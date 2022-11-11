@@ -9,9 +9,9 @@ function Signup() {
           Inscription <i class="fa-solid fa-user"></i>
         </h1>
         <form class="form-group">
-          <CustomInput label="Name" type="text" name="name" value=""/>
-          <CustomInput label="Email" type="text" name="email"/>
-          <CustomInput label="Password" type="password" name="password"/>
+          <CustomInput label="Name" placeholder="name" type="text" name="name" value=""/>
+          <CustomInput label="Email" placeholder="exemple@gmail.com" type="text" name="email"/>
+          <CustomInput label="Password" placeholder="password" type="password" name="password"/>
 
           <p>
             Already have an account? <a href="/">Sign in here</a>
