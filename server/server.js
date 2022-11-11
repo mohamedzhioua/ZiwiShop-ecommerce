@@ -1,6 +1,7 @@
 // Import dependencies  
 const express = require ('express') ; 
 const cors = require ('cors') ;
+const db = require('./config/db')
 
 
 
@@ -20,7 +21,10 @@ require('dotenv').config()
  credentials : true ,
  })) 
 
-const user = require('./models/user')
+ //Require application Route modules
+const userRoutes = require('./routes/users');
+ 
+app.use("/", userRoutes);
 
   app.listen(PORT, function () {
     console.log(`Server Runs Perfectly at http://localhost:${PORT}`);
