@@ -3,7 +3,7 @@ import '../CustomInput/CustomInput.css'
 function CustomInput() {
   return (
     <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
+    <label ></label>
     <input type="password"  placeholder="Password" />
   </div>
     )

@@ -9,8 +9,8 @@ function Signin() {
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
         </h1>
         <form class="form-group">
-        <CustomInput/>
-        <CustomInput/>        
+          <CustomInput />
+          <CustomInput />
           <p>
             If you dont have an account,<a href="/SignUp"> Sign up </a> here!
           </p>
