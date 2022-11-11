@@ -69,7 +69,7 @@ module.exports = {
         sameSite: "lax",
       } 
       res.cookie("Authorization", token, options);
-     res.status(201).json({message:"welcom"+ user.name +"to you home page",token,user})
+     res.status(201).json({message:"welcom "+ user.name +" to your home page",token,user})
     } catch (error) {
       console.log(error);
       res.status(400).send({ message: "Something went wrong" })
