@@ -1,4 +1,5 @@
 import React from "react";
+import CustomInput from "../../components/CustomInput/CustomInput";
 import "../Signin/Signin.css";
 function Signin() {
   return (
@@ -8,6 +9,8 @@ function Signin() {
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
         </h1>
         <form class="form-group">
+        <CustomInput/>
+        <CustomInput/>        
           <p>
             If you dont have an account,<a href="/SignUp"> Sign up </a> here!
           </p>
