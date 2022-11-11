@@ -1,10 +1,10 @@
 import React from 'react'
 import '../CustomInput/CustomInput.css'
-function CustomInput({label}) {
+function CustomInput({label ,type , placeholder ,name ,onChangeHandler}) {
   return (
     <div class="form-group">
     <label >{label}</label>
-    <input type="password"  placeholder="Password" />
+    <input  type={type}  placeholder={placeholder} name={name} onChange={onChangeHandler}/>
   </div>
     )
 }
