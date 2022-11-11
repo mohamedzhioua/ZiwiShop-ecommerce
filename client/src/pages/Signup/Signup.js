@@ -1,5 +1,5 @@
 import React from 'react'
-
+import '../Signup/Signup.css'
 function Signup() {
   return (
     
@@ -8,9 +8,7 @@ function Signup() {
        <h1>Inscription <i class="fa-solid fa-user"></i></h1>
        <form class="form-group" >
           
-          <input type="text" class="form-control" placeholder="username" />
-          <input type="email" class="form-control" placeholder="Email" />
-          <input type="password" class="form-control" placeholder="Password" />
+     
           <p>Already have an account? <a href="/">Sign in here</a>
           </p>
        </form>
