@@ -3,6 +3,8 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
+  //  ---------------------------------------- //signup method to add a new Passenger//--------------------------- //
+
   signup: async (req, res) => {
     let regex =
       /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/i;
@@ -23,11 +25,9 @@ module.exports = {
       }
       const emailExist = await User.findOne({ email });
       if (emailExist) {
-        return res
-          .status(401)
-          .send({
-            message: "Email User already Exist please try another Email",
-          });
+        return res.status(401).send({
+          message: "Email User already Exist please try another Email",
+        });
       }
       const hashedPassword = bcrypt.hashSync(password, 8);
       await User.create({
