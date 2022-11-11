@@ -1,4 +1,5 @@
 import React from "react";
+import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import "../Signup/Signup.css";
 function Signup() {
@@ -9,9 +10,26 @@ function Signup() {
           Inscription <i class="fa-solid fa-user"></i>
         </h1>
         <form class="form-group">
-          <CustomInput label="Name" placeholder="name" type="text" name="name" value=""/>
-          <CustomInput label="Email" placeholder="exemple@gmail.com" type="text" name="email"/>
-          <CustomInput label="Password" placeholder="password" type="password" name="password"/>
+          <CustomInput
+            label="Name"
+            placeholder="name"
+            type="text"
+            name="name"
+            value=""
+          />
+          <CustomInput
+            label="Email"
+            placeholder="name@exemple.com"
+            type="text"
+            name="email"
+          />
+          <CustomInput
+            label="Password"
+            placeholder="password"
+            type="password"
+            name="password"
+          />
+          <CustomButton label="submit" type="submit"/>
 
           <p>
             Already have an account? <a href="/">Sign in here</a>

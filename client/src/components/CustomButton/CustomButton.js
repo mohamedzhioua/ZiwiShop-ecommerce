@@ -1,8 +1,10 @@
 import React from 'react'
-
-function CustomButton() {
+import '../CustomButton/CustomButton.css'
+function CustomButton({label,type , handleSubmit}) {
   return (
-    <div>CustomButton</div>
+    <button  type={type} onSubmit={handleSubmit}>
+      {label}
+    </button>
   )
 }
 
