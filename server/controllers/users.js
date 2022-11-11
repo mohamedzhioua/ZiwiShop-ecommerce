@@ -58,21 +58,25 @@ module.exports = {
       if (!passwordMatch)
         return res.status(400).send({ message: "Wrong Password" });
       // generating a token and storing it in a cookie
-      const token = jwt.sign(
-        { id: user._id },
-         "zhioua_IS_Alive" ,
-        { expiresIn: "3d" }
-      );
-      const options= {
+      const token = jwt.sign({ id: user._id }, "zhioua_IS_Alive", {
+        expiresIn: "3d",
+      });
+      const options = {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
         httpOnly: true,
         sameSite: "lax",
-      } 
+      };
       res.cookie("Authorization", token, options);
-     res.status(201).json({message:"welcom "+ user.name +" to your home page",token,user})
+      res
+        .status(201)
+        .json({
+          message: "welcom " + user.name + " to your home page",
+          token,
+          user,
+        });
     } catch (error) {
       console.log(error);
-      res.status(400).send({ message: "Something went wrong" })
+      res.status(400).send({ message: "Something went wrong" });
     }
   },
 };

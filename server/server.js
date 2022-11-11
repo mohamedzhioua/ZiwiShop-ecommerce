@@ -24,7 +24,7 @@ require('dotenv').config()
  //Require application Route modules
 const userRoutes = require('./routes/users');
  
-app.use("/", userRoutes);
+app.use("/user", userRoutes);
 
   app.listen(PORT, function () {
     console.log(`Server Runs Perfectly at http://localhost:${PORT}`);
