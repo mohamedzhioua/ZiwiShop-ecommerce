@@ -1,6 +1,6 @@
 import React from "react";
 import "../CustomInput/CustomInput.css";
-function CustomInput({ label, type, placeholder, name, onChangeHandler }) {
+function CustomInput({ label, type, placeholder, name,value, onChange }) {
   return (
     <div class="form-group">
       <label>{label}</label>
@@ -8,7 +8,8 @@ function CustomInput({ label, type, placeholder, name, onChangeHandler }) {
         type={type}
         placeholder={placeholder}
         name={name}
-        onChange={onChangeHandler}
+        onChange={onChange}
+        value={value}
       />
     </div>
   );

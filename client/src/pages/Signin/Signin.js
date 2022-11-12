@@ -1,7 +1,8 @@
 import React from "react";
-import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import "../Signin/Signin.css";
+
+
 function Signin() {
   return (
     <div class="signin">
@@ -22,7 +23,7 @@ function Signin() {
             type="password"
             name="password"
           />
-          <CustomButton label="submit" type="submit" />
+          <button type="submit">submit</button>
           <p>
             If you dont have an account,<a href="/SignUp"> Sign up </a> here!
           </p>

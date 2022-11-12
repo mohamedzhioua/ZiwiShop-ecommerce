@@ -1,11 +1,11 @@
-import React from 'react'
-import '../CustomButton/CustomButton.css'
-function CustomButton({label,type , handleSubmit}) {
-  return (
-    <button  type={type} onSubmit={handleSubmit}>
-      {label}
-    </button>
-  )
-}
+// import React from 'react'
+// import '../CustomButton/CustomButton.css'
+// function CustomButton({label, type = "button"  , onSubmit}) {
+//   return (
+//     <button  type={type} onSubmit={onSubmit}>
+//       {label}
+//     </button>
+//   )
+// }
 
-export default CustomButton
+// export default CustomButton
