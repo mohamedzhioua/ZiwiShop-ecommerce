@@ -1,31 +1,20 @@
 const User = require("../models/user");
-const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const SignupValidation = require('../validator/SignupValidation')
 module.exports = {
   //  ---------------------------------------- //signup method to add a new user//--------------------------- //
 
   signup: async (req, res) => {
-    let regex =
-      /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/i;
+    const { name, email, password } = req.body;
+    const { errors, isValid } = SignupValidation(req.body) 
     try {
-      const { name, email, password } = req.body;
-      if (!email || !password || !name) {
-        return res.status(400).json({ message: "please fill all the fields " });
-      } else if (!validator.isEmail(email)) {
-        return res.status(400).json({
-          message: "Format Email required",
-        });
-      } else if (!regex.test(password)) {
-        return res.status(400).json({
-          message:
-            "Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long",
-        });
-      }
+      if(!isValid){
+   res.status(404).json(errors)
+  }
       const emailExist = await User.findOne({ email });
       if (emailExist) {
-        return res.status(400).json({
+        return res.status(404).json({
           message: "Email User already Exist please try another Email",
         });
       }
@@ -37,8 +26,7 @@ module.exports = {
       });
       res.status(201).json({ message: "user added with success" });
     } catch (error) {
-      console.log(error.message);
-      res.status(400).json({ message: "Something went wrong" });
+       res.status(404).json({ message: "Something went wrong" });
     }
   },
   //  ---------------------------------------- //signin method to add a new user//--------------------------- //
