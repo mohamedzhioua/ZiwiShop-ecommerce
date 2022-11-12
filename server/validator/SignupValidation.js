@@ -9,7 +9,8 @@ module.exports = function SignupValidation  (data)  {
   }
   if (!data.email) {
     errors.email = "Email field is required";
-  } else if (!validator.isEmail(data.email)) {
+  } 
+   if (!validator.isEmail(data.email)) {
     errors.email = "Format Email required";
   }
   if (!data.password) {
