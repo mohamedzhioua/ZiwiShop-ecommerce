@@ -1,8 +1,13 @@
 const validator = require("validator");
+const isEmpty = require('./IsEmpty') ;
 
-module.exports = function SignupValidation  (data)  {
+module.exports = function SignupValidation(data)  {
   let regex = /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/i;
   let errors = {};
+
+  data.name =!isEmpty(data.name) ? data.name : "" ;
+  data.email =!isEmpty(data.email) ? data.email : "" ;
+  data.password =!isEmpty(data.password) ? data.password : "" ;
 
   if (!data.name) {
     errors.name = "Name field is required";
