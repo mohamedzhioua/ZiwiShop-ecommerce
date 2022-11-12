@@ -1,21 +1,25 @@
-const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const SignupValidation = require('../validator/SignupValidation')
+
+// Load User model
+const User = require("../models/user");
+// Load input validation
+const SignupValidation = require("../validator/SignupValidation");
+
 module.exports = {
   //  ---------------------------------------- //signup method to add a new user//--------------------------- //
 
   signup: async (req, res) => {
     const { name, email, password } = req.body;
-    const { errors, isValid } = SignupValidation(req.body) 
+    const { errors, isValid } = SignupValidation(req.body);
     try {
-      if(!isValid){
-   res.status(404).json(errors)
-  }
+      if (!isValid) {
+        res.status(404).json(errors);
+      }
       const emailExist = await User.findOne({ email });
       if (emailExist) {
         return res.status(404).json({
-          message: "Email User already Exist please try another Email",
+          message: "Email already Exist please try another Email",
         });
       }
       const hashedPassword = bcrypt.hashSync(password, 8);
@@ -26,7 +30,7 @@ module.exports = {
       });
       res.status(201).json({ message: "user added with success" });
     } catch (error) {
-       res.status(404).json({ message: "Something went wrong" });
+      res.status(404).json({ message: "Something went wrong" });
     }
   },
   //  ---------------------------------------- //signin method to add a new user//--------------------------- //
@@ -56,13 +60,11 @@ module.exports = {
         sameSite: "lax",
       };
       res.cookie("Authorization", token, options);
-      res
-        .status(201)
-        .json({
-          message: "welcom " + user.name + " to your home page",
-          token,
-          user,
-        });
+      res.status(201).json({
+        message: "welcom " + user.name + " to your home page",
+        token,
+        user,
+      });
     } catch (error) {
       console.log(error);
       res.status(400).send({ message: "Something went wrong" });
