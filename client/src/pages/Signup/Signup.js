@@ -6,24 +6,25 @@ import axios from "axios";
 function Signup() {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-
+  console.log(errors)
 
   //add a User
   const onChangeHandler = (event) => {
     setForm({
       ...form,
-      [event.target.name]: [event.target.value],
+      [event.target.name]: event.target.value,
     });
   };
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    axios.post("/user/signup", form )
-    .then(res => {
-      // alert(res.data.message);
-      console.log(res);
-    })
-    .catch(err=>setErrors(err.res.data))
+    axios
+      .post("/user/signup", form)
+      .then((res) => {
+        alert(res.data.message);
+        console.log(res);
+      })
+      .catch((err) => setErrors(err.response.data));
   };
 
   return (
@@ -39,6 +40,7 @@ function Signup() {
             type="text"
             name="name"
             onChange={onChangeHandler}
+            errors={errors.name}
           />
           <CustomInput
             label="Email"
@@ -46,6 +48,7 @@ function Signup() {
             type="text"
             name="email"
             onChange={onChangeHandler}
+            errors={errors.email}
           />
           <CustomInput
             label="Password"
@@ -53,6 +56,7 @@ function Signup() {
             type="password"
             name="password"
             onChange={onChangeHandler}
+            errors={errors.password}
           />
           <button type="submit">submit</button>
           <p>
