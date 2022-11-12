@@ -5,7 +5,8 @@ import axios from "axios";
 
 function Signup() {
   const [form, setForm] = useState({});
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+
 
   //add a User
   const onChangeHandler = (event) => {
@@ -17,10 +18,12 @@ function Signup() {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    axios.post("/user/signup", form ,{withCredentials:true})
+    axios.post("/user/signup", form )
     .then(res => {
-      alert(res.data.message);
-    });
+      // alert(res.data.message);
+      console.log(res);
+    })
+    .catch(err=>setErrors(err.res.data))
   };
 
   return (
