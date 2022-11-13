@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames"
 import "../CustomInput/CustomInput.css";
 function CustomInput({
   label,
@@ -20,7 +21,7 @@ function CustomInput({
         value={value}
         className={classnames("form-control", { "is-invalid": errors })}
       />
-      {errors && <div class="is-invalid">{errors}</div>}{" "}
+      {errors && <div class="invalid-feedback">{errors}</div>}{" "}
     </div>
   );
 }

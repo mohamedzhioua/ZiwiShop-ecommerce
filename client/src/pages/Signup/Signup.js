@@ -6,7 +6,6 @@ import axios from "axios";
 function Signup() {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-  console.log(errors)
 
   //add a User
   const onChangeHandler = (event) => {
@@ -20,9 +19,9 @@ function Signup() {
     event.preventDefault();
     axios
       .post("/user/signup", form)
-      .then((res) => {
-        alert(res.data.message);
-        console.log(res);
+      .then((response) => {
+        alert(response.data.message);
+        console.log('------->',response);
       })
       .catch((err) => setErrors(err.response.data));
   };
