@@ -1,11 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import "../Signin/Signin.css";
 
-
 function Signin() {
+  const [form, setForm] = useState({});
+  const [errors, setErrors] = useState({});
+
+  //User signin
+  const onChangeHandler = (event) => {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onSubmitHandler = (event)=> {
+    event.preventDefault();
+    axios.post("/user/signin",form)
+    .then((response)=>{
+      alert(response.data.message)
+    })
+    .catch((err)=> setErrors(err.response.data)) ;
+  }
   return (
-    <div class="signin">
+    <div class="signin" onSubmit={onSubmitHandler}>
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -16,12 +35,16 @@ function Signin() {
             placeholder="name@exemple.com"
             type="text"
             name="email"
+            onChange={onChangeHandler}
+            errors={errors.email}
           />
           <CustomInput
             label="Password"
             placeholder="password"
             type="password"
             name="password"
+            onChange={onChangeHandler}
+            errors={errors.password}
           />
           <button type="submit">submit</button>
           <p>

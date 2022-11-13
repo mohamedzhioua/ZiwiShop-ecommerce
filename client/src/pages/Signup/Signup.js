@@ -21,7 +21,7 @@ function Signup() {
       .post("/user/signup", form)
       .then((response) => {
         alert(response.data.message);
-        console.log('------->',response);
+        console.log("------->", response);
       })
       .catch((err) => setErrors(err.response.data));
   };
