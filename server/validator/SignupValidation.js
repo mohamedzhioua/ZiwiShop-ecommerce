@@ -13,20 +13,19 @@ module.exports = function SignupValidation(data) {
     errors.name = "Name field is required";
   }
   // Email checks
-  if (!validator.isEmail(data.email)) {
-    errors.email = "Format Email required";
-  }
   if (validator.isEmpty(data.email)) {
     errors.email = "Email field is required";
+  } else if (!validator.isEmail(data.email)) {
+    errors.email = "Format Email required";
   }
+
   // Password checks
   if (validator.isEmpty(data.password)) {
     errors.password = "Password field is required";
+  } else if (!regex.test(data.password)) {
+    errors.password =
+      "Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long";
   }
-   if (!regex.test(data.password)) {
-      errors.password =
-        "Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long";
-    }
   return {
     errors,
     isValid: isEmpty(errors),

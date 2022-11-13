@@ -11,29 +11,29 @@ module.exports = {
 
   signup: async (req, res) => {
     const { name, email, password } = req.body;
-   
     const { errors, isValid } = SignupValidation(req.body);
+
     try {
       if (!isValid) {
-
-       res.status(404).json(errors);
-      } else {
-      const emailExist = await User.findOne({ email });
-      if (emailExist) {
-        errors.email  = "Email already Exist please try another Email";
-       res.status(404).json(errors);
-      }
-      const hashedPassword = bcrypt.hashSync(password, 8);
-      await User.create({
-        name,
-        email,
-        password: hashedPassword,
-      });
-      res.status(200).json({ message: "user added with success" });
-    }
-  } catch (error) {
-      res.status(404).json({ message: "Something went wrong" });
-      // res.status(404).json(error.message);
+        res.status(404).json(errors);
+      }else {
+      await User.findOne({ email }).then(async (exist) => {
+        if (exist) {
+          errors.email = "Email already in use";
+          res.status(404).json(errors);
+        } else {
+          const hash = bcrypt.hashSync(password, 8);
+          await User.create({
+            name,
+            email,
+            password: hash,
+          });
+          res.status(201).json({ message: "user added with success" });
+        }
+      }) }
+    
+    } catch (error) {
+      console.log(error.message);
     }
   },
   //  ---------------------------------------- //signin method to add a new user//--------------------------- //
