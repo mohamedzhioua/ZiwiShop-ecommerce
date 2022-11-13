@@ -1,7 +1,7 @@
 const validator = require("validator");
 const isEmpty = require("./IsEmpty");
 
-module.exports = function SigninValidation() {
+module.exports = function SigninValidation(data) {
   let errors = {};
 
   // Convert empty fields to an empty string so we can use validator
@@ -25,4 +25,4 @@ module.exports = function SigninValidation() {
   };
 };
 
-export default SigninValidation;
+ 
