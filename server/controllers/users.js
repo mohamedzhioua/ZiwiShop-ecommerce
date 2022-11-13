@@ -16,22 +16,22 @@ module.exports = {
     try {
       if (!isValid) {
         res.status(404).json(errors);
-      }else {
-      await User.findOne({ email }).then(async (exist) => {
-        if (exist) {
-          errors.email = "Email already in use";
-          res.status(404).json(errors);
-        } else {
-          const hash = bcrypt.hashSync(password, 8);
-          await User.create({
-            name,
-            email,
-            password: hash,
-          });
-          res.status(201).json({ message: "user added with success" });
-        }
-      }) }
-    
+      } else {
+        await User.findOne({ email }).then(async (exist) => {
+          if (exist) {
+            errors.email = "Email already in use";
+            res.status(404).json(errors);
+          } else {
+            const hash = bcrypt.hashSync(password, 8);
+            await User.create({
+              name,
+              email,
+              password: hash,
+            });
+            res.status(201).json({ message: "user added with success" });
+          }
+        });
+      }
     } catch (error) {
       console.log(error.message);
     }
