@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import "../Signin/Signin.css";
 
@@ -24,7 +25,7 @@ function Signin() {
     .catch((err)=> setErrors(err.response.data)) ;
   }
   return (
-    <div class="signin" onSubmit={onSubmitHandler}>
+    <div class="zhioua-mohamed" onSubmit={onSubmitHandler}>
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -48,7 +49,7 @@ function Signin() {
           />
           <button type="submit">submit</button>
           <p>
-            If you dont have an account,<a href="/SignUp"> Sign up </a> here!
+            If you dont have an account,<Link to="/signup"> Sign up </Link> here!
           </p>
         </form>
       </div>

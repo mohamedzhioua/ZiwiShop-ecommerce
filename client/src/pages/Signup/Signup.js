@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import "../Signup/Signup.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Signup() {
   const [form, setForm] = useState({});
@@ -21,13 +22,13 @@ function Signup() {
       .post("/user/signup", form)
       .then((response) => {
         alert(response.data.message);
-        console.log("------->", response);
+        event.target.reset();
       })
       .catch((err) => setErrors(err.response.data));
   };
 
   return (
-    <div class="signup">
+    <div class="zhioua-mohamed">
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Inscription <i class="fa-solid fa-user"></i>
@@ -59,7 +60,7 @@ function Signup() {
           />
           <button type="submit">submit</button>
           <p>
-            Already have an account? <a href="/">Sign in here</a>
+            Already have an account? <Link to="/signin">Sign in here</Link>
           </p>
         </form>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import classnames from "classnames"
+import classnames from "classnames";
 import "../CustomInput/CustomInput.css";
 function CustomInput({
   label,
