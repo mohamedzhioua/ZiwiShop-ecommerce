@@ -25,11 +25,15 @@ function Signin() {
     .catch((err)=> setErrors(err.response.data)) ;
   }
   return (
-    <div class="zhioua-mohamed" onSubmit={onSubmitHandler}>
+    <div class="zhioua" onSubmit={onSubmitHandler}>
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
         </h1>
+        <div
+            className="p-6 shadow-lg p-3 mb-5 bg-body rounded"
+            style={{ backgroundColor: "white" }}
+          >
         <form class="form-group">
           <CustomInput
             label="Email"
@@ -52,6 +56,7 @@ function Signin() {
             If you dont have an account,<Link to="/signup"> Sign up </Link> here!
           </p>
         </form>
+        </div>
       </div>
     </div>
   );

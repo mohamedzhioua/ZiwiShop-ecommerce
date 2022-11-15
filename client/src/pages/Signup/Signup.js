@@ -33,6 +33,10 @@ function Signup() {
         <h1>
           Inscription <i class="fa-solid fa-user"></i>
         </h1>
+        <div
+            className="p-6 shadow-lg p-3 mb-5 bg-body rounded"
+            style={{ backgroundColor: "white" }}
+          >
         <form class="form-group" onSubmit={onSubmitHandler}>
           <CustomInput
             label="Name"
@@ -63,6 +67,7 @@ function Signup() {
             Already have an account? <Link to="/signin">Sign in here</Link>
           </p>
         </form>
+        </div>
       </div>
     </div>
   );
