@@ -7,20 +7,21 @@
   Routes,
   Route,
 } from "react-router-dom";
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <BrowserRouter>
+ 
+    <Navbar />
     <Routes>
     <Route index element={<Signin />} />
 
         <Route  path="/"  element={<Home />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/logout" element={<Logout />} /> */}
-        
+        <Route path="/signup" element={<Signup />} />  
       </Routes>
-  </BrowserRouter>
+   </BrowserRouter>
   );
 }
 
