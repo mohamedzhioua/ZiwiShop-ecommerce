@@ -40,6 +40,7 @@ function Signin() {
             placeholder="name@exemple.com"
             type="text"
             name="email"
+            icon="fa fa-envelope"
             onChange={onChangeHandler}
             errors={errors.email}
           />
@@ -48,12 +49,13 @@ function Signin() {
             placeholder="password"
             type="password"
             name="password"
+            icon="fa-solid fa-lock"
             onChange={onChangeHandler}
             errors={errors.password}
           />
           <button type="submit">submit</button>
           <p>
-            If you dont have an account,<Link to="/signup"> Sign up </Link> here!
+            If you dont have an account yet, <Link to="/signup">Creat One</Link> here!
           </p>
         </form>
         </div>

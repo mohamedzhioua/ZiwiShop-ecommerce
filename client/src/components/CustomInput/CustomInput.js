@@ -1,10 +1,14 @@
 import React from "react";
 import classnames from "classnames";
 import "../CustomInput/CustomInput.css";
-function CustomInput({ label, type, placeholder, name, onChange, errors }) {
+function CustomInput({ label, type, icon, placeholder, name, onChange, errors }) {
   return (
-    <div class="form-group">
-      <label>{label}</label>
+    <div className="mb-3">
+      <label  className="form-label">{label}</label>
+      <div className="input-group">
+      <span className="input-group-text">
+          <i className={icon}></i>
+        </span>
       <input
         type={type}
         placeholder={placeholder}
@@ -13,6 +17,7 @@ function CustomInput({ label, type, placeholder, name, onChange, errors }) {
         className={classnames("form-control", { "is-invalid": errors })}
       />
       {errors && <div class="invalid-feedback">{errors}</div>}{" "}
+    </div>
     </div>
   );
 }

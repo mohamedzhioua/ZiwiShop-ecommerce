@@ -43,6 +43,7 @@ function Signup() {
             placeholder="name"
             type="text"
             name="name"
+            icon="fa fa-user"
             onChange={onChangeHandler}
             errors={errors.name}
           />
@@ -51,6 +52,7 @@ function Signup() {
             placeholder="name@exemple.com"
             type="text"
             name="email"
+            icon="fa fa-envelope"
             onChange={onChangeHandler}
             errors={errors.email}
           />
@@ -59,6 +61,7 @@ function Signup() {
             placeholder="password"
             type="password"
             name="password"
+            icon="fa-solid fa-lock"
             onChange={onChangeHandler}
             errors={errors.password}
           />
