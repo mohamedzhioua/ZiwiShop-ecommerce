@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function Navbar() {
+function Navbar({ user }) {
+  const LogoutHandler = () => {
+    
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -29,12 +32,24 @@ function Navbar() {
           </ul>
           <div className="d-flex">
             <div className="mx-4">
-              <Link className="btn btn-outline" to="/signin">
-                Login
-              </Link>
-              <Link className="btn btn-outline" to="/signup">
-                Register
-              </Link>
+              {!user.isConnected ? (
+                <>
+                  <Link className="btn btn-outline" to="/signin">
+                    Login
+                  </Link>
+                  <Link className="btn btn-outline" to="/signup">
+                    Register
+                  </Link>
+                </>
+              ) : (
+                <Link
+                  className="btn btn-outline"
+                  to="#"
+                  onClick={LogoutHandler}
+                >
+                  logout
+                </Link>
+              )}
             </div>
           </div>
         </div>

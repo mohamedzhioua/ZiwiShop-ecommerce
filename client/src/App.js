@@ -11,10 +11,9 @@ function App() {
   const user = { isConnected: false };
   return (
     <BrowserRouter>
-      <div className="bg-light" style={{ height: "100vh" }}>
-        <Navbar />
+      <div className="bg-white" style={{ height: "100vh" }}>
+        <Navbar user={user}/>
         <Routes>
-          <Route index element={<Signin />} />
 
           <Route
             path="/"
