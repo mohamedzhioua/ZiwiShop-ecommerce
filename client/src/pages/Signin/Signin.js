@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import "../Signin/Signin.css";
 
 function Signin() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -22,14 +23,13 @@ function Signin() {
       .post("/user/signin", form)
       .then((response) => {
         alert(response.data.message);
-        const token = response.data.token
-        localStorage.setItem("user-token",token);
-        setTimeout(() => {
-          Navigate('/');
-      }, 500);
+        const token = response.data.token;
+        localStorage.setItem("user-token", token);
+        navigate("/");
       })
       .catch((err) => setErrors(err.response.data));
   };
+
   return (
     <div class="zhioua" onSubmit={onSubmitHandler}>
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import "../Signup/Signup.css";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -23,9 +25,8 @@ function Signup() {
       .then((response) => {
         alert(response.data.message);
         // event.target.reset();
-        setTimeout(() => {
-          Navigate('/Signin');
-      }, 500);      })
+        navigate("/signin");
+      })
       .catch((err) => setErrors(err.response.data));
   };
 

@@ -6,12 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound/NotFound";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [isConnected, setIsconnected] = useState(false);
+  // console.log(isConnected);
   const checkUserToken = () => {
-    const userToken = localStorage.getItem("user-token");
+    const userToken = JSON.parse(localStorage.getItem("user-token"));
     console.log(userToken);
     if (!userToken || userToken === "undefined") {
       setIsconnected(false);
@@ -19,6 +20,11 @@ function App() {
     setIsconnected(true);
   };
   const user = { isConnected: isConnected };
+  console.log(user);
+  useEffect(() => {
+    checkUserToken();
+}, [isConnected]);
+
   return (
     <BrowserRouter>
       <div className="bg-white" style={{ height: "100vh" }}>
