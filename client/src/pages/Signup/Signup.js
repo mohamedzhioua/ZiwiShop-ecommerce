@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import "../Signup/Signup.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 function Signup() {
   const [form, setForm] = useState({});
@@ -22,8 +22,10 @@ function Signup() {
       .post("/user/signup", form)
       .then((response) => {
         alert(response.data.message);
-        event.target.reset();
-      })
+        // event.target.reset();
+        setTimeout(() => {
+          Navigate('/Signin');
+      }, 500);      })
       .catch((err) => setErrors(err.response.data));
   };
 
