@@ -4,7 +4,9 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="#">Mern Stack Zhioua-Mohamed</Link>
+        <Link className="navbar-brand" to="#">
+          Mern Stack Zhioua-Mohamed
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -27,14 +29,12 @@ function Navbar() {
           </ul>
           <div className="d-flex">
             <div className="mx-4">
-                
               <Link className="btn btn-outline" to="/signin">
                 Login
               </Link>
               <Link className="btn btn-outline" to="/signup">
                 Register
               </Link>
-
             </div>
           </div>
         </div>
