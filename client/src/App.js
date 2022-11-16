@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const user = { isConnected: false };
@@ -25,6 +26,7 @@ function App() {
           />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </div>
     </BrowserRouter>

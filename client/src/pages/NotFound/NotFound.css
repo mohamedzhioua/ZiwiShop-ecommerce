@@ -1,0 +1,11 @@
+body {
+    height: 100%;
+}
+
+.ziwi {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: pre-line;
+}
