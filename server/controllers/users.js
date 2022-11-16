@@ -22,11 +22,11 @@ module.exports = {
             errors.email = "Email already in use";
             res.status(404).json(errors);
           } else {
-            const hash = bcrypt.hashSync(password, 8);
+            const hashedpassword = bcrypt.hashSync(password, 8);
             await User.create({
               name,
               email,
-              password: hash,
+              password: hashedpassword,
             });
             res.status(201).json({ message: "user added with success" });
           }
@@ -58,7 +58,7 @@ module.exports = {
             res.status(404).json(errors);
           } else {
             // generating a token and storing it in a cookie
-            const token = jwt.sign({ id: user._id }, "zhioua_IS_Alive", {
+            const token = jwt.sign({ id: user._id }, "zhioua_DOING_GOOD", {
               expiresIn: "3d",
             });
             const options = {
