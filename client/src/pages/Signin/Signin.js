@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import "../Signin/Signin.css";
 
@@ -22,6 +22,11 @@ function Signin() {
       .post("/user/signin", form)
       .then((response) => {
         alert(response.data.message);
+        const token = response.data.token
+        localStorage.setItem("user-token",token);
+        setTimeout(() => {
+          Navigate('/');
+      }, 500);
       })
       .catch((err) => setErrors(err.response.data));
   };
