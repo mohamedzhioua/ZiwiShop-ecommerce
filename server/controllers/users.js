@@ -66,7 +66,7 @@ module.exports = {
               httpOnly: true,
               sameSite: "lax",
             };
-            res.cookie("Authorization", token, options);
+            // res.cookie("Authorization", token, options);
             res.status(201).json({
               message: "welcom " + user.name + " to your home page",
               token,
