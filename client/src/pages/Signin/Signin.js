@@ -22,13 +22,12 @@ function Signin() {
     axios
       .post("/user/signin", form)
       .then((response) => {
-        const token  = response.data.token;
+        const token = response.data.token;
         // Save token to localStorage
-        localStorage.setItem("user-token",JSON.stringify(token))
+        localStorage.setItem("user-token", JSON.stringify(token));
         alert(response.data.message);
-        setTimeout(() => {
+        navigate(0);
         navigate("/");
-        },1000)
       })
       .catch((err) => setErrors(err.response.data));
   };

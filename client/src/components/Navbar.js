@@ -1,13 +1,11 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Navbar({user,LogoutHandler}) {
-  // const userToken = localStorage.getItem("user-token");
-  console.log("navbar--->" , user);
+function Navbar({ user, Logout }) {
   const navigate = useNavigate();
 
-  const Logout = () => {
-LogoutHandler()
+  const LogoutHandler = () => {
+    Logout();
     navigate("/signin");
   };
   return (
@@ -51,7 +49,7 @@ LogoutHandler()
                 <Link
                   className="btn btn-outline"
                   to="#"
-                  onClick={Logout}
+                  onClick={LogoutHandler}
                 >
                   logout
                 </Link>

@@ -10,33 +10,33 @@ import { useEffect, useState } from "react";
 import ForceRedirect from "./components/ForceRedirect";
 
 function App() {
-  const [isConnected, setIsconnected] = useState("");
-
-  console.log("isConnected-->", isConnected);
+  const [isConnected, setIsconnected] = useState(false);
 
   const checkUserToken = () => {
-    const user = JSON.parse(localStorage.getItem("user-token"));
-    if (user) {
-      setIsconnected(user);
-    } else {
-      setIsconnected("");
+    if (typeof window !== "undefined") {
+      const user = JSON.parse(localStorage.getItem("user-token"));
+      if (user) {
+        setIsconnected(true);
+      } else {
+        setIsconnected(false);
+      }
     }
   };
   useEffect(() => {
     checkUserToken();
   }, [isConnected]);
 
-  const LogoutHandler = () => {
+  const Logout = () => {
     if (localStorage.getItem("user-token")) {
       localStorage.removeItem("user-token");
-      setIsconnected("");
+      setIsconnected(false);
     }
   };
 
   return (
     <BrowserRouter>
       <div className="bg-white" style={{ height: "100vh" }}>
-        <Navbar LogoutHandler={LogoutHandler} user={isConnected} />
+        <Navbar Logout={Logout} user={isConnected} />
         <Routes>
           <Route
             path="/"
