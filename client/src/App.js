@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound/NotFound";
 import { useEffect, useState } from "react";
+import ForceRedirect from "./components/ForceRedirect";
 
 function App() {
   const [isConnected, setIsconnected] = useState("");
@@ -45,8 +46,22 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/signin"
+            element={
+              <ForceRedirect user={isConnected}>
+                <Signin />
+              </ForceRedirect>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <ForceRedirect user={isConnected}>
+                <Signup />
+              </ForceRedirect>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
