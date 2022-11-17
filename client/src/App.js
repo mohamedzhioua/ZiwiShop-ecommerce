@@ -9,31 +9,38 @@ import NotFound from "./pages/NotFound/NotFound";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [isConnected, setIsconnected] = useState(false);
-  // console.log(isConnected);
+  const [isConnected, setIsconnected] = useState("");
+
+  console.log("isConnected-->", isConnected);
+
   const checkUserToken = () => {
-    const userToken = JSON.parse(localStorage.getItem("user-token"));
-    console.log(userToken);
-    if (!userToken || userToken === "undefined") {
-      setIsconnected(false);
+    const user = JSON.parse(localStorage.getItem("user-token"));
+    if (user) {
+      setIsconnected(user);
+    } else {
+      setIsconnected("");
     }
-    setIsconnected(true);
   };
-  const user = { isConnected: isConnected };
-  console.log(user);
   useEffect(() => {
     checkUserToken();
-}, [isConnected]);
+  }, [isConnected]);
+
+  const LogoutHandler = () => {
+    if (localStorage.getItem("user-token")) {
+      localStorage.removeItem("user-token");
+      setIsconnected("");
+    }
+  };
 
   return (
     <BrowserRouter>
       <div className="bg-white" style={{ height: "100vh" }}>
-        <Navbar user={user} />
+        <Navbar LogoutHandler={LogoutHandler} user={isConnected} />
         <Routes>
           <Route
             path="/"
             element={
-              <ProtectedRoute user={user}>
+              <ProtectedRoute user={isConnected}>
                 <Home />
               </ProtectedRoute>
             }

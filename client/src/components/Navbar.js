@@ -1,8 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-function Navbar({ user }) {
-  const LogoutHandler = () => {
-    
+import { Link, useNavigate } from "react-router-dom";
+
+function Navbar({user,LogoutHandler}) {
+  // const userToken = localStorage.getItem("user-token");
+  console.log("navbar--->" , user);
+  const navigate = useNavigate();
+
+  const Logout = () => {
+LogoutHandler()
+    navigate("/signin");
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,7 +38,7 @@ function Navbar({ user }) {
           </ul>
           <div className="d-flex">
             <div className="mx-4">
-              {!user.isConnected ? (
+              {!user ? (
                 <>
                   <Link className="btn btn-outline" to="/signin">
                     Login
@@ -45,7 +51,7 @@ function Navbar({ user }) {
                 <Link
                   className="btn btn-outline"
                   to="#"
-                  onClick={LogoutHandler}
+                  onClick={Logout}
                 >
                   logout
                 </Link>
