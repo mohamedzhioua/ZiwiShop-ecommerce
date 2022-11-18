@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
+import GoogleAuth from "../../components/GoogleAuth";
 import "../Signin/Signin.css";
 
 function Signin() {
@@ -62,6 +63,7 @@ function Signin() {
               errors={errors.password}
             />
             <button type="submit">submit</button>
+            <GoogleAuth />
             <p>
               If you dont have an account yet,{" "}
               <Link to="/signup">Creat One</Link> here!
