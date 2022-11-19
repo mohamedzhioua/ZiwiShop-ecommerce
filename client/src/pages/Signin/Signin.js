@@ -32,6 +32,9 @@ function Signin() {
       })
       .catch((err) => setErrors(err.response.data));
   };
+   const informParent=()=>{
+    
+   }
 
   return (
     <div class="zhioua" onSubmit={onSubmitHandler}>
@@ -63,7 +66,7 @@ function Signin() {
               errors={errors.password}
             />
             <button type="submit">submit</button>
-            <GoogleAuth />
+            <GoogleAuth informParent={informParent} />
             <p>
               If you dont have an account yet,{" "}
               <Link to="/signup">Creat One</Link> here!
