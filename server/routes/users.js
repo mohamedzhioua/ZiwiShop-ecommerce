@@ -8,4 +8,7 @@ router.post("/signup", UserController.signup);
 // GET request for user login.
 router.post("/signin", UserController.signin);
 
+// POST request to handle the Google Login response.
+router.post("/google-login", UserController.googleLogin);
+
 module.exports = router;
