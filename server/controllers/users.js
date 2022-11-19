@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const { OAuth2Client } = require("google-auth-library");
 // Load User model
 const User = require("../models/user");
 // Load input validation
@@ -58,7 +58,7 @@ module.exports = {
             res.status(404).json(errors);
           } else {
             // generating a token and storing it in a cookie
-            const token = jwt.sign({ id: user._id }, "zhioua_DOING_GOOD", {
+            const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
               expiresIn: "3d",
             });
             const options = {
@@ -83,7 +83,6 @@ module.exports = {
   googleLogin: async (req, res) => {
     const client = new OAuth2Client(process.env.webClientId);
     const { idToken } = req.body;
-    console.log("-req--->", req.body);
     let response = await client.verifyIdToken({
       idToken,
       audience: process.env.webClientId,
@@ -97,7 +96,7 @@ module.exports = {
       try {
         if (user) {
           console.log("-user--->", user);
-          const token = jwt.sign({ id: user.id }, process.env.SECRET_jwt_code, {
+          const token = jwt.sign({ _id: user._id }, "zhioua_Still_Alive", {
             expiresIn: "3d",
           });
           return res.json({
@@ -114,7 +113,7 @@ module.exports = {
             password,
           });
 
-          const token = jwt.sign({ id: user.id }, "zhioua_DOING_GOOD", {
+          const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
             expiresIn: "3d",
           });
           return res.json({
