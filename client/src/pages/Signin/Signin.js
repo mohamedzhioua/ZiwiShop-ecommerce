@@ -51,8 +51,18 @@ function Signin() {
  
   return (
     <div class="zhioua" onSubmit={onSubmitHandler}>
-                  <ToastContainer />
-      <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+<ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>      <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
         </h1>
