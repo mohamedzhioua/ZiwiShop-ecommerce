@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound/NotFound";
 import { useEffect, useState } from "react";
 import ForceRedirect from "./components/ForceRedirect";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [isConnected, setIsconnected] = useState(false);
@@ -63,7 +64,10 @@ function App() {
             }
           />
           <Route path="*" element={<NotFound />} />
+
         </Routes>
+        <Footer />
+
       </div>
     </BrowserRouter>
   );
