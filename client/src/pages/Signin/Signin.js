@@ -27,13 +27,18 @@ function Signin() {
         // Save token to localStorage
         localStorage.setItem("user-token", JSON.stringify(token));
         alert(response.data.message);
-        navigate(0);
+        window.location.reload(false);
         navigate("/");
       })
       .catch((err) => setErrors(err.response.data));
   };
    const informParent=(response)=>{
-    
+    const token = response.data.token;
+    // Save token to localStorage
+    localStorage.setItem("user-token", JSON.stringify(token));
+    alert(response.data.message);
+    window.location.reload(false);
+    navigate("/");
    }
 
   return (
