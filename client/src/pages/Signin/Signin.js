@@ -6,6 +6,7 @@ import GoogleAuth from "../../components/GoogleAuth";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Signin/Signin.css";
+import FacebookAuth from "../../components/FacebookAuth";
 
 function Signin() {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ theme="dark"
             />
             <button type="submit">submit</button>
             <GoogleAuth informParent={informParent} />
+            <FacebookAuth/>
             <p>
               If you dont have an account yet,{" "}
               <Link to="/signup">Creat One</Link> here!
