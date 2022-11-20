@@ -82,7 +82,7 @@ module.exports = {
   //  ---------------------------------------- //Google Authentication //--------------------------- //
   googleLogin: async (req, res) => {
     const client = new OAuth2Client(process.env.webClientId);
-    const { idToken } = req.body;
+    const {idToken}  = req.body;
     let response = await client.verifyIdToken({
       idToken,
       audience: process.env.webClientId,
