@@ -35,6 +35,7 @@ function App() {
   };
 
   return (
+    
     <BrowserRouter>
       <div className="bg-white" style={{ height: "100vh" }}>
         <Navbar Logout={Logout} user={isConnected} />
