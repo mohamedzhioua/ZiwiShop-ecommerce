@@ -2,15 +2,17 @@ import React from 'react'
 import FacebookLogin from 'react-facebook-login';
 
 function FacebookAuth() {
-    const responseFacebook = (response) => {
+    const responseFacebook = async (response) => {
         console.log(response);
       }
   return (
     <FacebookLogin
-    appId="696398112098618"
+    appId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
     autoLoad={true}
     fields="name,email,picture"
-     callback={responseFacebook} />
+    callback={(res) => responseFacebook(res)}
+     
+     />
       )
 }
 
