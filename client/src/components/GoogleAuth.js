@@ -4,16 +4,17 @@ import axios from "axios"
 
 const GoogleAuth =({ informParent }) =>{
   const responseGoogle = (response) => {
-    console.log(response);
-    axios.post("/user/google-login" , {idToken:response.tokenId })
+    
+    axios.post("/user/google-login" , {idToken:response.tokenId} )
     .then(response => {
-      console.log('GOOGLE SIGNIN SUCCESS', response);
-      // inform parent component
+       // inform parent component
       informParent(response);
+      console.log(response);
     })
     .catch(error => {
       console.log('GOOGLE SIGNIN ERROR', error.response);
     });
+    
  
   };
   return (

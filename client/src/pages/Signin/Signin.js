@@ -32,7 +32,7 @@ function Signin() {
       })
       .catch((err) => setErrors(err.response.data));
   };
-   const informParent=()=>{
+   const informParent=(response)=>{
     
    }
 
