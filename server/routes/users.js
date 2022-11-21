@@ -11,4 +11,7 @@ router.post("/signin", UserController.signin);
 // POST request to handle the Google Login response.
 router.post("/google-login", UserController.googleLogin);
 
+// POST request to handle the Google Login response.
+router.post("/facebook-login", UserController.FacebookLogin);
+
 module.exports = router;
