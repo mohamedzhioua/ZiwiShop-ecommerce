@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
-import GoogleAuth from "../../components/GoogleAuth";
+import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../Signin/Signin.css";
