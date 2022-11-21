@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
+const fetch = require("node-fetch");
+
 // Load User model
 const User = require("../models/user");
 // Load input validation
