@@ -69,9 +69,9 @@ function Signup() {
               errors={errors.password}
             />
             <button className="submit" type="submit">submit</button>
-            <p>
+            <h6>
               Already have an account? <Link to="/signin">Sign in here</Link>
-            </p>
+            </h6>
           </form>
         </div>
       </div>
