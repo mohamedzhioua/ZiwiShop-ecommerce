@@ -6,7 +6,7 @@ import GoogleAuth from "../../components/GoogleAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../Signin/Signin.css";
-import FacebookAuth from "../../components/FacebookAuth";
+import FacebookAuth from "../../components/FacebookAuth/FacebookAuth";
 
 function Signin() {
   const navigate = useNavigate();
@@ -94,9 +94,11 @@ function Signin() {
               errors={errors.password}
             />
             <button type="submit">submit</button>
+ <div className="d-flex flex-row mb-3 justify-content-evenly">
             <GoogleAuth informParent={informParent} />
-            <FacebookAuth informParent={informParent} />
-            <p>
+             <FacebookAuth informParent={informParent} />
+             </div>
+             <p>
               If you dont have an account yet,{" "}
               <Link to="/signup">Creat One</Link> here!
             </p>
