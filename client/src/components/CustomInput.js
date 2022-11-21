@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classnames from "classnames";
 function CustomInput({
   label,
@@ -8,7 +8,10 @@ function CustomInput({
   name,
   onChange,
   errors,
+  password,
 }) {
+  const [passwordVisible, setPasswordVisible] = useState(password);
+
   return (
     <div className="mb-3">
       <label className="form-label">{label}</label>
@@ -23,6 +26,11 @@ function CustomInput({
           onChange={onChange}
           className={classnames("form-control", { "is-invalid": errors })}
         />
+{password && (
+  <div>
+    <i onClick={()=>setPasswordVisible(!passwordVisible)} className={`fa ${passwordVisible ? "fa-eye-slash" : "fa-eye" }`}></i>
+    </div>
+)}
         {errors && <div class="invalid-feedback">{errors}</div>}{" "}
       </div>
     </div>

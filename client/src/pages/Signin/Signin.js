@@ -92,6 +92,7 @@ function Signin() {
               icon="fa-solid fa-lock"
               onChange={onChangeHandler}
               errors={errors.password}
+              password
             />
             <button className="submit" type="submit">sign in</button>
             <div class="row px-3 mb-4">
