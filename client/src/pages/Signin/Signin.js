@@ -94,11 +94,15 @@ function Signin() {
               errors={errors.password}
             />
             <button type="submit">submit</button>
- <div className="d-flex flex-row mb-3 justify-content-evenly">
-            <GoogleAuth informParent={informParent} />
-             <FacebookAuth informParent={informParent} />
-             </div>
-             <p>
+            <hr />
+            <p className="text-center">
+              Login with social media
+            </p>
+            <div className="d-flex flex-row mb-3 justify-content-evenly social-media">
+              <GoogleAuth informParent={informParent} />
+              <FacebookAuth informParent={informParent} />
+            </div>
+            <p>
               If you dont have an account yet,{" "}
               <Link to="/signup">Creat One</Link> here!
             </p>

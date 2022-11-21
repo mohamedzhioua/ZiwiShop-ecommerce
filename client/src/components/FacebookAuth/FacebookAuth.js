@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import "../FacebookAuth/FacebookAuth.css"
+import "../FacebookAuth/FacebookAuth.css";
 
 function FacebookAuth({ informParent }) {
   const responseFacebook = async (response) => {
@@ -26,10 +26,15 @@ function FacebookAuth({ informParent }) {
         fields="name,email,picture"
         autoLoad={false}
         callback={(res) => responseFacebook(res)}
-         render={renderProps => (
-    <button classname="social-icon facebook"  onClick={renderProps.onClick}><i class="fab fa-facebook-f" /></button>
-  )}
-       />
+        render={(renderProps) => (
+          <button
+             className="social-icon-facebook"
+            onClick={renderProps.onClick}
+          >
+            <i class="fab fa-facebook-f" />
+          </button>
+        )}
+      />
     </div>
   );
 }

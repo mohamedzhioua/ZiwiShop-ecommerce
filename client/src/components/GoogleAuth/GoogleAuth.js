@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { gapi } from "gapi-script";
-import "../GoogleAuth/GoogleAuth.css"
+import "../GoogleAuth/GoogleAuth.css";
 const GoogleAuth = ({ informParent }) => {
   useEffect(() => {
     function initClient() {
@@ -30,19 +30,24 @@ const GoogleAuth = ({ informParent }) => {
   };
 
   return (
-    <div> 
-    <GoogleLogin
-      clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
-      buttonText="Continue with Google"
-      onSuccess={responseGoogle}
-      onFailure={responseGoogle}
-      cookiePolicy={"single_host_origin"}
-      render={renderProps => (
-        <button classname="social-icon facebook" onClick={renderProps.onClick} disabled={renderProps.disabled}><i class="fab fa-google" /></button>
-      )} 
-    />
+    <div>
+      <GoogleLogin
+        clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
+        buttonText="Continue with Google"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={"single_host_origin"}
+        render={(renderProps) => (
+          <button
+            className="social-icon-google"
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+          >
+            <i class="fab fa-google" />
+          </button>
+        )}
+      />
     </div>
-
   );
 };
 

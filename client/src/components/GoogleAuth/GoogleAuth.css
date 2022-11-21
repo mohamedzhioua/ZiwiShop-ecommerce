@@ -1,0 +1,13 @@
+
+.social-icon-google{
+    color:white ;
+    background-color: #DB4437;
+    height :60px;
+    width: 60px;
+    border-radius: 50%;
+    border: none;
+}
+.social-icon-google :hover {
+    background:#DB4437 ;
+    opacity: 0.6; 
+  }
