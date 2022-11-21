@@ -31,10 +31,10 @@ function Signup() {
   };
 
   return (
-    <div class="zhioua-mohamed">
-      <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+    <div className="container">
+      <div className="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
-          Inscription <i class="fa-solid fa-user"></i>
+          Inscription <i className="fa-solid fa-user"></i>
         </h1>
         <div
           className="p-6 shadow-lg p-3 mb-5 bg-body rounded"
@@ -68,7 +68,7 @@ function Signup() {
               onChange={onChangeHandler}
               errors={errors.password}
             />
-            <button type="submit">submit</button>
+            <button className="submit" type="submit">submit</button>
             <p>
               Already have an account? <Link to="/signin">Sign in here</Link>
             </p>

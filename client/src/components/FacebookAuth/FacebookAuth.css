@@ -1,9 +1,13 @@
 
 .social-icon-facebook{
   color: white;
-  background-color: #426782;
+  background-color: #3B5998;
   height: 60px;
   width: 60px;
   border-radius: 50%;
   border: none;
 }
+.social-icon-facebook:hover {
+    background:#426782 ;
+    opacity: 1; 
+  }

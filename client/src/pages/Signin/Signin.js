@@ -53,7 +53,7 @@ function Signin() {
   };
 
   return (
-    <div class="zhioua" onSubmit={onSubmitHandler}>
+    <div className="container" onSubmit={onSubmitHandler}>
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -93,11 +93,9 @@ function Signin() {
               onChange={onChangeHandler}
               errors={errors.password}
             />
-            <button type="submit">submit</button>
+            <button className="submit" type="submit">submit</button>
             <hr />
-            <p className="text-center">
-              Login with social media
-            </p>
+            <p className="text-center">Login with social media</p>
             <div className="d-flex flex-row mb-3 justify-content-evenly social-media">
               <GoogleAuth informParent={informParent} />
               <FacebookAuth informParent={informParent} />
