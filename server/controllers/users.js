@@ -138,17 +138,19 @@ module.exports = {
   //  ---------------------------------------- //Facebook Authentication //--------------------------- //
   FacebookLogin: async (req, res) => {
     try {
-      console.log('FACEBOOK LOGIN REQ BODY', req.body);
+      console.log("FACEBOOK LOGIN REQ BODY", req.body);
       const { userID, accessToken } = req.body;
       const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
       let response = await fetch(url, {
-        method: 'GET'
-      })
+        method: "GET",
+      });
       const data = await response.json();
       const { email, name } = data;
       let user = await User.findOne({ email });
       if (user) {
-        const token = jwt.sign({ _id: user._id },"zhioua_DOING_GOOD", { expiresIn: '3d' });
+        const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
+          expiresIn: "3d",
+        });
         return res.json({
           status: "Success",
           message: "welcom " + user.name + " to your home page",
@@ -156,16 +158,16 @@ module.exports = {
           token,
         });
       } else {
-        let password = email + "zhioua_DOING_GOOD" ;
+        let password = email + "zhioua_DOING_GOOD";
         const userData = await User.create({
           name,
           email,
           password,
         });
-        if (!userData){
+        if (!userData) {
           return res.status(400).json({
             message: "User signup failed with facebook",
-          })
+          });
         }
         const token = jwt.sign({ _id: userData._id }, "zhioua_DOING_GOOD", {
           expiresIn: "3d",
@@ -179,7 +181,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
-      res.status(400).send(error)
+      res.status(400).send(error);
     }
   },
-}
+};
