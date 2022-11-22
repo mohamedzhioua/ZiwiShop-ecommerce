@@ -1,5 +1,5 @@
 import React from 'react'
-
+import '../Profile/Profile.css'
 function Home() {
   return (
     <div class="container d-flex justify-content-center mt-5">
@@ -8,7 +8,7 @@ function Home() {
       
       <div class="top-container">
         
-        <img src={"https://i.imgur.com/G1pXs7D.jpg"} class="img-fluid profile-image" width="70" alt='user face'/>
+        <img src={"https://i.imgur.com/G1pXs7D.jpg"} class="img-fluid profile-image" width="200" alt='user face'/>
         
         <div className="ml-3">
           <h5 className="name">Clarke Jeffery</h5>

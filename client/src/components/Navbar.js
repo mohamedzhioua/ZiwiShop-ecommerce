@@ -30,7 +30,7 @@ function Navbar({ user, Logout }) {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link active" to="/">
-                Home
+                Profile
               </Link>
             </li>
           </ul>

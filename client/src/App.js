@@ -1,8 +1,8 @@
 import "./App.css";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
-import Home from "./pages/Home/Home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Profile from "./pages/Profile/Profile"
+ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound/NotFound";
@@ -44,7 +44,7 @@ function App() {
             path="/"
             element={
               <ProtectedRoute user={isConnected}>
-                <Home />
+                <Profile />
               </ProtectedRoute>
             }
           />
