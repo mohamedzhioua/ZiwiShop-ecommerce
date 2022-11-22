@@ -10,7 +10,7 @@ function CustomInput({
   errors,
   password,
 }) {
-  const [passwordVisible, setPasswordVisible] = useState(password);
+  // const [passwordVisible, setPasswordVisible] = useState(password);
 
   return (
     <div className="mb-3">
@@ -19,18 +19,22 @@ function CustomInput({
         <span className="input-group-text">
           <i className={icon}></i>
         </span>
-        <input
+         <input
           type={type}
           placeholder={placeholder}
           name={name}
           onChange={onChange}
           className={classnames("form-control", { "is-invalid": errors })}
         />
-{password && (
-  <div>
-    <i onClick={()=>setPasswordVisible(!passwordVisible)} className={`fa ${passwordVisible ? "fa-eye-slash" : "fa-eye" }`}></i>
-    </div>
-)}
+{/* {password && (
+          <span  >
+    <i onClick={()=>setPasswordVisible(!passwordVisible)} className={`fa ${passwordVisible ? "fa-eye-slash" : "fa-eye" }`} style={{
+      position: 'absolute',
+      right: 10,
+      
+      }} ></i>
+      </span>
+)} */}
         {errors && <div class="invalid-feedback">{errors}</div>}{" "}
       </div>
     </div>

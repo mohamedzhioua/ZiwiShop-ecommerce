@@ -92,16 +92,16 @@ function Signin() {
               icon="fa-solid fa-lock"
               onChange={onChangeHandler}
               errors={errors.password}
-              password
-            />
-            <button className="submit" type="submit">sign in</button>
+             />
+            <button className="submit" type="submit">
+              sign in
+            </button>
             <div class="row px-3 mb-4">
-                        <div class="line"></div>
-                        <small class="or text-center">Or</small>
-                        <div class="line"></div>
-                    </div>
-            {/* <hr /> */}
-            {/* <p className="text-center">Login with social media</p> */}
+              <div class="line"></div>
+              <small class="or text-center">Or</small>
+              <div class="line"></div>
+            </div>
+
             <div className="d-flex flex-row mb-3 justify-content-evenly social-media">
               <GoogleAuth informParent={informParent} />
               <FacebookAuth informParent={informParent} />

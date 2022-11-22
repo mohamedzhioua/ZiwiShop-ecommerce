@@ -3,6 +3,7 @@ import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { gapi } from "gapi-script";
 import "../GoogleAuth/GoogleAuth.css";
+
 const GoogleAuth = ({ informParent }) => {
   useEffect(() => {
     function initClient() {
