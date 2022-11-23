@@ -12,33 +12,20 @@ function Profile() {
         <div class=" image d-flex flex-column justify-content-center align-items-center">
           <button class="btn btn-secondary">
             {" "}
-            <img
-              src={"https://avatars.githubusercontent.com/u/107249637?v=4"}
-              alt="user face"
-              height="100"
-              width="100"
-            />
+            <img src={user.image} alt="user face" height="150" width="150" />
           </button>
           <span class="name mt-3">{user.name}</span>{" "}
           <span class="idd">Full Stack JavaScript Developer</span>
           <div class="d-flex flex-row justify-content-center align-items-center gap-2"></div>
           <div class="d-flex flex-row justify-content-center align-items-center mt-3">
             <span class="number">
-              e-mail : <span class="follow">{user.email}</span>
+              e-mail 📧 : <span class="follow">{user.email}</span>
             </span>{" "}
-          </div>
-          <div class=" d-flex mt-2">
-            {" "}
-            <button class="btn1 btn-dark">Edit Profile</button>{" "}
           </div>
           <div class="text mt-3">
             <span>
-              Dynamic Software Developer skilled at developing complex
-              solutions, possessing string thinking skills, high energy and
-              integrity.I am dedicated to constantly self-improve . I am also
-              experienced in communication, team management and problem solving
-              . Seeking to further improve my skills as the future full stack
-              developer at Atmospheric Solutions.
+              If you'd like to support my work , feel free to sponsor me , star
+              my repo and contact me ❤️‍🔥
             </span>
           </div>
           <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center">

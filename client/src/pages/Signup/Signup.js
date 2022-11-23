@@ -25,7 +25,7 @@ function Signup() {
       .then((response) => {
         alert(response.data.message);
         // event.target.reset();
-        navigate("/signin",{state:form});
+        navigate("/signin");
       })
       .catch((err) => setErrors(err.response.data));
   };
@@ -68,7 +68,9 @@ function Signup() {
               onChange={onChangeHandler}
               errors={errors.password}
             />
-            <button className="submit" type="submit">submit</button>
+            <button className="submit" type="submit">
+              submit
+            </button>
             <hr />
             <h6>
               Already have an account? <Link to="/signin">Sign in here</Link>

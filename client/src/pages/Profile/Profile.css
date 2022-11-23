@@ -4,7 +4,7 @@
 }
 
 .card {
-  width: 1000px;
+  width: 1200px;
   background-color: #efefef;
   border: none;
   cursor: pointer;
@@ -18,12 +18,6 @@
 .card:hover .image img {
   transform: scale(1.5);
 }
-
-/* .btn {
-    height: 140px;
-    width: 140px;
-    border-radius: 50%
-} */
 
 .name {
   font-size: 22px;
@@ -42,15 +36,6 @@
   font-size: 22px;
   font-weight: bold;
   color: #444444;
-}
-
-.btn1 {
-  height: 40px;
-  width: 150px;
-  border: none;
-  background-color: #000;
-  color: #aeaeae;
-  font-size: 15px;
 }
 
 .text span {

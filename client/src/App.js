@@ -29,9 +29,7 @@ function App() {
 
   const Logout = () => {
     if (localStorage.getItem("user-token")) {
-      localStorage.removeItem("user-token");
-      localStorage.removeItem("user");
-
+      localStorage.clear();
       setIsconnected(false);
     }
   };

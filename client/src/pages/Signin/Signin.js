@@ -45,7 +45,8 @@ function Signin() {
     const token = response.data.token;
     // Save token to localStorage
     localStorage.setItem("user-token", JSON.stringify(token));
-     toast.success(`${response.data.message}`, {
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    toast.success(`${response.data.message}`, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
     setTimeout(() => {
