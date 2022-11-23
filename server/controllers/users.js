@@ -108,7 +108,7 @@ module.exports = {
             token,
           });
         } else {
-          let password = email + "zhioua_DOING_GOOD";
+          let password = email + " zhioua_DOING_GOOD";
           const user = await User.create({
             name,
             email,
@@ -160,25 +160,25 @@ module.exports = {
           token,
         });
       } else {
-        let password = email + "zhioua_DOING_GOOD";
-        const userData = await User.create({
+        let password = email + " zhioua_DOING_GOOD";
+        const user = await User.create({
           name,
           email,
           password,
           image,
         });
-        if (!userData) {
+        if (!user) {
           return res.status(400).json({
             message: "User signup failed with facebook",
           });
         }
-        const token = jwt.sign({ _id: userData._id }, "zhioua_DOING_GOOD", {
+        const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
           expiresIn: "3d",
         });
         return res.json({
           status: "Success",
-          message: "welcom " + userData.name + " to your home page",
-          userData,
+          message: "welcom " + user.name + " to your home page",
+          user,
           token,
         });
       }
