@@ -1,3 +1,3 @@
 # mern-stack-social-authentication
- If you'd like to support my work , feel free to sponsor me , star
-              my repo and contact me ❤️‍🔥
+ If you'd like to support my work , feel free to star ⭐
+              my repo or you can contact me ❤️‍🔥
