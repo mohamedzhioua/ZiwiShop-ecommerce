@@ -17,6 +17,10 @@ const UserSchema = new Schema({
         required:true,
 
     },
+    image:{
+        type:String,
+        default:"https://avatars.githubusercontent.com/u/107249637?v=4"
+    }
   
 }, {timestamps: true})
 

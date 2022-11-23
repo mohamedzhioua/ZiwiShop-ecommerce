@@ -92,7 +92,7 @@ module.exports = {
     console.log("-response--->", response);
 
     const { email_verified, email, name } = response.payload;
-
+    const image = response.payload.picture;
     if (email_verified) {
       let user = await User.findOne({ email });
       try {
@@ -113,6 +113,7 @@ module.exports = {
             name,
             email,
             password,
+            image,
           });
 
           const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
@@ -146,6 +147,7 @@ module.exports = {
       });
       const data = await response.json();
       const { email, name } = data;
+      const image = data.picture.data.url;
       let user = await User.findOne({ email });
       if (user) {
         const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
@@ -163,6 +165,7 @@ module.exports = {
           name,
           email,
           password,
+          image,
         });
         if (!userData) {
           return res.status(400).json({
