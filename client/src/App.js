@@ -1,8 +1,8 @@
 import "./App.css";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
-import Profile from "./pages/Profile/Profile"
- import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Profile from "./pages/Profile/Profile";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound/NotFound";
@@ -30,12 +30,13 @@ function App() {
   const Logout = () => {
     if (localStorage.getItem("user-token")) {
       localStorage.removeItem("user-token");
+      localStorage.removeItem("user");
+
       setIsconnected(false);
     }
   };
 
   return (
-    
     <BrowserRouter>
       <div className="bg-white" style={{ height: "100vh" }}>
         <Navbar Logout={Logout} user={isConnected} />
@@ -65,10 +66,8 @@ function App() {
             }
           />
           <Route path="*" element={<NotFound />} />
-
         </Routes>
         <Footer />
-
       </div>
     </BrowserRouter>
   );

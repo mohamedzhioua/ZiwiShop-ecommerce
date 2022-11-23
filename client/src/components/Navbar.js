@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function Navbar({ user, Logout }) {
+function Navbar({ user, Logout  }) {
   const navigate = useNavigate();
 
   const LogoutHandler = () => {
@@ -38,7 +38,7 @@ function Navbar({ user, Logout }) {
             <div className="mx-4">
               {!user ? (
                 <>
-                  <Link className="btn btn-outline" to="/signin">
+                  <Link className="btn btn-outline"  to="/signin">
                     Login
                   </Link>
                   <Link className="btn btn-outline" to="/signup">

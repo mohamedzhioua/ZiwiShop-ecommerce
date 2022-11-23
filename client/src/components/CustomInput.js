@@ -9,6 +9,7 @@ function CustomInput({
   onChange,
   errors,
   password,
+  
 }) {
   // const [passwordVisible, setPasswordVisible] = useState(password);
 
@@ -25,7 +26,7 @@ function CustomInput({
           name={name}
           onChange={onChange}
           className={classnames("form-control", { "is-invalid": errors })}
-        />
+         />
 {/* {password && (
           <span  >
     <i onClick={()=>setPasswordVisible(!passwordVisible)} className={`fa ${passwordVisible ? "fa-eye-slash" : "fa-eye" }`} style={{

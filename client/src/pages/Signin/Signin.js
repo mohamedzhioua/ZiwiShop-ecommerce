@@ -29,9 +29,11 @@ function Signin() {
         const token = response.data.token;
         // Save token to localStorage
         localStorage.setItem("user-token", JSON.stringify(token));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         toast.success(`${response.data.message}`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
+        console.log(response);
         setTimeout(() => {
           window.location.reload(false);
           navigate("/");
@@ -43,7 +45,7 @@ function Signin() {
     const token = response.data.token;
     // Save token to localStorage
     localStorage.setItem("user-token", JSON.stringify(token));
-    toast.success(`${response.data.message}`, {
+     toast.success(`${response.data.message}`, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
     setTimeout(() => {
@@ -92,7 +94,7 @@ function Signin() {
               icon="fa-solid fa-lock"
               onChange={onChangeHandler}
               errors={errors.password}
-             />
+            />
             <button className="submit" type="submit">
               sign in
             </button>
