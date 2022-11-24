@@ -34,3 +34,10 @@
 .text-sm {
     font-size: 14px !important;
 }
+.App {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

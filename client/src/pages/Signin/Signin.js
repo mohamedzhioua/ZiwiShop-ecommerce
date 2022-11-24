@@ -23,6 +23,7 @@ function Signin() {
   };
 
   const onSubmitHandler = (event) => {
+    setIsLoading(true);
     event.preventDefault();
     axios
       .post("/user/signin", form)
@@ -37,10 +38,14 @@ function Signin() {
         console.log(response);
         setTimeout(() => {
           window.location.reload(false);
-          navigate("/",{state:{name:'hhhhhh'}});
+          navigate("/", { state: { name: "hhhhhh" } });
         }, 1000);
+        setIsLoading(false);
       })
-      .catch((err) => setErrors(err.response.data));
+      .catch((err) => {
+        setErrors(err.response.data);
+        setIsLoading(false);
+      });
   };
   const informParent = (response) => {
     const token = response.data.token;
@@ -56,9 +61,9 @@ function Signin() {
     }, 1000);
   };
 
-  return (
+  const renderUser =  (
     <div className="container" onSubmit={onSubmitHandler}>
-      <ToastContainer
+       <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -97,7 +102,7 @@ function Signin() {
               onChange={onChangeHandler}
               errors={errors.password}
             />
-            <button className="submit" type="submit">
+            <button className="submit" type="submit" >
               sign in
             </button>
             <div class="row px-3 mb-4">
@@ -119,6 +124,11 @@ function Signin() {
       </div>
     </div>
   );
+  return (
+    <div className="App">
+      {isLoading ? <LoadingSpinner /> : renderUser}
+      </div>
+      )
 }
 
 export default Signin;

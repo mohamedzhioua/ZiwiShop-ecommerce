@@ -3,9 +3,8 @@ import '../LoadingSpinner/Spinner.css'
 
 function LoadingSpinner() {
   return (
-    <div id="root">
-    <div class="loader-wrapper">
-      <div class="loader"></div>
+    <div className="spinner-container">
+    <div className="loading-spinner">
     </div>
   </div>
     )
