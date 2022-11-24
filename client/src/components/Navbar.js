@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar({ user, Logout  }) {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function Navbar({ user, Logout  }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" to="/">
+              <Link className="nav-link active"  to="/">
                 Profile
               </Link>
             </li>

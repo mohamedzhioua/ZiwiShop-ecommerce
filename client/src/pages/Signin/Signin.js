@@ -7,12 +7,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../Signin/Signin.css";
 import FacebookAuth from "../../components/FacebookAuth/FacebookAuth";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 function Signin() {
   const navigate = useNavigate();
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-
+  const [isLoading, setIsLoading] = useState(false);
   //User signin
   const onChangeHandler = (event) => {
     setForm({
@@ -36,7 +37,7 @@ function Signin() {
         console.log(response);
         setTimeout(() => {
           window.location.reload(false);
-          navigate("/");
+          navigate("/",{state:{name:'hhhhhh'}});
         }, 1000);
       })
       .catch((err) => setErrors(err.response.data));

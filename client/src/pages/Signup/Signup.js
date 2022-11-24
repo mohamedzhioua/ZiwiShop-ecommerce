@@ -69,7 +69,7 @@ function Signup() {
               errors={errors.password}
             />
             <button className="submit" type="submit">
-              submit
+              register
             </button>
             <hr />
             <h6>
