@@ -3,10 +3,11 @@ import CustomInput from "../../components/CustomInput";
 import "../Signup/Signup.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 function Signup() {
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -19,18 +20,23 @@ function Signup() {
   };
 
   const onSubmitHandler = (event) => {
+    setIsLoading(true);
     event.preventDefault();
     axios
       .post("/user/signup", form)
       .then((response) => {
-        alert(response.data.message);
-        // event.target.reset();
-        navigate("/signin");
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("/signin");
+        }, 1000);
       })
-      .catch((err) => setErrors(err.response.data));
+      .catch((err) => {
+        setErrors(err.response.data);
+        setIsLoading(false);
+      });
   };
 
-  return (
+  const renderSignup = (
     <div className="container">
       <div className="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
@@ -79,6 +85,9 @@ function Signup() {
         </div>
       </div>
     </div>
+  );
+  return (
+    <div className="App">{isLoading ? <LoadingSpinner /> : renderSignup}</div>
   );
 }
 

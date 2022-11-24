@@ -32,15 +32,14 @@ function Signin() {
         // Save token to localStorage
         localStorage.setItem("user-token", JSON.stringify(token));
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        toast.success(`${response.data.message}`, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-        console.log(response);
+        // toast.success(`${response.data.message}`, {
+        //   position: toast.POSITION.BOTTOM_CENTER,
+        // })
+        window.location.reload(false);
         setTimeout(() => {
-          window.location.reload(false);
-          navigate("/", { state: { name: "hhhhhh" } });
+          navigate("/");
+          setIsLoading(false);
         }, 1000);
-        setIsLoading(false);
       })
       .catch((err) => {
         setErrors(err.response.data);
@@ -48,22 +47,21 @@ function Signin() {
       });
   };
   const informParent = (response) => {
+    setIsLoading(true);
     const token = response.data.token;
     // Save token to localStorage
     localStorage.setItem("user-token", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(response.data.user));
-    toast.success(`${response.data.message}`, {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
+    window.location.reload(false);
     setTimeout(() => {
-      window.location.reload(false);
       navigate("/");
+      setIsLoading(false);
     }, 1000);
   };
 
-  const renderUser =  (
+  const renderSignin = (
     <div className="container" onSubmit={onSubmitHandler}>
-       <ToastContainer
+      {/* <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -74,7 +72,7 @@ function Signin() {
         draggable
         pauseOnHover
         theme="dark"
-      />{" "}
+      />{" "} */}
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -102,7 +100,7 @@ function Signin() {
               onChange={onChangeHandler}
               errors={errors.password}
             />
-            <button className="submit" type="submit" >
+            <button className="submit" type="submit">
               sign in
             </button>
             <div class="row px-3 mb-4">
@@ -125,10 +123,8 @@ function Signin() {
     </div>
   );
   return (
-    <div className="App">
-      {isLoading ? <LoadingSpinner /> : renderUser}
-      </div>
-      )
+    <div className="App">{isLoading ? <LoadingSpinner /> : renderSignin}</div>
+  );
 }
 
 export default Signin;
