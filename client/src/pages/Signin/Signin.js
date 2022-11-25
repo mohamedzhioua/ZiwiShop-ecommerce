@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
- import "../Signin/Signin.css";
+import "../Signin/Signin.css";
 import FacebookAuth from "../../components/FacebookAuth/FacebookAuth";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 function Signin() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({email: "",name:"", password: ""});
+  const [form, setForm] = useState({ email: "", name: "", password: "" });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   //User signin
@@ -55,7 +55,7 @@ function Signin() {
     }, 1000);
   };
 
- return (
+  return (
     <div className="container" onSubmit={onSubmitHandler}>
       <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>

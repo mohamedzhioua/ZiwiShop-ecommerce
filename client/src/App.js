@@ -3,12 +3,13 @@ import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
 import Profile from "./pages/Profile/Profile";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Header from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound/NotFound";
 import { useEffect, useState } from "react";
 import ForceRedirect from "./components/ForceRedirect";
 import Footer from "./components/Footer/Footer";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [isConnected, setIsconnected] = useState(false);
@@ -37,7 +38,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="bg-white" style={{ height: "100vh" }}>
-        <Navbar Logout={Logout} user={isConnected}  />
+        <Header Logout={Logout} user={isConnected} />
         <Routes>
           <Route
             path="/"

@@ -1,7 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-
-function Navbar({ user, Logout }) {
+import { useNavigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+function Header({ user, Logout }) {
   const navigate = useNavigate();
 
   const LogoutHandler = () => {
@@ -9,57 +11,45 @@ function Navbar({ user, Logout }) {
     navigate("/signin");
   };
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="#">
-          Mern Stack Zhioua-Mohamed
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link active" to="/">
-                Profile
-              </Link>
-            </li>
-          </ul>
-          <div className="d-flex">
-            <div className="mx-4">
-              {!user ? (
-                <>
-                  <Link className="btn btn-outline" to="/signin">
-                    Login
-                  </Link>
-                  <Link className="btn btn-outline" to="/signup">
-                    Register
-                  </Link>
-                </>
-              ) : (
-                <Link
-                  className="btn btn-outline"
-                  to="#"
-                  onClick={LogoutHandler}
-                >
-                  logout
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="#">Mern Stack Zhioua-Mohamed</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link className="nav-link active" to="/">
+              Profile
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+        <Navbar.Collapse className="justify-content-end">
+          <Nav>
+            {!user ? (
+              <>
+                <Nav.Link className="btn btn-outline" to="/signin">
+                  {" "}
+                  Login
+                </Nav.Link>
+                <Nav.Link className="btn btn-outline" to="/signup">
+                  {" "}
+                  Register
+                </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link
+                className="btn btn-outline"
+                to="#"
+                onClick={LogoutHandler}
+              >
+                {" "}
+                logout
+              </Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
-export default Navbar;
+export default Header;
