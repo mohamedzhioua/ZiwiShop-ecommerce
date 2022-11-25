@@ -36,8 +36,10 @@ function Signup() {
       });
   };
 
-  const renderSignup = (
+return(
     <div className="container">
+          {/* <div className="App">{isLoading ? <LoadingSpinner /> : ""}</div> */}
+
       <div className="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
           Inscription <i className="fa-solid fa-user"></i>
@@ -74,7 +76,7 @@ function Signup() {
               onChange={onChangeHandler}
               errors={errors.password}
             />
-            <button className="submit" type="submit">
+            <button className="submit" type="submit" disabled={isLoading}>
               register
             </button>
             <hr />
@@ -86,9 +88,7 @@ function Signup() {
       </div>
     </div>
   );
-  return (
-    <div className="App">{isLoading ? <LoadingSpinner /> : renderSignup}</div>
-  );
+ 
 }
 
 export default Signup;

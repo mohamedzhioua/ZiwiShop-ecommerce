@@ -31,7 +31,7 @@ function FacebookAuth({ informParent }) {
             className="social-icon-facebook"
             onClick={renderProps.onClick}
           >
-            <i className="fab fa-facebook-f" /> 
+            <i className="fab fa-facebook-f" />
           </button>
         )}
       />

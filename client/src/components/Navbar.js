@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Navbar({ user, Logout  }) {
+function Navbar({ user, Logout }) {
   const navigate = useNavigate();
 
   const LogoutHandler = () => {
@@ -29,7 +29,7 @@ function Navbar({ user, Logout  }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active"  to="/">
+              <Link className="nav-link active" to="/">
                 Profile
               </Link>
             </li>
@@ -38,7 +38,7 @@ function Navbar({ user, Logout  }) {
             <div className="mx-4">
               {!user ? (
                 <>
-                  <Link className="btn btn-outline"  to="/signin">
+                  <Link className="btn btn-outline" to="/signin">
                     Login
                   </Link>
                   <Link className="btn btn-outline" to="/signup">
