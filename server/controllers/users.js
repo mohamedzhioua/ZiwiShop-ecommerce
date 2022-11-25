@@ -8,6 +8,7 @@ const User = require("../models/user");
 // Load input validation
 const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
+
 module.exports = {
   //  ---------------------------------------- //signup method to add a new user//--------------------------- //
 
@@ -59,16 +60,10 @@ module.exports = {
             errors.password = "Wrong Password";
             res.status(404).json(errors);
           } else {
-            // generating a token and storing it in a cookie
+            // generate a token and send to client
             const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
               expiresIn: "3d",
             });
-            const options = {
-              expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
-              httpOnly: true,
-              sameSite: "lax",
-            };
-            // res.cookie("Authorization", token, options);
             res.status(201).json({
               message: "welcom " + user.name + " to your home page",
               token,
@@ -89,15 +84,12 @@ module.exports = {
       idToken,
       audience: process.env.webClientId,
     });
-    console.log("-response--->", response);
-
     const { email_verified, email, name } = response.payload;
     const image = response.payload.picture;
     if (email_verified) {
       let user = await User.findOne({ email });
       try {
         if (user) {
-          console.log("-user--->", user);
           const token = jwt.sign({ _id: user._id }, "zhioua_Still_Alive", {
             expiresIn: "3d",
           });
@@ -160,7 +152,7 @@ module.exports = {
           token,
         });
       } else {
-        let password = email + " zhioua_DOING_GOOD";
+        let password = email + "zhioua_DOING_GOOD";
         const user = await User.create({
           name,
           email,
@@ -169,7 +161,7 @@ module.exports = {
         });
         if (!user) {
           return res.status(400).json({
-            message: "User signup failed with facebook",
+            error: "User signup failed with facebook",
           });
         }
         const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
@@ -184,7 +176,9 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
-      res.status(400).send(error);
+      res.status(400).json({
+        error: "Facebook login failed. Try later",
+      });
     }
   },
 };
