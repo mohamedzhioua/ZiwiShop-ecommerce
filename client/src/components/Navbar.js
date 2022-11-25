@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+
 function Header({ user, Logout }) {
   const navigate = useNavigate();
 
@@ -21,31 +24,25 @@ function Header({ user, Logout }) {
               Profile
             </Nav.Link>
           </Nav>
-        </Navbar.Collapse>
-        <Navbar.Collapse className="justify-content-end">
-          <Nav>
+          <Form className="d-flex">
             {!user ? (
               <>
-                <Nav.Link className="btn btn-outline" to="/signin">
+                <Button className="me-1" variant="secondary" href="/signin">
                   {" "}
                   Login
-                </Nav.Link>
-                <Nav.Link className="btn btn-outline" to="/signup">
+                </Button>
+                <Button className="me-1" variant="secondary" href="/signup">
                   {" "}
                   Register
-                </Nav.Link>
+                </Button>
               </>
             ) : (
-              <Nav.Link
-                className="btn btn-outline"
-                to="#"
-                onClick={LogoutHandler}
-              >
+              <Button variant="secondary" href="#" onClick={LogoutHandler}>
                 {" "}
                 logout
-              </Nav.Link>
+              </Button>
             )}
-          </Nav>
+          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
