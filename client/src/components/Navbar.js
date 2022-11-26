@@ -1,10 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
 
 function Header({ user, Logout }) {
   const navigate = useNavigate();
@@ -20,29 +18,29 @@ function Header({ user, Logout }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link className="nav-link active" to="/">
-              Profile
-            </Nav.Link>
+            <Link className="nav-link active" to="/">
+              Profile <i class="fa fa-home" />
+            </Link>
           </Nav>
-          <Form className="d-flex">
+          <Nav className="ms-auto">
             {!user ? (
               <>
-                <Button className="me-1" variant="secondary" href="/signin">
+                <Link className="btn btn-outline" to="/signin">
                   {" "}
-                  Login
-                </Button>
-                <Button className="me-1" variant="secondary" href="/signup">
+                  Login <i class="fas fa-sign-in-alt" />
+                </Link>
+                <Link className="btn btn-outline" to="/signup">
                   {" "}
-                  Register
-                </Button>
+                  Register <i class="fa fa-user-plus" />
+                </Link>
               </>
             ) : (
-              <Button variant="secondary" href="#" onClick={LogoutHandler}>
+              <Link className="btn btn-outline" to="#" onClick={LogoutHandler}>
                 {" "}
-                logout
-              </Button>
+                logout <i class="fas fa-sign-out-alt" />
+              </Link>
             )}
-          </Form>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
