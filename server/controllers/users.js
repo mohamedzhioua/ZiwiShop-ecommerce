@@ -23,7 +23,7 @@ module.exports = {
         await User.findOne({ email }).then(async (exist) => {
           if (exist) {
             errors.email = "Email already in use";
-            res.status(404).json(errors);
+      return  res.status(404).json(errors);
           } else {
             const hashedpassword = await bcrypt.hash(password, 8);
             await User.create({
@@ -52,13 +52,13 @@ module.exports = {
           if (!user) {
             errors.email =
               "Email does not exist ! please Enter the right Email or You can make account";
-            res.status(404).json(errors);
+            return res.status(404).json(errors);
           }
           // Compare sent in password with found user hashed password
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
             errors.password = "Wrong Password";
-            res.status(404).json(errors);
+            return res.status(404).json(errors);
           } else {
             // generate a token and send to client
             const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
