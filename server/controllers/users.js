@@ -55,7 +55,7 @@ module.exports = {
             res.status(404).json(errors);
           }
           // Compare sent in password with found user hashed password
-          const passwordMatch = bcrypt.compareSync(password, user.password);
+          const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
             errors.password = "Wrong Password";
             res.status(404).json(errors);
