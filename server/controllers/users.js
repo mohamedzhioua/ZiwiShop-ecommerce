@@ -25,7 +25,7 @@ module.exports = {
             errors.email = "Email already in use";
             res.status(404).json(errors);
           } else {
-            const hashedpassword = bcrypt.hashSync(password, 8);
+            const hashedpassword = await bcrypt.hash(password, 8);
             await User.create({
               name,
               email,
