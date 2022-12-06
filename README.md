@@ -14,14 +14,14 @@
       -   REACT_APP_GOOGLE_CLIENT_ID=Insert the valid google client id
 -   Create a `.env` file in the server side and store the following:
       -   webClientId=Insert the valid google client id
-      -   Run the server on PORT 5000
+      -   Run the server on PORT 5000 (npm run dev)
 -   npm start/yarn start
 ```
 
-```bash
+
 -   for the database You can obtain A MONGO_URI after creating a collection on [mongodb atlas](https://www.mongodb.com/cloud/atlas). 
 -   For the GOOGLE_CLIENT_ID and the FACEBOOK_APP_ID, you will need to go through the Google developer console and the facebook developer accounts page respectively
-```
+ 
 
 
 ## Demo 
@@ -30,11 +30,11 @@
 
 ## Contributing
 
-```bash
--   Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
--   See anything else you'd like to add here? Please send a pull request as well!
-```
-
+ -   Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+ -   See anything else you'd like to add here? Please send a pull request as well!
+ 
+ ---
+ 
 <p> If you'd like to support my work , feel free to star ⭐
               my repo or you can contact me so we can enjoy a coffee together ☕️❤️‍🔥</p>
 
