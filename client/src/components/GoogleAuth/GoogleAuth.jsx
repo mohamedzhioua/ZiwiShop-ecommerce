@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { gapi } from "gapi-script";
 import "../GoogleAuth/GoogleAuth.css";
 
 const GoogleAuth = ({ informParent }) => {
-  useEffect(() => {
+   useEffect(() => {
     function initClient() {
       gapi.client.init({
-        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         scope: "",
       });
     }
@@ -18,13 +18,13 @@ const GoogleAuth = ({ informParent }) => {
   const responseGoogle = async (response) => {
     try {
       const result = await axios.post(
-        "/user/google-login",
+        `${import.meta.env.VITE_API_URL}/user/google-login`,
         { idToken: response.tokenId },
         { withCredentials: true }
       );
-
+      // console.log("🚀 ~ file: GoogleAuth.jsx:25 ~ responseGoogle ~ result:", result)
+ 
       informParent(result);
-      console.log(result);
     } catch (error) {
       console.log("GOOGLE SIGNIN ERROR", error.response);
     }
@@ -33,7 +33,7 @@ const GoogleAuth = ({ informParent }) => {
   return (
     <div>
       <GoogleLogin
-        clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
+        clientId={`${import.meta.env.VITE_GOOGLE_CLIENT_ID}`}
         buttonText="Continue with Google"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
@@ -44,7 +44,7 @@ const GoogleAuth = ({ informParent }) => {
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
-            <i class="fab fa-google" />
+            <i className="fab fa-google" />
           </button>
         )}
       />

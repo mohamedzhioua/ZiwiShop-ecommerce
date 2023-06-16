@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import "../Signup/Signup.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 function Signup() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Signup() {
     setIsLoading(true);
     event.preventDefault();
     axios
-      .post("/user/signup", form)
+      .post(`${import.meta.env.VITE_API_URL}/user/signup`, form)
       .then((response) => {
         setTimeout(() => {
           setIsLoading(false);
@@ -36,9 +35,9 @@ function Signup() {
       });
   };
 
-return(
+  return (
     <div className="container">
-          {/* <div className="App">{isLoading ? <LoadingSpinner /> : ""}</div> */}
+      {/* <div className="App">{isLoading ? <LoadingSpinner /> : ""}</div> */}
 
       <div className="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
@@ -48,7 +47,7 @@ return(
           className="p-6 shadow-lg p-3 mb-5 bg-body rounded"
           style={{ backgroundColor: "white" }}
         >
-          <form class="form-group" onSubmit={onSubmitHandler}>
+          <form className="form-group" onSubmit={onSubmitHandler}>
             <CustomInput
               label="Name"
               placeholder="name"
@@ -88,7 +87,7 @@ return(
       </div>
     </div>
   );
- 
+
 }
 
 export default Signup;

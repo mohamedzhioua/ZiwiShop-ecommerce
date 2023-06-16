@@ -5,8 +5,7 @@ import CustomInput from "../../components/CustomInput";
 import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 import "../Signin/Signin.css";
 import FacebookAuth from "../../components/FacebookAuth/FacebookAuth";
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-
+ 
 function Signin() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", name: "", password: "" });
@@ -24,7 +23,7 @@ function Signin() {
     setIsLoading(true);
     event.preventDefault();
     axios
-      .post("/user/signin", form)
+      .post(`${import.meta.env.VITE_API_URL}/user/signin`, form)
       .then((response) => {
         const token = response.data.token;
         // Save token to localStorage
@@ -57,15 +56,15 @@ function Signin() {
 
   return (
     <div className="container" onSubmit={onSubmitHandler}>
-      <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+      <div className="col-lg-4 col-md-6 col-sm-8 mx-auto">
         <h1>
-          Connexion <i class="fa fa-sign-in" aria-hidden="true"></i>
+          Connexion <i className="fa fa-sign-in" aria-hidden="true"></i>
         </h1>
         <div
           className="p-6 shadow-lg p-3 mb-5 bg-body rounded"
           style={{ backgroundColor: "white" }}
         >
-          <form class="form-group">
+          <form className="form-group">
             <CustomInput
               label="Email"
               placeholder="name@exemple.com"
@@ -88,10 +87,10 @@ function Signin() {
             <button className="submit" type="submit">
               sign in
             </button>
-            <div class="row px-3 mb-4">
-              <div class="line"></div>
-              <small class="or text-center">Or</small>
-              <div class="line"></div>
+            <div className="row px-3 mb-4">
+              <div className="line"></div>
+              <small className="or text-center">Or</small>
+              <div className="line"></div>
             </div>
 
             <div className="d-flex flex-row mb-3 justify-content-evenly social-media">

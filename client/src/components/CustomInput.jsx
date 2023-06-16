@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import classnames from "classnames";
 function CustomInput({
   label,
@@ -34,7 +33,7 @@ function CustomInput({
             ></i>
           </span>
         )} */}
-        {errors && <div class="invalid-feedback">{errors}</div>}{" "}
+        {errors && <div className="invalid-feedback">{errors}</div>}{" "}
       </div>
     </div>
   );
