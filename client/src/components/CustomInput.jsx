@@ -1,42 +1,29 @@
-import classnames from "classnames";
-function CustomInput({
-  label,
-  type,
-  icon,
-  placeholder,
-  name,
-  onChange,
-  errors,
-  password,
-}) {
-  // const [passwordVisible, setPasswordVisible] = useState(password);
+import { TextField } from "@material-ui/core";
 
-  return (
-    <div className="mb-3">
-      <label className="form-label">{label}</label>
-      <div className="input-group">
-        <span className="input-group-text">
-          <i className={icon}></i>
-        </span>
-        <input
-          type={type}
-           placeholder={placeholder}
-          name={name}
-          onChange={onChange}
-          className={classnames("form-control", { "is-invalid": errors })}
-        />
-        {/* {password && (
-          <span className="input-group-text">
-            <i
-              onClick={() => setPasswordVisible(!passwordVisible)}
-              className={`fa ${passwordVisible ? "fa-eye-slash" : "fa-eye"}`}
-            ></i>
-          </span>
-        )} */}
-        {errors && <div className="invalid-feedback">{errors}</div>}{" "}
-      </div>
-    </div>
-  );
-}
+const CustomInput = ({
+  label,
+  placeholder,
+  type,
+  name,
+  value,
+  onChange,
+  onBlur,
+  error,
+  helperText,
+}) => (
+  <TextField
+    label={label}
+    placeholder={placeholder}
+    type={type}
+    name={name}
+    variant="outlined"
+    fullWidth
+    value={value}
+    onChange={onChange}
+    onBlur={onBlur}
+    error={error}
+    helperText={helperText}
+  />
+);
 
 export default CustomInput;

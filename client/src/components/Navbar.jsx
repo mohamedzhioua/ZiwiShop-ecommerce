@@ -1,7 +1,10 @@
- import { Link, useNavigate } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import HomeIcon from "@mui/icons-material/Home";
+import LoginIcon from "@mui/icons-material/Login";
+import RegisterIcon from "@mui/icons-material/PersonAdd";
+import LogoutIcon from "@mui/icons-material/ExitToApp";
 
 function Header({ user, Logout }) {
   const navigate = useNavigate();
@@ -10,40 +13,44 @@ function Header({ user, Logout }) {
     Logout();
     navigate("/signin");
   };
+
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="#">Mern Stack Zhioua-Mohamed</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link className="nav-link active" to="/">
-              Profile <i className="fa fa-home" />
-            </Link>
-          </Nav>
-          <Nav className="ms-auto">
-            {!user ? (
-              <>
-                <Link className="btn btn-outline" to="/signin">
-                  {" "}
-                  Login <i className="fas fa-sign-in-alt" />
-                </Link>
-                <Link className="btn btn-outline" to="/signup">
-                  {" "}
-                  Register <i className="fa fa-user-plus" />
-                </Link>
-              </>
-            ) : (
-              <Link className="btn btn-outline" to="#" onClick={LogoutHandler}>
-                {" "}
-                logout <i className="fas fa-sign-out-alt" />
-              </Link>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <Typography variant="h6" style={{ flexGrow: 1 }}>
+          Mern Stack Zhioua-Mohamed
+        </Typography>
+        <div>
+          <Button component={Link} to="/" color="inherit">
+            <HomeIcon style={{ marginRight: "0.5rem" }} />
+            Profile
+          </Button>
+          {!user ? (
+            <>
+              <Button component={Link} to="/signin" color="inherit">
+                <LoginIcon style={{ marginRight: "0.5rem" }} />
+                Login
+              </Button>
+              <Button component={Link} to="/signup" color="inherit">
+                <RegisterIcon style={{ marginRight: "0.5rem" }} />
+                Register
+              </Button>
+            </>
+          ) : (
+            <Button onClick={LogoutHandler} color="inherit">
+              <LogoutIcon style={{ marginRight: "0.5rem" }} />
+              Logout
+            </Button>
+          )}
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 }
+
+Header.propTypes = {
+  user: PropTypes.any,
+  Logout: PropTypes.func.isRequired,
+};
 
 export default Header;

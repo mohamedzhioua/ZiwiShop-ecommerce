@@ -1,93 +1,165 @@
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Link as RouterLink } from "react-router-dom";
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import axios from "axios";
+import { Box, Link, Container, CssBaseline, Grid, Typography } from "@material-ui/core";
 import { useState } from "react";
 import CustomInput from "../../components/CustomInput";
-import "../Signup/Signup.css";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import CustomButton from "../../components/CustomButton";
 
-function Signup() {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [form, setForm] = useState({});
-  const [errors, setErrors] = useState({});
+const Signup = () => {
+  const [serverErrors, setServerErrors] = useState({});
 
-  //add a User
-  const onChangeHandler = (event) => {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value,
-    });
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
   };
 
-  const onSubmitHandler = (event) => {
-    setIsLoading(true);
-    event.preventDefault();
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const onSubmit = (values, { setSubmitting }) => {
+    setSubmitting(true);
     axios
-      .post(`${import.meta.env.VITE_API_URL}/user/signup`, form)
+      .post(`${import.meta.env.VITE_API_URL}/user/signup`, values)
       .then((response) => {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/signin");
-        }, 1000);
+
       })
       .catch((err) => {
-        setErrors(err.response.data);
-        setIsLoading(false);
+        setSubmitting(false);
+        setServerErrors(err.response.data);
+
       });
   };
 
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
+
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    isSubmitting,
+  } = formik;
+
   return (
-    <div className="container">
-      {/* <div className="App">{isLoading ? <LoadingSpinner /> : ""}</div> */}
 
-      <div className="col-lg-4 col-md-6 col-sm-8 mx-auto">
-        <h1>
-          Inscription <i className="fa-solid fa-user"></i>
-        </h1>
-        <div
-          className="p-6 shadow-lg p-3 mb-5 bg-body rounded"
-          style={{ backgroundColor: "white" }}
-        >
-          <form className="form-group" onSubmit={onSubmitHandler}>
-            <CustomInput
-              label="Name"
-              placeholder="name"
-              type="text"
-              name="name"
-              icon="fa fa-user"
-              onChange={onChangeHandler}
-              errors={errors.name}
-            />
-            <CustomInput
-              label="Email"
-              placeholder="name@exemple.com"
-              type="text"
-              name="email"
-              icon="fa fa-envelope"
-              onChange={onChangeHandler}
-              errors={errors.email}
-            />
-            <CustomInput
-              label="Password"
-              placeholder="password"
-              type="password"
-              name="password"
-              icon="fa-solid fa-lock"
-              onChange={onChangeHandler}
-              errors={errors.password}
-            />
-            <button className="submit" type="submit" disabled={isLoading}>
-              register
-            </button>
-            <hr />
-            <h6>
-              Already have an account? <Link to="/signin">Sign in here</Link>
-            </h6>
-          </form>
-        </div>
-      </div>
-    </div>
+    <Container component="main" maxWidth="xs"
+      style={{
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)'
+      }}
+    >
+      <CssBaseline />
+
+      <Box
+        style={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 10
+        }}
+
+      >  <Box style={{
+        display: 'grid',
+        placeItems: 'center',
+      }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+          Sign Up
+          </Typography>
+        </Box>
+        <form onSubmit={handleSubmit} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <CustomInput
+                label="Name*"
+                placeholder="name"
+                type="text"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.name && !!(errors.name || serverErrors.name)}
+                helperText={touched.name && (errors.name || serverErrors.name)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomInput
+                label="Email*"
+                placeholder="name@example.com"
+                type="text"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.email && !!(errors.email || serverErrors.email)}
+                helperText={touched.email && (errors.email || serverErrors.email)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomInput
+                label="Password*"
+                placeholder="password"
+                type="password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.password && !!(errors.password || serverErrors.password)}
+                helperText={touched.password && (errors.password || serverErrors.password)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButton
+                variant="contained"
+                color="primary"
+                type="submit"
+                disabled={isSubmitting}
+                fullWidth
+                size="large"
+              >
+                {isSubmitting ? "Sign Up..." : "Continue"}
+              </CustomButton>
+            </Grid>
+            <Grid container style={{ marginTop: '10px' }}>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  to="/signin"
+                  variant="body2"
+                  component={RouterLink}>
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Container>
   );
-
-}
+};
 
 export default Signup;

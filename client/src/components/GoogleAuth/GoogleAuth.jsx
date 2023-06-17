@@ -3,9 +3,15 @@ import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { gapi } from "gapi-script";
 import "../GoogleAuth/GoogleAuth.css";
+import CustomButton from "../CustomButton";
+import GoogleIcon from '@mui/icons-material/Google';
+
+
 
 const GoogleAuth = ({ informParent }) => {
-   useEffect(() => {
+
+
+  useEffect(() => {
     function initClient() {
       gapi.client.init({
         clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
@@ -22,8 +28,7 @@ const GoogleAuth = ({ informParent }) => {
         { idToken: response.tokenId },
         { withCredentials: true }
       );
-      // console.log("🚀 ~ file: GoogleAuth.jsx:25 ~ responseGoogle ~ result:", result)
- 
+
       informParent(result);
     } catch (error) {
       console.log("GOOGLE SIGNIN ERROR", error.response);
@@ -39,13 +44,17 @@ const GoogleAuth = ({ informParent }) => {
         onFailure={responseGoogle}
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (
-          <button
-            className="social-icon-google"
+          <CustomButton
+            variant="contained"
+            style={{ backgroundColor: '#f44336', color: 'white' }}
+            fullWidth
+            size="large"
+            startIcon={<GoogleIcon />}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
-            <i className="fab fa-google" />
-          </button>
+            Continue with Google
+          </CustomButton>
         )}
       />
     </div>

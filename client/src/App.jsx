@@ -8,8 +8,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import { useEffect, useState } from "react";
 import ForceRedirect from "./components/ForceRedirect";
 import Footer from "./components/Footer/Footer";
-import "bootstrap/dist/css/bootstrap.min.css";
-
+ 
 function App() {
   const [isConnected, setIsconnected] = useState(false);
 
