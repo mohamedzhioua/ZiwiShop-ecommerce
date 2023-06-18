@@ -1,20 +1,25 @@
-import axios from "axios";
 import { useState } from "react";
+import axiosInstance from '../../api/axios'
 import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Avatar from '@mui/material/Avatar';
 import CustomInput from "../../components/CustomInput";
 import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 import FacebookAuth from "../../components/FacebookAuth/FacebookAuth";
-import { CssBaseline, Link, Avatar, Container, Grid, Typography } from "@material-ui/core";
+import { CssBaseline, Link, Container, Grid, Typography } from "@material-ui/core";
 import CustomButton from "../../components/CustomButton";
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-
+import { FaRegUserCircle } from "react-icons/fa";
+import useAuth from '../../hooks/useAuth';
+import useMounted from '../../hooks/useMounted';
 import { Box } from "@mui/system";
 
 function Signin() {
+  const { login } = useAuth();
+  const mounted = useMounted();
+
   const [serverErrors, setServerErrors] = useState({});
-  const initialValues = {
+   const initialValues = {
     email: "",
     password: "",
   };
@@ -24,24 +29,20 @@ function Signin() {
     password: Yup.string().required("Password is required"),
   });
 
-  const onSubmitHandler = (values, { setSubmitting }) => {
-    setSubmitting(true);
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/user/signin`, values)
-      .then((response) => {
-        const token = response.data.token;
-        localStorage.setItem("user-token", JSON.stringify(token));
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-
-        window.location.reload(false);
-
-      })
-      .catch((err) => {
+  const onSubmitHandler = async (values, { setStatus, setSubmitting }) => {
+    try {
+      await login(values.email, values.password);
+    } catch (error) {
+      console.error(error);
+      setServerErrors(error);
+  
+      if (mounted()) {
+        setStatus({ success: false });
         setSubmitting(false);
-        setServerErrors(err.response.data);
-      });
+      }
+    }
   };
-
+  
   const informParent = (response) => {
     const token = response.data.token;
     localStorage.setItem("user-token", JSON.stringify(token));
@@ -70,13 +71,17 @@ function Signin() {
       <CssBaseline />
 
       <Box style={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <AccountCircleOutlinedIcon/>
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-
+        <Box style={{
+          display: 'grid',
+          placeItems: 'center',
+        }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <FaRegUserCircle />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+        </Box>
         <form onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -108,11 +113,12 @@ function Signin() {
             <Grid item xs={12}>
               <CustomButton
                 variant="contained"
-                color="primary"
+                color="secondary"
                 type="submit"
                 disabled={isSubmitting}
                 fullWidth
                 size="large"
+
               >
                 {isSubmitting ? "Signing in..." : "Continue"}
               </CustomButton>
@@ -127,12 +133,18 @@ function Signin() {
             <Grid container style={{ marginTop: '10px' }}
             >
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  color="textSecondary"
+                  href="#"
+                  variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body2" component={RouterLink}>
+                <Link color="textSecondary"
+                  to="/signup"
+                  variant="body2"
+                  component={RouterLink}>
                   {"If you don't have an account yet"}
                 </Link>
               </Grid>

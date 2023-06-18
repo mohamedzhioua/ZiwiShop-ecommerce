@@ -2,8 +2,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link as RouterLink } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import axios from "axios";
+import { AiOutlineLock } from 'react-icons/ai';
+import axiosInstance from '../../api/axios'
 import { Box, Link, Container, CssBaseline, Grid, Typography } from "@material-ui/core";
 import { useState } from "react";
 import CustomInput from "../../components/CustomInput";
@@ -24,9 +24,9 @@ const Signup = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const onSubmit = (values, { setSubmitting }) => {
+  const onSubmit = async(values, { setSubmitting }) => {
     setSubmitting(true);
-    axios
+    axiosInstance
       .post(`${import.meta.env.VITE_API_URL}/user/signup`, values)
       .then((response) => {
 
@@ -81,10 +81,14 @@ const Signup = () => {
         placeItems: 'center',
       }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <AiOutlineLock />
           </Avatar>
           <Typography component="h1" variant="h5">
-          Sign Up
+            Sign Up
+          </Typography>
+
+          <Typography variant="subtitle1" component="p" color="textSecondary" align="center">
+            Create an account!
           </Typography>
         </Box>
         <form onSubmit={handleSubmit} noValidate>
@@ -131,7 +135,7 @@ const Signup = () => {
             <Grid item xs={12}>
               <CustomButton
                 variant="contained"
-                color="primary"
+                color="secondary"
                 type="submit"
                 disabled={isSubmitting}
                 fullWidth
@@ -140,20 +144,14 @@ const Signup = () => {
                 {isSubmitting ? "Sign Up..." : "Continue"}
               </CustomButton>
             </Grid>
-            <Grid container style={{ marginTop: '10px' }}>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link
-                  to="/signin"
-                  variant="body2"
-                  component={RouterLink}>
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
+            <Grid container style={{ marginTop: '10px', display: 'grid', placeItems: 'center' }}>
+              <Link
+                color="textSecondary"
+                to="/signin"
+                variant="body2"
+                component={RouterLink}>
+                {" Already have an account?  Sign In"}
+              </Link>
             </Grid>
           </Grid>
         </form>

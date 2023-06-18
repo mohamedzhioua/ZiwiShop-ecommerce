@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
-import axios from "axios";
+import axiosInstance from "../../api/axios";
 import { gapi } from "gapi-script";
 import "../GoogleAuth/GoogleAuth.css";
 import CustomButton from "../CustomButton";
-import GoogleIcon from '@mui/icons-material/Google';
-
+import { FcGoogle } from "react-icons/fc";
 
 
 const GoogleAuth = ({ informParent }) => {
@@ -23,7 +22,7 @@ const GoogleAuth = ({ informParent }) => {
 
   const responseGoogle = async (response) => {
     try {
-      const result = await axios.post(
+      const result = await axiosInstance.post(
         `${import.meta.env.VITE_API_URL}/user/google-login`,
         { idToken: response.tokenId },
         { withCredentials: true }
@@ -45,13 +44,13 @@ const GoogleAuth = ({ informParent }) => {
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (
           <CustomButton
-            variant="contained"
-            style={{ backgroundColor: '#f44336', color: 'white' }}
+            variant="outlined"
             fullWidth
             size="large"
-            startIcon={<GoogleIcon />}
+            icon={FcGoogle}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
+            style={{ border: "2px solid black", color: 'black' }}
           >
             Continue with Google
           </CustomButton>

@@ -1,10 +1,16 @@
 import Button from '@mui/material/Button';
-import Icon from '@mui/material/Icon';
 
-const CustomButton = ({ icon, children, ...props }) => {
+const CustomButton = ({ icon: Icon, children, ...props }) => {
     return (
-        <Button variant="contained" {...props}>
-            {icon && <Icon>{icon}</Icon>}
+        <Button variant="contained"  {...props}>
+            {Icon && <Icon style={{
+                width: 24,
+                height: 24,
+                position: 'absolute',
+                left: 10,
+                top: 8,
+
+            }} />}
             {children}
         </Button>
     );
