@@ -1,22 +1,19 @@
-import axiosInstance from "../../api/axios";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import "../FacebookAuth/FacebookAuth.css";
 import CustomButton from "../CustomButton";
 import { FaFacebook } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
 
-function FacebookAuth({ informParent }) {
+function FacebookAuth() {
+  const { facebookLogin } = useAuth();
   const responseFacebook = async (response) => {
-    console.log(response);
     try {
-      const result = await axiosInstance.post(`${import.meta.env.VITE_API_URL}/user/facebook-login`, {
-        userID: response.userID,
-        accessToken: response.accessToken,
-      });
-
-      informParent(result);
-      console.log(result);
+      await facebookLogin(
+        response.userID,
+        response.accessToken,
+      );
     } catch (error) {
-      console.log("Facebook SIGNIN ERROR", error.response);
+      console.log("Facebook SIGNIN ERROR", error);
     }
   };
 

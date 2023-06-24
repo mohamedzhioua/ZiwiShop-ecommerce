@@ -1,32 +1,38 @@
- import axiosInstance from './axios';
+import axiosInstance from './axios';
 
 class AuthApi {
-  login(data) {
-    return new Promise((resolve, reject) => {
-      axiosInstance
-        .post(`/user/signin`, data)
-        .then((user) => {
-          resolve(user);
-        })
-        .catch((error) => {
-          reject(error.response.data);
-        });
-    });
+  constructor() {
+    this.basePath = '/user';
   }
-  
-  register(data) {
+
+  request(method, url, data) {
     return new Promise((resolve, reject) => {
-      axiosInstance
-        .post(`/user/signup`, data)
-        .then((user) => {
-          resolve(user);
+      axiosInstance[method](`${this.basePath}${url}`, data)
+        .then((response) => {
+          resolve(response.data);
         })
         .catch((error) => {
-          reject(console.log(error));
+          reject(error.message);
         });
     });
   }
 
+
+  login(data) {
+    return this.request('post', '/signin', data);
+  }
+
+  facebookLogin(data) {
+    return this.request('post', '/facebookLogin', data);
+  }
+
+  googleLogin(idToken) {
+    return this.request('post', '/googleLogin', idToken);
+  }
+
+  register(data) {
+    return this.request('post', '/signup', data);
+  }
 
 }
 

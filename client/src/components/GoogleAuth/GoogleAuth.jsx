@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
-import axiosInstance from "../../api/axios";
 import { gapi } from "gapi-script";
 import "../GoogleAuth/GoogleAuth.css";
 import CustomButton from "../CustomButton";
 import { FcGoogle } from "react-icons/fc";
+import useAuth from "../../hooks/useAuth";
 
 
-const GoogleAuth = ({ informParent }) => {
+const GoogleAuth = ( ) => {
+  const { googleLogin } = useAuth();
 
 
   useEffect(() => {
@@ -21,16 +22,10 @@ const GoogleAuth = ({ informParent }) => {
   });
 
   const responseGoogle = async (response) => {
-    try {
-      const result = await axiosInstance.post(
-        `${import.meta.env.VITE_API_URL}/user/google-login`,
-        { idToken: response.tokenId },
-        { withCredentials: true }
-      );
-
-      informParent(result);
-    } catch (error) {
-      console.log("GOOGLE SIGNIN ERROR", error.response);
+     try {
+     await googleLogin(response.tokenId)    
+     } catch (error) {
+      console.log("GOOGLE SIGNIN ERROR", error);
     }
   };
 

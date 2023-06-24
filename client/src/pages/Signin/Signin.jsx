@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axiosInstance from '../../api/axios'
 import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import CustomInput from "../../components/CustomInput";
 import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 import FacebookAuth from "../../components/FacebookAuth/FacebookAuth";
-import { CssBaseline, Link, Container, Grid, Typography } from "@material-ui/core";
+import {  Link, Container, Grid, Typography } from "@material-ui/core";
 import CustomButton from "../../components/CustomButton";
 import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from '../../hooks/useAuth';
@@ -19,7 +18,7 @@ function Signin() {
   const mounted = useMounted();
 
   const [serverErrors, setServerErrors] = useState({});
-   const initialValues = {
+  const initialValues = {
     email: "",
     password: "",
   };
@@ -35,21 +34,15 @@ function Signin() {
     } catch (error) {
       console.error(error);
       setServerErrors(error);
-  
+
       if (mounted()) {
         setStatus({ success: false });
         setSubmitting(false);
       }
     }
   };
-  
-  const informParent = (response) => {
-    const token = response.data.token;
-    localStorage.setItem("user-token", JSON.stringify(token));
-    localStorage.setItem("user", JSON.stringify(response.data.user));
-    window.location.reload(false);
 
-  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -68,8 +61,6 @@ function Signin() {
 
   return (
     <Container component="main" maxWidth="xs" style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-      <CssBaseline />
-
       <Box style={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
         <Box style={{
           display: 'grid',
@@ -124,10 +115,10 @@ function Signin() {
               </CustomButton>
             </Grid>
             <Grid item xs={12}>
-              <GoogleAuth informParent={informParent} />
+              <GoogleAuth />
             </Grid>
             <Grid item xs={12}>
-              <FacebookAuth informParent={informParent} />
+              <FacebookAuth />
             </Grid>
 
             <Grid container style={{ marginTop: '10px' }}

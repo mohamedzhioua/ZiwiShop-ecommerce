@@ -3,13 +3,16 @@ import * as Yup from "yup";
 import { Link as RouterLink } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { AiOutlineLock } from 'react-icons/ai';
-import axiosInstance from '../../api/axios'
-import { Box, Link, Container, CssBaseline, Grid, Typography } from "@material-ui/core";
+import { Box, Link, Container,  Grid, Typography } from "@material-ui/core";
 import { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import useMounted from "../../hooks/useMounted";
+import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
+  const { register } = useAuth();
+  const mounted = useMounted();
   const [serverErrors, setServerErrors] = useState({});
 
   const initialValues = {
@@ -24,18 +27,18 @@ const Signup = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const onSubmit = async(values, { setSubmitting }) => {
-    setSubmitting(true);
-    axiosInstance
-      .post(`${import.meta.env.VITE_API_URL}/user/signup`, values)
-      .then((response) => {
+  const onSubmit = async (values, { setStatus, setSubmitting }) => {
+    try {
+      await register(values.email, values.name, values.password);
+    } catch (error) {
+      console.error(error);
+      setServerErrors(error);
 
-      })
-      .catch((err) => {
+      if (mounted()) {
+        setStatus({ success: false });
         setSubmitting(false);
-        setServerErrors(err.response.data);
-
-      });
+      }
+    }
   };
 
 
@@ -65,8 +68,6 @@ const Signup = () => {
         transform: 'translate(-50%, -50%)'
       }}
     >
-      <CssBaseline />
-
       <Box
         style={{
           marginTop: 8,

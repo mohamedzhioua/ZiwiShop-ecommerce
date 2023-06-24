@@ -1,20 +1,20 @@
-import { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
+import { createContext, useEffect, useReducer } from "react";
 import { authApi } from "../api/authApi";
 
 const initialState = {
-  isAuthenticated: false,
+  IsLoggedIn: false,
   isInitialized: false,
   user: null,
 };
 
 const handlers = {
   INITIALIZE: (state, action) => {
-    const { isAuthenticated, user } = action.payload;
+    const { IsLoggedIn, user } = action.payload;
 
     return {
       ...state,
-      isAuthenticated,
+      IsLoggedIn,
       isInitialized: true,
       user,
     };
@@ -23,14 +23,14 @@ const handlers = {
     const { user } = action.payload;
     return {
       ...state,
-      isAuthenticated: true,
+      IsLoggedIn: true,
       user,
     };
   },
   LOGOUT: (state) => {
     return {
       ...state,
-      isAuthenticated: false,
+      IsLoggedIn: false,
       user: null,
     };
   },
@@ -39,7 +39,23 @@ const handlers = {
 
     return {
       ...state,
-      isAuthenticated: true,
+      IsLoggedIn: false,
+      user,
+    };
+  },
+  FACEBOOK_LOGIN: (state, action) => {
+    const { user } = action.payload;
+    return {
+      ...state,
+      IsLoggedIn: true,
+      user,
+    };
+  },
+  GOOGLE_LOGIN: (state, action) => {
+    const { user } = action.payload;
+    return {
+      ...state,
+      IsLoggedIn: true,
       user,
     };
   },
@@ -52,6 +68,8 @@ const AuthContext = createContext({
   ...initialState,
   platform: "JWT",
   login: () => Promise.resolve(),
+  facebookLogin: () => Promise.resolve(),
+  googleLogin: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
 });
@@ -70,7 +88,7 @@ export const AuthProvider = (props) => {
           dispatch({
             type: "INITIALIZE",
             payload: {
-              isAuthenticated: true,
+              IsLoggedIn: true,
               user: userDetails,
             },
           });
@@ -78,7 +96,7 @@ export const AuthProvider = (props) => {
           dispatch({
             type: "INITIALIZE",
             payload: {
-              isAuthenticated: false,
+              IsLoggedIn: false,
               user: null,
             },
           });
@@ -88,19 +106,18 @@ export const AuthProvider = (props) => {
         dispatch({
           type: "INITIALIZE",
           payload: {
-            isAuthenticated: false,
+            IsLoggedIn: false,
             user: null,
           },
         });
       }
     };
-  
+
     initialize();
   }, []);
-  
+
   const login = async (email, password) => {
-    const response = await authApi.login({ email, password });
-    const user = response.data;
+    const user = await authApi.login({ email, password });
     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "LOGIN",
@@ -109,7 +126,43 @@ export const AuthProvider = (props) => {
       },
     });
   };
-    
+  const facebookLogin = async (userID, accessToken) => {
+    const user = await authApi.facebookLogin({
+      userID,
+      accessToken
+    });
+    localStorage.setItem("userDetails", JSON.stringify(user));
+    dispatch({
+      type: "FACEBOOK_LOGIN",
+      payload: {
+        user,
+      },
+    });
+
+  };
+  const googleLogin = async (idToken) => {
+     const user = await authApi.googleLogin({idToken});
+    localStorage.setItem("userDetails", JSON.stringify(user));
+    dispatch({
+      type: "GOOGLE_LOGIN",
+      payload: {
+        user,
+      },
+    });
+
+  };
+  const register = async (email, name, password) => {
+
+    const user = await authApi.register({ email, name, password });
+    localStorage.setItem("userDetails", JSON.stringify(user));
+    dispatch({
+      type: "REGISTER",
+      payload: {
+        user,
+      },
+    });
+  };
+
   const logout = async () => {
     try {
       localStorage.removeItem("userDetails");
@@ -119,21 +172,6 @@ export const AuthProvider = (props) => {
     }
   };
 
-  const register = async (email, name, password) => {
-    try {
-      const response = await authApi.register({ email, name, password });
-      const user = response.data;
-      localStorage.setItem("userDetails", JSON.stringify(user));
-      dispatch({
-        type: "REGISTER",
-        payload: {
-          user,
-        },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   return (
     <AuthContext.Provider
@@ -143,6 +181,8 @@ export const AuthProvider = (props) => {
         login,
         logout,
         register,
+        facebookLogin,
+        googleLogin,
       }}
     >
       {children}

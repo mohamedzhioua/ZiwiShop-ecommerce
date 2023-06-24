@@ -1,11 +1,12 @@
- import useAuth from "../../hooks/useAuth";
+ import { Container } from "@mui/system";
+import useAuth from "../../hooks/useAuth";
 import "../Profile/Profile.css";
 function Profile() {
   const userDetails = useAuth().user;
  
   return (
-    <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
-      <div className="card p-4">
+    <Container maxWidth="xl">  
+        <div className="card p-4">
         <div className=" image d-flex flex-column justify-content-center align-items-center">
           <button className="btn btn-secondary">
             {" "}
@@ -44,7 +45,7 @@ function Profile() {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

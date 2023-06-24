@@ -1,12 +1,24 @@
- import '../LoadingSpinner/Spinner.css'
+import { Box } from '@mui/system'
+import '../LoadingSpinner/Spinner.css'
 
 function LoadingSpinner() {
   return (
-    <div className="spinner-container">
-    <div className="loading-spinner">z
-    </div>
-  </div>
-    )
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
+      <div className="loader">
+  <div className="box1"></div>
+  <div className="box2"></div>
+  <div className="box3"></div>
+</div>
+ 
+    </Box>
+  )
 }
 
 export default LoadingSpinner
