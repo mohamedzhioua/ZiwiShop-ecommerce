@@ -51,11 +51,11 @@ const AccountPopover = () => {
               
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
-            >
+             >
 
                 {IsLoggedIn ? (
                     <>
-                        <Box sx={{ p: 2 }}>
+                        <Box sx={{ p: 2 }} >
                             <Typography color="textPrimary" variant="subtitle2">
                                 {`${(user?.name)}`}
                             </Typography>
@@ -72,14 +72,14 @@ const AccountPopover = () => {
                         </Box>
                     </>
                 ) : (
-                    <Box sx={{ p: 2 }}>
+                     <Box sx={{ p: 2 }} gutterBottom>
                         <CustomButton
                             component={Link}
                             to="/signin"
                             color="primary"
                             fullWidth
                             variant="outlined"
-                            sx={{ mb: 1 }}
+                            includeSpacing 
                         >
                             LOGIN
                         </CustomButton>
@@ -92,7 +92,8 @@ const AccountPopover = () => {
                         >
                             REGISTER
                         </CustomButton>
-                    </Box>)}
+                    </Box>
+                    )}
             </Popover>
         </>
     )

@@ -2,10 +2,11 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ForceRedirect from "./ForceRedirect";
 import PrivateRoute from "./PrivateRoute";
+import NotFound from "../pages/NotFound";
   
-const Profile = React.lazy(() => import("../pages/Profile/Profile"));
-const Login = React.lazy(() => import("../pages/Signin/Signin"));
-const Register = React.lazy(() => import("../pages/Signup/Signup"));
+const Profile = React.lazy(() => import("../pages/Profile"));
+const Login = React.lazy(() => import("../pages/Signin"));
+const Register = React.lazy(() => import("../pages/Signup"));
   
 const Router = () => {
     return (
@@ -35,7 +36,7 @@ const Router = () => {
                     }
                 />
             </Route>
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 };

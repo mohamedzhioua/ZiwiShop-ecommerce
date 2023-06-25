@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Button } from '@mui/material';
+import DarkButton from '../components/DarkButton/DarkButton';
 
 
 
@@ -37,7 +38,7 @@ function Navbar() {
   );
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky" color="fifthary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -56,7 +57,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Ziwi
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -146,7 +147,9 @@ function Navbar() {
 
 
           </Box>
-
+          <Box sx={{ ml: 1 }}>
+          <DarkButton />
+        </Box>
           <Box sx={{ flexGrow: 0 }}>
             <AccountPopover />
           </Box>

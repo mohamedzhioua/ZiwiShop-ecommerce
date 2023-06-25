@@ -1,16 +1,17 @@
 import { BrowserRouter } from "react-router-dom";
-import Footer from "./layouts/Footer/Footer";
+import Footer from "./layouts/Footer";
 import Router from "./routes/Router";
 import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {  ThemeProvider } from '@mui/material/styles';
 import Navbar from "./layouts/Navbar";
+import useTheme from "./hooks/useTheme";
 
 function App() {
 
-  const defaultTheme = createTheme();
+  const {theme} = useTheme();
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         <Navbar  />

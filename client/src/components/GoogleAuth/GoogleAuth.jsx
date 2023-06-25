@@ -45,7 +45,7 @@ const GoogleAuth = ( ) => {
             icon={FcGoogle}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            style={{ border: "2px solid black", color: 'black' }}
+            color="fourthary"
           >
             Continue with Google
           </CustomButton>

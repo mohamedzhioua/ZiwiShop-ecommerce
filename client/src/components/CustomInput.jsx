@@ -23,7 +23,7 @@ const CustomInput = ({
     onBlur={onBlur}
     error={error}
     helperText={helperText}
-  />
+   />
 );
 
 export default CustomInput;

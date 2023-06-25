@@ -32,7 +32,6 @@ function FacebookAuth() {
             fullWidth
             size="large"
             icon={FaFacebook}
-            style={{ border: "2px solid black" }}
 
           >
             Continue with Facebook
