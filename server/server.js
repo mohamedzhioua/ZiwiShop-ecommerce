@@ -1,29 +1,26 @@
-// Import dependencies
 const express = require("express");
 const cors = require("cors");
 const db = require("./config/db");
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 
-//load env variables
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-// express app config
-// parse requests of content-type - application/x-www-form-urlencoded
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/public"));
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use(
   cors({
     origin: ["http://localhost:3000"],
     methods: "GET,POST,PUT,DELETE,OPTIONS",
+    credentials: true
   })
 );
-//Require application Route modules
 const userRoutes = require("./routes/users");
 
 app.use("/user", userRoutes);

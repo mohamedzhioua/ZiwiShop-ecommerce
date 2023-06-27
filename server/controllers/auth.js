@@ -2,13 +2,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
-
-// Load User model
 const User = require("../models/user");
-// Load input validation
 const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
 
+const signToken = (id) => {
+  return jwt.sign({ userId: id }, process.env.TOKEN_KEY, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+};
 module.exports = {
   //  ---------------------------------------- //signup method to add a new user//--------------------------- //
 
@@ -23,7 +25,7 @@ module.exports = {
         await User.findOne({ email }).then(async (exist) => {
           if (exist) {
             errors.email = "Email already in use";
-      return  res.status(404).json(errors);
+            return res.status(404).json(errors);
           } else {
             const hashedpassword = await bcrypt.hash(password, 8);
             await User.create({
@@ -36,7 +38,7 @@ module.exports = {
         });
       }
     } catch (error) {
-      console.log(error.message);
+      return res.status(500).send("Error: " + error.message);
     }
   },
   //  ---------------------------------------- //signin method to add a new user//--------------------------- //
@@ -54,53 +56,58 @@ module.exports = {
               "Email does not exist ! please Enter the right Email or You can make account";
             return res.status(404).json(errors);
           }
-          // Compare sent in password with found user hashed password
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
             errors.password = "Wrong Password";
             return res.status(404).json(errors);
           } else {
-            // generate a token and send to client
-            const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
-              expiresIn: "3d",
-            });
-            res.status(201).json({
-              message: "welcom " + user.name + " to your home page",
+            const token = signToken(user._id);
+            res.status(200).json({
               token,
-              user,
+              name: user.name,
+              email: user.email,
+              image: user.image,
             });
           }
         });
       }
     } catch (error) {
-      console.log(error.message);
+      return res.status(500).send("Error: " + error.message);
     }
   },
   //  ---------------------------------------- //Google Authentication //--------------------------- //
   googleLogin: async (req, res) => {
     const client = new OAuth2Client(process.env.webClientId);
     const { idToken } = req.body;
-    let response = await client.verifyIdToken({
-      idToken,
-      audience: process.env.webClientId,
-    });
-    const { email_verified, email, name } = response.payload;
-    const image = response.payload.picture;
-    if (email_verified) {
-      let user = await User.findOne({ email });
-      try {
+
+    if (!idToken) {
+      return res.status(400).json({
+        message: "ID Token is missing",
+      });
+    }
+
+    try {
+      const response = await client.verifyIdToken({
+        idToken,
+        audience: process.env.webClientId,
+      });
+
+      const { email_verified, email, name } = response.payload;
+      const image = response.payload.picture;
+
+      if (email_verified) {
+        let user = await User.findOne({ email });
+
         if (user) {
-          const token = jwt.sign({ _id: user._id }, "zhioua_Still_Alive", {
-            expiresIn: "3d",
-          });
-          return res.json({
-            status: "Success",
-            message: "welcom " + user.name + " to your home page",
-            user,
+          const token = signToken(user._id);
+          res.status(200).json({
             token,
+            name: user.name,
+            email: user.email,
+            image: user.image,
           });
         } else {
-          let password = email + " zhioua_DOING_GOOD";
+          let password = email + process.env.TOKEN_KEY;
           const user = await User.create({
             name,
             email,
@@ -108,30 +115,30 @@ module.exports = {
             image,
           });
 
-          const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
-            expiresIn: "3d",
-          });
-          return res.json({
-            status: "Success",
-            message: "welcom " + user.name + " to your home page",
-            user,
+          const token = signToken(user._id);
+          res.status(200).json({
             token,
+            name: user.name,
+            email: user.email,
+            image: user.image,
           });
         }
-      } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
+      } else {
+        return res.status(400).json({
+          message: "Google login failed. Please try again.",
+        });
       }
-    } else {
-      return res.status(400).json({
-        message: "Google login failed try again",
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: "An error occurred during Google login.",
       });
     }
   },
+
   //  ---------------------------------------- //Facebook Authentication //--------------------------- //
   FacebookLogin: async (req, res) => {
     try {
-      console.log("FACEBOOK LOGIN REQ BODY", req.body);
       const { userID, accessToken } = req.body;
       const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
       let response = await fetch(url, {
@@ -142,17 +149,15 @@ module.exports = {
       const image = data.picture.data.url;
       let user = await User.findOne({ email });
       if (user) {
-        const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
-          expiresIn: "3d",
-        });
-        return res.json({
-          status: "Success",
-          message: "welcom " + user.name + " to your home page",
-          user,
+        const token = signToken(user._id);
+        res.status(200).json({
           token,
+          name: user.name,
+          email: user.email,
+          image: user.image,
         });
       } else {
-        let password = email + "zhioua_DOING_GOOD";
+        let password = email + process.env.TOKEN_KEY;
         const user = await User.create({
           name,
           email,
@@ -161,23 +166,21 @@ module.exports = {
         });
         if (!user) {
           return res.status(400).json({
-            error: "User signup failed with facebook",
+            message: "User signup failed with Facebook",
           });
         }
-        const token = jwt.sign({ _id: user._id }, "zhioua_DOING_GOOD", {
-          expiresIn: "3d",
-        });
-        return res.json({
-          status: "Success",
-          message: "welcom " + user.name + " to your home page",
-          user,
+        const token = signToken(user._id);
+        res.status(200).json({
           token,
+          name: user.name,
+          email: user.email,
+          image: user.image,
         });
       }
     } catch (error) {
       console.log(error);
-      res.status(400).json({
-        error: "Facebook login failed. Try later",
+      res.status(500).json({
+        message: "Facebook login failed. Please try again later",
       });
     }
   },

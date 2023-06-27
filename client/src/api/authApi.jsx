@@ -12,7 +12,7 @@ class AuthApi {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.message);
+          reject(error.response.data);
         });
     });
   }

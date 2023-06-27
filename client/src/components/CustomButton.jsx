@@ -1,7 +1,10 @@
 import Button from '@mui/material/Button';
 const CustomButton = ({ icon: Icon, children, includeSpacing, ...props }) => {
     const buttonStyle = {
-      borderColor: "fourthary.main",
+      borderColor: "primary",
+      fontWeight: "bold",
+      fontSize: "14px",
+
     };
   
     if (includeSpacing) {
@@ -9,7 +12,9 @@ const CustomButton = ({ icon: Icon, children, includeSpacing, ...props }) => {
     }
   
     return (
-      <Button variant="contained" {...props} sx={buttonStyle}>
+      <Button variant="contained" {...props}
+       sx={buttonStyle}
+       >
         {Icon && (
           <Icon
             style={{

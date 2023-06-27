@@ -1,5 +1,6 @@
-import { Typography, Button, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import CustomButton from '../components/CustomButton';
 
 const NotFound = () => {
     return (
@@ -13,15 +14,15 @@ const NotFound = () => {
                 textAlign: 'center',
             }}
         >
-            <Typography variant="h3" component="h1" gutterBottom>
+            <Typography variant="h1" component="h1" gutterBottom>
                 404 - Page Not Found
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="h3" gutterBottom>
                 The page you are looking for does not exist.
             </Typography>
-            <Button component={Link} to="/" variant="outlined" color="fifthary">
+            <CustomButton component={Link} to="/" variant="outlined" color="primary">
                 Go Home
-            </Button>
+            </CustomButton>
         </Box>
     );
 };

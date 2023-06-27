@@ -1,4 +1,3 @@
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -7,18 +6,21 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+// import {FaLaptopCode} from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Button } from '@mui/material';
 import DarkButton from '../components/DarkButton/DarkButton';
+import { useTheme } from '@emotion/react';
+
 
 
 
 function Navbar() {
   const { IsLoggedIn } = useAuth();
+  const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigationLinks = [
     { name: "Home", href: "/home" },
@@ -38,12 +40,14 @@ function Navbar() {
   );
 
   return (
-    <AppBar position="sticky" color="fifthary">
+    <Box
+      position='sticky'
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <FaLaptopCode sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}size={20} /> */}
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component={Link}
             to={"/"}
@@ -53,7 +57,7 @@ function Navbar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: theme.palette.primary.main,
               textDecoration: 'none',
             }}
           >
@@ -67,7 +71,7 @@ function Navbar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="primary"
             >
               <MenuIcon />
             </IconButton>
@@ -99,7 +103,7 @@ function Navbar() {
                     textAlign="center"
                     sx={{
                       textDecoration: 'none',
-                      color: 'inherit',
+                      color: 'primary',
                     }}
                   >
                     {item.name}
@@ -111,24 +115,23 @@ function Navbar() {
 
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <FaLaptopCode sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} size={30}/> */}
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
-              fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: theme.palette.primary.main,
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Ziwi
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
@@ -139,7 +142,7 @@ function Navbar() {
                 to={item.href}
                 component={Link}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'primary', display: 'block' }}
               >{item.name}
               </Button>
 
@@ -147,15 +150,15 @@ function Navbar() {
 
 
           </Box>
-          <Box sx={{ ml: 1 }}>
-          <DarkButton />
-        </Box>
+          <Box sx={{ mr: 1 }}>
+            <DarkButton />
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <AccountPopover />
           </Box>
         </Toolbar>
       </Container>
-    </AppBar >
+    </Box >
   );
 }
 export default Navbar;

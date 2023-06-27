@@ -28,7 +28,7 @@ const AccountPopover = () => {
     };
     return (
         < >
-            <Box onClick={handleOpenUserMenu}>
+            <Box onClick={handleOpenUserMenu} >
                 <Avatar src={user?.image}
                     sx={{
                         height: 40,
@@ -48,10 +48,10 @@ const AccountPopover = () => {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-              
+
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
-             >
+            >
 
                 {IsLoggedIn ? (
                     <>
@@ -72,14 +72,14 @@ const AccountPopover = () => {
                         </Box>
                     </>
                 ) : (
-                     <Box sx={{ p: 2 }} gutterBottom>
+                    <Box sx={{ p: 2 }} >
                         <CustomButton
                             component={Link}
                             to="/signin"
                             color="primary"
                             fullWidth
                             variant="outlined"
-                            includeSpacing 
+                            includeSpacing
                         >
                             LOGIN
                         </CustomButton>
@@ -93,7 +93,7 @@ const AccountPopover = () => {
                             REGISTER
                         </CustomButton>
                     </Box>
-                    )}
+                )}
             </Popover>
         </>
     )

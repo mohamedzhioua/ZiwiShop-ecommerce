@@ -1,18 +1,20 @@
 import { Box, IconButton } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineLightMode } from "react-icons/md";
 import useTheme from "../../hooks/useTheme";
- 
+
 const NightModeToggle = () => {
   const { mode, toggleColorMode } = useTheme();
 
   return (
     <Box
-      
+
     >
-     
-      <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
-        {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+
+
+      <IconButton sx={{ ml: 1 }} onClick={toggleColorMode}
+        color="inherit">
+        {mode === "dark" ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
       </IconButton>
     </Box>
   );

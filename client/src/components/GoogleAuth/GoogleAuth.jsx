@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-import "../GoogleAuth/GoogleAuth.css";
 import CustomButton from "../CustomButton";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
@@ -45,7 +44,7 @@ const GoogleAuth = ( ) => {
             icon={FcGoogle}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            color="fourthary"
+            color="primary"
           >
             Continue with Google
           </CustomButton>

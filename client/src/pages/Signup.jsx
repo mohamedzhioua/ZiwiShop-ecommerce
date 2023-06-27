@@ -9,10 +9,14 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import useMounted from "../hooks/useMounted";
 import useAuth from "../hooks/useAuth";
+import { useTheme } from "@emotion/react";
+import { tokens } from "../theme/theme";
 
 const Signup = () => {
   const { register } = useAuth();
   const mounted = useMounted();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
 
   const initialValues = {
@@ -151,7 +155,7 @@ const Signup = () => {
               </Grid>
               <Grid container style={{ marginTop: '10px', display: 'grid', placeItems: 'center' }}>
                 <Link
-                  color="textSecondary"
+                  style={{ color: colors.grey[100] }}
                   to="/signin"
                   variant="subtitle2"
                   component={RouterLink}>

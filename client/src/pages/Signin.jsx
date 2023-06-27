@@ -13,11 +13,14 @@ import useAuth from '../hooks/useAuth';
 import useMounted from '../hooks/useMounted';
 import { Box } from "@mui/system";
 import { CardContent } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { tokens } from "../theme/theme";
 
 function Signin() {
   const { login } = useAuth();
   const mounted = useMounted();
-
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
   const initialValues = {
     email: "",
@@ -39,6 +42,7 @@ function Signin() {
       if (mounted()) {
         setStatus({ success: false });
         setSubmitting(false);
+
       }
     }
   };
@@ -70,7 +74,7 @@ function Signin() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <FaRegUserCircle />
           </Avatar>
-          <Typography  variant="h5">
+          <Typography variant="h5">
             Sign in
           </Typography>
         </Box>
@@ -127,7 +131,7 @@ function Signin() {
               >
                 <Grid item xs>
                   <Link
-                    color="textSecondary"
+                    style={{ color: colors.grey[100] }}
                     href="#"
                     variant="body2">
                     Forgot password?
@@ -135,10 +139,11 @@ function Signin() {
                 </Grid>
                 <Grid item>
                   <Link
-                    color="textSecondary"
+                    style={{ color: colors.grey[100] }}
                     to="/signup"
                     variant="body2"
-                    component={RouterLink}>
+                    component={RouterLink}
+                  >
                     {"If you don't have an account yet"}
                   </Link>
                 </Grid>
