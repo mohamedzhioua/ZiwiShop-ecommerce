@@ -6,6 +6,7 @@ import {  ThemeProvider } from '@mui/material/styles';
 import Navbar from "./layouts/Navbar";
 import useTheme from "./hooks/useTheme";
 import './index.css'
+import CartMenu from "./components/CartMenu";
 
 // const ScrollToTop = () => {
 //   const { pathname } = useLocation();
@@ -28,6 +29,7 @@ function App() {
         <Navbar />
         <div className="content">
            <Router />
+           <CartMenu />
            </div>
          <Footer />
       </BrowserRouter>

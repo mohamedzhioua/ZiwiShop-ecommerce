@@ -1,7 +1,5 @@
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'; import Container from '@mui/material/Container';
@@ -11,7 +9,7 @@ import useAuth from '../hooks/useAuth';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
-import { Badge, Button } from '@mui/material';
+import { Badge, Button ,IconButton ,Box} from '@mui/material';
 import DarkButton from '../components/DarkButton/DarkButton';
 import { useTheme } from '@emotion/react';
 import { useDispatch, useSelector } from "react-redux";
