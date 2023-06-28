@@ -19,8 +19,8 @@ export const tokens = (mode) => ({
         100: "#d0d1d5",
         200: "#a1a4ab",
         300: "#727681",
-        400: "#1F2A40",
-        500: "#141b2d",
+        400: "#333333",
+        500: "#000000",
         600: "#101624",
         700: "#0c101b",
         800: "#080b12",
@@ -77,8 +77,8 @@ export const tokens = (mode) => ({
         200: "#080b12",
         300: "#0c101b",
         400: "#f2f0f0",
-        500: "#141b2d",
-        600: "#1F2A40",
+        500: "#000000",
+        600: "#333333",
         700: "#727681",
         800: "#a1a4ab",
         900: "#d0d1d5",
@@ -128,7 +128,7 @@ export const getDesignTokens = (mode) => {
         ? {
           // palette values for dark mode
           primary: {
-            main: "#FFFFFFFF",
+            main: "#FFFFFF",
           },
           secondary: {
             main: colors.greenAccent[500],
@@ -150,7 +150,7 @@ export const getDesignTokens = (mode) => {
           // palette values for light mode
 
           primary: {
-            main: colors.primary[100],
+            main: colors.primary[500],
           },
           secondary: {
             main: colors.greenAccent[500],

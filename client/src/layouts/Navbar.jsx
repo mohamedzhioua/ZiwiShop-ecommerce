@@ -4,23 +4,26 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'; import Container from '@mui/material/Container';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import MenuItem from '@mui/material/MenuItem';
-// import {FaLaptopCode} from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
-import { Button } from '@mui/material';
+import { Badge, Button } from '@mui/material';
 import DarkButton from '../components/DarkButton/DarkButton';
 import { useTheme } from '@emotion/react';
-
+import { useDispatch, useSelector } from "react-redux";
+import { setIsCartOpen } from '../app/feature/cartSlice';
 
 
 
 function Navbar() {
   const { IsLoggedIn } = useAuth();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.cart);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigationLinks = [
     { name: "Home", href: "/home" },
@@ -41,7 +44,18 @@ function Navbar() {
 
   return (
     <Box
-      position='sticky'
+      component="header"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        backdropFilter: 'blur(6px)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '60px',
+        zIndex: 1,
+      }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -76,7 +90,6 @@ function Navbar() {
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -95,15 +108,20 @@ function Navbar() {
             >
 
               {filteredLinks.map((item) => (
-                <MenuItem key={item.name} onClick={handleCloseNavMenu}>
+                <MenuItem key={item.name} onClick={handleCloseNavMenu} PaperProps={{ sx: { width: 200 } }}
+                  sx={{
+                    width: 130, borderRadius: 1, px: 1,
+                    py: 0.5, justifyContent: 'center'
+                  }}
+                >
 
                   <Typography
+                    variant="h5"
                     component={Link}
                     to={item.href}
-                    textAlign="center"
                     sx={{
                       textDecoration: 'none',
-                      color: 'primary',
+                      color: theme.palette.primary.main,
                     }}
                   >
                     {item.name}
@@ -142,7 +160,7 @@ function Navbar() {
                 to={item.href}
                 component={Link}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'primary', display: 'block' }}
+                sx={{ my: 2, color: theme.palette.primary.main, display: 'block' }}
               >{item.name}
               </Button>
 
@@ -150,10 +168,41 @@ function Navbar() {
 
 
           </Box>
-          <Box sx={{ mr: 1 }}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center" gap="5px"
+          >
+            <IconButton
+              aria-label="Search"
+              color="primary"
+            >
+              <SearchOutlinedIcon />
+            </IconButton>
             <DarkButton />
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
+            <Badge
+              badgeContent={cart.length}
+              color="secondary"
+              invisible={cart.length === 0}
+              sx={{
+                "& .MuiBadge-badge": {
+                  right: 5,
+                  top: 5,
+                  padding: "0 4px",
+                  height: "14px",
+                  minWidth: "13px",
+                },
+              }}
+            >
+              <IconButton
+                onClick={() => dispatch(setIsCartOpen({}))}
+
+                aria-label="Shopping Cart"
+                color="primary"
+              >
+                <ShoppingCartOutlinedIcon />
+              </IconButton>
+            </Badge>
             <AccountPopover />
           </Box>
         </Toolbar>

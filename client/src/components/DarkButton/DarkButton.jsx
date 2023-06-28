@@ -1,20 +1,16 @@
 import { Box, IconButton } from "@mui/material";
-import { MdOutlineDarkMode } from "react-icons/md";
-import { MdOutlineLightMode } from "react-icons/md";
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import useTheme from "../../hooks/useTheme";
 
 const NightModeToggle = () => {
   const { mode, toggleColorMode } = useTheme();
 
   return (
-    <Box
-
-    >
-
-
-      <IconButton sx={{ ml: 1 }} onClick={toggleColorMode}
-        color="inherit">
-        {mode === "dark" ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
+    <Box>
+      <IconButton sx={{ ml: 1}} onClick={toggleColorMode}
+      color="primary">
+        {mode === "dark" ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
       </IconButton>
     </Box>
   );

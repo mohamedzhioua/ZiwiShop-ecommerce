@@ -1,17 +1,22 @@
 import { createTheme } from "@mui/material";
-import   { useState, useMemo } from "react";
-import  { getDesignTokens } from "../theme/theme";
+import { useState, useEffect, useMemo } from "react";
+import { getDesignTokens } from "../theme/theme";
 
 export const useColorTheme = () => {
-  const [mode, setMode] = useState("light");
+  const storedMode = localStorage.getItem("themeMode");
+  const [mode, setMode] = useState(storedMode || "light");
 
-  const toggleColorMode = () =>
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  const toggleColorMode = () => {
+    const newMode = mode === "light" ? "dark" : "light";
+    setMode(newMode);
+    localStorage.setItem("themeMode", newMode);
+  };
 
-  const modifiedTheme = useMemo(
-    () => createTheme(getDesignTokens(mode)),
-    [mode]
-  );
+  const modifiedTheme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
+  useEffect(() => {
+    localStorage.setItem("themeMode", mode);
+  }, [mode]);
 
   return {
     theme: modifiedTheme,

@@ -1,9 +1,9 @@
+import PropTypes from "prop-types";
 import Button from '@mui/material/Button';
 const CustomButton = ({ icon: Icon, children, includeSpacing, ...props }) => {
     const buttonStyle = {
       borderColor: "primary",
-      fontWeight: "bold",
-      fontSize: "14px",
+       fontSize: "14px",
 
     };
   
@@ -30,6 +30,10 @@ const CustomButton = ({ icon: Icon, children, includeSpacing, ...props }) => {
       </Button>
     );
   };
-  
+  CustomButton.propTypes = {
+    children: PropTypes.node,
+    icon: PropTypes.string,
+    includeSpacing: PropTypes.bool
+   };
 
 export default CustomButton;

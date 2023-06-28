@@ -1,4 +1,4 @@
-import { Avatar, Popover, Typography } from '@mui/material'
+import { Avatar, Divider, Popover, Typography } from '@mui/material'
 import { useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,22 +28,29 @@ const AccountPopover = () => {
     };
     return (
         < >
-            <Box onClick={handleOpenUserMenu} >
-                <Avatar src={user?.image}
+            <Box onClick={handleOpenUserMenu} sx={{'&:hover':{cursor:"pointer"}}} >
+                <Avatar
                     sx={{
-                        height: 40,
-                        width: 40
-                    }} />
+                        height: 34,
+                        width: 34
+                    }}
+                    src={user?.image}
+                />
             </Box>
             <Popover
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
+                PaperProps={{
+                    sx: {
+                        width: 200, borderRadius: 1, px: 1,
+                        py: 0.5, mt: '45px'
+                    }
+                }}
+                disableScrollLock
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                keepMounted
+                keepMountedF
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -56,16 +63,18 @@ const AccountPopover = () => {
                 {IsLoggedIn ? (
                     <>
                         <Box sx={{ p: 2 }} >
-                            <Typography color="textPrimary" variant="subtitle2">
+                            <Typography variant="h5">
                                 {`${(user?.name)}`}
                             </Typography>
                         </Box>
-                        <Box sx={{ p: 2 }}>
+                        <Divider />
+                        <Box sx={{ p: 1.5 }}>
                             <CustomButton
                                 color="primary"
                                 fullWidth
                                 onClick={LogoutHandler}
                                 variant="outlined"
+
                             >
                                 Logout
                             </CustomButton>

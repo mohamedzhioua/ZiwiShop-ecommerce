@@ -1,6 +1,5 @@
-import { useTheme } from "@emotion/react";
-import { TextField } from "@material-ui/core";
-import { tokens } from "../theme/theme";
+import PropTypes from "prop-types";
+import TextField from "@mui/material/TextField";
 
 const CustomInput = ({
   label,
@@ -13,12 +12,7 @@ const CustomInput = ({
   error,
   helperText,
 }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode); 4
-  const inputStyle = {
-    color: colors.primary[100],
 
-  };
   return (
 
     <TextField
@@ -33,11 +27,19 @@ const CustomInput = ({
       onBlur={onBlur}
       error={error}
       helperText={helperText}
-      InputProps={{
-        style: inputStyle,
-      }}
+
     />
   )
 };
-
+CustomInput.propTypes = {
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  value: PropTypes.any,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  error: PropTypes.bool,
+  helperText: PropTypes.string,
+};
 export default CustomInput;
