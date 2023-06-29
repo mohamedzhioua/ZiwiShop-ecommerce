@@ -13,6 +13,7 @@ import {
 // import { useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import CustomButton from "./CustomButton";
+import { tokens } from "../theme/theme";
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -22,6 +23,7 @@ const FlexBox = styled(Box)`
 
 const CartMenu = () => {
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
@@ -50,18 +52,18 @@ const CartMenu = () => {
         width="max(400px, 30%)"
         height="100%"
         sx={{
-          backgroundColor: theme.palette.grey[200]
+          backgroundColor: colors.primary[400]
         }}
       >
         <Box padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
           <FlexBox mb="15px">
-            <Typography variant="h3" sx={{ color: theme.palette.neutral.main }}>SHOPPING BAG ({cart.length})</Typography>
+            <Typography variant="h3" sx={{ color: colors.grey[100] }}>SHOPPING BAG ({cart.length})</Typography>
             <IconButton
               onClick={() => dispatch(setIsCartOpen({}))}
               size="large"
               aria-haspopup="true"
-              sx={{ color: theme.palette.neutral.main }}>
+              sx={{ color: colors.grey[100] }}>
               <CloseIcon />
             </IconButton>
           </FlexBox>
@@ -81,7 +83,7 @@ const CartMenu = () => {
                   </Box>
                   <Box flex="1 1 60%">
                     <FlexBox mb="5px">
-                      <Typography fontWeight="bold" sx={{ color: theme.palette.neutral.main }}>
+                      <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
                         {item?.attributes.name}
                       </Typography>
                       <IconButton
@@ -98,7 +100,7 @@ const CartMenu = () => {
                       <Box
                         display="flex"
                         alignItems="center"
-                        border={`1.5px solid ${theme.palette.neutral.main}`}
+                        border={`1.5px solid ${colors.grey[100]}`}
                       >
                         <IconButton
                           onClick={() =>
@@ -116,7 +118,7 @@ const CartMenu = () => {
                           <AddIcon />
                         </IconButton>
                       </Box>
-                      <Typography fontWeight="bold" sx={{ color: theme.palette.neutral.main }}>
+                      <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
                         ${item.attributes.price}
                       </Typography>
                     </FlexBox>
@@ -130,8 +132,8 @@ const CartMenu = () => {
           {/* ACTIONS */}
           <Box m="20px 0">
             <FlexBox m="20px 0">
-              <Typography fontWeight="bold" sx={{ color: theme.palette.neutral.main }}>SUBTOTAL</Typography>
-              <Typography fontWeight="bold" sx={{ color: theme.palette.neutral.main }}>${totalPrice}</Typography>
+              <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>SUBTOTAL</Typography>
+              <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>${totalPrice}</Typography>
             </FlexBox>
             <CustomButton
               sx={{

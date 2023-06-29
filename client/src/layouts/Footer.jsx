@@ -2,7 +2,7 @@
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    position: "fixed",
+    // position: "fixed",
     bottom: 0,
     left: 0,
     right: 0,

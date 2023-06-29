@@ -28,7 +28,15 @@ const AccountPopover = () => {
     };
     return (
         < >
-            <Box onClick={handleOpenUserMenu} sx={{'&:hover':{cursor:"pointer"}}} >
+            <Box
+                onClick={handleOpenUserMenu}
+                sx={{
+                    '&:hover': {
+                        cursor: "pointer"
+                    }, alignItems: 'center',
+                    display: 'flex'
+                }}
+            >
                 <Avatar
                     sx={{
                         height: 34,
@@ -38,10 +46,15 @@ const AccountPopover = () => {
                 />
             </Box>
             <Popover
-                PaperProps={{
-                    sx: {
-                        width: 200, borderRadius: 1, px: 1,
-                        py: 0.5, mt: '45px'
+                slotProps={{
+                    paper: {
+                        sx: {
+                            width: 240,
+                            borderRadius: 3,
+                            px: 1,
+                            py: 0.5,
+                            mt: '45px'
+                        }
                     }
                 }}
                 disableScrollLock

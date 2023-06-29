@@ -1,15 +1,16 @@
 import Toolbar from '@mui/material/Toolbar';
- import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'; import Container from '@mui/material/Container';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Container from '@mui/material/Container';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import useAuth from '../hooks/useAuth';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
-import { Badge, Button ,IconButton ,Box} from '@mui/material';
+import { Badge, Button, IconButton, Box } from '@mui/material';
 import DarkButton from '../components/DarkButton/DarkButton';
 import { useTheme } from '@emotion/react';
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +25,8 @@ function Navbar() {
   const cart = useSelector((state) => state.cart.cart);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigationLinks = [
-    { name: "Home", href: "/home" },
-    { name: "Profile", href: "/" },
+    { name: "Home", href: "/" },
+    { name: "Profile", href: "/Profile" },
     { name: "Blog", href: "/blog" },
   ];
   const handleOpenNavMenu = (event) => {
@@ -57,7 +58,6 @@ function Navbar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <FaLaptopCode sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}size={20} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -106,9 +106,9 @@ function Navbar() {
             >
 
               {filteredLinks.map((item) => (
-                <MenuItem key={item.name} onClick={handleCloseNavMenu} PaperProps={{ sx: { width: 200 } }}
+                <MenuItem key={item.name} onClick={handleCloseNavMenu}
                   sx={{
-                    width: 130, borderRadius: 1, px: 1,
+                    width: 150, borderRadius: 3, px: 1,
                     py: 0.5, justifyContent: 'center'
                   }}
                 >
@@ -131,7 +131,6 @@ function Navbar() {
 
             </Menu>
           </Box>
-          {/* <FaLaptopCode sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} size={30}/> */}
           <Typography
             variant="h5"
             noWrap
