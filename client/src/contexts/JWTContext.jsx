@@ -6,6 +6,7 @@ const initialState = {
   IsLoggedIn: false,
   isInitialized: false,
   user: null,
+  role: null
 };
 
 const handlers = {
@@ -25,6 +26,7 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
+      role: user.role,
     };
   },
   LOGOUT: (state) => {
@@ -32,6 +34,8 @@ const handlers = {
       ...state,
       IsLoggedIn: false,
       user: null,
+      role: null,
+
     };
   },
   REGISTER: (state, action) => {
@@ -49,6 +53,8 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
+      role: user.role,
+
     };
   },
   GOOGLE_LOGIN: (state, action) => {
@@ -57,6 +63,8 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
+      role: user.role,
+
     };
   },
 };
@@ -141,7 +149,7 @@ export const AuthProvider = (props) => {
 
   };
   const googleLogin = async (idToken) => {
-     const user = await authApi.googleLogin({idToken});
+    const user = await authApi.googleLogin({ idToken });
     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "GOOGLE_LOGIN",

@@ -19,15 +19,18 @@ import { setIsCartOpen } from '../app/feature/cartSlice';
 
 
 function Navbar() {
-  const { IsLoggedIn } = useAuth();
+  const { IsLoggedIn, role } = useAuth();
   const theme = useTheme();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigationLinks = [
+    { name: "Overview", href: "/overview" },
+    { name: "Products", href: "/products" },
     { name: "Home", href: "/" },
-    { name: "Profile", href: "/Profile" },
-    { name: "Blog", href: "/blog" },
+    { name: "Profile", href: "/profile" },
+
+
   ];
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,9 +40,19 @@ function Navbar() {
     setAnchorElNav(null);
   };
 
-  const filteredLinks = navigationLinks.filter(
-    (item) => IsLoggedIn || (item.name == "Home")
+  let filteredLinks = navigationLinks.filter(
+    (item) => IsLoggedIn || item.name === "Home"
   );
+
+  if (IsLoggedIn && role === "ADMIN") {
+    // If logged in and role is ADMIN, show all navigation links
+    filteredLinks = navigationLinks;
+  } else if (IsLoggedIn &&  role !== "ADMIN") {
+    // If logged in but not an ADMIN, show only Home and Profile
+    filteredLinks = filteredLinks.filter(
+      (item) => item.name === "Home" || item.name === "Profile"
+    );
+  }
 
   return (
     <Box
@@ -73,7 +86,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            Ziwi
+            ZiwiShop
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -146,7 +159,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            Ziwi
+            ZiwiShop
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 

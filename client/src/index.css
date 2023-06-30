@@ -3,24 +3,28 @@
 .content {
   margin-top: 64px;
   margin-bottom: 64px;
+  height: 100%;
+  width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
+ 
 
-::-webkit-scrollbar {
-  width: 10px;
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #ccc5ce #ffffff;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #e0e0e0;
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
+*::-webkit-scrollbar-track {
+  background: #ffffff;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+*::-webkit-scrollbar-thumb {
+  background-color: #ccc5ce;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
 }
