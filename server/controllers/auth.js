@@ -66,6 +66,7 @@ module.exports = {
               token,
               name: user.name,
               email: user.email,
+              role: user.role,
               image: user.image,
             });
           }
@@ -104,6 +105,7 @@ module.exports = {
             token,
             name: user.name,
             email: user.email,
+            role: user.role,
             image: user.image,
           });
         } else {
@@ -120,6 +122,7 @@ module.exports = {
             token,
             name: user.name,
             email: user.email,
+            role: user.role,
             image: user.image,
           });
         }
@@ -154,6 +157,7 @@ module.exports = {
           token,
           name: user.name,
           email: user.email,
+          role: user.role,
           image: user.image,
         });
       } else {
@@ -174,6 +178,7 @@ module.exports = {
           token,
           name: user.name,
           email: user.email,
+          role: user.role,
           image: user.image,
         });
       }

@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
+const DB = process.env.DATABASE.replace(
+  '<password>',
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose.set('strictQuery', false);
 mongoose
-  .connect("mongodb://localhost:27017/Authentication", {
+  .connect(DB, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
