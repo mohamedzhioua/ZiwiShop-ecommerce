@@ -4,10 +4,11 @@ import { Box, Container } from "@mui/system"
 import AddIcon from '@mui/icons-material/Add';
 import Heading from "../../../components/Heading";
 import ProductListTable from "../../../components/product/ProductListTable";
+import { Link } from "react-router-dom";
 
 function ProductsList() {
   const data = [1, 1]
-  const products = [ ]
+  const products = []
   return (
     <>
       <Container maxWidth='xl' >
@@ -24,7 +25,8 @@ function ProductsList() {
           <Heading title={`Products (${data.length})`} description="Manage products for your store" />
 
           <CustomButton
-          //  onClick={() => router.push(`/${params.storeId}/products/new`)}
+            component={Link}
+            to="/dashboard/products/add"
           >
             <AddIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Add New
           </CustomButton>
@@ -35,10 +37,10 @@ function ProductsList() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-          <Box sx={{ mt: 3 }}>
-            <ProductListTable products={products} />
-          </Box>
-      </Container>
+        <Box sx={{ mt: 3 }}>
+          <ProductListTable products={products} />
+        </Box>
+      </Container >
     </>
   )
 }

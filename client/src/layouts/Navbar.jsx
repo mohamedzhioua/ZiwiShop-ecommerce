@@ -26,8 +26,8 @@ function Navbar() {
   const cart = useSelector((state) => state.cart.cart);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigationLinks = [
-    { name: "Overview", href: "/overview" },
-    { name: "Products", href: "/products" },
+    { name: "Overview", href: "/dashboard/overview" },
+    { name: "Products", href: "/dashboard/products" },
     { name: "Home", href: "/" },
     { name: "Profile", href: "/profile" },
 

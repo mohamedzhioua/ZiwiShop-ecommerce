@@ -1,5 +1,4 @@
-import { styled } from '@mui/material/styles';
-import 'simplebar/dist/simplebar.min.css';
-import SimpleBar from 'npm i simplebar-react';
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 
-export const Scrollbar = styled(SimpleBar);
+export const Scrollbar = SimpleBar;

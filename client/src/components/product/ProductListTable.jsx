@@ -1,7 +1,6 @@
 
-import { Card, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField } from '@mui/material';
-import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
+import { Box, Card, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -122,19 +121,19 @@ const ProductListTable = (props) => {
                         {product.image
                           ? (
                             <Box
-                              sx={{
-                                alignItems: 'center',
-                                backgroundColor: 'background.default',
-                                display: 'flex',
-                                height: 100,
-                                justifyContent: 'center',
-                                overflow: 'hidden',
-                                width: 100,
-                                '& img': {
-                                  height: 'auto',
-                                  width: '100%'
-                                }
-                              }}
+                              // sx={{
+                              //   alignItems: 'center',
+                              //   backgroundColor: 'background.default',
+                              //   display: 'flex',
+                              //   height: 100,
+                              //   justifyContent: 'center',
+                              //   overflow: 'hidden',
+                              //   width: 100,
+                              //   '& img': {
+                              //     height: 'auto',
+                              //     width: '100%'
+                              //   }
+                              // }}
                             >
                               <img
                                 alt="Product"
@@ -144,20 +143,20 @@ const ProductListTable = (props) => {
                           )
                           : (
                             <Box
-                              sx={{
-                                alignItems: 'center',
-                                backgroundColor: 'background.default',
-                                display: 'flex',
-                                height: 100,
-                                justifyContent: 'center',
-                                width: 100
-                              }}
+                              // sx={{
+                              //   alignItems: 'center',
+                              //   backgroundColor: 'background.default',
+                              //   display: 'flex',
+                              //   height: 100,
+                              //   justifyContent: 'center',
+                              //   width: 100
+                              // }}
                             >
                               <BrokenImageOutlinedIcon fontSize="small" />
                             </Box>
                           )}
                         <Link
-                          color="textPrimary"
+                          // color="textPrimary"
                           component={Link}
                           to="#"
                           underline="none"

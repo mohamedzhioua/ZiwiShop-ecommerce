@@ -1,7 +1,15 @@
+ import { Container } from "@mui/system"
+import ProductForm from "../../../components/product/ProductForm"
  
+
 function ProductAdd() {
   return (
-    <div>ProductAdd</div>
+    <>
+      <Container maxWidth='xl' >
+      
+          <ProductForm />
+       </Container >
+    </>
   )
 }
 

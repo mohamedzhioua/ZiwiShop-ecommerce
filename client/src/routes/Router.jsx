@@ -30,10 +30,10 @@ const Router = () => {
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/products/add" element={<ProductAdd />} />
-        <Route path="/products/:productId/edit" element={<ProductEdit />} />
-        <Route path="/overview" element={<Overview />} />
+        <Route path="/dashboard/products" element={<ProductList />} />
+        <Route path="/dashboard/products/add" element={<ProductAdd />} />
+        <Route path="/dashboard/products/:productId/edit" element={<ProductEdit />} />
+        <Route path="/dashboard/overview" element={<Overview />} />
       </Route>
 
       <Route path="/noaccess" element={<NoAccess />} />
