@@ -34,6 +34,7 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "simplebar-react": "^3.2.4",
     "yup": "^1.2.0"
   },
   "devDependencies": {

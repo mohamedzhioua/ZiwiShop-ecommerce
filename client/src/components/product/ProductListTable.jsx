@@ -9,10 +9,11 @@ import numeral from 'numeral';
 import { useState } from 'react';
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
- 
- 
+import { Scrollbar } from '../Scrollbar';
 
- 
+
+
+
 const applyFilters = (products, query) => {
   return products.filter((product) => {
     return product.name.toLowerCase().includes(query.toLowerCase());
@@ -74,137 +75,139 @@ const ProductListTable = (props) => {
           />
         </Box>
       </Box>
-      <Box sx={{ minWidth: 1200 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell padding="checkbox">
-              </TableCell>
-              <TableCell>
-                Name
-              </TableCell>
-              <TableCell>
-                Inventory
-              </TableCell>
-              <TableCell>
-                Details
-              </TableCell>
-              <TableCell>
-                Attributes
-              </TableCell>
-              <TableCell>
-                Price
-              </TableCell>
-              <TableCell align="right">
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {paginatedProducts.map((product) => {
-              // const isProductSelected = selectedProducts.includes(product.id);
+      <Scrollbar>
+        <Box sx={{ minWidth: 1200 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell padding="checkbox">
+                </TableCell>
+                <TableCell>
+                  Name
+                </TableCell>
+                <TableCell>
+                  Inventory
+                </TableCell>
+                <TableCell>
+                  Details
+                </TableCell>
+                <TableCell>
+                  Attributes
+                </TableCell>
+                <TableCell>
+                  Price
+                </TableCell>
+                <TableCell align="right">
+                  Actions
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {paginatedProducts.map((product) => {
+                // const isProductSelected = selectedProducts.includes(product.id);
 
-              return (
-                <TableRow
-                  hover
-                  key={product.id}
+                return (
+                  <TableRow
+                    hover
+                    key={product.id}
                   // selected={isProductSelected}
-                >
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      {product.image
-                        ? (
-                          <Box
-                            sx={{
-                              alignItems: 'center',
-                              backgroundColor: 'background.default',
-                              display: 'flex',
-                              height: 100,
-                              justifyContent: 'center',
-                              overflow: 'hidden',
-                              width: 100,
-                              '& img': {
-                                height: 'auto',
-                                width: '100%'
-                              }
-                            }}
-                          >
-                            <img
-                              alt="Product"
-                              src={product.image}
-                            />
-                          </Box>
-                        )
-                        : (
-                          <Box
-                            sx={{
-                              alignItems: 'center',
-                              backgroundColor: 'background.default',
-                              display: 'flex',
-                              height: 100,
-                              justifyContent: 'center',
-                              width: 100
-                            }}
-                          >
-                            <BrokenImageOutlinedIcon fontSize="small" />
-                          </Box>
-                        )}
-                      <Link
-                        color="textPrimary"
-                        component={Link}
-                        to="#"
-                        underline="none"
-                        sx={{ ml: 2 }}
-                        variant="subtitle2"
+                  >
+                    <TableCell>
+                      <Box
+                        sx={{
+                          alignItems: 'center',
+                          display: 'flex'
+                        }}
                       >
-                        {product.name}
-                      </Link>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {/* {getInventoryLabel(product.inventoryType)} */}
-                  </TableCell>
-                  <TableCell>
-                    {product.quantity}
-                    {' '}
-                    in stock
-                    {product.variants > 1 && ` in ${product.variants} variants`}
-                  </TableCell>
-                  <TableCell>
-                    {product.attributes.map((attr) => attr)}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(product.price)
-                      .format(`${product.currency}0,0.00`)}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton>
-                      <EditOutlinedIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton>
-                      <DeleteOutlineOutlinedIcon fontSize="small" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          count={filteredProducts.length}
-          onPageChange={onPageChange}
-          onRowsPerPageChange={onRowsPerPageChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
-      </Box>
+                        {product.image
+                          ? (
+                            <Box
+                              sx={{
+                                alignItems: 'center',
+                                backgroundColor: 'background.default',
+                                display: 'flex',
+                                height: 100,
+                                justifyContent: 'center',
+                                overflow: 'hidden',
+                                width: 100,
+                                '& img': {
+                                  height: 'auto',
+                                  width: '100%'
+                                }
+                              }}
+                            >
+                              <img
+                                alt="Product"
+                                src={product.image}
+                              />
+                            </Box>
+                          )
+                          : (
+                            <Box
+                              sx={{
+                                alignItems: 'center',
+                                backgroundColor: 'background.default',
+                                display: 'flex',
+                                height: 100,
+                                justifyContent: 'center',
+                                width: 100
+                              }}
+                            >
+                              <BrokenImageOutlinedIcon fontSize="small" />
+                            </Box>
+                          )}
+                        <Link
+                          color="textPrimary"
+                          component={Link}
+                          to="#"
+                          underline="none"
+                          sx={{ ml: 2 }}
+                          variant="subtitle2"
+                        >
+                          {product.name}
+                        </Link>
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      {/* {getInventoryLabel(product.inventoryType)} */}
+                    </TableCell>
+                    <TableCell>
+                      {product.quantity}
+                      {' '}
+                      in stock
+                      {product.variants > 1 && ` in ${product.variants} variants`}
+                    </TableCell>
+                    <TableCell>
+                      {product.attributes.map((attr) => attr)}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(product.price)
+                        .format(`${product.currency}0,0.00`)}
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton>
+                        <EditOutlinedIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton>
+                        <DeleteOutlineOutlinedIcon fontSize="small" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+          <TablePagination
+            component="div"
+            count={filteredProducts.length}
+            onPageChange={onPageChange}
+            onRowsPerPageChange={onRowsPerPageChange}
+            page={page}
+            rowsPerPage={limit}
+            rowsPerPageOptions={[5, 10, 25]}
+          />
+        </Box>
+      </Scrollbar>
     </Card>
   );
 };
