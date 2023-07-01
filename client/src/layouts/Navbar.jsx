@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Badge, Button, IconButton, Box } from '@mui/material';
-import DarkButton from '../components/DarkButton/DarkButton';
+import DarkButton from '../components/DarkButton';
 import { useTheme } from '@emotion/react';
 import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
@@ -19,7 +19,8 @@ import { setIsCartOpen } from '../app/feature/cartSlice';
 
 
 function Navbar() {
-  const { IsLoggedIn, role } = useAuth();
+  const { IsLoggedIn, user } = useAuth();
+ 
   const theme = useTheme();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
@@ -44,10 +45,10 @@ function Navbar() {
     (item) => IsLoggedIn || item.name === "Home"
   );
 
-  if (IsLoggedIn && role === "ADMIN") {
+  if (IsLoggedIn && user?.role === "ADMIN") {
     // If logged in and role is ADMIN, show all navigation links
     filteredLinks = navigationLinks;
-  } else if (IsLoggedIn &&  role !== "ADMIN") {
+  } else if (IsLoggedIn &&  user?.role !== "ADMIN") {
     // If logged in but not an ADMIN, show only Home and Profile
     filteredLinks = filteredLinks.filter(
       (item) => item.name === "Home" || item.name === "Profile"

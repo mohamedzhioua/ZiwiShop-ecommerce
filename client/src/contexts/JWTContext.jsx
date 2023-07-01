@@ -6,8 +6,7 @@ const initialState = {
   IsLoggedIn: false,
   isInitialized: false,
   user: null,
-  role: null
-};
+ };
 
 const handlers = {
   INITIALIZE: (state, action) => {
@@ -26,15 +25,14 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-      role: user.role,
-    };
+     };
   },
   LOGOUT: (state) => {
     return {
       ...state,
       IsLoggedIn: false,
       user: null,
-      role: null,
+     
 
     };
   },
@@ -53,7 +51,7 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-      role: user.role,
+      
 
     };
   },
@@ -63,7 +61,7 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-      role: user.role,
+      
 
     };
   },

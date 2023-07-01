@@ -1,7 +1,7 @@
 import { Box, IconButton } from "@mui/material";
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import useTheme from "../../hooks/useTheme";
+import useTheme from "../hooks/useTheme";
 
 const NightModeToggle = () => {
   const { mode, toggleColorMode } = useTheme();
