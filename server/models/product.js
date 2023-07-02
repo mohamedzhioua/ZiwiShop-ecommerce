@@ -33,13 +33,13 @@ const ProductSchema = new Schema(
         ref: "image",
       },
     ],
-    Featured: {
-      type: String,
-      required: true,
+    isFeatured: {
+      type: Boolean,
+      default: false,
     },
-    Archived: {
-      type: String,
-      required: true,
+    isArchived: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
