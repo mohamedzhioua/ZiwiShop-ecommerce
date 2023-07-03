@@ -20,7 +20,7 @@ import { setIsCartOpen } from '../app/feature/cartSlice';
 
 function Navbar() {
   const { IsLoggedIn, user } = useAuth();
- 
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
@@ -28,6 +28,7 @@ function Navbar() {
   const navigationLinks = [
     { name: "Overview", href: "/dashboard/overview" },
     { name: "Products", href: "/dashboard/products" },
+    { name: "Sizes", href: "/dashboard/sizes" },
     { name: "Home", href: "/" },
     { name: "Profile", href: "/profile" },
 
@@ -48,7 +49,7 @@ function Navbar() {
   if (IsLoggedIn && user?.role === "ADMIN") {
     // If logged in and role is ADMIN, show all navigation links
     filteredLinks = navigationLinks;
-  } else if (IsLoggedIn &&  user?.role !== "ADMIN") {
+  } else if (IsLoggedIn && user?.role !== "ADMIN") {
     // If logged in but not an ADMIN, show only Home and Profile
     filteredLinks = filteredLinks.filter(
       (item) => item.name === "Home" || item.name === "Profile"
@@ -128,12 +129,14 @@ function Navbar() {
                 >
 
                   <Typography
-                    variant="h5"
+
+                    variant="h6"
                     component={Link}
                     to={item.href}
                     sx={{
                       textDecoration: 'none',
                       color: theme.palette.primary.main,
+                      fontWeight: "bold"
                     }}
                   >
                     {item.name}
@@ -167,11 +170,12 @@ function Navbar() {
             {filteredLinks.map((item) => (
 
               <Button
+                variant='h4'
                 key={item.name}
                 to={item.href}
                 component={Link}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: theme.palette.primary.main, display: 'block' }}
+                sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: "bold" }}
               >{item.name}
               </Button>
 

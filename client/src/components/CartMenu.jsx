@@ -51,9 +51,7 @@ const CartMenu = () => {
         bottom="0"
         width="max(400px, 30%)"
         height="100%"
-        sx={{
-          backgroundColor: colors.primary[400]
-        }}
+        backgroundColor='background.paper'
       >
         <Box padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
@@ -137,12 +135,12 @@ const CartMenu = () => {
             </FlexBox>
             <CustomButton
               sx={{
-                 borderRadius: 0,
+                borderRadius: 0,
                 minWidth: "100%",
                 padding: "20px 40px",
                 m: "20px 0",
               }}
-               onClick={() => {
+              onClick={() => {
                 // navigate("/checkout");
                 dispatch(setIsCartOpen({}));
               }}

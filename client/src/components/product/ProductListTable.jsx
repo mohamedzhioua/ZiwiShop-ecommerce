@@ -1,14 +1,14 @@
 
 import PropTypes from 'prop-types';
-import { Box, Card, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField } from '@mui/material';
+import { Box, Card, IconButton, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import numeral from 'numeral';
 import { useState } from 'react';
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Scrollbar } from '../Scrollbar';
+import TableSearchBar from '../TableSearchBar';
 
 
 
@@ -42,41 +42,12 @@ const ProductListTable = (props) => {
   };
   return (
     <Card >
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexWrap: 'wrap',
-          m: -1,
-          p: 2
-        }}
-      >
-        <Box
-          sx={{
-            m: 1,
-            maxWidth: '100%',
-            width: 500
-          }}
-        >
-          <TextField
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchOutlinedIcon fontSize="small" />
-                </InputAdornment>
-              )
-            }}
-            onChange={handleQueryChange}
-            placeholder="Search products"
-            value={query}
-            variant="outlined"
-          />
-        </Box>
-      </Box>
+      <TableSearchBar 
+      handleQueryChange={handleQueryChange} 
+      query={query}
+       /> 
       <Scrollbar>
-        <Box sx={{ minWidth: 1200 }}>
-          <Table>
+           <Table sx={{ minWidth: 700}}>
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox">
@@ -121,19 +92,19 @@ const ProductListTable = (props) => {
                         {product.image
                           ? (
                             <Box
-                              // sx={{
-                              //   alignItems: 'center',
-                              //   backgroundColor: 'background.default',
-                              //   display: 'flex',
-                              //   height: 100,
-                              //   justifyContent: 'center',
-                              //   overflow: 'hidden',
-                              //   width: 100,
-                              //   '& img': {
-                              //     height: 'auto',
-                              //     width: '100%'
-                              //   }
-                              // }}
+                            // sx={{
+                            //   alignItems: 'center',
+                            //   backgroundColor: 'background.default',
+                            //   display: 'flex',
+                            //   height: 100,
+                            //   justifyContent: 'center',
+                            //   overflow: 'hidden',
+                            //   width: 100,
+                            //   '& img': {
+                            //     height: 'auto',
+                            //     width: '100%'
+                            //   }
+                            // }}
                             >
                               <img
                                 alt="Product"
@@ -143,14 +114,14 @@ const ProductListTable = (props) => {
                           )
                           : (
                             <Box
-                              // sx={{
-                              //   alignItems: 'center',
-                              //   backgroundColor: 'background.default',
-                              //   display: 'flex',
-                              //   height: 100,
-                              //   justifyContent: 'center',
-                              //   width: 100
-                              // }}
+                            // sx={{
+                            //   alignItems: 'center',
+                            //   backgroundColor: 'background.default',
+                            //   display: 'flex',
+                            //   height: 100,
+                            //   justifyContent: 'center',
+                            //   width: 100
+                            // }}
                             >
                               <BrokenImageOutlinedIcon fontSize="small" />
                             </Box>
@@ -205,8 +176,7 @@ const ProductListTable = (props) => {
             rowsPerPage={limit}
             rowsPerPageOptions={[5, 10, 25]}
           />
-        </Box>
-      </Scrollbar>
+       </Scrollbar>
     </Card>
   );
 };

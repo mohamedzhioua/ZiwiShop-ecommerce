@@ -5,10 +5,10 @@ const Heading = (props) => {
     const { title, description } = props
     return (
         <div>
-            <Typography variant="h2" component="h2" >
+            <Typography variant="h1" sx={{fontWeight:"bold"}}>
                 {title}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="h5">
                 {description}
             </Typography>
         </div>

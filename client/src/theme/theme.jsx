@@ -1,3 +1,5 @@
+import { tableCellClasses } from '@mui/material';
+import { palette } from '@mui/system';
 
 export const tokens = (mode) => ({
   ...(mode === "dark"
@@ -118,6 +120,18 @@ export const tokens = (mode) => ({
       },
     }),
 });
+export const standard = {
+  50: '#F8F9FA',
+  100: '#F3F4F6',
+  200: '#E5E7EB',
+  300: '#D2D6DB',
+  400: '#9DA4AE',
+  500: '#6C737F',
+  600: '#4D5761',
+  700: '#2F3746',
+  800: '#1C2536',
+  900: '#111927'
+};
 
 export const getDesignTokens = (mode) => {
   const colors = tokens(mode);
@@ -142,9 +156,17 @@ export const getDesignTokens = (mode) => {
             light: colors.grey[100],
           },
           background: {
-            default: colors.primary[400],
+            default:   '#0E1320',
+            paper: standard[900]
           },
-
+          divider: '#2D3748',
+          action: {
+            active: standard[500],
+          },
+          text: {
+            primary: '#EDF2F7',
+            secondary: '#A0AEC0',
+           },
         }
         : {
           // palette values for light mode
@@ -164,9 +186,17 @@ export const getDesignTokens = (mode) => {
             light: colors.grey[100],
           },
           background: {
-            default: "#fcfcfc",
+            default:  "#fff",
+            paper: "#fff"
           },
-
+          divider: '#F2F4F7',
+          action: {
+            active: standard[500],
+          },
+          text: {
+            primary: standard[900],
+            secondary: standard[500],
+          }
         }),
     },
     typography: {
@@ -197,7 +227,34 @@ export const getDesignTokens = (mode) => {
         fontSize: 14,
       },
     },
-
-  }
-}
-
+    components: {
+      
+      MuiTableCell: {
+        styleOverrides: {
+          root: {
+            padding: '25px 30px' ,
+            borderBottomColor: mode === "dark" ? "#2D3748" :  '#F2F4F7',
+          },
+        },
+      },
+      MuiTableHead: {
+        styleOverrides: {
+          root: {
+            [`& .${tableCellClasses.root}`]: {
+              borderBottom: 'none',
+            fontSize: 12,
+            fontWeight: 600,
+            lineHeight: 1,
+            letterSpacing: 0.5,
+            textTransform: 'uppercase' ,
+              backgroundColor:
+                mode === "dark" ? standard[800] : standard[50],
+              color: mode === "dark" ? standard[400] : standard[700],
+            },
+          },
+        },
+      },
+    },
+  };
+};
+ 
