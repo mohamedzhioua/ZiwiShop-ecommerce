@@ -10,16 +10,14 @@ import { Link, Container, Grid, Typography } from "@material-ui/core";
 import CustomButton from "../components/CustomButton";
 import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from '../hooks/useAuth';
-import useMounted from '../hooks/useMounted';
-import { Box } from "@mui/system";
+ import { Box } from "@mui/system";
 import { CardContent } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { tokens } from "../theme/theme";
 
 function Signin() {
   const { login } = useAuth();
-  const mounted = useMounted();
-  const theme = useTheme();
+   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
   const initialValues = {
@@ -38,12 +36,9 @@ function Signin() {
     } catch (error) {
       console.error(error);
       setServerErrors(error);
+      setStatus({ success: false });
+      setSubmitting(false);
 
-      if (mounted()) {
-        setStatus({ success: false });
-        setSubmitting(false);
-
-      }
     }
   };
 

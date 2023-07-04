@@ -5,10 +5,10 @@ import React from "react";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const ForceRedirect = () => {
- const {IsLoggedIn}=useAuth()
+  const { IsLoggedIn } = useAuth()
 
   return IsLoggedIn ? (
-    <Navigate to="/" replace />
+    <Navigate to="/home" replace />
   ) : (
     <React.Suspense fallback={<LoadingSpinner />}>
       <Outlet />

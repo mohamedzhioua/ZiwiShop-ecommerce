@@ -1,30 +1,50 @@
 import ActionsColumn from '../ActionsColumn ';
 //  import PropTypes from 'prop-types';
 import { Card, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Scrollbar } from '../Scrollbar';
 import TableSearchBar from '../TableSearchBar';
 import TablePagination from '@mui/material/TablePagination'
-const data = [
-    { name: "meduim", value: "m", id: "1" },
-    { name: "large", value: "L", id: "2" },
-    { name: "large", value: "L", id: "3" },
-    { name: "large", value: "L", id: "4" },
-    { name: "large", value: "L", id: "5" },
-    { name: "large", value: "L", id: "6" },
-    { name: "large", value: "L", id: "7" },
-    { name: "large", value: "L", id: "9" },
-    { name: "large", value: "L", id: "9" },
-    { name: "large", value: "L", id: "10" },
-    { name: "large", value: "L", id: "11" },
-    { name: "large", value: "L", id: "12" }]
+import { sizeApi } from '../../api/sizeApi';
+ import { toast } from 'react-hot-toast';
 
-    const applyPagination = (data, page, limit) => data.slice(page * limit, page * limit + limit);
+
+const applyPagination = (data, page, limit) => data.slice(page * limit, page * limit + limit);
 
 const SizeListTable = () => {
-    const [query, setQuery] = useState('');
+ 
+    const [sizes, setSizes] = useState([])
+     const [query, setQuery] = useState('');
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
+
+    const getSizes = useCallback(async () => {
+        try {
+            const response = sizeApi.GetSizes();
+            toast.promise(
+                response,
+                {
+                    loading: 'Fetching data ...',
+                    error: 'Error while fetching data'
+                },
+            );
+            response
+                .then((sizes) => {
+                    setSizes(sizes);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (err) {
+            console.error(err);
+        }
+    }, []);
+    
+    useEffect(() => {
+        getSizes();
+    }, []);
+    
+
     const handleQueryChange = (event) => {
         setQuery(event.target.value);
     };
@@ -46,7 +66,7 @@ const SizeListTable = () => {
         console.log("Delete:", item.id);
     };
 
-    const paginatedData = applyPagination(data, page, limit);
+    const paginatedData = applyPagination(sizes, page, limit);
 
 
 
@@ -69,7 +89,7 @@ const SizeListTable = () => {
                     <TableBody>
                         {paginatedData.map((item) => {
                             return (
-                                <React.Fragment key={item.id}>
+                                <Fragment key={item.id}>
                                     <TableRow
                                         hover>
                                         <TableCell>
@@ -90,12 +110,12 @@ const SizeListTable = () => {
                                             align="right"
                                         >
                                             <ActionsColumn
-                                                handleUpdate={handleUpdate}
-                                                handleDelete={handleDelete}
+                                                onUpdate={handleUpdate}
+                                                onDelete={handleDelete}
                                             />
                                         </TableCell>
                                     </TableRow>
-                                </React.Fragment>
+                                </Fragment>
                             )
                         })}
                     </TableBody>
@@ -103,7 +123,7 @@ const SizeListTable = () => {
             </Scrollbar>
             <TablePagination
                 component="div"
-                count={data.length}
+                count={sizes.length}
                 onPageChange={onPageChange}
                 onRowsPerPageChange={onRowsPerPageChange}
                 page={page}

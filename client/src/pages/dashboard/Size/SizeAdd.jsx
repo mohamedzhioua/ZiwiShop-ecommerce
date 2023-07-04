@@ -17,8 +17,6 @@ function SizeAdd() {
         }}
       >
         <Heading title="Create size"  description="Add a new size" />
-
-      
       </Box>
       <Divider
         sx={{

@@ -7,15 +7,13 @@ import { Box, Link, Container, Grid, Typography, CardContent } from "@material-u
 import { useState } from "react";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import useMounted from "../hooks/useMounted";
-import useAuth from "../hooks/useAuth";
+ import useAuth from "../hooks/useAuth";
 import { useTheme } from "@emotion/react";
 import { tokens } from "../theme/theme";
 
 const Signup = () => {
   const { register } = useAuth();
-  const mounted = useMounted();
-  const theme = useTheme();
+   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
 
@@ -37,11 +35,9 @@ const Signup = () => {
     } catch (error) {
       console.error(error);
       setServerErrors(error);
+      setStatus({ success: false });
+      setSubmitting(false);
 
-      if (mounted()) {
-        setStatus({ success: false });
-        setSubmitting(false);
-      }
     }
   };
 

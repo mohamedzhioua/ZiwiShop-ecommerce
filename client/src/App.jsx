@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from "react-router-dom";
+import { Toaster } from 'react-hot-toast';
 import Footer from "./layouts/Footer";
 import Router from "./routes/Router";
 import { CssBaseline } from "@mui/material";
@@ -22,14 +23,15 @@ import useAuth from "./hooks/useAuth";
 function App() {
   const auth = useAuth();
   const { theme } = useTheme();
-  
-   return (
+
+  return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         <Navbar />
         <div className="content">
-        {auth.isInitialized ? <Router /> :""}
+          {auth.isInitialized ? <Router /> : ""}
+          <Toaster position="top-center" />
           <CartMenu />
         </div>
         <Footer />

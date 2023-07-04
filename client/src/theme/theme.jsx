@@ -229,7 +229,14 @@ export const getDesignTokens = (mode) => {
       },
     },
     components: {
-
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            padding: '32px 24px',
+            borderRadius: 20
+          }
+        }
+      },
       MuiTableCell: {
         styleOverrides: {
           root: {

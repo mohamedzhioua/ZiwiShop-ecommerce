@@ -103,7 +103,7 @@ const AccountPopover = () => {
                             </IconButton>
                             <ListItemText
                                 primary={(
-                                    <Typography variant="h4" align=''>
+                                    <Typography variant="h4" >
                                         Profile
                                     </Typography>
                                 )}

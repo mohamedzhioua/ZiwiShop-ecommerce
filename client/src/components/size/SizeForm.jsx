@@ -1,9 +1,11 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Stack } from "@mui/material";
 import CustomInput from "../CustomInput";
-import { Box, Stack } from "@mui/system";
+import { sizeApi } from "../../api/sizeApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const initialValues = {
     name: "",
@@ -20,22 +22,36 @@ const validationSchema = Yup.object().shape({
 
 
 const SizeForm = () => {
-
+    const navigate = useNavigate()
     const onSubmitHandler = async (
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
         try {
-
+            const response =  sizeApi.AddSize(values);
+                       toast.promise(
+            response,
+            {
+              loading:'Adding data',
+              error: 'Error while adding the data',
+              success:'Added !'
+            },
+          );
+          response
+          .then(() => {
             setStatus({ success: true });
             setSubmitting(false);
-            //   navigate('/dashboard/size');
-        } catch (err) {
-            console.error(err);
+            navigate('/dashboard/sizes');
+          })
+          .catch((error) => {
             setStatus({ success: false });
-            setErrors({ submit: err.message });
+            setErrors({ submit: error.message });
             setSubmitting(false);
-        }
+          });
+      } catch (err) {
+        toast.error('Something went wrong!');
+      }
+       
     };
 
 
@@ -55,48 +71,46 @@ const SizeForm = () => {
         isSubmitting,
     } = formik;
     return (
-        <Box mt={3} px={2}>
-            <Card>
-                <CardContent>
+        <Card>
+            <CardContent>
+                <form onSubmit={handleSubmit} noValidate>
+                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+                        <CustomInput
+                            name="name"
+                            label="Size Name*"
+                            placeholder="ex: Extra Large"
+                            type="text"
+                            value={values.name}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.name && Boolean(errors.name)}
+                            helperText={touched.name && errors.name}
+                        />
 
-                    <form onSubmit={handleSubmit} noValidate>
-                        <Stack spacing={3}>
-
-                            <CustomInput
-                                name="name"
-                                label="Size Name*"
-                                type="text"
-                                value={values.name}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.name && Boolean(errors.name)}
-                                helperText={touched.name && errors.name}
-                            />
-
-                            <CustomInput
-                                name="value"
-                                label="Size Value*"
-                                type="text"
-                                value={values.value}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.value && Boolean(errors.value)}
-                                helperText={touched.value && errors.value}
-                            />
-                        </Stack>
-                        <CustomButton
-                            variant="contained"
-                            type="submit"
-                            disabled={isSubmitting}
-                             size="large"
-                            sx={{ mt: 2 }}
-                        >
-                            {isSubmitting ? "loading..." : "Creat"}
-                        </CustomButton>
-                    </form>
-                </CardContent>
-            </Card>
-        </Box>
+                        <CustomInput
+                            name="value"
+                            label="Size Value*"
+                            placeholder="ex: XL"
+                            type="text"
+                            value={values.value}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.value && Boolean(errors.value)}
+                            helperText={touched.value && errors.value}
+                        />
+                    </Stack>
+                    <CustomButton
+                        variant="contained"
+                        type="submit"
+                        disabled={isSubmitting}
+                        size="large"
+                        sx={{ mt: 2 }}
+                    >
+                        {isSubmitting ? "loading..." : "Create"}
+                    </CustomButton>
+                </form>
+            </CardContent>
+        </Card>
     )
 }
 

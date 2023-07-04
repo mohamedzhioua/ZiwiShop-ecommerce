@@ -2,7 +2,7 @@ import axiosInstance from './axios';
 
 class AuthApi {
   constructor() {
-    this.basePath = '/user';
+    this.basePath = '/api/v1/user';
   }
 
   request(method, url, data) {
