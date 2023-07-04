@@ -21,9 +21,11 @@ app.use(
     credentials: true
   })
 );
-const userRoutes = require("./routes/users");
+const userRoutes = require("./routes/userRoutes");
+const sizeRoutes = require("./routes/sizeRoutes");
 
-app.use("/user", userRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/size", sizeRoutes);
 
 app.listen(PORT, function () {
   console.log(`Server Runs Perfectly at http://localhost:${PORT}`);

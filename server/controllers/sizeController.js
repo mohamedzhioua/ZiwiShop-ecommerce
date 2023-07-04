@@ -3,7 +3,18 @@ const IdParamsValidation = require("../validator/IdParamsValidation");
 const Size = require("../models/Size");
 
 module.exports = {
-//  ---------------------------------------- //AddSize//--------------------------- //
+  //  ---------------------------------------- //GetSizes//--------------------------- //
+
+  GetSizes: async (req, res) => {
+    try {
+      const sizes = await Size.find().lean();
+      return res.status(200).json(sizes);
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
+
+  //  ---------------------------------------- //AddSize//--------------------------- //
 
   AddSize: async (req, res) => {
     try {
@@ -26,14 +37,15 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
-//  ---------------------------------------- //updateSize//--------------------------- //
+  //  ---------------------------------------- //updateSize//--------------------------- //
 
-  updateSize: async (req, res) => {
+  UpdateSize: async (req, res) => {
     try {
-        const { sizeId } = req.params;
+      const { sizeId } = req.params;
       const { name, value } = req.body;
       const { errors, isValid } = SizeValidation(req.body);
-      const { errors: paramsErrors, isValid: isParamsValid } = IdParamsValidation(req.params);
+      const { errors: paramsErrors, isValid: isParamsValid } =
+        IdParamsValidation(req.params);
       if (!isValid) {
         return res.status(400).json(errors);
       }
@@ -41,7 +53,7 @@ module.exports = {
       if (!isParamsValid) {
         return res.status(400).json(paramsErrors);
       }
-      
+
       const size = await Size.findById(sizeId);
 
       if (!size) {
