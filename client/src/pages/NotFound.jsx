@@ -20,7 +20,7 @@ const NotFound = () => {
             <Typography variant="h3" gutterBottom>
                 The page you are looking for does not exist.
             </Typography>
-            <CustomButton component={Link} to="/" variant="outlined" color="primary">
+            <CustomButton component={Link} to="/home" variant="outlined" color="primary">
                 Go Home
             </CustomButton>
         </Box>

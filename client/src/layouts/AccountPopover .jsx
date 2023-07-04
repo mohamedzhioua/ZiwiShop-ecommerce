@@ -1,9 +1,10 @@
-import { Avatar, Divider, Popover, Typography } from '@mui/material'
+import { Avatar, Divider, IconButton, ListItemButton, ListItemText, Popover, Typography } from '@mui/material'
 import { useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
 import CustomButton from '../components/CustomButton';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 const AccountPopover = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -76,11 +77,38 @@ const AccountPopover = () => {
                 {IsLoggedIn ? (
                     <>
                         <Box sx={{ p: 2 }} >
-                            <Typography variant="h5">
+                            <Typography variant="h5" sx={{
+                                fontFamily: 'monospace',
+                                letterSpacing: '.3rem', align: 'center', fontWeight: "bold"
+                            }}>
                                 {`${(user?.name)}`}
                             </Typography>
                         </Box>
                         <Divider />
+                        <ListItemButton
+                            component={Link}
+                            to="/profile"
+                            sx={{
+                                borderRadius: 1,
+                                px: 1,
+                                py: 0.5
+                            }}
+                        >
+                            <IconButton
+                                aria-label="Search"
+                                color="primary"
+                            >
+                                <PersonOutlineOutlinedIcon />
+
+                            </IconButton>
+                            <ListItemText
+                                primary={(
+                                    <Typography variant="h4" align=''>
+                                        Profile
+                                    </Typography>
+                                )}
+                            />
+                        </ListItemButton>
                         <Box sx={{ p: 1.5 }}>
                             <CustomButton
                                 color="primary"

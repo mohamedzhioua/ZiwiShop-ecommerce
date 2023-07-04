@@ -24,7 +24,7 @@ const Router = () => {
   return (
 
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />

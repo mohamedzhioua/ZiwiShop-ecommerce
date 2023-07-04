@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import Heading from "../Heading";
 import {
     Card,
@@ -225,7 +225,6 @@ const validationSchema = Yup.object().shape({
 const ProductForm = () => {
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
-    console.log("🚀 ~ file: ProductForm.jsx:227 ~ ProductForm ~ files:", files)
 
     const handleDrop = (newFiles) => {
         setFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -317,9 +316,11 @@ const ProductForm = () => {
             <Box sx={{ mt: 3, px: 2 }}>
 
                 <Card>
-                    <CardContent>
-                        <form onSubmit={handleSubmit}>
-                            <Card>
+                    <CardContent  >
+                        <form onSubmit={handleSubmit}     noValidate>
+                         
+                            <Stack spacing={3}>
+                            <Card  >
                                 <CardHeader title="Upload Images" />
                                 <CardContent>
                                     <FileDropzone
@@ -331,94 +332,84 @@ const ProductForm = () => {
                                     />
                                 </CardContent>
                             </Card>
-                            <FormControl fullWidth sx={{ my: 2 }}>
-                                <TextField
-                                    name="name"
-                                    label="Product Name"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.name && Boolean(errors.name)}
-                                    helperText={touched.name && errors.name}
-                                />
-                            </FormControl>
-                            <FormControl fullWidth sx={{ my: 2 }}>
-                                <TextField
-                                    name="description"
-                                    label="Product Description"
-                                    value={values.description}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.description && Boolean(errors.description)}
-                                    helperText={touched.description && errors.description}
-                                    multiline
-                                    rows={4}
-                                />
-                            </FormControl>
-                            <FormControl fullWidth sx={{ my: 2 }}>
-                                <TextField
-                                    name="price"
-                                    label="Price"
-                                    type="number"
-                                    value={values.price}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.price && Boolean(errors.price)}
-                                    helperText={touched.price && errors.price}
-                                />
-                            </FormControl>
-                            <FormControl fullWidth sx={{ my: 2 }}>
-                                <TextField
-                                    name="category"
-                                    label="Category"
-                                    value={values.category}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.category && Boolean(errors.category)}
-                                    helperText={touched.category && errors.category}
-                                    select
-                                    SelectProps={{ native: true }}
-                                    variant="outlined"
-                                >
-                                    <option value="">Select a category</option>
-                                    {categoryOptions.map((category) => (
-                                        <option
-                                            key={category.value}
-                                            value={category.value}
-                                        >
-                                            {category.label}
-                                        </option>
-                                    ))}
-                                </TextField>
-                            </FormControl>
-                            <FormControl fullWidth sx={{ my: 2 }}>
-                                <Select
-                                    name="colorId"
-                                    label="Color"
-                                    value={values.colorId}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.colorId && Boolean(errors.colorId)}
-                                    helperText={touched.colorId && errors.colorId}
-                                >
-                                    <MenuItem value="">Select a color</MenuItem>
-                                    {/* Render color options here */}
-                                </Select>
-                            </FormControl>
-                            <FormControl fullWidth sx={{ my: 2 }}>
-                                <Select
-                                    name="sizeId"
-                                    label="Size"
-                                    value={values.sizeId}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.sizeId && Boolean(errors.sizeId)}
-                                    helperText={touched.sizeId && errors.sizeId}
-                                >
-                                    <MenuItem value="">Select a size</MenuItem>
-                                    {/* Render size options here */}
-                                </Select>
-                            </FormControl>
+                            <TextField
+                                name="name"
+                                label="Product Name"
+                                value={values.name}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.name && Boolean(errors.name)}
+                                helperText={touched.name && errors.name}
+                            />
+
+                            <TextField
+                                name="description"
+                                label="Product Description"
+                                value={values.description}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.description && Boolean(errors.description)}
+                                helperText={touched.description && errors.description}
+                                multiline
+                                rows={4}
+                            />
+                            <TextField
+                                name="price"
+                                label="Price"
+                                type="number"
+                                value={values.price}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.price && Boolean(errors.price)}
+                                helperText={touched.price && errors.price}
+                            />
+
+                            <TextField
+                                name="category"
+                                label="Category"
+                                value={values.category}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.category && Boolean(errors.category)}
+                                helperText={touched.category && errors.category}
+                                select
+                                SelectProps={{ native: true }}
+                                variant="outlined"
+                            >
+                                <option value="">Select a category</option>
+                                {categoryOptions.map((category) => (
+                                    <option
+                                        key={category.value}
+                                        value={category.value}
+                                    >
+                                        {category.label}
+                                    </option>
+                                ))}
+                            </TextField>
+                            <Select
+                                name="colorId"
+                                label="Color"
+                                value={values.colorId}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.colorId && Boolean(errors.colorId)}
+                                helperText={touched.colorId && errors.colorId}
+                            >
+                                <MenuItem value="">Select a color</MenuItem>
+                                {/* Render color options here */}
+                            </Select>
+                            <Select
+                                name="sizeId"
+                                label="Size"
+                                value={values.sizeId}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.sizeId && Boolean(errors.sizeId)}
+                                helperText={touched.sizeId && errors.sizeId}
+                            >
+                                <MenuItem value="">Select a size</MenuItem>
+                                {/* Render size options here */}
+                            </Select>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -455,18 +446,20 @@ const ProductForm = () => {
                                     </div>
                                 }
                             />
+                        </Stack>
 
-                            <CustomButton
-                                type="submit"
-                                variant="contained"
-                                disabled={isSubmitting}
-                            >
-                                Submit
-                            </CustomButton>
-                        </form>
-                    </CardContent>
-                </Card>
-            </Box>
+                        <CustomButton
+                            type="submit"
+                            variant="contained"
+                            disabled={isSubmitting}
+                            sx={{ mt: 2 }}
+                        >
+                            Submit
+                        </CustomButton>
+                    </form>
+                </CardContent>
+            </Card>
+        </Box >
         </>
     );
 };
