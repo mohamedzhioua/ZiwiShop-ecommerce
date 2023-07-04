@@ -18,13 +18,13 @@ const ProductEdit = lazy(() => import("../pages/dashboard/Product/ProductEdit"))
 //size
 const SizeList = lazy(() => import("../pages/dashboard/Size/SizeList"));
 const SizeAdd = lazy(() => import("../pages/dashboard/Size/SizeAdd"));
-// const SizeEdit = lazy(() => import("../pages/dashboard/Size/SizeEdit"));
+const SizeEdit = lazy(() => import("../pages/dashboard/Size/SizeEdit"));
 
 const Router = () => {
   return (
 
     <Routes>
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />
@@ -43,7 +43,7 @@ const Router = () => {
         {/* size  */}
         <Route path="/dashboard/sizes" element={<SizeList />} />
         <Route path="/dashboard/sizes/add" element={<SizeAdd />} />
-        {/* <Route path="/dashboard/sizes/:sizeId/edit" element={<sizeEdit />} /> */}
+        <Route path="/dashboard/sizes/edit/:id" element={<SizeEdit />} />
 
         <Route path="/dashboard/overview" element={<Overview />} />
       </Route>

@@ -5,12 +5,42 @@ import AddIcon from '@mui/icons-material/Add';
 import { Box, Container } from '@mui/system';
 import { Divider } from '@mui/material';
 import SizeListTable from '../../../components/size/SizeListTable';
+import { useCallback, useEffect, useState } from 'react';
+ import { toast } from 'react-hot-toast';
+import { sizeApi } from '../../../api/sizeApi';
+
 
 function SizeList() {
-  const data = [1, 1]
+  const [sizes, setSizes] = useState([])
+
+  const getSizes = useCallback(async () => {
+    try {
+      toast.promise(
+        sizeApi.GetSizes(),
+        {
+          loading: 'Fetching data...',
+          error: 'Error while fetching data',
+        },
+        { id: 'fetching', success: { style: { display: 'none' } } }
+      )
+        .then((response) => {
+          setSizes(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    getSizes();
+  }, []);
+
   return (
     <>
-      <Container maxWidth='xl' >
+      <Container maxWidth='xl'>
         <Box
           sx={{
             display: 'flex',
@@ -21,7 +51,7 @@ function SizeList() {
             marginTop: '5rem',
           }}
         >
-          <Heading title={`Sizes (${data?.length})`} description="Manage sizes for your products" />
+          <Heading title={`Sizes (${sizes?.length})`} description="Manage sizes for your products" />
 
           <CustomButton
             component={Link}
@@ -36,7 +66,7 @@ function SizeList() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-        <SizeListTable />
+        <SizeListTable sizes={sizes}/>
       </Container >
     </>
   )

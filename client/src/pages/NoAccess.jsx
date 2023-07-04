@@ -20,7 +20,7 @@ const NotAuthorized = () => {
             <Typography variant="h3" gutterBottom>
                 You are not authorized to access this page.
             </Typography>
-            <CustomButton component={Link} to="/home" variant="outlined" color="primary">
+            <CustomButton component={Link} to="/" variant="outlined" color="primary">
                 Go Home
             </CustomButton>
         </Box>

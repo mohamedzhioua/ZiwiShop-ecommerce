@@ -20,16 +20,19 @@ class SizeApi {
   GetSizes() {
     return this.request('get', '/');
   }
+  GetOneSize(id) {
+       return this.request('get', `/${id}`);
+  }
 
   AddSize(data) {
     return this.request('post', '/add', data);
   }
 
-  UpdateSize(id,data) {
+  UpdateSize(id, data) {
     return this.request('patch', `/${id}`, data);
   }
 
-  
+
 }
 
 export const sizeApi = new SizeApi();

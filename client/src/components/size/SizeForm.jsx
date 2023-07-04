@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
@@ -7,10 +8,7 @@ import { sizeApi } from "../../api/sizeApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-const initialValues = {
-    name: "",
-    value: "",
-};
+
 const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Name must be at least 2 letters')
@@ -21,37 +19,48 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const SizeForm = () => {
+const SizeForm = (props) => {
+    const { initialData } = props
+
     const navigate = useNavigate()
+
+    const initialValues = initialData || {
+        name: "",
+        value: "",
+    };
     const onSubmitHandler = async (
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
         try {
-            const response =  sizeApi.AddSize(values);
-                       toast.promise(
-            response,
-            {
-              loading:'Adding data',
-              error: 'Error while adding the data',
-              success:'Added !'
-            },
-          );
-          response
-          .then(() => {
-            setStatus({ success: true });
-            setSubmitting(false);
-            navigate('/dashboard/sizes');
-          })
-          .catch((error) => {
-            setStatus({ success: false });
-            setErrors({ submit: error.message });
-            setSubmitting(false);
-          });
-      } catch (err) {
-        toast.error('Something went wrong!');
-      }
-       
+            let response;
+            if (initialData) {
+                 response = sizeApi.UpdateSize(initialData._id, values)
+            } else {
+                response = sizeApi.AddSize(values);
+            }
+            toast.promise(
+                response,
+                {
+                    loading: initialData ? 'data updated' : 'Adding data',
+                    error: initialData ? 'Error while updating the data' : 'Error while adding the data',
+                    success: initialData ? 'Size Updated' : ' Size Added !'
+                },
+            );
+            response
+                .then(() => {
+                    setStatus({ success: true });
+                    setSubmitting(false);
+                    navigate('/dashboard/sizes');
+                })
+                .catch((error) => {
+                    setStatus({ success: false });
+                    setErrors({ submit: error.message });
+                    setSubmitting(false);
+                });
+        } catch (err) {
+            toast.error('Something went wrong!');
+        }
     };
 
 
@@ -106,12 +115,14 @@ const SizeForm = () => {
                         size="large"
                         sx={{ mt: 2 }}
                     >
-                        {isSubmitting ? "loading..." : "Create"}
+                        {isSubmitting ? "loading..." : initialData ? "Save changes" : "Create"}
                     </CustomButton>
                 </form>
             </CardContent>
         </Card>
     )
 }
-
+SizeForm.propTypes = {
+    initialData: PropTypes.object,
+};
 export default SizeForm

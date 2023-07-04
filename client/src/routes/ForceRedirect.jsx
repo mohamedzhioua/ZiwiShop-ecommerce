@@ -8,7 +8,7 @@ const ForceRedirect = () => {
   const { IsLoggedIn } = useAuth()
 
   return IsLoggedIn ? (
-    <Navigate to="/home" replace />
+    <Navigate to="/" replace />
   ) : (
     <React.Suspense fallback={<LoadingSpinner />}>
       <Outlet />

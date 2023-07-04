@@ -29,7 +29,7 @@ function Navbar() {
     { name: "Overview", href: "/dashboard/overview" },
     { name: "Products", href: "/dashboard/products" },
     { name: "Sizes", href: "/dashboard/sizes" },
-    { name: "Home", href: "/home" },
+    { name: "Home", href: "/" },
     { name: "Profile", href: "/profile" },
 
 
@@ -77,7 +77,7 @@ function Navbar() {
             variant="h5"
             noWrap
             component={Link}
-            to={"/home"}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -152,7 +152,7 @@ function Navbar() {
             variant="h5"
             noWrap
             component={Link}
-            to={"/home"}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

@@ -3,13 +3,13 @@ import IconButton from '@mui/material/IconButton';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-const ActionsColumn = ({ item, onUpdate, onDelete }) => {
+const ActionsColumn = ({  onUpdate, onDelete }) => {
   const handleUpdate = () => {
-    onUpdate(item);
+    onUpdate();
   };
 
   const handleDelete = () => {
-    onDelete(item);
+    onDelete();
   };
 
   return (
@@ -24,8 +24,7 @@ const ActionsColumn = ({ item, onUpdate, onDelete }) => {
   );
 };
 ActionsColumn.propTypes = {
-  item: PropTypes.string.isRequired,
-  onUpdate: PropTypes.func.isRequired,
+   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
