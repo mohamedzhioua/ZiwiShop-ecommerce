@@ -7,7 +7,16 @@ module.exports = {
 
   GetSizes: async (req, res) => {
     try {
-      const sizes = await Size.find().lean();
+      const sizes = await Size.aggregate([
+        {
+          $project: {
+            id: "$_id",
+            name: 1,
+            value: 1,
+            _id: 0,
+          },
+        },
+      ]);
       return res.status(200).json(sizes);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -41,7 +50,7 @@ module.exports = {
 
   UpdateSize: async (req, res) => {
     try {
-      const { sizeId } = req.params;
+      const { id } = req.params;
       const { name, value } = req.body;
       const { errors, isValid } = SizeValidation(req.body);
       const { errors: paramsErrors, isValid: isParamsValid } =
@@ -54,7 +63,7 @@ module.exports = {
         return res.status(400).json(paramsErrors);
       }
 
-      const size = await Size.findById(sizeId);
+      const size = await Size.findById(id);
 
       if (!size) {
         return res.status(404).json({ error: "Size not found" });
@@ -64,6 +73,26 @@ module.exports = {
       size.value = value || size.value;
 
       await size.save();
+
+      return res.status(200).json(size);
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
+  //  ---------------------------------------- //GetOneSize//--------------------------- //
+
+  GetOneSize: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { errors, isValid } = IdParamsValidation(req.params);
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+      const size = await Size.findById(id).lean();
+
+      if (!size) {
+        return res.status(404).json({ error: "Size not found" });
+      }
 
       return res.status(200).json(size);
     } catch (error) {
