@@ -13,7 +13,13 @@ module.exports = {
             id: "$_id",
             name: 1,
             value: 1,
+            createdAt: 1,
             _id: 0,
+          },
+        },
+        {
+          $sort: {
+            createdAt: -1,
           },
         },
       ]);
@@ -35,7 +41,7 @@ module.exports = {
       const existingSize = await Size.findOne({ name });
       if (existingSize) {
         errors.name = "Size with the same name already exists";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
       }
       const newSize = await Size.create({
         name,
@@ -95,6 +101,30 @@ module.exports = {
       }
 
       return res.status(200).json(size);
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
+
+  //  ---------------------------------------- //DeleteSize//--------------------------- //
+
+  DeleteSize: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { errors, isValid } = IdParamsValidation(req.params);
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      const size = await Size.findById(id);
+
+      if (!size) {
+        return res.status(404).json({ error: "Size not found" });
+      }
+
+      await size.remove();
+
+      return res.status(200).json();
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }

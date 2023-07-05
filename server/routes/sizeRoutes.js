@@ -11,4 +11,6 @@ router.post("/add", SizeController.AddSize);
 
 router.patch("/:id", SizeController.UpdateSize);
 
+router.delete("/:id", SizeController.DeleteSize);
+
 module.exports = router;
