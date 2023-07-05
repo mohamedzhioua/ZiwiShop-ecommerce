@@ -19,6 +19,10 @@ const ProductEdit = lazy(() => import("../pages/dashboard/Product/ProductEdit"))
 const SizeList = lazy(() => import("../pages/dashboard/Size/SizeList"));
 const SizeAdd = lazy(() => import("../pages/dashboard/Size/SizeAdd"));
 const SizeEdit = lazy(() => import("../pages/dashboard/Size/SizeEdit"));
+//category
+const CategoryList = lazy(() => import("../pages/dashboard/Category/CategoryList"));
+const CategoryAdd = lazy(() => import("../pages/dashboard/Category/CategoryAdd"));
+const CategoryEdit = lazy(() => import("../pages/dashboard/Category/CategoryEdit"));
 
 const Router = () => {
   return (
@@ -44,7 +48,10 @@ const Router = () => {
         <Route path="/dashboard/sizes" element={<SizeList />} />
         <Route path="/dashboard/sizes/add" element={<SizeAdd />} />
         <Route path="/dashboard/sizes/edit/:id" element={<SizeEdit />} />
-
+        {/* category  */}
+        <Route path="/dashboard/categories" element={<CategoryList />} />
+        <Route path="/dashboard/categories/add" element={<CategoryAdd />} />
+        <Route path="/dashboard/categories/edit/:id" element={<CategoryEdit />} />
         <Route path="/dashboard/overview" element={<Overview />} />
       </Route>
 

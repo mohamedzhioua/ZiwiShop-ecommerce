@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Container } from '@mui/system';
 import { Divider } from '@mui/material';
-import SizeListTable from '../../../components/size/SizeListTable';
+import CategoryListTable from '../../../components/category/CategoryListTable';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { sizeApi } from '../../../api/sizeApi';
 import { useMounted } from '../../../hooks/use-mounted';
+import { categoryApi } from '../../../api/categoryApi';
 
 
 function SizeList() {
   const isMounted = useMounted()
-  const [sizes, setSizes] = useState([])
+  const [categories, setCategories] = useState([])
 
   const getSizes = useCallback(async () => {
     try {
       toast.promise(
-        sizeApi.GetSizes(),
+        categoryApi.GetCategories(),
         {
           loading: 'Fetching data...',
           error: 'Error while fetching data',
@@ -27,7 +27,7 @@ function SizeList() {
       )
         .then((response) => {
           if (isMounted()) {
-            setSizes(response);
+            setCategories(response);
           }
         })
         .catch((error) => {
@@ -57,11 +57,11 @@ function SizeList() {
             marginTop: '5rem',
           }}
         >
-          <Heading title={`Sizes (${sizes?.length})`} description="Manage sizes for your products" />
+          <Heading title={`Categories (${categories?.length})`} description="Manage Categories for your products" />
 
           <CustomButton
             component={Link}
-            to="/dashboard/sizes/add"
+            to="/dashboard/categories/add"
           >
             <AddIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Add New
           </CustomButton>
@@ -72,7 +72,7 @@ function SizeList() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-        <SizeListTable sizes={sizes} />
+        <CategoryListTable categories={categories} />
       </Container >
     </>
   )

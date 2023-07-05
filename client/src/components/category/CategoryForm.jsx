@@ -4,31 +4,28 @@ import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
 import { Card, CardContent, Stack } from "@mui/material";
 import CustomInput from "../CustomInput";
-import { sizeApi } from "../../api/sizeApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useMounted } from '../../hooks/use-mounted';
+import { categoryApi } from '../../api/categoryApi';
  
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Name must be at least 2 letters')
         .required('Name is required'),
-    value: Yup.string()
-        .min(1, 'Value must be at least 1 letter')
-        .required('Value is required'),
+    
 });
 
 
-const SizeForm = (props) => {
+const CategoryForm = (props) => {
     const { initialData } = props
     const isMounted = useMounted()
     const navigate = useNavigate()
 
     const initialValues = initialData || {
         name: "",
-        value: "",
-    };
+     };
     const onSubmitHandler = async (
         values,
         { setErrors, setStatus, setSubmitting }
@@ -36,9 +33,9 @@ const SizeForm = (props) => {
         try {
             let response;
             if (initialData) {
-                response = sizeApi.UpdateSize(initialData._id, values)
+                response = categoryApi.UpdateCategory(initialData._id, values)
             } else {
-                response = sizeApi.AddSize(values);
+                response = categoryApi.AddCategory(values);
             }
             toast.promise(
                 response,
@@ -53,7 +50,7 @@ const SizeForm = (props) => {
                     if (isMounted()) {
                         setStatus({ success: true });
                         setSubmitting(false);
-                        navigate('/dashboard/sizes');
+                        navigate('/dashboard/categories');
                     }
                 })
                 .catch((error) => {
@@ -91,8 +88,8 @@ const SizeForm = (props) => {
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
                         <CustomInput
                             name="name"
-                            label="Size Name*"
-                            placeholder="ex: Extra Large"
+                            label="Category Name*"
+                            placeholder="ex: BLAZERS"
                             type="text"
                             value={values.name}
                             onChange={handleChange}
@@ -101,17 +98,6 @@ const SizeForm = (props) => {
                             helperText={touched.name && errors.name}
                         />
 
-                        <CustomInput
-                            name="value"
-                            label="Size Value*"
-                            placeholder="ex: XL"
-                            type="text"
-                            value={values.value}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={touched.value && Boolean(errors.value)}
-                            helperText={touched.value && errors.value}
-                        />
                     </Stack>
                     <CustomButton
                         variant="contained"
@@ -127,7 +113,7 @@ const SizeForm = (props) => {
         </Card>
     )
 }
-SizeForm.propTypes = {
+CategoryForm.propTypes = {
     initialData: PropTypes.object,
 };
-export default SizeForm
+export default CategoryForm

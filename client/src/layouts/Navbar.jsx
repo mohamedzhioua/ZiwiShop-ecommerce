@@ -27,11 +27,11 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigationLinks = [
     { name: "Overview", href: "/dashboard/overview" },
-    { name: "Products", href: "/dashboard/products" },
     { name: "Sizes", href: "/dashboard/sizes" },
+    { name: "Categories", href: "/dashboard/categories" },
+    { name: "Products", href: "/dashboard/products" },
     { name: "Home", href: "/" },
-    { name: "Profile", href: "/profile" },
-
+ 
 
   ];
   const handleOpenNavMenu = (event) => {
