@@ -21,7 +21,7 @@ class SizeApi {
     return this.request('get', '/');
   }
   GetOneSize(id) {
-       return this.request('get', `/${id}`);
+    return this.request('get', `/${id}`);
   }
 
   AddSize(data) {
@@ -32,7 +32,9 @@ class SizeApi {
     return this.request('patch', `/${id}`, data);
   }
 
-
+  DeleteSize(id) {
+    return this.request('delete', `/${id}`);
+  }
 }
 
 export const sizeApi = new SizeApi();

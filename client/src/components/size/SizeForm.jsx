@@ -7,6 +7,8 @@ import CustomInput from "../CustomInput";
 import { sizeApi } from "../../api/sizeApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useMounted } from '../../hooks/use-mounted';
+import { useState } from 'react';
 
 
 const validationSchema = Yup.object().shape({
@@ -21,7 +23,7 @@ const validationSchema = Yup.object().shape({
 
 const SizeForm = (props) => {
     const { initialData } = props
-
+    const isMounted = useMounted()
     const navigate = useNavigate()
 
     const initialValues = initialData || {
@@ -35,7 +37,7 @@ const SizeForm = (props) => {
         try {
             let response;
             if (initialData) {
-                 response = sizeApi.UpdateSize(initialData._id, values)
+                response = sizeApi.UpdateSize(initialData._id, values)
             } else {
                 response = sizeApi.AddSize(values);
             }
@@ -49,14 +51,18 @@ const SizeForm = (props) => {
             );
             response
                 .then(() => {
-                    setStatus({ success: true });
-                    setSubmitting(false);
-                    navigate('/dashboard/sizes');
+                    if (isMounted()) {
+                        setStatus({ success: true });
+                        setSubmitting(false);
+                        navigate('/dashboard/sizes');
+                    }
                 })
                 .catch((error) => {
-                    setStatus({ success: false });
-                    setErrors({ submit: error.message });
-                    setSubmitting(false);
+                    if (isMounted()) {
+                        setStatus({ success: false });
+                        setErrors(error);
+                        setSubmitting(false);
+                    }
                 });
         } catch (err) {
             toast.error('Something went wrong!');
