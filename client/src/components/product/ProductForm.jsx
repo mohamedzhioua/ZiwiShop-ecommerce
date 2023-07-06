@@ -1,16 +1,11 @@
-import { Box, Stack } from "@mui/system";
-import Heading from "../Heading";
+import { Stack } from "@mui/system";
 import {
     Card,
     CardContent,
-    CardHeader,
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
+   Unstable_Grid2 as Grid,
     MenuItem,
     Select,
-    TextField,
+    Switch,
     Typography,
 } from "@mui/material";
 import FileDropzone from "../FileDropzone";
@@ -19,6 +14,9 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
+import { fileToBase64 } from "../../utils/file-to-base64";
+import CustomInput from "../CustomInput";
+
 const categoryOptions = [
     {
         value: 'bloomers',
@@ -225,11 +223,28 @@ const validationSchema = Yup.object().shape({
 const ProductForm = () => {
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleDrop = (newFiles) => {
+        if (files.length + newFiles.length > 5) {
+            setErrorMessage('Maximum number of images exceeded. Please select up to 5 images.');
+            return;
+        }
         setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-        formik.setFieldValue('images', [...formik.values.images, ...newFiles]);
+
+        const base64Promises = newFiles.map((file) => fileToBase64(file));
+        Promise.all(base64Promises)
+            .then((base64Results) => {
+                formik.setFieldValue('images', [
+                    ...formik.values.images,
+                    ...base64Results,
+                ]);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
+
 
 
     const handleRemove = (file) => {
@@ -246,13 +261,12 @@ const ProductForm = () => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
-        console.log("🚀 ~ file: ProductForm.jsx:248 ~ ProductForm ~ values:", values)
         try {
             const formData = new FormData();
             formData.append('category', values.category);
             formData.append('description', values.description);
-            values.images.forEach((file, index) => {
-                formData.append(`images[${index}]`, file);
+            values.images.forEach((base64, index) => {
+                formData.append(`images[${index}]`, base64);
             });
             formData.append('name', values.name);
             formData.append('price', values.price);
@@ -262,7 +276,6 @@ const ProductForm = () => {
             formData.append('isArchived', values.isArchived);
 
             // Make your API request here using the formData
-            console.log("🚀 ~ file: ProductForm.jsx:250 ~ ProductForm ~ formData:", formData)
 
             setStatus({ success: true });
             setSubmitting(false);
@@ -294,172 +307,232 @@ const ProductForm = () => {
 
     return (
         <>
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginLeft: "1rem",
-                    marginRight: "1rem",
-                    marginTop: "5rem",
-                }}
-            >
-                <Heading title="Create product" description="Add a new product" />
-            </Box>
-            <Divider
-                sx={{
-                    marginY: 2,
-                    marginLeft: "1rem",
-                    marginRight: "1rem",
-                }}
-            />
-            <Box sx={{ mt: 3, px: 2 }}>
-
-                <Card>
-                    <CardContent  >
-                        <form onSubmit={handleSubmit}     noValidate>
-                         
-                            <Stack spacing={3}>
-                            <Card  >
-                                <CardHeader title="Upload Images" />
-                                <CardContent>
+            <form onSubmit={handleSubmit} noValidate>
+                <Stack spacing={4}>
+                    <Card>
+                        <CardContent>
+                            <Grid container
+                                spacing={4}>
+                                <Grid xs={12}
+                                    md={4} mb={2}
+                                >
+                                    <Typography variant="h5" fontWeight="bold">
+                                        Upload Images
+                                    </Typography>
+                                </Grid>
+                                <Grid xs={12}
+                                    md={8}>
                                     <FileDropzone
-                                        accept={['image/*']}
+                                        caption="(SVG, JPG, PNG, or gif )"
+                                        accept={{ 'image/*': ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'] }}
                                         files={files}
                                         onDrop={handleDrop}
                                         onRemove={handleRemove}
                                         onRemoveAll={handleRemoveAll}
+                                        error={errorMessage}
                                     />
-                                </CardContent>
-                            </Card>
-                            <TextField
-                                name="name"
-                                label="Product Name"
-                                value={values.name}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.name && Boolean(errors.name)}
-                                helperText={touched.name && errors.name}
-                            />
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent >
 
-                            <TextField
-                                name="description"
-                                label="Product Description"
-                                value={values.description}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.description && Boolean(errors.description)}
-                                helperText={touched.description && errors.description}
-                                multiline
-                                rows={4}
-                            />
-                            <TextField
-                                name="price"
-                                label="Price"
-                                type="number"
-                                value={values.price}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.price && Boolean(errors.price)}
-                                helperText={touched.price && errors.price}
-                            />
-
-                            <TextField
-                                name="category"
-                                label="Category"
-                                value={values.category}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.category && Boolean(errors.category)}
-                                helperText={touched.category && errors.category}
-                                select
-                                SelectProps={{ native: true }}
-                                variant="outlined"
-                            >
-                                <option value="">Select a category</option>
-                                {categoryOptions.map((category) => (
-                                    <option
-                                        key={category.value}
-                                        value={category.value}
+                            <Grid 
+                            container
+                                spacing={3}>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <CustomInput
+                                        required
+                                        name="name"
+                                        label="Product Name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.name && Boolean(errors.name)}
+                                        helperText={touched.name && errors.name}
+                                    />
+                                </Grid>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <CustomInput
+                                        required
+                                        name="description"
+                                        label="Product Description"
+                                        value={values.description}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.description && Boolean(errors.description)}
+                                        helperText={touched.description && errors.description}
+                                        multiline
+                                        rows={4}
+                                    />
+                                </Grid>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <CustomInput
+                                        required
+                                        name="price"
+                                        label="Price"
+                                        type="number"
+                                        value={values.price}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.price && Boolean(errors.price)}
+                                        helperText={touched.price && errors.price}
+                                    />
+                                </Grid>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <CustomInput
+                                        required
+                                        name="category"
+                                        label="Category"
+                                        value={values.category}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.category && Boolean(errors.category)}
+                                        helperText={touched.category && errors.category}
+                                        select
+                                        SelectProps={{ native: true }}
+                                        variant="outlined"
                                     >
-                                        {category.label}
-                                    </option>
-                                ))}
-                            </TextField>
-                            <Select
-                                name="colorId"
-                                label="Color"
-                                value={values.colorId}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.colorId && Boolean(errors.colorId)}
-                                helperText={touched.colorId && errors.colorId}
-                            >
-                                <MenuItem value="">Select a color</MenuItem>
-                                {/* Render color options here */}
-                            </Select>
-                            <Select
-                                name="sizeId"
-                                label="Size"
-                                value={values.sizeId}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.sizeId && Boolean(errors.sizeId)}
-                                helperText={touched.sizeId && errors.sizeId}
-                            >
-                                <MenuItem value="">Select a size</MenuItem>
-                                {/* Render size options here */}
-                            </Select>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        name="isFeatured"
-                                        checked={values.isFeatured}
+                                        <option value="">Select a category</option>
+                                        {categoryOptions.map((category) => (
+                                            <option
+                                                key={category.value}
+                                                value={category.value}
+                                            >
+                                                {category.label}
+                                            </option>
+                                        ))}
+                                    </CustomInput>
+                                </Grid>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <Select
+                                        fullWidth
+                                        name="colorId"
+                                        label="Color"
+                                        value={values.colorId}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                    />
-                                }
-                                label={
-                                    <div>
-                                        Archived
-                                        <Typography variant="body2" color="textSecondary">
-                                            This product will appear on the store home page
-                                        </Typography>
-                                    </div>
-                                }
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        name="isArchived"
-                                        checked={values.isArchived}
+                                        error={touched.colorId && Boolean(errors.colorId)}
+                                        helperText={touched.colorId && errors.colorId}
+                                    >
+                                        <MenuItem value="">Select a color</MenuItem>
+                                        {/* Render color options here */}
+                                    </Select>
+                                </Grid>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <Select
+                                        fullWidth
+                                        name="sizeId"
+                                        label="Size"
+                                        value={values.sizeId}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                    />
-                                }
-                                label={
-                                    <div>
-                                        Archived
-                                        <Typography variant="body2" color="textSecondary">
-                                            This product will not appear anywhere in the store.
-                                        </Typography>
-                                    </div>
-                                }
-                            />
-                        </Stack>
+                                        error={touched.sizeId && Boolean(errors.sizeId)}
+                                        helperText={touched.sizeId && errors.sizeId}
+                                    >
+                                        <MenuItem value="">Select a size</MenuItem>
+                                        {/* Render size options here */}
+                                    </Select>
+                                </Grid>
+                            </Grid>
 
+
+                            <Stack
+                                spacing={3}
+                                sx={{ mt: 3 }}
+                            >
+                                <Stack
+                                    alignItems="center"
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    spacing={3}
+                                >
+                                    <Stack spacing={1}>
+                                        <Typography
+                                            gutterBottom
+                                            variant="subtitle1"
+                                        >
+                                            Archived                                        </Typography>
+                                        <Typography
+                                            color="text.secondary"
+                                            variant="body2"
+                                        >
+                                            This product will not appear anywhere in the store.
+
+                                        </Typography>
+                                    </Stack>
+                                    <Switch
+                                        checked={formik.values.isVerified}
+                                        color="primary"
+                                        edge="start"
+                                        name="isVerified"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.isVerified}
+                                    />
+                                </Stack>
+                                <Stack
+                                    alignItems="center"
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    spacing={3}
+                                >
+                                    <Stack spacing={1}>
+                                        <Typography
+                                            gutterBottom
+                                            variant="subtitle1"
+                                        >
+                                            Featured
+                                        </Typography>
+                                        <Typography
+                                            color="text.secondary"
+                                            variant="body2"
+                                        >
+                                            This product will appear on the home page
+                                        </Typography>
+                                    </Stack>
+                                    <Switch
+                                        checked={formik.values.hasDiscount}
+                                        color="primary"
+                                        edge="start"
+                                        name="hasDiscount"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.hasDiscount}
+                                    />
+                                </Stack>
+                            </Stack>
+
+
+
+                        </CardContent>
                         <CustomButton
                             type="submit"
                             variant="contained"
                             disabled={isSubmitting}
-                            sx={{ mt: 2 }}
                         >
                             Submit
                         </CustomButton>
-                    </form>
-                </CardContent>
-            </Card>
-        </Box >
+                    </Card>
+                </Stack >
+            </form >
         </>
     );
 };

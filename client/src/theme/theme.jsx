@@ -1,6 +1,5 @@
 import { tableCellClasses } from '@mui/material';
-import { palette } from '@mui/system';
-
+ 
 export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
@@ -233,7 +232,16 @@ export const getDesignTokens = (mode) => {
         styleOverrides: {
           root: {
             padding: '32px 24px',
-            borderRadius: 20
+            borderRadius: 20,
+          
+          }
+        }
+      },
+      MuiCardContent: {
+        styleOverrides: {
+          root: {
+            padding: '32px 24px',
+      
           }
         }
       },

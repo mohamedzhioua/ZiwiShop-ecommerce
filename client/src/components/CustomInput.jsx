@@ -11,11 +11,13 @@ const CustomInput = ({
   onBlur,
   error,
   helperText,
+  required
 }) => {
 
   return (
 
     <TextField
+    required={ required}
       label={label}
       placeholder={placeholder}
       type={type}
@@ -40,6 +42,7 @@ CustomInput.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   error: PropTypes.bool,
+  required: PropTypes.bool,
   helperText: PropTypes.string,
 };
 export default CustomInput;

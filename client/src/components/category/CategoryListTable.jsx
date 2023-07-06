@@ -8,7 +8,6 @@ import { simpleFilter } from '../../utils/filters';
 import { pagination } from '../../utils/paginations';
 import { useNavigate } from 'react-router-dom';
 import AlertModal from '../modals/AlertModal';
-import { sizeApi } from '../../api/sizeApi';
 import { toast } from 'react-hot-toast';
 import IconButton from '@mui/material/IconButton';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
