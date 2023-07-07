@@ -8,12 +8,7 @@ const BrandSchema = new Schema(
         trim: true,
         required: true,
       },
-      images: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: "image",
-        },
-      ],
+  
   },
   { timestamps: true }
 );
