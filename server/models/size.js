@@ -16,3 +16,4 @@ const SizeSchema = new Schema(
 );
 
 module.exports = mongoose.model("size", SizeSchema);
+ 

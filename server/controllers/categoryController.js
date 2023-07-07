@@ -1,6 +1,6 @@
 const CategoryValidation = require("../validator/CategoryValidation");
 const IdParamsValidation = require("../validator/IdParamsValidation");
-const Category = require("../models/Category");
+const Category = require("../models/category");
 
 module.exports = {
   //  ---------------------------------------- //GetCategories//--------------------------- //

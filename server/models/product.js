@@ -33,6 +33,11 @@ const ProductSchema = new Schema(
         ref: "image",
       },
     ],
+    quantity: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     isFeatured: {
       type: Boolean,
       default: false,

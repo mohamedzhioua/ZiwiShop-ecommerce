@@ -1,6 +1,6 @@
 const SizeValidation = require("../validator/SizeValidation");
 const IdParamsValidation = require("../validator/IdParamsValidation");
-const Size = require("../models/Size");
+const Size = require("../models/size");
 
 module.exports = {
   //  ---------------------------------------- //GetSizes//--------------------------- //
