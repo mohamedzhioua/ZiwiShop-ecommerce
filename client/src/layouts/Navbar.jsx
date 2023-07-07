@@ -29,6 +29,7 @@ function Navbar() {
     { name: "Overview", href: "/dashboard/overview" },
     { name: "Sizes", href: "/dashboard/sizes" },
     { name: "Categories", href: "/dashboard/categories" },
+    { name: "Brands", href: "/dashboard/brands" },
     { name: "Products", href: "/dashboard/products" },
     { name: "Home", href: "/" },
  

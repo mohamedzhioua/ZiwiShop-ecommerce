@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-properties */
 export const bytesToSize = (bytes, decimals = 2) => {
   if (bytes === 0) {
     return '0 Bytes';

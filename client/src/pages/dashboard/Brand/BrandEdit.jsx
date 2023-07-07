@@ -3,36 +3,36 @@ import { Box, Container } from '@mui/system';
 import Heading from '../../../components/Heading'
  import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
- import CategoryForm from '../../../components/category/CategoryForm';
- import { categoryApi } from '../../../api/categoryApi';
+  import { brandApi } from '../../../api/brandApi';
+import BrandForm from '../../../components/brand/BrandForm';
 
 
-const useCategory = (id) => {
-  const [category, setCategory] = useState(null);
+const useBrand = (id) => {
+  const [brand, setBrand] = useState(null);
 
-  const GetOneCategory = useCallback(async () => {
+  const GetOneBrand = useCallback(async () => {
     try {
-      const response = await categoryApi.GetOneCategory(id);
-      setCategory(response);
+      const response = await brandApi.GetOneBrand(id);
+      setBrand(response);
     } catch (err) {
       console.error(err);
     }
   }, [id]);
 
   useEffect(() => {
-    GetOneCategory();
+    GetOneBrand();
   },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 
-  return category;
+  return brand;
 };
-function CategoryEdit() {
+function BrandEdit() {
   const { id } = useParams();
-   const category = useCategory(id);
+   const brand = useBrand(id);
  
 
-  if (!category) {
+  if (!brand) {
     return null;
   }
 
@@ -51,7 +51,7 @@ function CategoryEdit() {
             marginTop: '5rem',
           }}
         >
-          <Heading title='Edit category'  description='Edit a category.' />
+          <Heading title='Edit brand'  description='Edit a brand.' />
         </Box>
         <Divider
           sx={{
@@ -59,11 +59,11 @@ function CategoryEdit() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-        <CategoryForm  initialData={category}/>
+        <BrandForm  initialData={brand}/>
       </Container >
 
     </>
   )
 }
 
-export default CategoryEdit
+export default BrandEdit
