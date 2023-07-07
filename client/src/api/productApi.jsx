@@ -16,7 +16,9 @@ class ProductApi {
         });
     });
   }
-
+  Getoptions() {
+    return this.request('get', '/options');
+  }
   GetSizes() {
     return this.request('get', '/');
   }

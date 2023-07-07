@@ -231,9 +231,7 @@ export const getDesignTokens = (mode) => {
       MuiCard: {
         styleOverrides: {
           root: {
-            padding: '32px 24px',
-            borderRadius: 20,
-          
+             borderRadius: 20,
           }
         }
       },

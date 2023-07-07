@@ -3,14 +3,14 @@ import { useDropzone } from 'react-dropzone';
 import { Box, Stack } from '@mui/system';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'; import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import CustomButton from './CustomButton';
-import { Avatar, IconButton, Link, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Avatar, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
+import { bytesToSize } from '../utils/bytes-to-size';
 
 const FileDropzone = (props) => {
   const {
     accept,
     files,
     onDrop,
-    onDropAccepted,
     onDropRejected,
     onRemove,
     onRemoveAll,
@@ -67,7 +67,7 @@ const FileDropzone = (props) => {
             }}
           >
             <IconButton>
-              <CloudUploadOutlinedIcon size="large" color='primary'/>
+              <CloudUploadOutlinedIcon size="large" color='primary' />
             </IconButton>
           </Avatar>
           <Stack spacing={1}>
@@ -133,12 +133,12 @@ const FileDropzone = (props) => {
                   />
                 </ListItemIcon>
                 <ListItemText
-                  primary={file.name}
+                  primary={file.name.split('.').pop()}
                   primaryTypographyProps={{
                     color: 'textPrimary',
                     variant: 'subtitle2'
                   }}
-                  secondary={file.size}
+                  secondary={bytesToSize(file.size)}
                 />
                 <Tooltip title="Remove">
                   <IconButton
@@ -183,15 +183,11 @@ const FileDropzone = (props) => {
 };
 
 FileDropzone.propTypes = {
-  accept: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
-  ]),
+  accept: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string.isRequired).isRequired),
   caption: PropTypes.string,
   error: PropTypes.string,
   files: PropTypes.array,
   onDrop: PropTypes.func,
-  onDropAccepted: PropTypes.func,
   onDropRejected: PropTypes.func,
   onRemove: PropTypes.func,
   onRemoveAll: PropTypes.func,
