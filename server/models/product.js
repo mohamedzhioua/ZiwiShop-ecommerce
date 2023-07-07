@@ -3,8 +3,12 @@ const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema(
   {
+    sku: {
+      type: String
+    },
     name: {
       type: String,
+      trim: true,
       required: true,
     },
     description: {
@@ -37,6 +41,11 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    brand: {
+      type: Schema.Types.ObjectId,
+      ref: 'brand',
+      default: null
     },
     isFeatured: {
       type: Boolean,
