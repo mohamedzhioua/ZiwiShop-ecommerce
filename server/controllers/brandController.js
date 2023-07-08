@@ -35,16 +35,16 @@ module.exports = {
       const { name } = req.body;
       const { errors, isValid } = BrandValidation(req.body);
       if (!isValid) {
-        res.status(404).json(errors);
+        res.status(400).json(errors);
       }
       const existingBrand = await Brand.findOne({ name });
       if (existingBrand) {
         errors.name = "Brand with the same name already exists";
-        return res.status(404).json(errors);
+        return res.status(400).json(errors);
       }
-      const newBrand= await Brand.create({
+      const newBrand = await Brand.create({
         name,
-       });
+      });
       return res.status(200).json(newBrand);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -70,11 +70,11 @@ module.exports = {
       const brand = await Brand.findById(id);
 
       if (!brand) {
-        return res.status(404).json({ error: "Brand not found" });
+        return res.status(400).json("Brand not found");
       }
 
       brand.name = name || brand.name;
- 
+
       await brand.save();
 
       return res.status(200).json(brand);
@@ -94,7 +94,7 @@ module.exports = {
       const brand = await Brand.findById(id).lean();
 
       if (!brand) {
-        return res.status(404).json({ error: "Brand not found" });
+        return res.status(400).json("Brand not found");
       }
 
       return res.status(200).json(brand);
@@ -116,7 +116,7 @@ module.exports = {
       const brand = await Brand.findById(id);
 
       if (!brand) {
-        return res.status(404).json({ error: "Brand not found" });
+        return res.status(400).json("Brand not found");
       }
 
       await brand.remove();

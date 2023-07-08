@@ -72,7 +72,7 @@ module.exports = {
       const size = await Size.findById(id);
 
       if (!size) {
-        return res.status(404).json({ error: "Size not found" });
+        return res.status(404).json("Size not found");
       }
 
       size.name = name || size.name;
@@ -97,7 +97,7 @@ module.exports = {
       const size = await Size.findById(id).lean();
 
       if (!size) {
-        return res.status(404).json({ error: "Size not found" });
+        return res.status(404).json("Size not found");
       }
 
       return res.status(200).json(size);
@@ -119,7 +119,7 @@ module.exports = {
       const size = await Size.findById(id);
 
       if (!size) {
-        return res.status(404).json({ error: "Size not found" });
+        return res.status(404).json("Size not found");
       }
 
       await size.remove();

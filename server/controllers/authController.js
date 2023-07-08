@@ -20,12 +20,12 @@ module.exports = {
 
     try {
       if (!isValid) {
-        res.status(404).json(errors);
+        res.status(400).json(errors);
       } else {
         await User.findOne({ email }).then(async (exist) => {
           if (exist) {
             errors.email = "Email already in use";
-            return res.status(404).json(errors);
+            return res.status(400).json(errors);
           } else {
             const hashedpassword = await bcrypt.hash(password, 8);
             await User.create({
@@ -48,18 +48,18 @@ module.exports = {
 
     try {
       if (!isValid) {
-        res.status(404).json(errors);
+        res.status(400).json(errors);
       } else {
         await User.findOne({ email }).then(async (user) => {
           if (!user) {
             errors.email =
               "Email does not exist ! please Enter the right Email or You can make account";
-            return res.status(404).json(errors);
+            return res.status(400).json(errors);
           }
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
             errors.password = "Wrong Password";
-            return res.status(404).json(errors);
+            return res.status(400).json(errors);
           } else {
             const token = signToken(user._id);
             res.status(200).json({
@@ -82,9 +82,7 @@ module.exports = {
     const { idToken } = req.body;
 
     if (!idToken) {
-      return res.status(400).json({
-        message: "ID Token is missing",
-      });
+      return res.status(400).json("ID Token is missing");
     }
 
     try {
@@ -127,15 +125,11 @@ module.exports = {
           });
         }
       } else {
-        return res.status(400).json({
-          message: "Google login failed. Please try again.",
-        });
+        return res.status(400).json("Google login failed. Please try again.");
       }
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
-        message: "An error occurred during Google login.",
-      });
+      return res.status(500).json("An error occurred during Google login.");
     }
   },
 
@@ -169,9 +163,7 @@ module.exports = {
           image,
         });
         if (!user) {
-          return res.status(400).json({
-            message: "User signup failed with Facebook",
-          });
+          return res.status(400).json("User signup failed with Facebook");
         }
         const token = signToken(user._id);
         res.status(200).json({
@@ -184,9 +176,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "Facebook login failed. Please try again later",
-      });
+      res.status(500).json("Facebook login failed. Please try again later");
     }
   },
 };

@@ -64,7 +64,7 @@ module.exports = {
       }
       const category = await Category.findById(id);
       if (!category) {
-        return res.status(404).json({ error: "Category not found" });
+        return res.status(400).json("Category not found" );
       }
       category.name = name || category.name;
       await category.save();
@@ -78,13 +78,13 @@ module.exports = {
   GetOneCategory: async (req, res) => {
     try {
       const { id } = req.params;
-       const { errors, isValid } = IdParamsValidation(req.params);
+      const { errors, isValid } = IdParamsValidation(req.params);
       if (!isValid) {
         return res.status(400).json(errors);
       }
       const category = await Category.findById(id).lean();
       if (!category) {
-        return res.status(404).json({ error: "Category not found" });
+        return res.status(400).json("Category not found");
       }
       return res.status(200).json(category);
     } catch (error) {
@@ -102,7 +102,7 @@ module.exports = {
       }
       const category = await Category.findById(id);
       if (!category) {
-        return res.status(404).json({ error: "Category not found" });
+        return res.status(400).json("Category not found");
       }
       await category.remove();
       return res.status(200).json();
