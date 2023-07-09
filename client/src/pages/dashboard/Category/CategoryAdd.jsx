@@ -18,7 +18,7 @@ function CategoryAdd() {
             marginTop: '5rem',
           }}
         >
-          <Heading title='Create size' description='Add a new size' />
+          <Heading title='Create Category' description='Add a new Category' />
         </Box>
         <Divider
           sx={{

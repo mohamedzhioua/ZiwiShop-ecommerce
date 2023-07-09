@@ -32,16 +32,18 @@ function SizeList() {
         })
         .catch((error) => {
           if (isMounted()) {
-          console.error(error);
+            console.error(error);
           }
         });
     } catch (err) {
       console.error(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     getSizes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -6,11 +6,40 @@ import { Box, Container } from '@mui/system';
 import { Divider } from '@mui/material';
 import CategoryListTable from '../../../components/category/CategoryListTable';
 import useCategory from '../../../hooks/useCategory';
+import { toast } from 'react-hot-toast';
+import { useCallback, useEffect } from 'react';
+import { categoryApi } from '../../../api/categoryApi';
 
 
 function CategoryList() {
-  const {categories} = useCategory()
- 
+  const { categories, saveCategories } = useCategory()
+
+  const getCategories = useCallback(async () => {
+    try {
+      toast.promise(
+        categoryApi.GetCategories(),
+        {
+          loading: 'Fetching data...',
+          error: 'Error while fetching data',
+        },
+        { id: 'fetching', success: { style: { display: 'none' } } }
+      )
+        .then((response) => {
+          saveCategories(response);
+
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

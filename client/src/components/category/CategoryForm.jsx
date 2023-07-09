@@ -16,26 +16,25 @@ import { useEffect, useState } from 'react';
 
 
 const CategoryForm = (props) => {
-    const { id } = props
+    const { initialData } = props
     const isMounted = useMounted()
     const navigate = useNavigate()
-    const { categories, setCategories } = useCategory()
+    const { categories, saveCategories } = useCategory()
     const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const initialData = categories?.find(category => category._id === id);
 
     const initialValues = initialData || {
         name: "",
         parentCategory: null
     };
     const initialCategoryId = initialData ? initialData.parentCategory : null;
- 
+
     useEffect(() => {
         if (initialCategoryId) {
-          const category = categories.find((item) => item.name === initialCategoryId);
-          setSelectedCategory(category);
+            const category = categories.find((item) => item.name === initialCategoryId);
+            setSelectedCategory(category);
         }
-      }, [initialCategoryId]);
+    }, [initialCategoryId]);
 
     const onSubmitHandler = async (
         values,
@@ -58,7 +57,7 @@ const CategoryForm = (props) => {
                 .then(() => {
                     if (isMounted()) {
                         setStatus({ success: true });
-                        setCategories((categories) => {
+                        saveCategories((categories) => {
                             if (initialData) {
                                 return categories.map((category) =>
                                     category._id === initialData._id ? { ...response } : category
@@ -134,7 +133,7 @@ const CategoryForm = (props) => {
                                 onChange={(event, newValue) => {
                                     setSelectedCategory(newValue);
                                     formik.setFieldValue('parentCategory', newValue ? newValue.id : '');
-                                  }}
+                                }}
                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                 onBlur={handleBlur}
                                 getOptionLabel={(option) => option.name}
@@ -168,6 +167,6 @@ const CategoryForm = (props) => {
     )
 }
 CategoryForm.propTypes = {
-    id: PropTypes.string,
+    initialData: PropTypes.object,
 };
 export default CategoryForm

@@ -16,7 +16,7 @@ import { categoryApi } from '../../api/categoryApi';
 
 
 const CategoryListTable = (props) => {
-    const { categories: initialSizes } = props;
+    const { categories: initialData } = props;
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
     const [query, setQuery] = useState('');
@@ -27,8 +27,8 @@ const CategoryListTable = (props) => {
     const [categoryId, setCategoryId] = useState('');
 
     useEffect(() => {
-        setCategories(initialSizes);
-    }, [initialSizes]);
+        setCategories(initialData);
+    }, [initialData]);
 
     const handleQueryChange = (event) => {
         setQuery(event.target.value);
@@ -84,8 +84,9 @@ const CategoryListTable = (props) => {
                     <Table sx={{ minWidth: 700 }}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Name</TableCell>
-                                 <TableCell align="right">Actions</TableCell>
+                                <TableCell>Category Name</TableCell>
+                                <TableCell>Category Parent Name</TableCell>
+                                <TableCell align="right">Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         {paginatedData.length === 0 ? (
@@ -103,7 +104,10 @@ const CategoryListTable = (props) => {
                                         <Fragment key={item._id}>
                                             <TableRow key={item._id} hover>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{item.name}</Typography>
+                                                    <Typography color="text.primary">{item.name }</Typography>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Typography color="text.primary">{item.parentCategory}</Typography>
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <IconButton onClick={() => handleUpdate(item._id)}>
