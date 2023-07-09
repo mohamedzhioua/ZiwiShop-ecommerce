@@ -9,7 +9,8 @@ import { useCallback, useEffect, useState } from "react"
 function ProductAdd() {
   const [options, setOptions] = useState({
     categories: [],
-    sizes: []
+    sizes: [],
+    brands:[]
   })
 
   const getOptions = useCallback(async () => {

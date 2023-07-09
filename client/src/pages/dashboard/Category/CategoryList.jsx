@@ -5,44 +5,12 @@ import AddIcon from '@mui/icons-material/Add';
 import { Box, Container } from '@mui/system';
 import { Divider } from '@mui/material';
 import CategoryListTable from '../../../components/category/CategoryListTable';
-import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useMounted } from '../../../hooks/use-mounted';
-import { categoryApi } from '../../../api/categoryApi';
+import useCategory from '../../../hooks/useCategory';
 
 
-function SizeList() {
-  const isMounted = useMounted()
-  const [categories, setCategories] = useState([])
-
-  const getSizes = useCallback(async () => {
-    try {
-      toast.promise(
-        categoryApi.GetCategories(),
-        {
-          loading: 'Fetching data...',
-          error: 'Error while fetching data',
-        },
-        { id: 'fetching', success: { style: { display: 'none' } } }
-      )
-        .then((response) => {
-          if (isMounted()) {
-            setCategories(response);
-          }
-        })
-        .catch((error) => {
-          if (isMounted()) {
-          console.error(error);
-          }
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  useEffect(() => {
-    getSizes();
-  }, []);
+function CategoryList() {
+  const categories = useCategory()
+ 
 
   return (
     <>
@@ -78,4 +46,4 @@ function SizeList() {
   )
 }
 
-export default SizeList
+export default CategoryList

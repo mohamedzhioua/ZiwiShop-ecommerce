@@ -4,6 +4,9 @@ import ForceRedirect from "./ForceRedirect";
 import NotFound from "../pages/NotFound";
 import NoAccess from "../pages/NoAccess";
 import ProtectedRoute from "./PrivateRoute";
+import { CategoryProvider } from "../contexts/CategoryContext"
+
+
 
 const Home = lazy(() => import("../pages/Home"));
 const Profile = lazy(() => import("../pages/Profile"));
@@ -52,9 +55,16 @@ const Router = () => {
         <Route path="/dashboard/sizes/add" element={<SizeAdd />} />
         <Route path="/dashboard/sizes/edit/:id" element={<SizeEdit />} />
         {/* category  */}
-        <Route path="/dashboard/categories" element={<CategoryList />} />
-        <Route path="/dashboard/categories/add" element={<CategoryAdd />} />
-        <Route path="/dashboard/categories/edit/:id" element={<CategoryEdit />} />
+        <Route path="/dashboard/categories" element={<CategoryProvider>
+          <CategoryList />
+        </CategoryProvider>} />
+        <Route path="/dashboard/categories/add" element={<CategoryProvider>
+          <CategoryAdd />
+        </CategoryProvider>} />
+        <Route path="/dashboard/categories/edit/:id" element={<CategoryProvider>
+          <CategoryEdit />
+        </CategoryProvider>} />
+
         {/* brand  */}
         <Route path="/dashboard/brands" element={<BrandList />} />
         <Route path="/dashboard/brands/add" element={<BrandAdd />} />

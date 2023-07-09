@@ -11,6 +11,7 @@ const CustomInput = ({
   onBlur,
   error,
   helperText,
+  multiline,
   required
 }) => {
 
@@ -29,6 +30,7 @@ const CustomInput = ({
       onBlur={onBlur}
       error={error}
       helperText={helperText}
+      multiline={multiline}
 
     />
   )
@@ -44,5 +46,6 @@ CustomInput.propTypes = {
   error: PropTypes.bool,
   required: PropTypes.bool,
   helperText: PropTypes.string,
+  multiline: PropTypes.string,
 };
 export default CustomInput;

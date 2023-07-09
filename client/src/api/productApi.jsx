@@ -1,13 +1,12 @@
 import axiosInstance from './axios';
 
 class ProductApi {
-  constructor() {
-    this.basePath = '/api/v1/product';
-  }
-
-  request(method, url, data) {
+  AddProduct(payload) {
     return new Promise((resolve, reject) => {
-      axiosInstance[method](`${this.basePath}${url}`, data)
+      axiosInstance
+        .post(`/api/v1/product/add`, payload, {
+          headers: { 'content-type': 'multipart/form-data' }
+        })
         .then((response) => {
           resolve(response.data);
         })
@@ -15,28 +14,63 @@ class ProductApi {
           reject(error.response.data);
         });
     });
+    
   }
-  Getoptions() {
-    return this.request('get', '/options');
+  Getoptions(payload) {
+    return new Promise((resolve, reject) => {
+      axiosInstance
+        .get(`/api/v1/product/options`, payload)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+    
   }
-  GetSizes() {
-    return this.request('get', '/');
-  }
-  GetOneSize(id) {
-    return this.request('get', `/${id}`);
-  }
+    
+  // constructor() {
+  //   this.basePath = '/api/v1/product';
+  //   this.config = {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //     },
+  //   }
+  // }
 
-  AddSize(data) {
-    return this.request('post', '/add', data);
-  }
+  // request(method, url, data) {
+  //   return new Promise((resolve, reject) => {
+  //     axiosInstance[method](`${this.basePath}${url}`, data ,this.config)
+  //       .then((response) => {
+  //         resolve(response.data);
+  //       })
+  //       .catch((error) => {
+  //         reject(error.response.data);
+  //       });
+  //   });
+  // }
+  // Getoptions() {
+  //   return this.request('get', '/options');
+  // }
+  // GetProducts() {
+  //   return this.request('get', '/');
+  // }
+  // GetOneProduct(id) {
+  //   return this.request('get', `/${id}`);
+  // }
 
-  UpdateSize(id, data) {
-    return this.request('patch', `/${id}`, data);
-  }
+  // AddProduct(data) {
+  //   return this.request('post', '/add', data);
+  // }
 
-  DeleteSize(id) {
-    return this.request('delete', `/${id}`);
-  }
+  // UpdateProduct(id, data) {
+  //   return this.request('patch', `/${id}`, data);
+  // }
+
+  // DeleteProduct(id) {
+  //   return this.request('delete', `/${id}`);
+  // }
 }
 
 export const productApi = new ProductApi();

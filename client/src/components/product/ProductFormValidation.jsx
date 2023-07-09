@@ -11,9 +11,12 @@ export const ProductvalidationSchema = Yup.object().shape({
     price: Yup.number()
         .min(1, 'Price must be greater than 0')
         .required('Price is required'),
-    colorId: Yup.string().min(1),
-    size: Yup.array()
+    quantity: Yup.number()
+        .min(1, 'quantity must be greater than 0')
+        .required('quantity is required'), 
+     sizes: Yup.array()
         .min(1, 'Please add at least one size'),
+    brand: Yup.string().required('category is required'),
     isFeatured: Yup.boolean().default(false).optional(),
     isArchived: Yup.boolean().default(false).optional(),
 });

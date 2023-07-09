@@ -2,11 +2,10 @@ import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
 import Heading from '../../../components/Heading'
 import CategoryForm from '../../../components/category/CategoryForm';
-
+ 
 
 function CategoryAdd() {
-
-  return (
+   return (
     <>
       <Container maxWidth='xl' >
         <Box

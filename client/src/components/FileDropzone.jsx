@@ -63,8 +63,10 @@ const FileDropzone = (props) => {
           <Avatar
             sx={{
               height: 64,
-              width: 64
+              width: 64,
+              backgroundColor: 'action.hover',
             }}
+            
           >
             <IconButton>
               <CloudUploadOutlinedIcon size="large" color='primary' />

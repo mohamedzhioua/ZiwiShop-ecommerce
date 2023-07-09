@@ -17,7 +17,9 @@ import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
 import { ProductvalidationSchema } from './ProductFormValidation';
-
+import { toast } from 'react-hot-toast';
+import { productApi } from '../../api/productApi';
+import { useMounted } from '../../hooks/use-mounted';
 
 
 const initialValues = {
@@ -26,8 +28,9 @@ const initialValues = {
     images: [],
     name: "",
     price: 0,
-    colorId: "",
-    size: [],
+    sizes: [],
+    brand: "",
+    quantity: 0,
     isFeatured: false,
     isArchived: false,
 };
@@ -37,14 +40,9 @@ const initialValues = {
 const ProductForm = (props) => {
     const { options } = props
     const navigate = useNavigate();
+    const isMounted = useMounted()
     const [files, setFiles] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [sizes, setSizes] = useState([]);
-
-    const handleSizeChange = (event, newSizes) => {
-        setSizes(newSizes);
-        formik.setFieldValue('size', newSizes);
-    };
 
     const handleDrop = (newFiles) => {
         if (files.length + newFiles.length > 5) {
@@ -75,31 +73,53 @@ const ProductForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
-        console.log("🚀 ~ file: ProductForm.jsx:91 ~ ProductForm ~ values:", values)
+
         try {
+            let response;
             const formData = new FormData();
             formData.append('category', values.category);
             formData.append('description', values.description);
-            values.images.forEach((base64, index) => {
-                formData.append(`images[${index}]`, base64);
+            values.images.forEach((image) => {
+                formData.append("images", image);
             });
             formData.append('name', values.name);
             formData.append('price', values.price);
-            formData.append('colorId', values.colorId);
-            formData.append('size', values.size);
+            values.sizes.forEach((size) => {
+                formData.append("sizes", size);
+            });
+            formData.append('brand', values.brand);
+            formData.append('quantity', values.quantity);
             formData.append('isFeatured', values.isFeatured);
             formData.append('isArchived', values.isArchived);
-
-            // Make your API request here using the formData
-
-            setStatus({ success: true });
-            setSubmitting(false);
-            //   navigate('/dashboard/products');
+            formData.forEach((value, key) => {
+                console.log(key + " " + value)
+            });
+            response = productApi.AddProduct(formData);
+            toast.promise(
+                response,
+                {
+                    loading: 'Adding data',
+                    error: 'Error while adding the data',
+                    success: ' Product Added !'
+                },
+            );
+            response
+                .then(() => {
+                    if (isMounted()) {
+                        setStatus({ success: true });
+                        setSubmitting(false);
+                        // navigate('/dashboard/sizes');
+                    }
+                })
+                .catch((error) => {
+                    if (isMounted()) {
+                        setStatus({ success: false });
+                        setErrors(error);
+                        setSubmitting(false);
+                    }
+                });
         } catch (err) {
-            console.error(err);
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-            setSubmitting(false);
+            toast.error('Something went wrong!');
         }
     };
 
@@ -172,24 +192,23 @@ const ProductForm = (props) => {
                                 </Grid>
                                 <Grid
                                     xs={12}
-                                    md={6}
+                                    md={3}
                                 >
                                     <CustomInput
                                         required
-                                        name="description"
-                                        label="Product Description"
-                                        value={values.description}
+                                        name="quantity"
+                                        label="quantity"
+                                        type="number"
+                                        value={values.quantity}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        error={touched.description && Boolean(errors.description)}
-                                        helperText={touched.description && errors.description}
-                                        multiline
-                                        rows={4}
+                                        error={touched.quantity && Boolean(errors.quantity)}
+                                        helperText={touched.quantity && errors.quantity}
                                     />
                                 </Grid>
                                 <Grid
                                     xs={12}
-                                    md={6}
+                                    md={3}
                                 >
                                     <CustomInput
                                         required
@@ -203,34 +222,31 @@ const ProductForm = (props) => {
                                         helperText={touched.price && errors.price}
                                     />
                                 </Grid>
-                                {/* <Grid
+                                <Grid
                                     xs={12}
                                     md={6}
                                 >
-                                    <CustomInput
-                                        required
-                                        name="category"
-                                        label="Category"
-                                        value={values.category}
-                                        onChange={handleChange}
+                                    <Autocomplete
+                                        options={options.brands}
+                                        value={values.brand}
+                                        onChange={(event, newValue) => {
+                                            formik.setFieldValue('brand', newValue);
+                                        }}
                                         onBlur={handleBlur}
-                                        error={touched.category && Boolean(errors.category)}
-                                        helperText={touched.category && errors.category}
-                                        select
-                                        SelectProps={{ native: true }}
-                                        variant="outlined"
-                                    >
-                                        <option value="">Select a category</option>
-                                        {options?.categories.map((category) => (
-                                            <option
-                                                key={category.value}
-                                                value={category.value}
-                                            >
-                                                {category.label}
-                                            </option>
-                                        ))}
-                                    </CustomInput>
-                                </Grid> */}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                required
+                                                name="brand"
+                                                label="Brand Name"
+                                                placeholder='Dior'
+                                                error={touched.brand && Boolean(errors.brand)}
+                                                helperText={touched.brand && errors.brand}
+                                            />
+                                        )}
+                                    />
+
+                                </Grid>
                                 <Grid
                                     xs={12}
                                     md={6}
@@ -262,8 +278,10 @@ const ProductForm = (props) => {
                                     <Autocomplete
                                         multiple
                                         options={options.sizes}
-                                        value={sizes}
-                                        onChange={handleSizeChange}
+                                        value={values.sizes}
+                                        onChange={(event, newSizes) => {
+                                            formik.setFieldValue('sizes', newSizes);
+                                        }}
                                         renderTags={(value, getTagProps) =>
                                             value.map((option, index) => (
                                                 <Chip
@@ -271,9 +289,8 @@ const ProductForm = (props) => {
                                                     variant="outlined"
                                                     label={option}
                                                     onDelete={() => {
-                                                        const newSizes = [...sizes];
-                                                        newSizes.splice(index, 1);
-                                                        setSizes(newSizes);
+                                                        const newSizes = values.sizes.filter((size) => size !== option);
+                                                        formik.setFieldValue('sizes', newSizes);
                                                     }}
                                                     {...getTagProps({ index })}
                                                 />
@@ -283,14 +300,31 @@ const ProductForm = (props) => {
                                             <TextField
                                                 {...params}
                                                 required
-                                                name="size"
+                                                name="sizes"
                                                 label="Size"
-                                                error={touched.size && Boolean(errors.size)}
-                                                helperText={touched.size && errors.size}
+                                                error={touched.sizes && Boolean(errors.sizes)}
+                                                helperText={touched.sizes && errors.sizes}
                                             />
                                         )}
                                     />
 
+                                </Grid>
+                                <Grid
+                                    xs={12}
+                                    md={6}
+                                >
+                                    <CustomInput
+                                        required
+                                        name="description"
+                                        label="Product Description"
+                                        value={values.description}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.description && Boolean(errors.description)}
+                                        helperText={touched.description && errors.description}
+                                        multiline={"multiline"}
+                                        rows={4}
+                                    />
                                 </Grid>
                             </Grid>
 
@@ -310,7 +344,8 @@ const ProductForm = (props) => {
                                             gutterBottom
                                             variant="subtitle1"
                                         >
-                                            Archived                                        </Typography>
+                                            Archived
+                                        </Typography>
                                         <Typography
                                             color="text.secondary"
                                             variant="body2"
@@ -320,12 +355,12 @@ const ProductForm = (props) => {
                                         </Typography>
                                     </Stack>
                                     <Switch
-                                        checked={formik.values.isVerified}
+                                        checked={formik.values.isArchived}
                                         color="primary"
                                         edge="start"
-                                        name="isVerified"
+                                        name="isArchived"
                                         onChange={formik.handleChange}
-                                        value={formik.values.isVerified}
+                                        value={formik.values.isArchived}
                                     />
                                 </Stack>
                                 <Stack
@@ -349,18 +384,15 @@ const ProductForm = (props) => {
                                         </Typography>
                                     </Stack>
                                     <Switch
-                                        checked={formik.values.hasDiscount}
+                                        checked={formik.values.isFeatured}
                                         color="primary"
                                         edge="start"
-                                        name="hasDiscount"
+                                        name="isFeatured"
                                         onChange={formik.handleChange}
-                                        value={formik.values.hasDiscount}
+                                        value={formik.values.isFeatured}
                                     />
                                 </Stack>
                             </Stack>
-
-
-
                         </CardContent>
                         <Stack sx={{ p: 3 }} >
                             <CustomButton
