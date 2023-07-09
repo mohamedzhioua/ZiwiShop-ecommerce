@@ -9,7 +9,7 @@ import useCategory from '../../../hooks/useCategory';
 
 
 function CategoryList() {
-  const categories = useCategory()
+  const {categories} = useCategory()
  
 
   return (

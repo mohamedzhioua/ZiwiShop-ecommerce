@@ -53,7 +53,7 @@ const CategoryListTable = (props) => {
             setLoading(true);
             await categoryApi.DeleteCategory(categoryId);
             toast.success('Size deleted.');
-            setCategories(categories.filter((item) => item.id !== categoryId));
+            setCategories(categories.filter((item) => item._id !== categoryId));
         } catch (error) {
             toast.error('Something went wrong.');
         } finally {
@@ -100,16 +100,16 @@ const CategoryListTable = (props) => {
                             <TableBody>
                                 {paginatedData.map((item) => {
                                     return (
-                                        <Fragment key={item.id}>
-                                            <TableRow key={item.id} hover>
+                                        <Fragment key={item._id}>
+                                            <TableRow key={item._id} hover>
                                                 <TableCell>
                                                     <Typography color="text.primary">{item.name}</Typography>
                                                 </TableCell>
                                                 <TableCell align="right">
-                                                    <IconButton onClick={() => handleUpdate(item.id)}>
+                                                    <IconButton onClick={() => handleUpdate(item._id)}>
                                                         <EditOutlinedIcon fontSize="small" />
                                                     </IconButton>
-                                                    <IconButton onClick={() => handleDelete(item.id)} >
+                                                    <IconButton onClick={() => handleDelete(item._id)} >
                                                         <DeleteOutlineOutlinedIcon fontSize="small" />
                                                     </IconButton>
                                                 </TableCell>

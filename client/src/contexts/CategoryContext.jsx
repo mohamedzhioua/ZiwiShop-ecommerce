@@ -4,11 +4,11 @@ import { categoryApi } from '../api/categoryApi';
 import { toast } from 'react-hot-toast';
 
 
- const CategoryContext = createContext();
+const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
     const [categories, setCategories] = useState([]);
-  
+
     const getCategories = useCallback(async () => {
         try {
             toast.promise(
@@ -20,7 +20,7 @@ export function CategoryProvider({ children }) {
                 { id: 'fetching', success: { style: { display: 'none' } } }
             )
                 .then((response) => {
-                      setCategories(response);
+                    setCategories(response);
 
                 })
                 .catch((error) => {
@@ -33,10 +33,10 @@ export function CategoryProvider({ children }) {
 
     useEffect(() => {
         getCategories();
-    }, []);
+    }, [getCategories]);
 
     return (
-        <CategoryContext.Provider value={categories}>
+        <CategoryContext.Provider value={{categories,setCategories}}>
             {children}
         </CategoryContext.Provider>
     );
