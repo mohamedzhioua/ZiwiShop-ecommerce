@@ -12,9 +12,9 @@ module.exports = {
   try {
     const options = {};
 
-    const getSizeNames = Size.find({}, { name: 1, _id: 0 }).lean().exec();
-    const getCategoryNames = Category.find({}, { name: 1, _id: 0 }).lean().exec();
-    const getBrandNames = Brand.find({}, { name: 1, _id: 0 }).lean().exec();
+    const getSizeNames = Size.find({}, { name: 1, _id: 1 }).lean().exec();
+    const getCategoryNames = Category.find({}, { name: 1, _id: 1 }).lean().exec();
+    const getBrandNames = Brand.find({}, { name: 1, _id: 1 }).lean().exec();
   
     const [sizeNames, categoryNames, brandNames] = await Promise.all([
       getSizeNames,
@@ -30,5 +30,20 @@ module.exports = {
     return res.status(500).send("Error: " + error.message);
   }
 },
- 
+AddProduct: async (req, res) => {
+  try {
+    const { name ,description,price,category,sizes,images,quantity,brand,isFeatured,isArchived} = req.body;
+    const { errors, isValid } = ProductValidation(req.body);
+    if (!isValid) {
+     return res.status(400).json(errors);
+    }
+    const newProduct = await Product.create({
+      name,description,price,category,sizes,images,quantity,brand,isArchived,isFeatured
+    });
+  
+     return res.status(200).json(newProduct);
+  } catch (error) {
+    return res.status(500).send("Error: " + error.message);
+  }
+},
 };

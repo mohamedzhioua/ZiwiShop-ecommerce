@@ -1,4 +1,5 @@
 const { uploadToCloudinary } = require('../utils/cloudinaryHandler');
+const sharp = require('sharp');
 
 exports.resizeProductImages = async (req, res, next) => {
     try {
@@ -18,7 +19,7 @@ exports.resizeProductImages = async (req, res, next) => {
   
       await Promise.all(
         req.files.images.map(async (file, i) => {
-          const path = `${process.env.APP_NAME}/products/${req.product.id}/`;
+          const path = `${process.env.APP_NAME}/products/`;
   
           const processedImage = await sharp(file.buffer)
             .toFormat('webp')
@@ -26,6 +27,7 @@ exports.resizeProductImages = async (req, res, next) => {
             .toBuffer();
   
           const filePath = await uploadToCloudinary(processedImage, path);
+          console.log("🚀 ~ file: resizeProductImages.js:30 ~ req.files.images.map ~ filePath:", filePath)
   
           req.body.images.push(filePath.url);
         })

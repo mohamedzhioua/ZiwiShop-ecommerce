@@ -44,7 +44,7 @@ module.exports = function ProductValidation(data) {
 
   // Images checks
   if (!Array.isArray(data.images) || data.images.length === 0) {
-    errors.image = "You must choose at least 1 image";
+    errors.images = "You must choose at least 1 image";
   } else if (data.images.length > 5) {
     errors.images = "You can only choose up to 5 images";
   }
