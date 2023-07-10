@@ -7,6 +7,7 @@ const { uploadProductImages } = require("../middlewares/multerMiddleware");
 router.get("/options", ProductController.Getoptions);
 
 // router.get("/:id",ProductController);
+router.get("/",ProductController.GetProducts);
 
 router.post(
   "/add",
