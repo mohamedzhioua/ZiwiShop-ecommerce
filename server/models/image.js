@@ -10,12 +10,7 @@ const ImageSchema = new Schema(
     cloudinary_id: {
       type: String,
       required: true,
-    },
-    product: {
-      type: Schema.Types.ObjectId,
-      ref: "product",
-      required: true,
-    },
+    }
   },
   { timestamps: true }
 );

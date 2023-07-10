@@ -5,6 +5,8 @@ const CategoryController = require("../controllers/categoryController");
 
 router.get("/", CategoryController.GetCategories);
 
+router.get("/categoryParents", CategoryController.GetCategoryParents);
+
 router.get("/:id", CategoryController.GetOneCategory);
 
 router.post("/add", CategoryController.AddCategory);
