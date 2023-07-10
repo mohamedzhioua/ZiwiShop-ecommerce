@@ -18,8 +18,8 @@ import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
 import { ProductvalidationSchema } from './ProductFormValidation';
 import { toast } from 'react-hot-toast';
-import { productApi } from '../../api/productApi';
 import { useMounted } from '../../hooks/use-mounted';
+import { productApi } from '../../api/productApi';
 
 
 const initialValues = {
@@ -73,7 +73,7 @@ const ProductForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
-
+ 
         try {
             let response;
             const formData = new FormData();
@@ -227,12 +227,14 @@ const ProductForm = (props) => {
                                     md={6}
                                 >
                                     <Autocomplete
-                                        options={options.brands}
-                                        value={values.brand}
+                                        options={options.brands?.map((item) => ({ name: item.name, id: item._id }))}
+                                        // value={values.brand}
                                         onChange={(event, newValue) => {
-                                            formik.setFieldValue('brand', newValue);
+                                            formik.setFieldValue('brand', newValue ? newValue.id : '');
                                         }}
+                                        isOptionEqualToValue={(option, value) => option.value === value.value}
                                         onBlur={handleBlur}
+                                        getOptionLabel={(option) => option.name}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
@@ -251,13 +253,18 @@ const ProductForm = (props) => {
                                     xs={12}
                                     md={6}
                                 >
+                                    {/*                                  
                                     <Autocomplete
-                                        options={options.categories}
-                                        value={values.category}
-                                        onChange={(event, newValue) => {
-                                            formik.setFieldValue('category', newValue);
-                                        }}
-                                        onBlur={handleBlur}
+                                        options={options.categories.flatMap((category) => [
+                                            { category: category.name, childCategories: '' },
+                                            ...category.childCategories.map((childCategory) => ({
+                                                category: category.name,
+                                                childCategories: childCategory.name
+                                            }))
+                                        ])}
+                                        groupBy={(option) => option.category}
+                                        getOptionLabel={(option) => option.childCategories}
+                                        sx={{ width: 300 }}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
@@ -268,8 +275,33 @@ const ProductForm = (props) => {
                                                 helperText={touched.category && errors.category}
                                             />
                                         )}
+                                    /> */}
+                                    <Autocomplete
+                                        options={options.categories.flatMap((category) => [
+                                            { category: category.name, childCategories: '' },
+                                            ...category.childCategories.map((childCategory) => ({
+                                                category: category.name,
+                                                childCategories: { name: childCategory.name, id: childCategory._id },
+                                            })),
+                                        ])}
+                                        groupBy={(option) => option.category}
+                                        getOptionLabel={(option) => option.childCategories.name}
+                                        sx={{ width: 300 }}
+                                        onChange={(event, value) => {
+                                            formik.setFieldValue('category', value.childCategories.id);
+                                        }}
+                                        isOptionEqualToValue={(option, value) => option.childCategories.id === value.childCategories.id}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                required
+                                                name="category"
+                                                label="Category"
+                                                error={formik.touched.category && Boolean(formik.errors.category)}
+                                                helperText={formik.touched.category && formik.errors.category}
+                                            />
+                                        )}
                                     />
-
                                 </Grid>
                                 <Grid
                                     xs={12}
@@ -277,19 +309,21 @@ const ProductForm = (props) => {
                                 >
                                     <Autocomplete
                                         multiple
-                                        options={options.sizes}
-                                        value={values.sizes}
-                                        onChange={(event, newSizes) => {
-                                            formik.setFieldValue('sizes', newSizes);
+                                        options={options.sizes.map((item) => ({ name: item.name, id: item._id }))}
+                                        onChange={(event, newValue) => {
+                                            formik.setFieldValue('sizes', newValue.map((size) => size.id));
                                         }}
+                                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                                        onBlur={handleBlur}
+                                        getOptionLabel={(option) => option.name}
                                         renderTags={(value, getTagProps) =>
                                             value.map((option, index) => (
                                                 <Chip
                                                     key={index}
                                                     variant="outlined"
-                                                    label={option}
+                                                    label={option.name}
                                                     onDelete={() => {
-                                                        const newSizes = values.sizes.filter((size) => size !== option);
+                                                        const newSizes = values.sizes.filter((size) => size !== option.id);
                                                         formik.setFieldValue('sizes', newSizes);
                                                     }}
                                                     {...getTagProps({ index })}
@@ -308,6 +342,7 @@ const ProductForm = (props) => {
                                         )}
                                     />
 
+
                                 </Grid>
                                 <Grid
                                     xs={12}
@@ -322,7 +357,7 @@ const ProductForm = (props) => {
                                         onBlur={handleBlur}
                                         error={touched.description && Boolean(errors.description)}
                                         helperText={touched.description && errors.description}
-                                        multiline={"multiline"}
+                                        multiline={true}
                                         rows={4}
                                     />
                                 </Grid>

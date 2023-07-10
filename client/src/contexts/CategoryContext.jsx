@@ -1,20 +1,35 @@
 import PropTypes from "prop-types";
-import { createContext, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
+import { categoryApi } from "../api/categoryApi";
 
 
 const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
     const [categories, setCategories] = useState([]);
+    const [categoryParents,setCategoryParents]=useState([])
 
-
+    const GetCategoryParents = useCallback(async () => {
+        try {
+          const response = await categoryApi.GetCategoryParents()
+          setCategoryParents(response);
+        } catch (error) {
+          console.error(error);
+        }
+      }, []);
+      
+      useEffect(() => {
+        GetCategoryParents();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+      
     const saveCategories = (updatedCategories) => {
         setCategories(updatedCategories);
     };
-
+   
 
     return (
-        <CategoryContext.Provider value={{ categories, saveCategories }}>
+        <CategoryContext.Provider value={{ categories, saveCategories ,categoryParents}}>
             {children}
         </CategoryContext.Provider>
     );

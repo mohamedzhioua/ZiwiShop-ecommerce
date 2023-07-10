@@ -20,6 +20,9 @@ class CategoryApi {
   GetCategories() {
     return this.request('get', '/');
   }
+  GetCategoryParents() {
+    return this.request('get', '/categoryParents');
+  }
   GetOneCategory(id) {
     return this.request('get', `/${id}`);
   }

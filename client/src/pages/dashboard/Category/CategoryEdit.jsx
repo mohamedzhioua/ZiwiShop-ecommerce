@@ -1,13 +1,14 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
 import Heading from '../../../components/Heading'
- import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
- import CategoryForm from '../../../components/category/CategoryForm';
- import { categoryApi } from '../../../api/categoryApi';
+import CategoryForm from '../../../components/category/CategoryForm';
+import { categoryApi } from '../../../api/categoryApi';
+import useCategory from '../../../hooks/useCategory';
 
 
-const useCategory = (id) => {
+const useCategorie = (id) => {
   const [category, setCategory] = useState(null);
 
   const GetOneCategory = useCallback(async () => {
@@ -29,14 +30,15 @@ const useCategory = (id) => {
 };
 function CategoryEdit() {
   const { id } = useParams();
-   const category = useCategory(id);
- 
+  const category = useCategorie(id);
+  const { categoryParents } = useCategory();
+
 
   if (!category) {
     return null;
   }
 
- 
+
 
   return (
     <>
@@ -51,7 +53,7 @@ function CategoryEdit() {
             marginTop: '5rem',
           }}
         >
-          <Heading title='Edit category'  description='Edit a category.' />
+          <Heading title='Edit category' description='Edit a category.' />
         </Box>
         <Divider
           sx={{
@@ -59,7 +61,7 @@ function CategoryEdit() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-        <CategoryForm  initialData={category}/>
+        <CategoryForm initialData={category} categoryParents={categoryParents} />
       </Container >
 
     </>

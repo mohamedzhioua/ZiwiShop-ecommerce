@@ -2,9 +2,13 @@ import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
 import Heading from '../../../components/Heading'
 import CategoryForm from '../../../components/category/CategoryForm';
+import useCategory from '../../../hooks/useCategory';
+ 
  
 
 function CategoryAdd() {
+  const { categoryParents } = useCategory();
+
    return (
     <>
       <Container maxWidth='xl' >
@@ -26,7 +30,7 @@ function CategoryAdd() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-        <CategoryForm />
+        <CategoryForm   categoryParents={categoryParents}/>
       </Container >
 
     </>

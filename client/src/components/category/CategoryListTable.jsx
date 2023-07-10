@@ -18,7 +18,7 @@ import { categoryApi } from '../../api/categoryApi';
 const CategoryListTable = (props) => {
     const { categories: initialData } = props;
     const [categories, setCategories] = useState([]);
-    const navigate = useNavigate();
+     const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
