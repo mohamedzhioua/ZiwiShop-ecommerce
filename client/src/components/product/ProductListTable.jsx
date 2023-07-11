@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types';
-import { Box, Card, IconButton, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Box, Card, IconButton, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import { Scrollbar } from '../Scrollbar';
 import TableSearchBar from '../TableSearchBar';
+import AlertModal from '../modals/AlertModal';
 
 
 
@@ -41,132 +42,100 @@ const ProductListTable = (props) => {
     setLimit(parseInt(event.target.value, 10));
   };
   return (
-    <Card >
-      <TableSearchBar 
-      handleQueryChange={handleQueryChange} 
-      query={query}
-       /> 
-      <Scrollbar>
-           <Table sx={{ minWidth: 700}}>
+    <>
+      <AlertModal
+      // isOpen={open}
+      // onClose={() => setOpen(false)}
+      // onConfirm={onDelete}
+      // loading={loading}
+      />
+      <Card >
+        <TableSearchBar
+          handleQueryChange={handleQueryChange}
+          query={query}
+        />
+        <Scrollbar>
+          <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                </TableCell>
-                <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  Inventory
-                </TableCell>
-                <TableCell>
-                  Details
-                </TableCell>
-                <TableCell>
-                  Attributes
-                </TableCell>
-                <TableCell>
-                  Price
-                </TableCell>
-                <TableCell align="right">
-                  Actions
-                </TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Parent Category</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {paginatedProducts.map((product) => {
-                // const isProductSelected = selectedProducts.includes(product.id);
+            {paginatedProducts.length === 0 ? (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={7} align="center">
+                    <Typography color="text.primary">No result</Typography>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            ) : (
+              <TableBody>
+                {paginatedProducts.map((product) => {
 
-                return (
-                  <TableRow
-                    hover
-                    key={product.id}
-                  // selected={isProductSelected}
-                  >
-                    <TableCell>
-                      <Box
-                        sx={{
-                          alignItems: 'center',
-                          display: 'flex'
-                        }}
-                      >
-                        {product.image
-                          ? (
-                            <Box
-                            // sx={{
-                            //   alignItems: 'center',
-                            //   backgroundColor: 'background.default',
-                            //   display: 'flex',
-                            //   height: 100,
-                            //   justifyContent: 'center',
-                            //   overflow: 'hidden',
-                            //   width: 100,
-                            //   '& img': {
-                            //     height: 'auto',
-                            //     width: '100%'
-                            //   }
-                            // }}
-                            >
+                  return (
+                    <TableRow hover key={product._id}   >
+                      <TableCell>
+                        <Box
+                          sx={{
+                            alignItems: 'center',
+                            display: 'flex',
+                          }}
+                        >
+                          {product.images && product.images.length > 0 ? (
+                            <Box>
                               <img
                                 alt="Product"
-                                src={product.image}
+                                src={product.images[0].url}
+                                style={{
+                                  height: 100,
+                                  width: 100,
+                                  objectFit: 'cover',
+                                }}
                               />
                             </Box>
-                          )
-                          : (
+                          ) : (
                             <Box
-                            // sx={{
-                            //   alignItems: 'center',
-                            //   backgroundColor: 'background.default',
-                            //   display: 'flex',
-                            //   height: 100,
-                            //   justifyContent: 'center',
-                            //   width: 100
-                            // }}
+                              sx={{
+                                alignItems: 'center',
+                                backgroundColor: 'background.default',
+                                display: 'flex',
+                                height: 100,
+                                justifyContent: 'center',
+                                width: 100,
+                              }}
                             >
                               <BrokenImageOutlinedIcon fontSize="small" />
                             </Box>
                           )}
-                        <Link
-                          // color="textPrimary"
-                          component={Link}
-                          to="#"
-                          underline="none"
-                          sx={{ ml: 2 }}
-                          variant="subtitle2"
-                        >
-                          {product.name}
-                        </Link>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      {/* {getInventoryLabel(product.inventoryType)} */}
-                    </TableCell>
-                    <TableCell>
-                      {product.quantity}
-                      {' '}
-                      in stock
-                      {product.variants > 1 && ` in ${product.variants} variants`}
-                    </TableCell>
-                    <TableCell>
-                      {product.attributes.map((attr) => attr)}
-                    </TableCell>
-                    <TableCell>
-                      {numeral(product.price)
-                        .format(`${product.currency}0,0.00`)}
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <EditOutlinedIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton>
-                        <DeleteOutlineOutlinedIcon fontSize="small" />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
+                        </Box>
+                      </TableCell>
+                      <TableCell> {product.name}</TableCell>
+                      <TableCell>{product.category[0].name}</TableCell>
+                      <TableCell>{product.category[0].parentCategory}</TableCell>
+                      <TableCell>{numeral(product.price).format('$0,0.00')}</TableCell>
+                      <TableCell>{product.quantity}</TableCell>
+                      <TableCell align="right">
+                        <IconButton>
+                          <EditOutlinedIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton>
+                          <DeleteOutlineOutlinedIcon fontSize="small" />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            )}
           </Table>
+
           <TablePagination
             component="div"
             count={filteredProducts.length}
@@ -176,8 +145,9 @@ const ProductListTable = (props) => {
             rowsPerPage={limit}
             rowsPerPageOptions={[5, 10, 25]}
           />
-       </Scrollbar>
-    </Card>
+        </Scrollbar>
+      </Card>
+    </>
   );
 };
 
