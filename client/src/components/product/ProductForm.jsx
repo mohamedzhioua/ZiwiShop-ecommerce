@@ -20,6 +20,7 @@ import { ProductvalidationSchema } from './ProductFormValidation';
 import { toast } from 'react-hot-toast';
 import { useMounted } from '../../hooks/use-mounted';
 import { productApi } from '../../api/productApi';
+import { flattenCategories } from "../../utils/flattenCategories"
 
 
 const initialValues = {
@@ -34,6 +35,7 @@ const initialValues = {
     isFeatured: false,
     isArchived: false,
 };
+
 
 
 
@@ -228,10 +230,10 @@ const ProductForm = (props) => {
                                 >
                                     <Autocomplete
                                         options={options.brands?.map((item) => ({ name: item.name, id: item._id }))}
-                                        // value={values.brand}
+                                        value={values.brand ? options.brands.find(brand => brand._id === values.brand) : null}
                                         onChange={(event, newValue) => {
                                             formik.setFieldValue('brand', newValue ? newValue.id : '');
-                                        }}
+                                         }}
                                         isOptionEqualToValue={(option, value) => option.value === value.value}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
@@ -249,48 +251,17 @@ const ProductForm = (props) => {
                                     />
 
                                 </Grid>
-                                <Grid
-                                    xs={12}
-                                    md={6}
-                                >
-                                    {/*                                  
+                                <Grid xs={12} md={6}>
+
                                     <Autocomplete
-                                        options={options.categories.flatMap((category) => [
-                                            { category: category.name, childCategories: '' },
-                                            ...category.childCategories.map((childCategory) => ({
-                                                category: category.name,
-                                                childCategories: childCategory.name
-                                            }))
-                                        ])}
+                                        options={flattenCategories(options.categories)}
                                         groupBy={(option) => option.category}
-                                        getOptionLabel={(option) => option.childCategories}
-                                        sx={{ width: 300 }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                required
-                                                name="category"
-                                                label="Category"
-                                                error={touched.category && Boolean(errors.category)}
-                                                helperText={touched.category && errors.category}
-                                            />
-                                        )}
-                                    /> */}
-                                    <Autocomplete
-                                        options={options.categories.flatMap((category) => [
-                                            { category: category.name, childCategories: '' },
-                                            ...category.childCategories.map((childCategory) => ({
-                                                category: category.name,
-                                                childCategories: { name: childCategory.name, id: childCategory._id },
-                                            })),
-                                        ])}
-                                        groupBy={(option) => option.category}
-                                        getOptionLabel={(option) => option.childCategories.name}
-                                        sx={{ width: 300 }}
+                                        getOptionLabel={(option) => option.childCategories ? option.childCategories.name : ''}
                                         onChange={(event, value) => {
-                                            formik.setFieldValue('category', value.childCategories.id);
-                                        }}
-                                        isOptionEqualToValue={(option, value) => option.childCategories.id === value.childCategories.id}
+                                            formik.setFieldValue('category', value?.childCategories?.id);
+                                         }}
+                                        value={values.category ? flattenCategories(options.categories).find(option => option.childCategories.id === values.category) : null}
+                                        isOptionEqualToValue={(option, value) => option.childCategories && option.childCategories.id === value.childCategories.id}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
@@ -312,7 +283,8 @@ const ProductForm = (props) => {
                                         options={options.sizes.map((item) => ({ name: item.name, id: item._id }))}
                                         onChange={(event, newValue) => {
                                             formik.setFieldValue('sizes', newValue.map((size) => size.id));
-                                        }}
+                                         }}
+                                        value={values.sizes ? options.sizes.find(size => size._id === values.sizes) : null}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
