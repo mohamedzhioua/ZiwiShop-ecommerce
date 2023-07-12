@@ -31,10 +31,11 @@ const CategoryForm = (props) => {
         isLeaf: false,
     };
     const initialCategoryId = initialData ? initialData.parentCategory : null;
-
-    useEffect(() => {
+    
+     useEffect(() => {
         if (initialCategoryId) {
             const category = categoryParents?.find((item) => item.name === initialCategoryId);
+            console.log("🚀 ~ file: CategoryForm.jsx:39 ~ useEffect ~ category:", category)
             setSelectedCategory(category);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +45,7 @@ const CategoryForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
-        try {
+         try {
             let response;
             if (initialData) {
                 response = categoryApi.UpdateCategory(initialData._id, values);

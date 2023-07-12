@@ -7,25 +7,24 @@ import { useCallback, useEffect, useState } from "react"
 
 
 function ProductAdd() {
+
   const [options, setOptions] = useState({
     categories: [],
     sizes: [],
-    brands:[]
-  })
-
-  const getOptions = useCallback(async () => {
-    try {
+    brands: []
+})
+const getOptions = useCallback(async () => {
+  try {
       const result = await productApi.Getoptions()
       setOptions(result)
-    } catch (err) {
+  } catch (err) {
       console.error(err);
-    }
-  }, []);
+  }
+}, []);
 
-  useEffect(() => {
-    getOptions();
-  }, [getOptions]);
-  
+useEffect(() => {
+  getOptions();
+}, []);
   return (
     <>
       <Container maxWidth='xl' >
@@ -48,7 +47,7 @@ function ProductAdd() {
             marginRight: "1rem",
           }}
         />
-        <ProductForm options={options} />
+        <ProductForm options={options}/>
       </Container >
     </>
   )

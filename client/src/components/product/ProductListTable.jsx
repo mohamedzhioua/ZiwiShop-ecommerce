@@ -1,7 +1,7 @@
 
 import PropTypes from 'prop-types';
 import { Box, Card, IconButton, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import numeral from 'numeral';
@@ -28,6 +28,7 @@ const ProductListTable = (props) => {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
+  const navigate = useNavigate();
 
 
   const handleQueryChange = (event) => {
@@ -41,6 +42,11 @@ const ProductListTable = (props) => {
   const onRowsPerPageChange = (event) => {
     setLimit(parseInt(event.target.value, 10));
   };
+
+  const handleUpdate = (id) => {
+    navigate(`/dashboard/products/edit/${id}`);
+  };
+
   return (
     <>
       <AlertModal
@@ -122,7 +128,7 @@ const ProductListTable = (props) => {
                       <TableCell>{numeral(product.price).format('$0,0.00')}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
                       <TableCell align="right">
-                        <IconButton>
+                        <IconButton onClick={() => handleUpdate(product._id)}>
                           <EditOutlinedIcon fontSize="small" />
                         </IconButton>
                         <IconButton>

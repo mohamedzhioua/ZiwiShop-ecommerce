@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import FileDropzone from "../FileDropzone";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
@@ -23,28 +23,52 @@ import { productApi } from '../../api/productApi';
 import { flattenCategories } from "../../utils/flattenCategories"
 
 
-const initialValues = {
-    category: "",
-    description: "",
-    images: [],
-    name: "",
-    price: 0,
-    sizes: [],
-    brand: "",
-    quantity: 0,
-    isFeatured: false,
-    isArchived: false,
-};
-
-
-
 
 const ProductForm = (props) => {
-    const { options } = props
+    const { initialData, options } = props
+
     const navigate = useNavigate();
     const isMounted = useMounted()
     const [files, setFiles] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [selectedBrand, setSelectedBrand] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedSizes, setSelectedSizes] = useState([]);
+
+
+    const initialValues = initialData || {
+        category: "",
+        description: "",
+        images: [],
+        name: "",
+        price: 0,
+        sizes: [],
+        brand: "",
+        quantity: 0,
+        isFeatured: false,
+        isArchived: false,
+    };
+
+    const initialBrandId = initialData ? initialData.brand : null;
+    const initialCategoryId = initialData ? initialData.category : null;
+    const initialSizesId = initialData ? initialData.sizes : null;
+
+    useEffect(() => {
+        if (initialBrandId) {
+            const brand = options.brands?.find((item) => item._id === initialBrandId);
+            setSelectedBrand(brand);
+        }
+        if (initialCategoryId) {
+            const category = flattenCategories(options?.categories).find(option => option.childCategories.id === initialCategoryId)
+            setSelectedCategory(category);
+        }
+        if (initialSizesId) {
+            const sizes = options.sizes.filter(size => initialSizesId.includes(size._id));
+            setSelectedSizes(sizes);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialBrandId, initialCategoryId, initialSizesId]);
 
     const handleDrop = (newFiles) => {
         if (files.length + newFiles.length > 5) {
@@ -58,7 +82,6 @@ const ProductForm = (props) => {
         ]);
 
     };
-
 
 
     const handleRemove = (file) => {
@@ -75,7 +98,7 @@ const ProductForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
- 
+
         try {
             let response;
             const formData = new FormData();
@@ -228,12 +251,14 @@ const ProductForm = (props) => {
                                     xs={12}
                                     md={6}
                                 >
+
                                     <Autocomplete
                                         options={options.brands?.map((item) => ({ name: item.name, id: item._id }))}
-                                        value={values.brand ? options.brands.find(brand => brand._id === values.brand) : null}
+                                        value={selectedBrand}
                                         onChange={(event, newValue) => {
+                                            setSelectedBrand(newValue);
                                             formik.setFieldValue('brand', newValue ? newValue.id : '');
-                                         }}
+                                        }}
                                         isOptionEqualToValue={(option, value) => option.value === value.value}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
@@ -256,11 +281,12 @@ const ProductForm = (props) => {
                                     <Autocomplete
                                         options={flattenCategories(options.categories)}
                                         groupBy={(option) => option.category}
+                                        value={selectedCategory}
                                         getOptionLabel={(option) => option.childCategories ? option.childCategories.name : ''}
-                                        onChange={(event, value) => {
-                                            formik.setFieldValue('category', value?.childCategories?.id);
-                                         }}
-                                        value={values.category ? flattenCategories(options.categories).find(option => option.childCategories.id === values.category) : null}
+                                        onChange={(event, newValue) => {
+                                            setSelectedCategory(newValue);
+                                            formik.setFieldValue('category', newValue ? newValue?.childCategories?.id : '');
+                                        }}
                                         isOptionEqualToValue={(option, value) => option.childCategories && option.childCategories.id === value.childCategories.id}
                                         renderInput={(params) => (
                                             <TextField
@@ -282,9 +308,10 @@ const ProductForm = (props) => {
                                         multiple
                                         options={options.sizes.map((item) => ({ name: item.name, id: item._id }))}
                                         onChange={(event, newValue) => {
+                                            setSelectedSizes(newValue)
                                             formik.setFieldValue('sizes', newValue.map((size) => size.id));
-                                         }}
-                                        value={values.sizes ? options.sizes.find(size => size._id === values.sizes) : null}
+                                        }}
+                                        value={selectedSizes}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
@@ -418,6 +445,8 @@ const ProductForm = (props) => {
     );
 };
 ProductForm.propTypes = {
-    options: PropTypes.object.isRequired
+    initialData: PropTypes.object,
+    options: PropTypes.array.required,
 };
+
 export default ProductForm;

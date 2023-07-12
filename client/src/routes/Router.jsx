@@ -49,7 +49,7 @@ const Router = () => {
         {/* products  */}
         <Route path="/dashboard/products" element={<ProductList />} />
         <Route path="/dashboard/products/add" element={<ProductAdd />} />
-        <Route path="/dashboard/products/:productId/edit" element={<ProductEdit />} />
+        <Route path="/dashboard/products/edit/:id"  element={<ProductEdit />} />
         {/* size  */}
         <Route path="/dashboard/sizes" element={<SizeList />} />
         <Route path="/dashboard/sizes/add" element={<SizeAdd />} />
