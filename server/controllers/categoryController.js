@@ -53,7 +53,11 @@ module.exports = {
         errors.name = "Category with the same name already exists";
         return res.status(400).json(errors);
       }
-      const newCategory = await Category.create({ name, parentCategory ,isLeaf});
+      const newCategory = await Category.create({
+        name,
+        parentCategory,
+        isLeaf,
+      });
       return res.status(200).json(newCategory);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -78,11 +82,13 @@ module.exports = {
       if (!category) {
         return res.status(400).json("Category not found");
       }
+       
       const updatedCategory = await Category.findByIdAndUpdate(
         id,
         {
-          name: name || category.name,
-          parentCategory: parentCategory || category.parentCategory,
+          name,
+          parentCategory : parentCategory === "" ? null : parentCategory,
+          isLeaf,
         },
         { new: true }
       );
@@ -117,33 +123,33 @@ module.exports = {
           category.parentCategory = parentCategory.name;
         }
       }
-    // try {
-    //   const { id } = req.params;
-    //   const { errors, isValid } = IdParamsValidation(req.params);
-    //   if (!isValid) {
-    //     return res.status(400).json(errors);
-    //   }
+      // try {
+      //   const { id } = req.params;
+      //   const { errors, isValid } = IdParamsValidation(req.params);
+      //   if (!isValid) {
+      //     return res.status(400).json(errors);
+      //   }
 
-    //   const category = await Category.findById(id)
-    //     .populate("parentCategory", "name isLeaf") // Include the 'isLeaf' field in the population
-    //     .lean();
+      //   const category = await Category.findById(id)
+      //     .populate("parentCategory", "name isLeaf") // Include the 'isLeaf' field in the population
+      //     .lean();
 
-    //   if (!category) {
-    //     return res.status(400).json("Category not found");
-    //   }
+      //   if (!category) {
+      //     return res.status(400).json("Category not found");
+      //   }
 
-    //   if (category.parentCategory) {
-    //     if (category.parentCategory.isLeaf) {
-    //       const parentCategory = await Category.findById(
-    //         category.parentCategory._id // Use the '_id' field to query the parent category
-    //       ).lean();
-    //       if (parentCategory) {
-    //         category.parentCategory = parentCategory.name;
-    //       }
-    //     } else {
-    //       category.parentCategory = category.parentCategory.name;
-    //     }
-    //   }
+      //   if (category.parentCategory) {
+      //     if (category.parentCategory.isLeaf) {
+      //       const parentCategory = await Category.findById(
+      //         category.parentCategory._id // Use the '_id' field to query the parent category
+      //       ).lean();
+      //       if (parentCategory) {
+      //         category.parentCategory = parentCategory.name;
+      //       }
+      //     } else {
+      //       category.parentCategory = category.parentCategory.name;
+      //     }
+      //   }
 
       return res.status(200).json(category);
     } catch (error) {
