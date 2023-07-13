@@ -29,6 +29,9 @@ const ProductForm = (props) => {
     const navigate = useNavigate();
     const isMounted = useMounted()
     const [files, setFiles] = useState([]);
+    console.log("🚀 ~ file: ProductForm.jsx:32 ~ ProductForm ~ files:", files)
+    const [updatefiles, setUpdateFiles] = useState([]);
+    console.log("🚀 ~ file: ProductForm.jsx:34 ~ ProductForm ~ updatefiles:", updatefiles)
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedBrand, setSelectedBrand] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -66,13 +69,13 @@ const ProductForm = (props) => {
             setSelectedSizes(sizes);
         }
         if (initialData?.images) {
-            setFiles(initialData.images)
+            setUpdateFiles(initialData.images)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialBrandId, initialCategoryId, initialSizesId]);
 
     const handleDrop = (newFiles) => {
-        if (files.length + newFiles.length > 5) {
+           if (files.length + newFiles.length >  5) {
             setErrorMessage('Maximum number of images exceeded. Please select up to 5 images.');
         } else {
             setFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -88,6 +91,9 @@ const ProductForm = (props) => {
         setFiles((prevFiles) =>
             prevFiles.filter((_file) => _file.path !== file.path)
         );
+        setUpdateFiles((prevFiles) =>
+        prevFiles.filter((_file) =>_file.url !== file.url)
+    );
     };
 
     const handleRemoveAll = () => {
@@ -183,14 +189,15 @@ const ProductForm = (props) => {
                                 <Grid xs={12}
                                     md={8}>
                                     <FileDropzone
-                                        caption="(SVG, JPG, PNG, or gif )"
-                                        // accept={{ 'image/*': ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'] }}
+                                        caption="(SVG, JPG, PNG, or gif)"
                                         accept={{ "image/*": [] }}
                                         files={files}
+                                        updatefiles={updatefiles}
                                         onDrop={handleDrop}
                                         onRemove={handleRemove}
                                         onRemoveAll={handleRemoveAll}
                                         error={touched.images && errors.images ? errors.images : errorMessage}
+                                        id={initialData?._id}
                                     />
                                 </Grid>
                             </Grid>

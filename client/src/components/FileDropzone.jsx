@@ -5,7 +5,17 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'; i
 import CustomButton from './CustomButton';
 import { Avatar, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
 import { bytesToSize } from '../utils/bytes-to-size';
-
+import { productApi } from '../api/productApi';
+import { toast } from 'react-hot-toast';
+ 
+  const DeleteProductImage = async (id,item) => {
+  try {
+       await productApi.DeleteProductImage(id,item);
+      toast.success('Image deleted.');
+   } catch (error) {
+      toast.error('Something went wrong.');
+  }  
+};
 const FileDropzone = (props) => {
   const {
     accept,
@@ -17,6 +27,8 @@ const FileDropzone = (props) => {
     onUpload,
     error,
     caption,
+    updatefiles,
+    id,
     ...other
   } = props;
 
@@ -117,7 +129,7 @@ const FileDropzone = (props) => {
           <List>
             {files?.map((file) => (
               <ListItem
-                key={file?.cloudinary_id ? file?.cloudinary_id: file?.path }
+                key={file?.path}
                 sx={{
                   border: 1,
                   borderColor: 'divider',
@@ -129,14 +141,14 @@ const FileDropzone = (props) => {
               >
                 <ListItemIcon>
                   <img
-                    src={file?.cloudinary_id ?  file?.url : URL.createObjectURL(file)}
-                    alt={file?.name || file?.cloudinary_id}
+                    src={URL.createObjectURL(file)}
+                    alt={file?.name}
                     style={{ width: 50, height: 50 }}
                   />
 
                 </ListItemIcon>
                 <ListItemText
-                  primary={file?.name?.split('.').pop() || file?.url?.split('/').pop()}
+                  primary={file?.name?.split('.').pop()}
                   primaryTypographyProps={{
                     color: 'textPrimary',
                     variant: 'subtitle2'
@@ -181,6 +193,52 @@ const FileDropzone = (props) => {
           </Box>
         </Box>
       )}
+      {updatefiles?.length > 0 && (
+        <Box sx={{ mt: 2 }}>
+          <List>
+            {updatefiles?.map((item) => (
+              <ListItem
+                key={item?.cloudinary_id}
+                sx={{
+                  border: 1,
+                  borderColor: 'divider',
+                  borderRadius: 1,
+                  '& + &': {
+                    mt: 1
+                  }
+                }}
+              >
+                <ListItemIcon>
+                  <img
+                    src={item?.url}
+                    alt={item?.cloudinary_id}
+                    style={{ width: 50, height: 50 }}
+                  />
+
+                </ListItemIcon>
+                <ListItemText
+                  primary={item?.url?.split('/').pop()}
+                  primaryTypographyProps={{
+                    color: 'textPrimary',
+                    variant: 'subtitle2'
+                  }}
+                />
+                <Tooltip title="Remove">
+                  <IconButton
+                    edge="end"
+                    onClick={() => {
+                      onRemove && onRemove(item)
+                      DeleteProductImage(id,item)
+                    }}
+                  >
+                    <CloseOutlinedIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
     </div>
   );
 };
@@ -190,16 +248,18 @@ FileDropzone.propTypes = {
   caption: PropTypes.string,
   error: PropTypes.string,
   files: PropTypes.array,
+  updatefiles: PropTypes.array,
   onDrop: PropTypes.func,
   onDropRejected: PropTypes.func,
   onRemove: PropTypes.func,
   onRemoveAll: PropTypes.func,
   onUpload: PropTypes.func,
-
+  id:PropTypes.string,
 };
 
 FileDropzone.defaultProps = {
-  files: []
+  files: [],
+  updatefiles: []
 };
 
 export default FileDropzone;

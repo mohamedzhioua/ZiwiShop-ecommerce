@@ -42,6 +42,10 @@ class ProductApi {
   DeleteProduct(id) {
     return this.request('delete', `/${id}`);
   }
+  DeleteProductImage(id, data) {
+    return this.request('patch', `/${id}/image`, data);
+  }
+
 }
 
 export const productApi = new ProductApi();
