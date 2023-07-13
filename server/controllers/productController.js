@@ -6,32 +6,12 @@ const Category = require("../models/category");
 const Brand = require("../models/brand");
 const Image = require("../models/image");
 const { removeFromCloudinary } = require("../utils/cloudinaryHandler");
+const handleImages = require("../utils/imageHandler");
+const createCategories = require("../utils/categoriesHandler");
 
-function createCategories(categories, parentCategory = null) {
-  const categoryList = [];
-  let category;
-  if (parentCategory === null) {
-    category = categories.filter((cat) => cat.parentCategory === null);
-  } else {
-    category = categories.filter((cat) =>
-      parentCategory.equals(cat.parentCategory)
-    );
-  }
-
-  for (let cate of category) {
-    categoryList.push({
-      _id: cate._id,
-      name: cate.name,
-      parentCategory: cate.parentCategory,
-      childCategories: createCategories(categories, cate._id),
-    });
-  }
-
-  return categoryList;
-}
 module.exports = {
   //  ---------------------------------------- //GetCategories&sizes&Brands//--------------------------- //
- 
+
   Getoptions: async (req, res) => {
     try {
       const options = {};
@@ -75,13 +55,7 @@ module.exports = {
         return res.status(400).json(errors);
       }
 
-      const createdImages = await Promise.all(
-        req.body.images.map(async (imageData) => {
-          const { url, cloudinary_id } = imageData;
-          const newImage = await Image.create({ url, cloudinary_id });
-          return newImage._id;
-        })
-      );
+      const createdImages = await handleImages(req.body.images);
 
       const newProduct = await Product.create({
         name,
@@ -185,29 +159,71 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
-    //  ---------------------------------------- //DeleteProductImages//--------------------------- //
-    DeleteProductImages: async (req, res) => {
+  //  ---------------------------------------- //DeleteProductImages//--------------------------- //
+  DeleteProductImages: async (req, res) => {
     try {
       const { id } = req.params;
-      const { url, _id ,cloudinary_id } = req.body;
+      const { url, _id, cloudinary_id } = req.body;
       const { errors, isValid } = IdParamsValidation(req.params);
       if (!isValid) {
         return res.status(400).json(errors);
       }
-     
+
       const image = await Image.findById(_id);
       const product = await Product.findById(id);
- 
+
       if (!image) {
         return res.status(400).json("image not found");
       }
-       await removeFromCloudinary(cloudinary_id);
-       await image.remove()
-       product.images.pull(_id);
-       await product.save();
-       return res.status(200).json();
-     } catch (error) {
+      await removeFromCloudinary(cloudinary_id);
+      await image.remove();
+      product.images.pull(_id);
+      await product.save();
+      return res.status(200).json();
+    } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
-    },
+  },
+  //  ---------------------------------------- //UpdateProducts//--------------------------- //
+  UpdateProduct: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+        name,
+        description,
+        price,
+        category,
+        sizes,
+        quantity,
+        brand,
+        isFeatured,
+        isArchived,
+      } = req.body;
+      const { errors, isValid } = IdParamsValidation(req.params);
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+      const product = await Product.findById(id);
+      if (!product) {
+        return res.status(400).json("product not found");
+      }
+      const createdImages = await handleImages(req.body.images);
+
+      product.images.push(...createdImages);
+      product.name = name;
+      product.description = description;
+      product.price = price;
+      product.category = category;
+      product.sizes = sizes;
+      product.quantity = quantity;
+      product.brand = brand;
+      product.isFeatured = isFeatured;
+      product.isArchived = isArchived;
+
+      const updatedProduct = await product.save();
+      return res.status(200).json(updatedProduct);
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
 };

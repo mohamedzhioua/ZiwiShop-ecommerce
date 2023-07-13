@@ -6,9 +6,9 @@ const { uploadProductImages } = require("../middlewares/multerMiddleware");
 
 router.get("/options", ProductController.Getoptions);
 
-router.get("/:id",ProductController.GetOneProduct);
+router.get("/:id", ProductController.GetOneProduct);
 
-router.get("/",ProductController.GetProducts);
+router.get("/", ProductController.GetProducts);
 
 router.post(
   "/add",
@@ -18,7 +18,12 @@ router.post(
 );
 router.patch("/:id/image", ProductController.DeleteProductImages);
 
-// router.patch("/:id", ProductController);
+router.patch(
+  "/:id",
+  uploadProductImages,
+  resizeProductImages,
+  ProductController.UpdateProduct
+);
 
 // router.delete("/:id", ProductController);
 
