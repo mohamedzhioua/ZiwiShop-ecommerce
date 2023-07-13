@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import FileDropzone from "../FileDropzone";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
@@ -26,7 +26,6 @@ import { flattenCategories } from "../../utils/flattenCategories"
 
 const ProductForm = (props) => {
     const { initialData, options } = props
-
     const navigate = useNavigate();
     const isMounted = useMounted()
     const [files, setFiles] = useState([]);
@@ -66,21 +65,22 @@ const ProductForm = (props) => {
             const sizes = options.sizes.filter(size => initialSizesId.includes(size._id));
             setSelectedSizes(sizes);
         }
-
+        if (initialData?.images) {
+            setFiles(initialData.images)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialBrandId, initialCategoryId, initialSizesId]);
 
     const handleDrop = (newFiles) => {
         if (files.length + newFiles.length > 5) {
             setErrorMessage('Maximum number of images exceeded. Please select up to 5 images.');
-            return;
+        } else {
+            setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+            formik.setFieldValue('images', [
+                ...formik.values.images,
+                ...newFiles,
+            ]);
         }
-        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-        formik.setFieldValue('images', [
-            ...formik.values.images,
-            ...newFiles,
-        ]);
-
     };
 
 
@@ -184,7 +184,8 @@ const ProductForm = (props) => {
                                     md={8}>
                                     <FileDropzone
                                         caption="(SVG, JPG, PNG, or gif )"
-                                        accept={{ 'image/*': ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'] }}
+                                        // accept={{ 'image/*': ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'] }}
+                                        accept={{ "image/*": [] }}
                                         files={files}
                                         onDrop={handleDrop}
                                         onRemove={handleRemove}
@@ -259,7 +260,7 @@ const ProductForm = (props) => {
                                             setSelectedBrand(newValue);
                                             formik.setFieldValue('brand', newValue ? newValue.id : '');
                                         }}
-                                        isOptionEqualToValue={(option, value) => option.value === value.value}
+                                        isOptionEqualToValue={useCallback((option, value) => option?.id === value?._id, [])}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
                                         renderInput={(params) => (
@@ -287,7 +288,7 @@ const ProductForm = (props) => {
                                             setSelectedCategory(newValue);
                                             formik.setFieldValue('category', newValue ? newValue?.childCategories?.id : '');
                                         }}
-                                        isOptionEqualToValue={(option, value) => option.childCategories && option.childCategories.id === value.childCategories.id}
+                                        isOptionEqualToValue={useCallback((option, value) => option?.childCategories && option?.childCategories?.id === value?.childCategories?.id, [])}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
@@ -305,14 +306,14 @@ const ProductForm = (props) => {
                                     md={6}
                                 >
                                     <Autocomplete
-                                        multiple
+                                        multiple={true}
                                         options={options.sizes.map((item) => ({ name: item.name, id: item._id }))}
                                         onChange={(event, newValue) => {
                                             setSelectedSizes(newValue)
                                             formik.setFieldValue('sizes', newValue.map((size) => size.id));
                                         }}
                                         value={selectedSizes}
-                                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                                        isOptionEqualToValue={useCallback((option, value) => option?.id === value?._id, [])}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
                                         renderTags={(value, getTagProps) =>
@@ -347,7 +348,8 @@ const ProductForm = (props) => {
                                     xs={12}
                                     md={6}
                                 >
-                                    <CustomInput
+                                    <TextField
+                                        fullWidth
                                         required
                                         name="description"
                                         label="Product Description"
@@ -357,7 +359,7 @@ const ProductForm = (props) => {
                                         error={touched.description && Boolean(errors.description)}
                                         helperText={touched.description && errors.description}
                                         multiline={true}
-                                        rows={4}
+                                        maxRows={4}
                                     />
                                 </Grid>
                             </Grid>
@@ -446,7 +448,7 @@ const ProductForm = (props) => {
 };
 ProductForm.propTypes = {
     initialData: PropTypes.object,
-    options: PropTypes.array.required,
+    options: PropTypes.object.isRequired,
 };
 
 export default ProductForm;

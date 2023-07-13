@@ -66,7 +66,7 @@ const FileDropzone = (props) => {
               width: 64,
               backgroundColor: 'action.hover',
             }}
-            
+
           >
             <IconButton>
               <CloudUploadOutlinedIcon size="large" color='primary' />
@@ -112,12 +112,12 @@ const FileDropzone = (props) => {
           {error}
         </Typography>
       )}
-      {files.length > 0 && (
+      {files?.length > 0 && (
         <Box sx={{ mt: 2 }}>
           <List>
-            {files.map((file) => (
+            {files?.map((file) => (
               <ListItem
-                key={file.path}
+                key={file?.cloudinary_id ? file?.cloudinary_id: file?.path }
                 sx={{
                   border: 1,
                   borderColor: 'divider',
@@ -129,18 +129,19 @@ const FileDropzone = (props) => {
               >
                 <ListItemIcon>
                   <img
-                    src={URL.createObjectURL(file)}
-                    alt={file.name}
+                    src={file?.cloudinary_id ?  file?.url : URL.createObjectURL(file)}
+                    alt={file?.name || file?.cloudinary_id}
                     style={{ width: 50, height: 50 }}
                   />
+
                 </ListItemIcon>
                 <ListItemText
-                  primary={file.name.split('.').pop()}
+                  primary={file?.name?.split('.').pop() || file?.url?.split('/').pop()}
                   primaryTypographyProps={{
                     color: 'textPrimary',
                     variant: 'subtitle2'
                   }}
-                  secondary={bytesToSize(file.size)}
+                  secondary={bytesToSize(file?.size)}
                 />
                 <Tooltip title="Remove">
                   <IconButton
