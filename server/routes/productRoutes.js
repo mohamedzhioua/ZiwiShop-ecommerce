@@ -16,6 +16,7 @@ router.post(
   resizeProductImages,
   ProductController.AddProduct
 );
+router.patch("/:id/image", ProductController.DeleteProductImages);
 
 // router.patch("/:id", ProductController);
 
