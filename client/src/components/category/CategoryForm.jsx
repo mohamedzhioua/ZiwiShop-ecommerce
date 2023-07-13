@@ -22,8 +22,7 @@ const CategoryForm = (props) => {
     const navigate = useNavigate()
     const { saveCategories } = useCategory()
     const [selectedCategory, setSelectedCategory] = useState(null);
-
-
+ 
 
     const initialValues = initialData || {
         name: "",

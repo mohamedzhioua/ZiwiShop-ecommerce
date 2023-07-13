@@ -29,9 +29,7 @@ const ProductForm = (props) => {
     const navigate = useNavigate();
     const isMounted = useMounted()
     const [files, setFiles] = useState([]);
-    console.log("🚀 ~ file: ProductForm.jsx:32 ~ ProductForm ~ files:", files)
     const [updatefiles, setUpdateFiles] = useState([]);
-    console.log("🚀 ~ file: ProductForm.jsx:34 ~ ProductForm ~ updatefiles:", updatefiles)
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedBrand, setSelectedBrand] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -75,7 +73,7 @@ const ProductForm = (props) => {
     }, [initialBrandId, initialCategoryId, initialSizesId]);
 
     const handleDrop = (newFiles) => {
-           if (files.length + newFiles.length >  5) {
+        if (files.length + newFiles.length > 5) {
             setErrorMessage('Maximum number of images exceeded. Please select up to 5 images.');
         } else {
             setFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -92,8 +90,8 @@ const ProductForm = (props) => {
             prevFiles.filter((_file) => _file.path !== file.path)
         );
         setUpdateFiles((prevFiles) =>
-        prevFiles.filter((_file) =>_file.url !== file.url)
-    );
+            prevFiles.filter((_file) => _file.url !== file.url)
+        );
     };
 
     const handleRemoveAll = () => {
@@ -104,6 +102,7 @@ const ProductForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
+        console.log("🚀 ~ file: ProductForm.jsx:107 ~ ProductForm ~ values:", values)
 
         try {
             let response;
@@ -125,7 +124,11 @@ const ProductForm = (props) => {
             formData.forEach((value, key) => {
                 console.log(key + " " + value)
             });
-            response = productApi.AddProduct(formData);
+            if (initialData) {
+                response = productApi.UpdateProduct(initialData._id, formData)
+            } else {
+                response = productApi.AddProduct(formData);
+            }
             toast.promise(
                 response,
                 {
@@ -139,7 +142,7 @@ const ProductForm = (props) => {
                     if (isMounted()) {
                         setStatus({ success: true });
                         setSubmitting(false);
-                        // navigate('/dashboard/sizes');
+                        navigate('/dashboard/products');
                     }
                 })
                 .catch((error) => {
@@ -313,29 +316,32 @@ const ProductForm = (props) => {
                                     md={6}
                                 >
                                     <Autocomplete
-                                        multiple={true}
-                                        options={options.sizes.map((item) => ({ name: item.name, id: item._id }))}
-                                        onChange={(event, newValue) => {
-                                            setSelectedSizes(newValue)
-                                            formik.setFieldValue('sizes', newValue.map((size) => size.id));
-                                        }}
+                                        multiple
+                                        options={options.sizes.map((item) => ({ _id: item._id, name: item.name }))}
                                         value={selectedSizes}
-                                        isOptionEqualToValue={useCallback((option, value) => option?.id === value?._id, [])}
+                                        onChange={(event, newValue) => {
+                                            const selectedSizes = newValue ? newValue.map(size => size._id) : [];
+                                            setSelectedSizes(newValue)
+                                            formik.setFieldValue('sizes', selectedSizes);
+                                        }}
+
+                                        isOptionEqualToValue={useCallback((option, value) => { option?._id === value?._id }, [])}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
                                         renderTags={(value, getTagProps) =>
-                                            value.map((option, index) => (
-                                                <Chip
-                                                    key={index}
-                                                    variant="outlined"
-                                                    label={option.name}
-                                                    onDelete={() => {
-                                                        const newSizes = values.sizes.filter((size) => size !== option.id);
-                                                        formik.setFieldValue('sizes', newSizes);
-                                                    }}
-                                                    {...getTagProps({ index })}
-                                                />
-                                            ))
+                                            value
+                                                .map((option, index) => (
+                                                    <Chip
+                                                        key={index}
+                                                        variant="outlined"
+                                                        label={option.name}
+                                                        onDelete={() => {
+                                                            const newSizes = values.sizes.filter((size) => size !== option._id);
+                                                            formik.setFieldValue('sizes', newSizes);
+                                                        }}
+                                                        {...getTagProps({ index })}
+                                                    />
+                                                ))
                                         }
                                         renderInput={(params) => (
                                             <TextField

@@ -36,7 +36,7 @@ class ProductApi {
   }
 
   UpdateProduct(id, data) {
-    return this.request('patch', `/${id}`, data);
+    return this.request('patch', `/${id}`, data,this.config);
   }
 
   DeleteProduct(id) {
