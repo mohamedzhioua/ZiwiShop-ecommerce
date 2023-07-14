@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import { Card, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
-import { Scrollbar } from '../Scrollbar';
+import { Scrollbar } from '../ui/Scrollbar';
 import TableSearchBar from '../TableSearchBar';
 import TablePagination from '@mui/material/TablePagination'
 import { simpleFilter } from '../../utils/filters';
 import { pagination } from '../../utils/paginations';
 import { useNavigate } from 'react-router-dom';
-import AlertModal from '../modals/AlertModal';
+import AlertModal from '../ui/modals/AlertModal';
 import { sizeApi } from '../../api/sizeApi';
 import { toast } from 'react-hot-toast';
 import IconButton from '@mui/material/IconButton';

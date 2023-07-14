@@ -1,6 +1,6 @@
 import { Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../components/ui/CustomButton';
 
 const NotAuthorized = () => {
     return (

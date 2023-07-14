@@ -1,21 +1,17 @@
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { Box, Stack } from '@mui/system';
-import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'; import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import CustomButton from './CustomButton';
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'; 
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import CustomButton from './ui/CustomButton';
 import { Avatar, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
 import { bytesToSize } from '../utils/bytes-to-size';
 import { productApi } from '../api/productApi';
 import { toast } from 'react-hot-toast';
+import { useState } from 'react';
+import Loader from './ui/Loader';
  
-  const DeleteProductImage = async (id,item) => {
-  try {
-       await productApi.DeleteProductImage(id,item);
-      toast.success('Image deleted.');
-   } catch (error) {
-      toast.error('Something went wrong.');
-  }  
-};
+
 const FileDropzone = (props) => {
   const {
     accept,
@@ -31,6 +27,7 @@ const FileDropzone = (props) => {
     id,
     ...other
   } = props;
+  const [isDeleting, setIsDeleting] = useState(false);  
 
   const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     accept: accept,
@@ -40,7 +37,17 @@ const FileDropzone = (props) => {
   });
 
   const errorMessage = fileRejections.length > 0 ? 'Invalid file type' : '';
-
+  const DeleteProductImage = async (id,item) => {
+    setIsDeleting(true);
+    try {
+         await productApi.DeleteProductImage(id,item);
+        toast.success('Image deleted.');
+     } catch (error) {
+        toast.error('Something went wrong.');
+    }  finally {
+      setIsDeleting(false);
+    }
+  };
   return (
     <div {...other}>
       <Box
@@ -205,7 +212,9 @@ const FileDropzone = (props) => {
                   borderRadius: 1,
                   '& + &': {
                     mt: 1
-                  }
+                  },
+                  filter: isDeleting ? 'blur(4px)' : 'none',  
+                  pointerEvents: isDeleting ? 'none' : 'auto'  
                 }}
               >
                 <ListItemIcon>
@@ -238,6 +247,9 @@ const FileDropzone = (props) => {
             ))}
           </List>
         </Box>
+      )}
+        {isDeleting && ( 
+          <Loader open={isDeleting}/>
       )}
     </div>
   );

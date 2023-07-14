@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/ui/LoadingSpinner/LoadingSpinner";
 import React from 'react';
 
 const ProtectedRoute = ({ allowedRoles }) => {

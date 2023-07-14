@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/system"
 import ProductForm from "../../../components/product/ProductForm"
-import Heading from "../../../components/Heading"
+import Heading from "../../../components/ui/Heading"
 import { Divider } from "@mui/material"
 import { productApi } from "../../../api/productApi"
 import { useCallback, useEffect, useState } from "react"

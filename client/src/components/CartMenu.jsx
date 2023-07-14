@@ -12,7 +12,7 @@ import {
 } from "../app/feature/cartSlice";
 // import { useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
-import CustomButton from "./CustomButton";
+import CustomButton from "./ui/CustomButton";
 import { tokens } from "../theme/theme";
 
 const FlexBox = styled(Box)`

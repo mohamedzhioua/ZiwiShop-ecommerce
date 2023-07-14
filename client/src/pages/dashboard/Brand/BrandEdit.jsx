@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
-import Heading from '../../../components/Heading'
+import Heading from '../../../ui/components/Heading'
  import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
   import { brandApi } from '../../../api/brandApi';

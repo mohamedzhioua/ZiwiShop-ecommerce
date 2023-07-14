@@ -1,23 +1,13 @@
 import PropTypes from 'prop-types';
-import * as Yup from "yup";
 import { useFormik } from "formik";
-import CustomButton from "../CustomButton";
+import CustomButton from "../ui/CustomButton";
 import { Card, CardContent, Stack } from "@mui/material";
-import CustomInput from "../CustomInput";
+import CustomInput from "../ui/CustomInput";
 import { sizeApi } from "../../api/sizeApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useMounted } from '../../hooks/use-mounted';
  
-
-const validationSchema = Yup.object().shape({
-    name: Yup.string()
-        .min(2, 'Name must be at least 2 letters')
-        .required('Name is required'),
-    value: Yup.string()
-        .min(1, 'Value must be at least 1 letter')
-        .required('Value is required'),
-});
 
 
 const SizeForm = (props) => {

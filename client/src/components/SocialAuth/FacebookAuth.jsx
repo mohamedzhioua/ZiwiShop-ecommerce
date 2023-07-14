@@ -1,5 +1,5 @@
  import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import CustomButton from "../CustomButton";
+import CustomButton from "../ui/CustomButton";
 import { FaFacebook } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 

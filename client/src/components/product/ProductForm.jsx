@@ -14,8 +14,8 @@ import FileDropzone from "../FileDropzone";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import CustomButton from "../CustomButton";
-import CustomInput from "../CustomInput";
+import CustomButton from "../ui/CustomButton";
+import CustomInput from "../ui/CustomInput";
 import { ProductvalidationSchema } from './ProductFormValidation';
 import { toast } from 'react-hot-toast';
 import { useMounted } from '../../hooks/use-mounted';
@@ -36,18 +36,23 @@ const ProductForm = (props) => {
     const [selectedSizes, setSelectedSizes] = useState([]);
 
 
-    const initialValues = initialData || {
-        category: "",
-        description: "",
-        images: [],
-        name: "",
-        price: 0,
-        sizes: [],
-        brand: "",
-        quantity: 0,
-        isFeatured: false,
-        isArchived: false,
-    };
+    const initialValues = initialData
+        ? {
+            ...initialData,
+            images: [],
+        }
+        : {
+            category: "",
+            description: "",
+            images: [],
+            name: "",
+            price: 0,
+            sizes: [],
+            brand: "",
+            quantity: 0,
+            isFeatured: false,
+            isArchived: false,
+        };
 
     const initialBrandId = initialData ? initialData.brand : null;
     const initialCategoryId = initialData ? initialData.category : null;
@@ -73,9 +78,13 @@ const ProductForm = (props) => {
     }, [initialBrandId, initialCategoryId, initialSizesId]);
 
     const handleDrop = (newFiles) => {
-        if (files.length + newFiles.length > 5) {
+        const totalFiles = [...files, ...newFiles, ...updatefiles];
+        const remainingSlots = 5 - totalFiles.length;
+        if (remainingSlots < 0) {
             setErrorMessage('Maximum number of images exceeded. Please select up to 5 images.');
-        } else {
+            newFiles.splice(remainingSlots);
+        }
+        else {
             setFiles((prevFiles) => [...prevFiles, ...newFiles]);
             formik.setFieldValue('images', [
                 ...formik.values.images,
@@ -102,8 +111,7 @@ const ProductForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
-        console.log("🚀 ~ file: ProductForm.jsx:107 ~ ProductForm ~ values:", values)
-
+ 
         try {
             let response;
             const formData = new FormData();
@@ -324,8 +332,9 @@ const ProductForm = (props) => {
                                             setSelectedSizes(newValue)
                                             formik.setFieldValue('sizes', selectedSizes);
                                         }}
-
-                                        isOptionEqualToValue={useCallback((option, value) => { option?._id === value?._id }, [])}
+                                        isOptionEqualToValue={useCallback((option, value) => {
+                                            return option?._id === value?._id;
+                                        }, [])}
                                         onBlur={handleBlur}
                                         getOptionLabel={(option) => option.name}
                                         renderTags={(value, getTagProps) =>

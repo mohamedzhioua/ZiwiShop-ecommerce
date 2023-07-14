@@ -1,5 +1,5 @@
 import { Box } from '@mui/system'
-import '../LoadingSpinner/Spinner.css'
+import './Spinner.css'
 
 function LoadingSpinner() {
   return (

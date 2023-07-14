@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
-import Heading from '../../../components/Heading'
+import Heading from '../../../components/ui/Heading'
 import SizeForm from '../../../components/size/SizeForm';
 
 

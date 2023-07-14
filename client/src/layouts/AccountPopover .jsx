@@ -3,7 +3,7 @@ import { useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../components/ui/CustomButton';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 const AccountPopover = () => {

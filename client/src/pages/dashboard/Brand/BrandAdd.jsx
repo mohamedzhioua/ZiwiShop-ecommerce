@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
-import Heading from '../../../components/Heading'
+import Heading from '../../../components/ui/Heading'
 import BrandForm from '../../../components/brand/BrandForm';
 
 

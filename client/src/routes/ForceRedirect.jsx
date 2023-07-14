@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import React from "react";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/ui/LoadingSpinner/LoadingSpinner";
 
 const ForceRedirect = () => {
   const { IsLoggedIn } = useAuth()

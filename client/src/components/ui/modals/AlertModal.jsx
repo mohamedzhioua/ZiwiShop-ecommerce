@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
-import { useMounted } from "../../hooks/use-mounted";
+import { useMounted } from "../../../hooks/use-mounted";
+ import Heading from "../Heading"
 import CustomButton from '../CustomButton';
-import Heading from "../Heading"
 const AlertModal = (props) => {
   const { isOpen, onClose, onConfirm, loading } = props;
 

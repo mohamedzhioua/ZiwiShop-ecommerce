@@ -1,5 +1,5 @@
-import Heading from '../../../components/Heading'
-import CustomButton from '../../../components/CustomButton'
+import Heading from '../../../components/ui/Heading'
+import CustomButton from '../../../components/ui/CustomButton'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Container } from '@mui/system';

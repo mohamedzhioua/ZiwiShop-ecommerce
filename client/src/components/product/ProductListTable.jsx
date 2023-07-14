@@ -7,9 +7,9 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import numeral from 'numeral';
 import { useState } from 'react';
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
-import { Scrollbar } from '../Scrollbar';
+import { Scrollbar } from '../ui/Scrollbar';
 import TableSearchBar from '../TableSearchBar';
-import AlertModal from '../modals/AlertModal';
+import AlertModal from '../ui/modals/AlertModal';
 
 
 
@@ -65,8 +65,8 @@ const ProductListTable = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>Image</TableCell>
-                <TableCell>Name</TableCell>
                 <TableCell>Parent Category</TableCell>
+                <TableCell>Name</TableCell>
                 <TableCell>Category</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
@@ -123,8 +123,8 @@ const ProductListTable = (props) => {
                         </Box>
                       </TableCell>
                       <TableCell> {product.name}</TableCell>
-                      <TableCell>{product.category[0].name}</TableCell>
                       <TableCell>{product.category[0].parentCategory}</TableCell>
+                      <TableCell>{product.category[0].name}</TableCell>
                       <TableCell>{numeral(product.price).format('$0,0.00')}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
                       <TableCell align="right">
