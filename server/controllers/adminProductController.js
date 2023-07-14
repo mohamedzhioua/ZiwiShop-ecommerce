@@ -50,7 +50,7 @@ module.exports = {
         isArchived,
       } = req.body;
       const { errors, isValid } = ProductValidation(req.body);
-
+ 
       if (!isValid) {
         return res.status(400).json(errors);
       }
@@ -138,6 +138,9 @@ module.exports = {
           },
         },
         {
+          $sort: { createdAt: -1 },
+        },
+        {
           $project: {
             _id: 1,
             name: 1,
@@ -150,6 +153,10 @@ module.exports = {
               name: { $arrayElemAt: ["$category.name", 0] },
               parentCategory: { $arrayElemAt: ["$parentCategory.name", 0] },
             },
+            createdAt: 1,
+            updatedAt: 1,
+            isFeatured:1,
+            isArchived:1,
           },
         },
       ]);

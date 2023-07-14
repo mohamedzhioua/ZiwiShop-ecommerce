@@ -1,30 +1,34 @@
 const express = require("express");
 const router = express.Router();
-const ProductController = require("../controllers/productController");
+const AdminProductController = require("../controllers/adminProductController");
+const ClientProductController = require("../controllers/clientProductController");
 const { resizeProductImages } = require("../middlewares/resizeProductImages");
 const { uploadProductImages } = require("../middlewares/multerMiddleware");
 
-router.get("/options", ProductController.Getoptions);
+router.get("/options", AdminProductController.Getoptions);
 
-router.get("/:id", ProductController.GetOneProduct);
+router.get("/:id", AdminProductController.GetOneProduct);
 
-router.get("/", ProductController.GetProducts);
+router.get("/", AdminProductController.GetProducts);
 
 router.post(
   "/add",
   uploadProductImages,
   resizeProductImages,
-  ProductController.AddProduct
+  AdminProductController.AddProduct
 );
-router.patch("/:id/image", ProductController.DeleteProductImages);
+router.patch("/:id/image", AdminProductController.DeleteProductImages);
 
 router.patch(
   "/:id",
   uploadProductImages,
   resizeProductImages,
-  ProductController.UpdateProduct
+  AdminProductController.UpdateProduct
 );
 
-// router.delete("/:id", ProductController);
+// router.delete("/:id", AdminProductController);
+
+router.get("/client/Products", ClientProductController.GetClientProducts);
+
 
 module.exports = router;

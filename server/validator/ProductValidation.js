@@ -38,9 +38,14 @@ module.exports = function ProductValidation(data) {
   }
 
   // Sizes checks
-  if (!Array.isArray(data.sizes) || data.sizes.length === 0) {
-    errors.sizes = "Size field is required";
-  }
+// Sizes checks
+if (!Array.isArray(data.sizes)) {
+  data.sizes = [data.sizes]; // Convert to array with a single element
+}
+
+if (data.sizes.length === 0) {
+  errors.sizes = "Size field is required";
+}
 
   // Images checks
   if (!Array.isArray(data.images) || data.images.length === 0) {

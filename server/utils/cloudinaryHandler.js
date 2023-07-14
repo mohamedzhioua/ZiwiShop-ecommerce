@@ -10,10 +10,10 @@ exports.uploadToCloudinary = async (file, path) => {
   return new Promise((resolve, reject) => {
     if (file) {
       cloudinary.v2.uploader
-        .upload_stream({ folder: path }, (err, res) => {
-          if (err) {
-            console.log(err);
-            reject(err);
+        .upload_stream({ folder: path }, (error, res) => {
+          if (error) {
+            console.log(error);
+            reject(error);
           } else {
             console.log(`Upload succeed: ${res}`);
             resolve(res);
@@ -34,16 +34,16 @@ exports.getImages = async (path, max, sort) => {
       .then((res) => {
         resolve(res);
       })
-      .catch((err) => {
-        reject(err);
+      .catch((error) => {
+        reject(error);
         console.log({ message: error.message })
       });
   });
 };
  
-exports.removeFromCloudinary = async (public_id) => {
-    await cloudinary.uploader.destroy(public_id, function (error, result) {
-      console.log("🚀 ~ file: cloudinary.js:28 ~ result", result)
-      console.log({ message: error.message })
+exports.removeFromCloudinary = async (publicId ) => {
+    await cloudinary.uploader.destroy(publicId ,(error, result) => {
+      console.log("result", result)
+      console.log("error",error.message )
       });
   } 
