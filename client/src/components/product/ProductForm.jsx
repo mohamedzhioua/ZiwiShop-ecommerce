@@ -111,7 +111,6 @@ const ProductForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
- 
         try {
             let response;
             const formData = new FormData();
@@ -459,7 +458,7 @@ const ProductForm = (props) => {
                                 disabled={isSubmitting}
                                 size="large"
                             >
-                                {isSubmitting ? "loading..." : "Create"}
+                                {isSubmitting ? "loading..." : initialData ? "Save changes" : "Create"}
                             </CustomButton>
                         </Stack>
                     </Card>

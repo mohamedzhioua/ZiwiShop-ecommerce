@@ -3,8 +3,7 @@ import * as Yup from "yup";
 export const ProductvalidationSchema = Yup.object().shape({
     category: Yup.string().required('category is required'),
     description: Yup.string().max(1000),
-    images: Yup.array()
-        .min(1, 'Please upload at least one image'),
+    
     name: Yup.string()
         .min(2, 'Name must contain more than 2 characters')
         .required('Name is required'),

@@ -4,12 +4,15 @@ import { Box, Card, IconButton, Table, TableBody, TableCell, TableHead, TablePag
 import { Link, useNavigate } from 'react-router-dom';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import numeral from 'numeral';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import { Scrollbar } from '../ui/Scrollbar';
 import TableSearchBar from '../TableSearchBar';
 import AlertModal from '../ui/modals/AlertModal';
+import { formatter } from '../../utils/currencyFormatter';
+import { formatDate } from '../../utils/dateFormatter';
+import { toast } from 'react-hot-toast';
+import { productApi } from '../../api/productApi';
 
 
 
@@ -24,12 +27,19 @@ const applyPagination = (products, page, limit) => products
   .slice(page * limit, page * limit + limit);
 
 const ProductListTable = (props) => {
-  const { products } = props;
+  const { products: initialSizes } = props;
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [productId, setProductId] = useState('');
 
+  useEffect(() => {
+    setProducts(initialSizes);
+}, [initialSizes]);
 
   const handleQueryChange = (event) => {
     setQuery(event.target.value);
@@ -46,14 +56,31 @@ const ProductListTable = (props) => {
   const handleUpdate = (id) => {
     navigate(`/dashboard/products/edit/${id}`);
   };
-
+const handleDelete = (id) => {
+  setProductId(id);
+        setOpen(true);
+    };
+    const onDelete = async () => {
+        try {
+            setLoading(true);
+            await productApi.DeleteProduct(productId);
+            toast.success('Product deleted.');
+            setProducts(products.filter((item) => item._id !== productId));
+        } catch (error) {
+            toast.error('Something went wrong.');
+        } finally {
+            setLoading(false);
+            setOpen(false);
+            setProductId(null)
+        }
+    };
   return (
     <>
       <AlertModal
-      // isOpen={open}
-      // onClose={() => setOpen(false)}
-      // onConfirm={onDelete}
-      // loading={loading}
+      isOpen={open}
+      onClose={() => setOpen(false)}
+      onConfirm={onDelete}
+      loading={loading}
       />
       <Card >
         <TableSearchBar
@@ -70,6 +97,9 @@ const ProductListTable = (props) => {
                 <TableCell>Category</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
+                <TableCell>Featured</TableCell>
+                <TableCell>Archived</TableCell>
+                <TableCell>Date</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -125,13 +155,16 @@ const ProductListTable = (props) => {
                       <TableCell> {product.name}</TableCell>
                       <TableCell>{product.category[0].parentCategory}</TableCell>
                       <TableCell>{product.category[0].name}</TableCell>
-                      <TableCell>{numeral(product.price).format('$0,0.00')}</TableCell>
+                      <TableCell>{formatter.format(product.price)}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
+                      <TableCell>{product.isFeatured ? "Yes" : "No"}</TableCell>
+                      <TableCell>{product.isArchived ? "Yes" : "No"}</TableCell>
+                      <TableCell>{formatDate(product.createdAt)}</TableCell>
                       <TableCell align="right">
                         <IconButton onClick={() => handleUpdate(product._id)}>
                           <EditOutlinedIcon fontSize="small" />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDelete(product._id)}>
                           <DeleteOutlineOutlinedIcon fontSize="small" />
                         </IconButton>
                       </TableCell>
