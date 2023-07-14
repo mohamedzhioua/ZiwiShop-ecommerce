@@ -27,6 +27,7 @@ class ProductApi {
   GetProducts() {
     return this.request('get', '/');
   }
+  
   GetOneProduct(id) {
     return this.request('get', `/${id}`);
   }
@@ -45,7 +46,9 @@ class ProductApi {
   DeleteProductImage(id, data) {
     return this.request('patch', `/${id}/image`, data);
   }
-
+  GetClientProducts() {
+    return this.request('get', '/client/Products');
+  }
 }
 
 export const productApi = new ProductApi();

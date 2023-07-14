@@ -1,45 +1,55 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Item from "../../components/Item";
 import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useDispatch, useSelector } from "react-redux";
-import { setItems } from "../../app/feature/cartSlice";
- 
+ import { productApi } from "../../api/productApi";
+import { useMounted } from "../../hooks/use-mounted";
+
+
 const ShoppingList = () => {
-  const dispatch = useDispatch();
   const [value, setValue] = useState("all");
-  const items = useSelector((state) => state.cart.items);
   const breakPoint = useMediaQuery("(min-width:600px)");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  async function getItems() {
-    const items = await fetch(
-      "http://localhost:2000/api/items?populate=image",
-      { method: "GET" }
-    );
-    const itemsJson = await items.json();
-    dispatch(setItems(itemsJson.data));
-  }
+
+
+  const [products, setProducts] = useState([])
+  const isMounted = useMounted()
+
+  const GetClientProducts = useCallback(async () => {
+    try {
+      const response = await productApi.GetClientProducts();
+      if (isMounted()) {
+        setProducts(response);
+        // dispatch(setItems(response));
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
 
   useEffect(() => {
-    getItems();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    GetClientProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const topRatedItems = items.filter(
-    (item) => item.attributes.category === "topRated"
-  );
-  const newArrivalsItems = items.filter(
-    (item) => item.attributes.category === "newArrivals"
-  );
-  const bestSellersItems = items.filter(
-    (item) => item.attributes.category === "bestSellers"
-  );
+  // const topRatedItems = items.filter(
+  //   (item) => item.attributes.category === "topRated"
+  // );
+  // const newArrivalsItems = items.filter(
+  //   (item) => item.attributes.category === "newArrivals"
+  // );
+  // const bestSellersItems = items.filter(
+  //   (item) => item.attributes.category === "bestSellers"
+  // );
 
   return (
     <Box width="80%" margin="80px auto">
@@ -74,10 +84,10 @@ const ShoppingList = () => {
         columnGap="1.33%"
       >
         {value === "all" &&
-          items.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
+          products.map((item) => (
+            <Item item={item} key={`${item.name}-${item._id}`} />
           ))}
-        {value === "newArrivals" &&
+        {/* {value === "newArrivals" &&
           newArrivalsItems.map((item) => (
             <Item item={item} key={`${item.name}-${item.id}`} />
           ))}
@@ -88,7 +98,7 @@ const ShoppingList = () => {
         {value === "topRated" &&
           topRatedItems.map((item) => (
             <Item item={item} key={`${item.name}-${item.id}`} />
-          ))}
+          ))} */}
       </Box>
     </Box>
   );

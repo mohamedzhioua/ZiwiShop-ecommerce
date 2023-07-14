@@ -8,14 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { addToCart } from '../app/feature/cartSlice';
 
 const Item = (props) => {
-const {  item, width }=props
-  const { theme } = useTheme();
+  const { item, width } = props
+   const { theme } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
 
-  const { category, price, name, image } = item.attributes;
  
 
   return (
@@ -29,8 +28,8 @@ const {  item, width }=props
           alt={item.name}
           width="300px"
           height="400px"
-          // src={`http://localhost:2000${image}`}
-          onClick={() => navigate(`/item/${item.id}`)}
+          src={item.images[0].url}
+          onClick={() => navigate(`/item/${item._id}`)}
           style={{ cursor: "pointer" }}
         />
         <Box
@@ -45,13 +44,15 @@ const {  item, width }=props
             <Box
               display="flex"
               alignItems="center"
-              backgroundColor={theme.palette.neutral[100]}
+              // backgroundColor={theme.palette.neutral[100]}
               borderRadius="3px"
             >
               <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
                 <RemoveIcon />
               </IconButton>
-              <Typography color={theme.palette.primary[300]}>{count}</Typography>
+              <Typography 
+              // color={theme.palette.primary[300]}
+              >{count}</Typography>
               <IconButton onClick={() => setCount(count + 1)}>
                 <AddIcon />
               </IconButton>
@@ -60,7 +61,9 @@ const {  item, width }=props
               onClick={() => {
                 dispatch(addToCart({ item: { ...item, count } }));
               }}
-              sx={{ backgroundColor: theme.palette.primary[300], color: "white" }}
+              sx={{ 
+                // backgroundColor: theme.palette.primary[300],
+                 color: "white" }}
             >
               Add to Cart
             </Button>
@@ -69,19 +72,19 @@ const {  item, width }=props
       </Box>
 
       <Box mt="3px">
-        <Typography variant="subtitle2" color={theme.palette.neutral.dark}>
-          {category
+        {/* <Typography variant="subtitle2" color={theme.palette.neutral.dark}>
+          {item.category
             .replace(/([A-Z])/g, " $1")
             .replace(/^./, (str) => str.toUpperCase())}
-        </Typography>
-        <Typography>{name}</Typography>
-        <Typography fontWeight="bold">${price}</Typography>
+        </Typography> */}
+        <Typography>{item.name}</Typography>
+        <Typography fontWeight="bold">${item.price}</Typography>
       </Box>
     </Box>
   );
 };
 Item.propTypes = {
-  item:PropTypes.string,
-  width:PropTypes.string,   
+  item: PropTypes.object,
+  width: PropTypes.string,
 };
 export default Item;
