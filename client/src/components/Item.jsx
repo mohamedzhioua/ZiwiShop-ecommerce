@@ -1,42 +1,44 @@
 import PropTypes from 'prop-types';
-import { useState } from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { IconButton, Box, Typography, Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from '../app/feature/cartSlice';
 import useTheme from '../hooks/useTheme';
- 
+import { toTitleCase } from '../utils/toTitleCase';
+import { currencyFormatter } from '../utils/currencyFormatter';
+import CustomButton from './ui/CustomButton';
+import { useHover } from '../hooks/useHover';
 const Item = (props) => {
-  const { item, width } = props
-   const { theme } = useTheme();
-    const navigate = useNavigate();
+  const { product, width } = props
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [count, setCount] = useState(1);
-  const [isHovered, setIsHovered] = useState(false);
+   const { mode, theme } = useTheme();
+  const ref = useRef(null);
+  const [hoverRef, isHovered] = useHover(ref);
 
- 
+
+
+
 
   return (
     <Box width={width}>
       <Box
         position="relative"
-        onMouseOver={() => setIsHovered(true)}
-        onMouseOut={() => setIsHovered(false)}
+        ref={hoverRef}
       >
         <img
-          alt={item.name}
+          alt={product.name}
           width="300px"
           height="400px"
-          src={item.images[0].url}
-          onClick={() => navigate(`/item/${item._id}`)}
+          src={product.images[0].url}
+          onClick={() => navigate(`/product/${product._id}`)}
           style={{ cursor: "pointer" }}
         />
         <Box
           display={isHovered ? "block" : "none"}
           position="absolute"
-          bottom="10%"
+          bottom="5%"
           left="0"
           width="100%"
           padding="0 5%"
@@ -45,47 +47,36 @@ const Item = (props) => {
             <Box
               display="flex"
               alignItems="center"
-              backgroundColor={theme.palette.neutral[100]}
               borderRadius="3px"
             >
-              <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
-                <RemoveIcon />
-              </IconButton>
-              <Typography 
-              color={theme.palette.primary[300]}
-              >{count}</Typography>
-              <IconButton onClick={() => setCount(count + 1)}>
-                <AddIcon />
-              </IconButton>
+              <CustomButton variant="outlined" sx={{
+                color: mode === "dark" ? "black" : "",
+                borderColor: mode === "dark" ? "black" : ""
+              }}>
+                Preview
+              </CustomButton>
             </Box>
-            <Button
-              onClick={() => {
-                dispatch(addToCart({ item: { ...item, count } }));
-              }}
-              sx={{ 
-                backgroundColor: theme.palette.primary[300],
-                 color: "white" }}
-            >
+            <CustomButton onClick={() => {
+              dispatch(addToCart({ item: { ...product } }));
+            }}>
               Add to Cart
-            </Button>
+            </CustomButton>
           </Box>
         </Box>
       </Box>
 
       <Box mt="3px">
-        {/* <Typography variant="subtitle2" color={theme.palette.neutral.dark}>
-          {item.category
-            .replace(/([A-Z])/g, " $1")
-            .replace(/^./, (str) => str.toUpperCase())}
-        </Typography> */}
-        <Typography>{item.name}</Typography>
-        <Typography fontWeight="bold">${item.price}</Typography>
+        <Typography color={theme.palette.neutral.light}>
+          {product.category[0].name}
+        </Typography>
+        <Typography>{toTitleCase(product.name)}</Typography>
+        <Typography fontWeight="bold">{currencyFormatter.format(product.price)}</Typography>
       </Box>
     </Box>
   );
 };
 Item.propTypes = {
-  item: PropTypes.object,
+  product: PropTypes.object,
   width: PropTypes.string,
 };
 export default Item;

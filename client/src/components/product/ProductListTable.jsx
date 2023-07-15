@@ -9,7 +9,7 @@ import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import { Scrollbar } from '../ui/Scrollbar';
 import TableSearchBar from '../TableSearchBar';
 import AlertModal from '../ui/modals/AlertModal';
-import { formatter } from '../../utils/currencyFormatter';
+import { currencyFormatter } from '../../utils/currencyFormatter';
 import { formatDate } from '../../utils/dateFormatter';
 import { toast } from 'react-hot-toast';
 import { productApi } from '../../api/productApi';
@@ -158,7 +158,7 @@ const handleDelete = (id) => {
                       <TableCell>{product.category[0].parentCategory}</TableCell>
                       <TableCell>{product.category[0].name}</TableCell>
                       <TableCell>{toTitleCase(product?.brand.name)}</TableCell>
-                      <TableCell>{formatter.format(product.price)}</TableCell>
+                      <TableCell>{currencyFormatter.format(product.price)}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
                       <TableCell>{product.isFeatured ? "Yes" : "No"}</TableCell>
                       <TableCell>{product.isArchived ? "Yes" : "No"}</TableCell>

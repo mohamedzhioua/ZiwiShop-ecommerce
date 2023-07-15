@@ -152,7 +152,7 @@ export const getDesignTokens = (mode) => {
           neutral: {
             dark: colors.grey[700],
             main: colors.grey[500],
-            light: colors.grey[100],
+            light: colors.grey[200],
           },
           background: {
             default: '#0E1320',
@@ -183,7 +183,7 @@ export const getDesignTokens = (mode) => {
           neutral: {
             dark: colors.grey[700],
             main: colors.grey[500],
-            light: colors.grey[100],
+            light: colors.grey[200],
           },
           background: {
             default: "#fff",

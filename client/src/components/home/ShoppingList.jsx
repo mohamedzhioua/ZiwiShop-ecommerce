@@ -84,8 +84,8 @@ const ShoppingList = () => {
         columnGap="1.33%"
       >
         {value === "all" &&
-          products.map((item) => (
-            <Item item={item} key={`${item.name}-${item._id}`} />
+          products.map((product) => (
+            <Item product={product} key={`${product.name}-${product._id}`} />
           ))}
         {/* {value === "newArrivals" &&
           newArrivalsItems.map((item) => (

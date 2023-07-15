@@ -11,10 +11,11 @@ import {
   setIsCartOpen,
 } from "../app/feature/cartSlice";
 // import { useNavigate } from "react-router-dom";
- import CustomButton from "./ui/CustomButton";
+import CustomButton from "./ui/CustomButton";
 import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
-
+import { toTitleCase } from "../utils/toTitleCase";
+ 
 const FlexBox = styled(Box)`
   display: flex;
   justify-content: space-between;
@@ -22,15 +23,15 @@ const FlexBox = styled(Box)`
 `;
 
 const CartMenu = () => {
-  const {theme} = useTheme();
+  const { theme } = useTheme();
   const colors = tokens(theme.palette.mode);
-   // const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
-
+  
   const totalPrice = cart.reduce((total, item) => {
-    return total + item.count * item.attributes.price;
+    return total + item.count * item.price;
   }, 0);
 
   return (
@@ -54,9 +55,8 @@ const CartMenu = () => {
         backgroundColor='background.paper'
       >
         <Box padding="30px" overflow="auto" height="100%">
-          {/* HEADER */}
           <FlexBox mb="15px">
-            <Typography variant="h3" sx={{ color: colors.grey[100] }}>SHOPPING BAG ({cart.length})</Typography>
+            <Typography variant="h3" sx={{ color: colors.grey[100] }}> SHOPPING BAG  ({cart.length})</Typography>
             <IconButton
               onClick={() => dispatch(setIsCartOpen({}))}
               size="large"
@@ -65,35 +65,33 @@ const CartMenu = () => {
               <CloseIcon />
             </IconButton>
           </FlexBox>
-
-          {/* CART LIST */}
           <Box>
             {cart?.map((item) => (
-              <Box key={`${item?.attributes.name}-${item?.id}`}>
+              <Box key={`${item?.name}-${item?._id}`}>
                 <FlexBox p="15px 0">
                   <Box flex="1 1 40%">
                     <img
                       alt={item?.name}
                       width="123px"
                       height="164px"
-                    // src={`http://localhost:2000${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
+                      src={item.images[0].url}
+                      loading="lazy"
                     />
                   </Box>
                   <Box flex="1 1 60%">
                     <FlexBox mb="5px">
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                        {item?.attributes.name}
+                        {toTitleCase(item?.name)}
                       </Typography>
                       <IconButton
                         onClick={() =>
-                          dispatch(removeFromCart({ id: item.id }))
+                          dispatch(removeFromCart({ id: item._id }))
                         }
 
                       >
                         <CloseIcon />
                       </IconButton>
                     </FlexBox>
-                    <Typography >{item.attributes.shortDescription}</Typography>
                     <FlexBox m="15px 0">
                       <Box
                         display="flex"
@@ -102,22 +100,22 @@ const CartMenu = () => {
                       >
                         <IconButton
                           onClick={() =>
-                            dispatch(decreaseCount({ id: item.id }))
+                            dispatch(decreaseCount({ id: item._id }))
                           }
                         >
                           <RemoveIcon />
                         </IconButton>
-                        <Typography>{item.count}</Typography>
+                        <Typography>{count}</Typography>
                         <IconButton
                           onClick={() =>
-                            dispatch(increaseCount({ id: item.id }))
+                            dispatch(increaseCount({ id: item._id }))
                           }
                         >
                           <AddIcon />
                         </IconButton>
                       </Box>
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                        ${item.attributes.price}
+                        {item.price}
                       </Typography>
                     </FlexBox>
                   </Box>
