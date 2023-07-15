@@ -11,9 +11,9 @@ import {
   setIsCartOpen,
 } from "../app/feature/cartSlice";
 // import { useNavigate } from "react-router-dom";
-import { useTheme } from "@emotion/react";
-import CustomButton from "./ui/CustomButton";
+ import CustomButton from "./ui/CustomButton";
 import { tokens } from "../theme/theme";
+import useTheme from "../hooks/useTheme";
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -22,9 +22,9 @@ const FlexBox = styled(Box)`
 `;
 
 const CartMenu = () => {
-  const theme = useTheme();
+  const {theme} = useTheme();
   const colors = tokens(theme.palette.mode);
-  // const navigate = useNavigate();
+   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);

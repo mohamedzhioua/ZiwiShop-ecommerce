@@ -19,7 +19,7 @@ function CategoryAdd() {
             marginTop: '5rem',
           }}
         >
-          <Heading title='Create Brand' description='Add a new brand' />
+          <Heading title='create brand' description='Add a new brand' />
         </Box>
         <Divider
           sx={{

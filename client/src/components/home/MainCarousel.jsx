@@ -3,8 +3,8 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { useTheme } from "@emotion/react";
-import { tokens } from "../../theme/theme";
+ import { tokens } from "../../theme/theme";
+import useTheme from "../../hooks/useTheme";
 
 
 
@@ -12,7 +12,7 @@ import { tokens } from "../../theme/theme";
 const gallery = Object.values(import.meta.glob('../../assets/carousel-images/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }))
 
 const MainCarousel = () => {
-  const theme = useTheme();
+  const {theme} = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");

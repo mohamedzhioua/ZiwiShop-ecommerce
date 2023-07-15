@@ -7,7 +7,8 @@ import { sizeApi } from "../../api/sizeApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useMounted } from '../../hooks/use-mounted';
- 
+import { SizevalidationSchema } from './SizeFormValidation';
+
 
 
 const SizeForm = (props) => {
@@ -61,7 +62,7 @@ const SizeForm = (props) => {
 
     const formik = useFormik({
         initialValues,
-        validationSchema,
+        validationSchema: SizevalidationSchema,
         onSubmit: onSubmitHandler,
     });
 
@@ -80,8 +81,9 @@ const SizeForm = (props) => {
                 <form onSubmit={handleSubmit} noValidate>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
                         <CustomInput
+                            required
                             name="name"
-                            label="Size Name*"
+                            label="Size Name"
                             placeholder="ex: Extra Large"
                             type="text"
                             value={values.name}
@@ -93,7 +95,7 @@ const SizeForm = (props) => {
 
                         <CustomInput
                             name="value"
-                            label="Size Value*"
+                            label="Size Value"
                             placeholder="ex: XL"
                             type="text"
                             value={values.value}

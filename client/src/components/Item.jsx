@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { IconButton, Box, Typography, useTheme, Button } from "@mui/material";
+import { IconButton, Box, Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from '../app/feature/cartSlice';
-
+import useTheme from '../hooks/useTheme';
+ 
 const Item = (props) => {
   const { item, width } = props
    const { theme } = useTheme();
-  const navigate = useNavigate();
+    const navigate = useNavigate();
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
@@ -44,14 +45,14 @@ const Item = (props) => {
             <Box
               display="flex"
               alignItems="center"
-              // backgroundColor={theme.palette.neutral[100]}
+              backgroundColor={theme.palette.neutral[100]}
               borderRadius="3px"
             >
               <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
                 <RemoveIcon />
               </IconButton>
               <Typography 
-              // color={theme.palette.primary[300]}
+              color={theme.palette.primary[300]}
               >{count}</Typography>
               <IconButton onClick={() => setCount(count + 1)}>
                 <AddIcon />
@@ -62,7 +63,7 @@ const Item = (props) => {
                 dispatch(addToCart({ item: { ...item, count } }));
               }}
               sx={{ 
-                // backgroundColor: theme.palette.primary[300],
+                backgroundColor: theme.palette.primary[300],
                  color: "white" }}
             >
               Add to Cart

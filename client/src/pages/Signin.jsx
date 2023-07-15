@@ -12,12 +12,12 @@ import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from '../hooks/useAuth';
  import { Box } from "@mui/system";
 import { CardContent } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { tokens } from "../theme/theme";
+ import { tokens } from "../theme/theme";
+import useTheme from "../hooks/useTheme";
 
 function Signin() {
   const { login } = useAuth();
-   const theme = useTheme();
+   const {theme} = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
   const initialValues = {

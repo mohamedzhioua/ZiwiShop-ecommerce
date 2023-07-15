@@ -8,12 +8,12 @@ import { useState } from "react";
 import CustomInput from "../components/ui/CustomInput";
 import CustomButton from "../components/ui/CustomButton";
  import useAuth from "../hooks/useAuth";
-import { useTheme } from "@emotion/react";
-import { tokens } from "../theme/theme";
+ import { tokens } from "../theme/theme";
+import useTheme from "../hooks/useTheme";
 
 const Signup = () => {
   const { register } = useAuth();
-   const theme = useTheme();
+   const {theme} = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
 

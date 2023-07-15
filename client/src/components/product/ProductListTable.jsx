@@ -13,6 +13,7 @@ import { formatter } from '../../utils/currencyFormatter';
 import { formatDate } from '../../utils/dateFormatter';
 import { toast } from 'react-hot-toast';
 import { productApi } from '../../api/productApi';
+import { toTitleCase } from '../../utils/toTitleCase';
 
 
 
@@ -92,9 +93,10 @@ const handleDelete = (id) => {
             <TableHead>
               <TableRow>
                 <TableCell>Image</TableCell>
-                <TableCell>Parent Category</TableCell>
                 <TableCell>Name</TableCell>
+                <TableCell>Parent Category</TableCell>
                 <TableCell>Category</TableCell>
+                <TableCell>Brand</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
                 <TableCell>Featured</TableCell>
@@ -152,9 +154,10 @@ const handleDelete = (id) => {
                           )}
                         </Box>
                       </TableCell>
-                      <TableCell> {product.name}</TableCell>
+                      <TableCell> {toTitleCase(product.name)}</TableCell>
                       <TableCell>{product.category[0].parentCategory}</TableCell>
                       <TableCell>{product.category[0].name}</TableCell>
+                      <TableCell>{toTitleCase(product?.brand.name)}</TableCell>
                       <TableCell>{formatter.format(product.price)}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
                       <TableCell>{product.isFeatured ? "Yes" : "No"}</TableCell>

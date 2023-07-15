@@ -5,7 +5,7 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import CustomButton from './ui/CustomButton';
 import { Avatar, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
-import { bytesToSize } from '../utils/bytes-to-size';
+import { bytesToSize } from '../utils/bytesToSize';
 import { productApi } from '../api/productApi';
 import { toast } from 'react-hot-toast';
 import { useState } from 'react';

@@ -12,16 +12,16 @@ import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Badge, Button, IconButton, Box } from '@mui/material';
 import DarkButton from '../components/ui/DarkButton';
-import { useTheme } from '@emotion/react';
-import { useDispatch, useSelector } from "react-redux";
+ import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
+import useTheme from '../hooks/useTheme';
 
 
 
 function Navbar() {
   const { IsLoggedIn, user } = useAuth();
 
-  const theme = useTheme();
+  const {theme} = useTheme();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const [anchorElNav, setAnchorElNav] = useState(null);

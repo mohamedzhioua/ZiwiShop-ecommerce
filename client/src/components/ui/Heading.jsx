@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
+import { toTitleCase } from '../../utils/toTitleCase';
 
 const Heading = (props) => {
     const { title, description } = props
     return (
         <div>
             <Typography variant="h1" sx={{fontWeight:"bold"}}>
-                {title}
+                {toTitleCase(title)}
             </Typography>
             <Typography variant="h5">
-                {description}
+                {toTitleCase(description)}
             </Typography>
         </div>
     );
