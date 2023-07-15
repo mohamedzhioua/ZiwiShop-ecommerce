@@ -1,25 +1,24 @@
 import PropTypes from 'prop-types';
 import { useFormik } from "formik";
-import CustomButton from '../ui/CustomButton';
+import CustomButton from "../../ui/CustomButton";
 import { Card, CardContent, Stack } from "@mui/material";
-import CustomInput from "../ui/CustomInput";
+import CustomInput from "../../ui/CustomInput";
+import { sizeApi } from "../../../api/sizeApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { useMounted } from '../../hooks/use-mounted';
-import { brandApi } from '../../api/brandApi';
-import { BrandValidationSchema } from './BrandFormValidation';
+import { useMounted } from '../../../hooks/use-mounted';
+import { SizevalidationSchema } from './SizeFormValidation';
 
 
 
-
-
-const BrandForm = (props) => {
+const SizeForm = (props) => {
     const { initialData } = props
     const isMounted = useMounted()
     const navigate = useNavigate()
 
     const initialValues = initialData || {
         name: "",
+        value: "",
     };
     const onSubmitHandler = async (
         values,
@@ -28,16 +27,16 @@ const BrandForm = (props) => {
         try {
             let response;
             if (initialData) {
-                response = brandApi.UpdateBrand(initialData._id, values)
+                response = sizeApi.UpdateSize(initialData._id, values)
             } else {
-                response = brandApi.AddBrand(values);
+                response = sizeApi.AddSize(values);
             }
             toast.promise(
                 response,
                 {
                     loading: initialData ? 'data updated' : 'Adding data',
                     error: initialData ? 'Error while updating the data' : 'Error while adding the data',
-                    success: initialData ? 'Brand Updated' : ' Brand Added !'
+                    success: initialData ? 'Size Updated' : ' Size Added !'
                 },
             );
             response
@@ -45,7 +44,7 @@ const BrandForm = (props) => {
                     if (isMounted()) {
                         setStatus({ success: true });
                         setSubmitting(false);
-                        navigate('/dashboard/brands');
+                        navigate('/dashboard/sizes');
                     }
                 })
                 .catch((error) => {
@@ -63,7 +62,7 @@ const BrandForm = (props) => {
 
     const formik = useFormik({
         initialValues,
-        validationSchema: BrandValidationSchema,
+        validationSchema: SizevalidationSchema,
         onSubmit: onSubmitHandler,
     });
 
@@ -84,8 +83,8 @@ const BrandForm = (props) => {
                         <CustomInput
                             required
                             name="name"
-                            label="Brand Name"
-                            placeholder="ex: Nike"
+                            label="Size Name"
+                            placeholder="ex: Extra Large"
                             type="text"
                             value={values.name}
                             onChange={handleChange}
@@ -94,6 +93,17 @@ const BrandForm = (props) => {
                             helperText={touched.name && errors.name}
                         />
 
+                        <CustomInput
+                            name="value"
+                            label="Size Value"
+                            placeholder="ex: XL"
+                            type="text"
+                            value={values.value}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.value && Boolean(errors.value)}
+                            helperText={touched.value && errors.value}
+                        />
                     </Stack>
                     <CustomButton
                         variant="contained"
@@ -109,7 +119,7 @@ const BrandForm = (props) => {
         </Card>
     )
 }
-BrandForm.propTypes = {
+SizeForm.propTypes = {
     initialData: PropTypes.object,
 };
-export default BrandForm
+export default SizeForm

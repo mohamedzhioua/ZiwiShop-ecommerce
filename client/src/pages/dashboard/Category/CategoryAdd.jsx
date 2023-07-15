@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
 import Heading from '../../../components/ui/Heading'
-import CategoryForm from '../../../components/category/CategoryForm';
+import CategoryForm from '../../../components/dashboard/category/CategoryForm';
 import useCategory from '../../../hooks/useCategory';
  
  

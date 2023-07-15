@@ -4,7 +4,7 @@ import Heading from '../../../ui/components/Heading'
  import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
   import { brandApi } from '../../../api/brandApi';
-import BrandForm from '../../../components/brand/BrandForm';
+import BrandForm from '../../../../components/dashboard/brand/BrandForm';
 
 
 const useBrand = (id) => {

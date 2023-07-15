@@ -3,7 +3,7 @@ import CustomButton from "../../../components/ui/CustomButton"
 import { Box, Container } from "@mui/system"
 import AddIcon from '@mui/icons-material/Add';
 import Heading from "../../../components/ui/Heading";
-import ProductListTable from "../../../components/product/ProductListTable";
+import ProductListTable from "../../../components/dashboard/product/ProductListTable";
 import { Link } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { productApi } from "../../../api/productApi";

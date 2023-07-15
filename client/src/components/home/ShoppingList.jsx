@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Item from "../../components/Item";
+import Item from "../ProductCard";
 import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
  import { productApi } from "../../api/productApi";
 import { useMounted } from "../../hooks/use-mounted";
+import ProductCard from "../ProductCard";
 
 
 const ShoppingList = () => {
@@ -17,8 +18,6 @@ const ShoppingList = () => {
     setValue(newValue);
   };
 
-
-
   const [products, setProducts] = useState([])
   const isMounted = useMounted()
 
@@ -27,8 +26,6 @@ const ShoppingList = () => {
       const response = await productApi.GetClientProducts();
       if (isMounted()) {
         setProducts(response);
-        // dispatch(setItems(response));
-
       }
     } catch (error) {
       console.error(error);
@@ -85,19 +82,19 @@ const ShoppingList = () => {
       >
         {value === "all" &&
           products.map((product) => (
-            <Item product={product} key={`${product.name}-${product._id}`} />
+            <ProductCard product={product} key={`${product.name}-${product._id}`} />
           ))}
         {/* {value === "newArrivals" &&
           newArrivalsItems.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
+            <ProductCard item={item} key={`${item.name}-${item.id}`} />
           ))}
         {value === "bestSellers" &&
           bestSellersItems.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
+            <ProductCard item={item} key={`${item.name}-${item.id}`} />
           ))}
         {value === "topRated" &&
           topRatedItems.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
+            <ProductCard item={item} key={`${item.name}-${item.id}`} />
           ))} */}
       </Box>
     </Box>

@@ -1,34 +1,34 @@
 import PropTypes from 'prop-types';
 import { Card, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
-import { Scrollbar } from '../ui/Scrollbar';
-import TableSearchBar from '../TableSearchBar';
+import { Scrollbar } from '../../ui/Scrollbar';
+import TableSearchBar from '../../TableSearchBar';
 import TablePagination from '@mui/material/TablePagination'
-import { simpleFilter } from '../../utils/filters';
-import { pagination } from '../../utils/paginations';
+import { simpleFilter } from '../../../utils/filters';
+import { pagination } from '../../../utils/paginations';
 import { useNavigate } from 'react-router-dom';
-import AlertModal from '../ui/modals/AlertModal';
+import AlertModal from '../../ui/modals/AlertModal';
+import { sizeApi } from '../../../api/sizeApi';
 import { toast } from 'react-hot-toast';
 import IconButton from '@mui/material/IconButton';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { categoryApi } from '../../api/categoryApi';
 
 
-const CategoryListTable = (props) => {
-    const { categories: initialData } = props;
-    const [categories, setCategories] = useState([]);
-     const navigate = useNavigate();
+const SizeListTable = (props) => {
+    const { sizes: initialSizes } = props;
+    const [sizes, setSizes] = useState([]);
+    const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [categoryId, setCategoryId] = useState('');
+    const [sizeId, setSizeId] = useState('');
 
     useEffect(() => {
-        setCategories(initialData);
-    }, [initialData]);
+        setSizes(initialSizes);
+    }, [initialSizes]);
 
     const handleQueryChange = (event) => {
         setQuery(event.target.value);
@@ -41,29 +41,29 @@ const CategoryListTable = (props) => {
     };
 
     const handleUpdate = (id) => {
-        navigate(`/dashboard/categories/edit/${id}`);
+        navigate(`/dashboard/sizes/edit/${id}`);
     };
 
     const handleDelete = (id) => {
-        setCategoryId(id);
+        setSizeId(id);
         setOpen(true);
     };
     const onDelete = async () => {
         try {
             setLoading(true);
-            await categoryApi.DeleteCategory(categoryId);
+            await sizeApi.DeleteSize(sizeId);
             toast.success('Size deleted.');
-            setCategories(categories.filter((item) => item._id !== categoryId));
+            setSizes(sizes.filter((item) => item.id !== sizeId));
         } catch (error) {
             toast.error('Something went wrong.');
         } finally {
             setLoading(false);
             setOpen(false);
-            setCategoryId(null)
+            setSizeId(null)
         }
     };
-    const filteredCategories = simpleFilter(categories, query);
-    const paginatedData = pagination(filteredCategories, page, limit);
+    const filteredSizes = simpleFilter(sizes, query);
+    const paginatedData = pagination(filteredSizes, page, limit);
 
 
 
@@ -84,8 +84,8 @@ const CategoryListTable = (props) => {
                     <Table sx={{ minWidth: 700 }}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Category Name</TableCell>
-                                <TableCell>Category Parent Name</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Value</TableCell>
                                 <TableCell align="right">Actions</TableCell>
                             </TableRow>
                         </TableHead>
@@ -101,19 +101,19 @@ const CategoryListTable = (props) => {
                             <TableBody>
                                 {paginatedData.map((item) => {
                                     return (
-                                        <Fragment key={item._id}>
-                                            <TableRow key={item._id} hover>
+                                        <Fragment key={item.id}>
+                                            <TableRow key={item.id} hover>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{item.name }</Typography>
+                                                    <Typography color="text.primary">{item.name}</Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{item.parentCategory}</Typography>
+                                                    <Typography color="text.primary">{item.value}</Typography>
                                                 </TableCell>
                                                 <TableCell align="right">
-                                                    <IconButton onClick={() => handleUpdate(item._id)}>
+                                                    <IconButton onClick={() => handleUpdate(item.id)}>
                                                         <EditOutlinedIcon fontSize="small" />
                                                     </IconButton>
-                                                    <IconButton onClick={() => handleDelete(item._id)} >
+                                                    <IconButton onClick={() => handleDelete(item.id)} >
                                                         <DeleteOutlineOutlinedIcon fontSize="small" />
                                                     </IconButton>
                                                 </TableCell>
@@ -127,7 +127,7 @@ const CategoryListTable = (props) => {
                 </Scrollbar>
                 <TablePagination
                     component="div"
-                    count={filteredCategories.length}
+                    count={filteredSizes.length}
                     onPageChange={onPageChange}
                     onRowsPerPageChange={onRowsPerPageChange}
                     page={page}
@@ -139,7 +139,7 @@ const CategoryListTable = (props) => {
 
     )
 }
-CategoryListTable.propTypes = {
-    categories: PropTypes.array.isRequired,
+SizeListTable.propTypes = {
+    sizes: PropTypes.array.isRequired,
 };
-export default CategoryListTable
+export default SizeListTable

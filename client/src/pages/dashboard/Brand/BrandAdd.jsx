@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
 import Heading from '../../../components/ui/Heading'
-import BrandForm from '../../../components/brand/BrandForm';
+import BrandForm from '../../../components/dashboard/brand/BrandForm';
 
 
 function CategoryAdd() {
@@ -19,7 +19,7 @@ function CategoryAdd() {
             marginTop: '5rem',
           }}
         >
-          <Heading title='create brand' description='Add a new brand' />
+          <Heading title='Create Brand' description='Add a new brand' />
         </Box>
         <Divider
           sx={{

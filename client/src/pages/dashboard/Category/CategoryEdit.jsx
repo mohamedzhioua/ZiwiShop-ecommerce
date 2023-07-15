@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/system';
 import Heading from '../../../components/ui/Heading'
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import CategoryForm from '../../../components/category/CategoryForm';
+import CategoryForm from '../../../components/dashboard/category/CategoryForm';
 import { categoryApi } from '../../../api/categoryApi';
 import useCategory from '../../../hooks/useCategory';
 

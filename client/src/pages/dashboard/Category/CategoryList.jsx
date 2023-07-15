@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Container } from '@mui/system';
 import { Divider } from '@mui/material';
-import CategoryListTable from '../../../components/category/CategoryListTable';
+import CategoryListTable from '../../../components/dashboard/category/CategoryListTable';
 import useCategory from '../../../hooks/useCategory';
 import { toast } from 'react-hot-toast';
 import { useCallback, useEffect } from 'react';

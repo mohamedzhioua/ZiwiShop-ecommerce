@@ -16,7 +16,7 @@ const Footer = () => {
  
   return (
     <footer className={classes.footer}>
-      {`Copyright © Zhioua Mohamed ${2023}`}
+      {`Copyright © Zhioua Mohamed ${2023} `} 
     </footer>
   );
 };

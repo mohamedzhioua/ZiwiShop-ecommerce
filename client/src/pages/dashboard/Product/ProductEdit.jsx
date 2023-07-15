@@ -4,7 +4,7 @@ import Heading from '../../../components/ui/Heading'
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { productApi } from '../../../api/productApi';
-import ProductForm from '../../../components/product/ProductForm';
+import ProductForm from '../../../components/dashboard/product/ProductForm';
 
 const useProduct = (id) => {
   const [product, setProduct] = useState(null);

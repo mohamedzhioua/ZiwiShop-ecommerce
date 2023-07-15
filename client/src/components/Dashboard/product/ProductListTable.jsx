@@ -6,14 +6,14 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useEffect, useState } from 'react';
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
-import { Scrollbar } from '../ui/Scrollbar';
-import TableSearchBar from '../TableSearchBar';
-import AlertModal from '../ui/modals/AlertModal';
-import { currencyFormatter } from '../../utils/currencyFormatter';
-import { formatDate } from '../../utils/dateFormatter';
+import { Scrollbar } from '../../ui/Scrollbar';
+import TableSearchBar from '../../TableSearchBar';
+import AlertModal from '../../ui/modals/AlertModal';
+import { currencyFormatter } from '../../../utils/currencyFormatter';
+import { formatDate } from '../../../utils/dateFormatter';
 import { toast } from 'react-hot-toast';
-import { productApi } from '../../api/productApi';
-import { toTitleCase } from '../../utils/toTitleCase';
+import { productApi } from '../../../api/productApi';
+import { toTitleCase } from '../../../utils/toTitleCase';
 
 
 

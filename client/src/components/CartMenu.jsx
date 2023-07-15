@@ -15,7 +15,7 @@ import CustomButton from "./ui/CustomButton";
 import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
 import { toTitleCase } from "../utils/toTitleCase";
- 
+
 const FlexBox = styled(Box)`
   display: flex;
   justify-content: space-between;
@@ -29,11 +29,14 @@ const CartMenu = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
-  
-  const totalPrice = cart.reduce((total, item) => {
-    return total + item.count * item.price;
-  }, 0);
 
+  const totalPrice = cart.reduce((total, item) => {
+    return total + Number(item.count)* Number(item.price);
+  }, 0);
+  const itemCount = cart.reduce(
+    (total, item) => total + Number(item.count),
+    0
+  )
   return (
     <Box
       display={isCartOpen ? "block" : "none"}
@@ -56,7 +59,7 @@ const CartMenu = () => {
       >
         <Box padding="30px" overflow="auto" height="100%">
           <FlexBox mb="15px">
-            <Typography variant="h3" sx={{ color: colors.grey[100] }}> SHOPPING BAG  ({cart.length})</Typography>
+            <Typography variant="h3" sx={{ color: colors.grey[100] }}> SHOPPING BAG  ({itemCount})</Typography>
             <IconButton
               onClick={() => dispatch(setIsCartOpen({}))}
               size="large"
@@ -83,6 +86,10 @@ const CartMenu = () => {
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
                         {toTitleCase(item?.name)}
                       </Typography>
+                      <Typography >
+                        {`${item.category[0].name} ${item.category[0].parentCategory ? `/ ${item.category[0].parentCategory}` : ""
+                          }`}
+                      </Typography>
                       <IconButton
                         onClick={() =>
                           dispatch(removeFromCart({ id: item._id }))
@@ -105,7 +112,7 @@ const CartMenu = () => {
                         >
                           <RemoveIcon />
                         </IconButton>
-                        <Typography>{count}</Typography>
+                        <Typography>{item.count}</Typography>
                         <IconButton
                           onClick={() =>
                             dispatch(increaseCount({ id: item._id }))

@@ -10,17 +10,17 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import FileDropzone from "../FileDropzone";
+import FileDropzone from "../../../FileDropzone";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import CustomButton from "../ui/CustomButton";
-import CustomInput from "../ui/CustomInput";
+import CustomButton from "../../../ui/CustomButton";
+import CustomInput from "../../../ui/CustomInput";
 import { ProductvalidationSchema } from './ProductFormValidation';
 import { toast } from 'react-hot-toast';
-import { useMounted } from '../../hooks/use-mounted';
-import { productApi } from '../../api/productApi';
-import { flattenCategories } from "../../utils/flattenCategories"
+import { useMounted } from '../../../../hooks/use-mounted';
+import { productApi } from '../../../../api/productApi';
+import { flattenCategories } from "../../../../utils/flattenCategories"
 
 
 

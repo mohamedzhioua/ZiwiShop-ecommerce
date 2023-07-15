@@ -4,22 +4,19 @@ import { useDispatch } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from '../app/feature/cartSlice';
-import useTheme from '../hooks/useTheme';
 import { toTitleCase } from '../utils/toTitleCase';
 import { currencyFormatter } from '../utils/currencyFormatter';
 import CustomButton from './ui/CustomButton';
 import { useHover } from '../hooks/useHover';
-const Item = (props) => {
+import useTheme from '../hooks/useTheme';
+
+const ProductCard = (props) => {
   const { product, width } = props
   const navigate = useNavigate();
   const dispatch = useDispatch();
    const { mode, theme } = useTheme();
   const ref = useRef(null);
   const [hoverRef, isHovered] = useHover(ref);
-
-
-
-
 
   return (
     <Box width={width}>
@@ -75,8 +72,8 @@ const Item = (props) => {
     </Box>
   );
 };
-Item.propTypes = {
+ProductCard.propTypes = {
   product: PropTypes.object,
   width: PropTypes.string,
 };
-export default Item;
+export default ProductCard;

@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/system"
-import ProductForm from "../../../components/product/ProductForm"
+import ProductForm from "../../../components/dashboard/product/ProductForm"
 import Heading from "../../../components/ui/Heading"
 import { Divider } from "@mui/material"
 import { productApi } from "../../../api/productApi"
