@@ -37,7 +37,7 @@ const ProductSchema = new Schema(
         ref: "image",
       },
     ],
-    quantity: {
+    countInStock: {
       type: Number,
       required: true,
      },

@@ -44,13 +44,13 @@ module.exports = {
         price,
         category,
         sizes,
-        quantity,
+        countInStock,
         brand,
         isFeatured,
         isArchived,
       } = req.body;
       const { errors, isValid } = ProductValidation(req.body);
- 
+
       if (!isValid) {
         return res.status(400).json(errors);
       }
@@ -64,7 +64,7 @@ module.exports = {
         category,
         sizes,
         images: createdImages,
-        quantity,
+        countInStock,
         brand,
         isArchived,
         isFeatured,
@@ -87,7 +87,7 @@ module.exports = {
       const product = await Product.findById(id)
         .populate("images", "_id url cloudinary_id")
         .select(
-          "_id name price quantity images sizes category brand isFeatured isArchived description"
+          "_id name price countInStock images sizes category brand isFeatured isArchived description"
         );
 
       if (!product) {
@@ -138,6 +138,17 @@ module.exports = {
           },
         },
         {
+          $lookup: {
+            from: "brands",
+            localField: "brand",
+            foreignField: "_id",
+            as: "brand",
+          },
+        },
+        {
+          $unwind: "$brand",
+        },
+        {
           $sort: { createdAt: -1 },
         },
         {
@@ -145,7 +156,8 @@ module.exports = {
             _id: 1,
             name: 1,
             price: 1,
-            quantity: 1,
+            countInStock: 1,
+            "brand.name": 1,
             images: { _id: 1, url: 1, cloudinary_id: 1 },
             sizes: { _id: 1, name: 1 },
             category: {
@@ -155,8 +167,8 @@ module.exports = {
             },
             createdAt: 1,
             updatedAt: 1,
-            isFeatured:1,
-            isArchived:1,
+            isFeatured: 1,
+            isArchived: 1,
           },
         },
       ]);
@@ -201,7 +213,7 @@ module.exports = {
         price,
         category,
         sizes,
-        quantity,
+        countInStock,
         brand,
         isFeatured,
         isArchived,
@@ -222,7 +234,7 @@ module.exports = {
       product.price = price;
       product.category = category;
       product.sizes = sizes;
-      product.quantity = quantity;
+      product.countInStock = countInStock;
       product.brand = brand;
       product.isFeatured = isFeatured;
       product.isArchived = isArchived;

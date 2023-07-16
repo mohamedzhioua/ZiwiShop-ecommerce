@@ -29,6 +29,7 @@ router.patch(
 // router.delete("/:id", AdminProductController);
 
 router.get("/client/Products", ClientProductController.GetClientProducts);
+router.get("/client/:id", ClientProductController.GetClientOneProduct);
 
 
 module.exports = router;

@@ -1,17 +1,12 @@
   const Product = require("../models/product");
-  const Size = require("../models/size");
-  const Category = require("../models/category");
-  const Brand = require("../models/brand");
-  const Image = require("../models/image");
+const IdParamsValidation = require("../validator/IdParamsValidation");
+
 
 module.exports = {
- 
- 
-  //  ---------------------------------------- //GetProducts//--------------------------- //
+ //  ---------------------------------------- //GetProducts//--------------------------- //
   GetClientProducts: async (req, res) => {
     try {
-      console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-      const products = await Product.aggregate([
+       const products = await Product.aggregate([
         {
           $match: {isFeatured: true},
         },
@@ -55,7 +50,7 @@ module.exports = {
             _id: 1,
             name: 1,
             price: 1,
-            quantity: 1,
+            countInStock: 1,
             images: { _id:1, url: 1},
             sizes: { _id: 1, name: 1 },
             category: {
@@ -76,6 +71,41 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
- 
+ //  ---------------------------------------- //GetOneProduct//--------------------------- //
+ GetClientOneProduct: async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { errors, isValid } = IdParamsValidation(req.params);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const product = await Product.findById(id)
+      .populate("images", "_id url")
+      .populate("sizes", "_id name value")
+      .populate({
+        path: "category",
+        select: "_id name parentCategory",
+        populate: {
+          path: "parentCategory",
+          select: "name",
+        },
+      })
+      .select(
+        "_id name price countInStock images sizes category brand isFeatured isArchived description"
+      );
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    return res.status(200).json(product);
+  } catch (error) {
+    return res.status(500).send("Error: " + error.message);
+  }
+},
+
+
+
  
 };
