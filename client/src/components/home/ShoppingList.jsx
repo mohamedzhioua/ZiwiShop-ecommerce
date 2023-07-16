@@ -2,12 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Item from "../ProductCard";
-import { Typography } from "@mui/material";
+ import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
  import { productApi } from "../../api/productApi";
 import { useMounted } from "../../hooks/use-mounted";
-import ProductCard from "../ProductCard";
+import ProductCard from "../Product/ProductCard";
 
 
 const ShoppingList = () => {

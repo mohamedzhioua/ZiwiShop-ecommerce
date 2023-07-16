@@ -38,8 +38,7 @@ const CartMenu = () => {
     (total, item) => total + Number(item.quantity),
     0
   )
-  console.log("🚀 ~ file: CartMenu.jsx:41 ~ CartMenu ~ itemCount:", itemCount)
-  return (
+   return (
     <Box
       display={isCartOpen ? "block" : "none"}
       backgroundColor="rgba(0, 0, 0, 0.4)"

@@ -3,18 +3,18 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { addToCart } from '../app/feature/cartSlice';
-import { toTitleCase } from '../utils/toTitleCase';
-import { currencyFormatter } from '../utils/currencyFormatter';
-import CustomButton from './ui/CustomButton';
-import { useHover } from '../hooks/useHover';
-import useTheme from '../hooks/useTheme';
+import { addToCart } from '../../app/feature/cartSlice';
+import { toTitleCase } from '../../utils/toTitleCase';
+import { currencyFormatter } from '../../utils/currencyFormatter';
+import CustomButton from '../ui/CustomButton';
+import { useHover } from '../../hooks/useHover';
+import useTheme from '../../hooks/useTheme';
 
 const ProductCard = (props) => {
   const { product, width } = props
   const navigate = useNavigate();
   const dispatch = useDispatch();
-   const { mode, theme } = useTheme();
+  const { mode, theme } = useTheme();
   const ref = useRef(null);
   const [hoverRef, isHovered] = useHover(ref);
 
@@ -29,7 +29,7 @@ const ProductCard = (props) => {
           width="300px"
           height="400px"
           src={product.images[0].url}
-          onClick={() => navigate(`/product/${product._id}`)}
+          onClick={() => navigate(`/productDetails/${product._id}`)}
           style={{ cursor: "pointer" }}
         />
         <Box
@@ -53,8 +53,9 @@ const ProductCard = (props) => {
                 Preview
               </CustomButton>
             </Box>
-            <CustomButton onClick={() => {
-              dispatch(addToCart({ item: { ...product } }));
+            <CustomButton
+             onClick={() => {
+              dispatch(addToCart({ item: { ...product, quantity: 1 } }));
             }}>
               Add to Cart
             </CustomButton>

@@ -98,7 +98,7 @@ const handleDelete = (id) => {
                 <TableCell>Category</TableCell>
                 <TableCell>Brand</TableCell>
                 <TableCell>Price</TableCell>
-                <TableCell>Quantity</TableCell>
+                <TableCell>Stock</TableCell>
                 <TableCell>Featured</TableCell>
                 <TableCell>Archived</TableCell>
                 <TableCell>Date</TableCell>
@@ -159,7 +159,7 @@ const handleDelete = (id) => {
                       <TableCell>{product.category[0].name}</TableCell>
                       <TableCell>{toTitleCase(product?.brand.name)}</TableCell>
                       <TableCell>{currencyFormatter.format(product.price)}</TableCell>
-                      <TableCell>{product.quantity}</TableCell>
+                      <TableCell>{product.countInStock}</TableCell>
                       <TableCell>{product.isFeatured ? "Yes" : "No"}</TableCell>
                       <TableCell>{product.isArchived ? "Yes" : "No"}</TableCell>
                       <TableCell>{formatDate(product.createdAt)}</TableCell>

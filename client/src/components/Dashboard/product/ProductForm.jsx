@@ -10,17 +10,17 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import FileDropzone from "../../../FileDropzone";
+import FileDropzone from "../../FileDropzone";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import CustomButton from "../../../ui/CustomButton";
-import CustomInput from "../../../ui/CustomInput";
+import CustomButton from "../../ui/CustomButton";
+import CustomInput from "../../ui/CustomInput";
 import { ProductvalidationSchema } from './ProductFormValidation';
 import { toast } from 'react-hot-toast';
-import { useMounted } from '../../../../hooks/use-mounted';
-import { productApi } from '../../../../api/productApi';
-import { flattenCategories } from "../../../../utils/flattenCategories"
+import { useMounted } from '../../../hooks/use-mounted';
+import { productApi } from '../../../api/productApi';
+import { flattenCategories } from "../../../utils/flattenCategories"
 
 
 
@@ -49,7 +49,7 @@ const ProductForm = (props) => {
             price: 0,
             sizes: [],
             brand: "",
-            quantity: 0,
+            countInStock: 0,
             isFeatured: false,
             isArchived: false,
         };
@@ -125,7 +125,7 @@ const ProductForm = (props) => {
                 formData.append("sizes", size);
             });
             formData.append('brand', values.brand);
-            formData.append('quantity', values.quantity);
+            formData.append('countInStock', values.countInStock);
             formData.append('isFeatured', values.isFeatured);
             formData.append('isArchived', values.isArchived);
             formData.forEach((value, key) => {
@@ -239,14 +239,14 @@ const ProductForm = (props) => {
                                 >
                                     <CustomInput
                                         required
-                                        name="quantity"
-                                        label="quantity"
+                                        name="countInStock"
+                                        label="Stock"
                                         type="number"
-                                        value={values.quantity}
+                                        value={values.countInStock}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        error={touched.quantity && Boolean(errors.quantity)}
-                                        helperText={touched.quantity && errors.quantity}
+                                        error={touched.countInStock && Boolean(errors.countInStock)}
+                                        helperText={touched.countInStock && errors.countInStock}
                                     />
                                 </Grid>
                                 <Grid
