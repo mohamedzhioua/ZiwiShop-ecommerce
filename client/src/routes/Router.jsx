@@ -18,7 +18,7 @@ const Overview = lazy(() => import("../pages/dashboard/Overview"));
 const ProductAdd = lazy(() => import("../pages/dashboard/Product/ProductAdd"));
 const ProductList = lazy(() => import("../pages/dashboard/Product/ProductList"));
 const ProductEdit = lazy(() => import("../pages/dashboard/Product/ProductEdit"));
-const ProductDetails = lazy(() => import("../components/Product/ProductDetails"));
+const ProductDetails = lazy(() => import("../pages/product/ProductDetails"));
 //size
 const SizeList = lazy(() => import("../pages/dashboard/Size/SizeList"));
 const SizeAdd = lazy(() => import("../pages/dashboard/Size/SizeAdd"));

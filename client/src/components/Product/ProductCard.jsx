@@ -29,8 +29,6 @@ const ProductCard = (props) => {
           width="300px"
           height="400px"
           src={product.images[0].url}
-          onClick={() => navigate(`/productDetails/${product._id}`)}
-          style={{ cursor: "pointer" }}
         />
         <Box
           display={isHovered ? "block" : "none"}
@@ -46,17 +44,20 @@ const ProductCard = (props) => {
               alignItems="center"
               borderRadius="3px"
             >
-              <CustomButton variant="outlined" sx={{
-                color: mode === "dark" ? "black" : "",
-                borderColor: mode === "dark" ? "black" : ""
-              }}>
+              <CustomButton
+                onClick={() => navigate(`/productDetails/${product._id}`)}
+                variant="outlined"
+                sx={{
+                  color: mode === "dark" ? "black" : "",
+                  borderColor: mode === "dark" ? "black" : ""
+                }}>
                 Preview
               </CustomButton>
             </Box>
             <CustomButton
-             onClick={() => {
-              dispatch(addToCart({ item: { ...product, quantity: 1 } }));
-            }}>
+              onClick={() => {
+                dispatch(addToCart({ item: { ...product, quantity: 1 } }));
+              }}>
               Add to Cart
             </CustomButton>
           </Box>

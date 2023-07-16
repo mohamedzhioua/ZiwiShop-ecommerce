@@ -29,6 +29,7 @@ const CartMenu = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
+  console.log("🚀 ~ file: CartMenu.jsx:32 ~ CartMenu ~ cart:", cart)
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
 
   const totalPrice = cart.reduce((total, item) => {
@@ -97,7 +98,7 @@ const CartMenu = () => {
                       </IconButton>
                     </FlexBox>
                       <Typography fontSize={11}  >
-                        {`${item.category[0].name} ${item.category[0].parentCategory ? `/ ${item.category[0].parentCategory}` : ""
+                        {`${item.category.name} ${item.category.parentCategory ? `/ ${item.category.parentCategory.name}` : ""
                           }`}
                       </Typography>
                     <FlexBox m="15px 0">

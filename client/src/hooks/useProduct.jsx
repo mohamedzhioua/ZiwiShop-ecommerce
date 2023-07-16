@@ -5,16 +5,16 @@ export const useProduct = (id) => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const GetOneProduct = async () => {
+    const GetClientOneProduct = async () => {
       try {
-        const response = await productApi.GetOneProduct(id);
+        const response = await productApi.GetClientOneProduct(id);
         setProduct(response);
       } catch (err) {
         console.error(err);
       }
     };
 
-    GetOneProduct();
+    GetClientOneProduct();
   }, [id]);
 
   return product;
