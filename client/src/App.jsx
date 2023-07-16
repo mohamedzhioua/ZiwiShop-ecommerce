@@ -7,8 +7,8 @@ import { CssBaseline } from "@mui/material";
 import Navbar from "./layouts/Navbar";
 import useTheme from "./hooks/useTheme";
 import './index.css'
-import CartMenu from "./components/CartMenu";
-import useAuth from "./hooks/useAuth";
+ import useAuth from "./hooks/useAuth";
+import CartMenu from './components/Cart/index';
 
 // const ScrollToTop = () => {
 //   const { pathname } = useLocation();
