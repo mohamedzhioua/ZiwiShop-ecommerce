@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Badge, Button, IconButton, Box } from '@mui/material';
 import DarkButton from '../components/ui/DarkButton';
- import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
 import useTheme from '../hooks/useTheme';
 
@@ -21,7 +21,7 @@ import useTheme from '../hooks/useTheme';
 function Navbar() {
   const { IsLoggedIn, user } = useAuth();
 
-  const {theme} = useTheme();
+  const { theme } = useTheme();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -32,7 +32,7 @@ function Navbar() {
     { name: "Brands", href: "/dashboard/brands" },
     { name: "Products", href: "/dashboard/products" },
     { name: "Home", href: "/" },
- 
+
 
   ];
   const handleOpenNavMenu = (event) => {
@@ -197,7 +197,7 @@ function Navbar() {
             </IconButton>
             <DarkButton />
             <Badge
-              badgeContent={cart.length}
+              badgeContent={cart.reduce((a, c) => a + Number(c.quantity), 0)}
               color="secondary"
               invisible={cart.length === 0}
               sx={{
@@ -205,8 +205,10 @@ function Navbar() {
                   right: 5,
                   top: 5,
                   padding: "0 4px",
-                  height: "14px",
-                  minWidth: "13px",
+                  height: "20px",
+                  minWidth: "20px",
+                  fontSize: "14px",
+                  fontWeight: "800"
                 },
               }}
             >

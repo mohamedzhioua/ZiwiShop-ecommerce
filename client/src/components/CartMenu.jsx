@@ -16,6 +16,7 @@ import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
 import { toTitleCase } from "../utils/toTitleCase";
 import { currencyFormatter } from "../utils/currencyFormatter";
+import { toast } from "react-hot-toast";
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -29,17 +30,17 @@ const CartMenu = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
-  console.log("🚀 ~ file: CartMenu.jsx:32 ~ CartMenu ~ cart:", cart)
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
 
   const totalPrice = cart.reduce((total, item) => {
-    return total + Number(item.quantity)* Number(item.price);
+    return total + Number(item.quantity) * Number(item.price);
   }, 0);
   const itemCount = cart.reduce(
     (total, item) => total + Number(item.quantity),
     0
   )
-   return (
+
+  return (
     <Box
       display={isCartOpen ? "block" : "none"}
       backgroundColor="rgba(0, 0, 0, 0.4)"
@@ -71,36 +72,37 @@ const CartMenu = () => {
             </IconButton>
           </FlexBox>
           <Box>
-            {cart?.map((item) => (
-              <Box key={`${item?.name}-${item?._id}`}>
+            {cart?.map((product) => (
+              <Box key={`${product?.name}-${product?._id}`}>
                 <FlexBox p="15px 0">
                   <Box flex="1 1 40%">
                     <img
-                      alt={item?.name}
+                      alt={product?.name}
                       width="123px"
                       height="164px"
-                      src={item.images[0].url}
+                      src={product.images[0].url}
                       loading="lazy"
                     />
                   </Box>
                   <Box flex="1 1 60%">
                     <FlexBox mb="5px">
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                        {toTitleCase(item?.name)}
+                        {toTitleCase(product?.name)}
                       </Typography>
                       <IconButton
                         onClick={() =>
-                          dispatch(removeFromCart({ id: item._id }))
+                          dispatch(removeFromCart({ id: product._id }))
                         }
 
                       >
                         <CloseIcon />
                       </IconButton>
                     </FlexBox>
-                      <Typography fontSize={11}  >
-                        {`${item.category.name} ${item.category.parentCategory ? `/ ${item.category.parentCategory.name}` : ""
-                          }`}
-                      </Typography>
+                    {product?.category && 
+                    <Typography fontSize={11} >
+                      {`${product.category[0].name} ${product.category[0].parentCategory ? `/ ${product.category[0].parentCategory}` : ""
+                        }`}
+                    </Typography>}
                     <FlexBox m="15px 0">
                       <Box
                         display="flex"
@@ -109,22 +111,26 @@ const CartMenu = () => {
                       >
                         <IconButton
                           onClick={() =>
-                            dispatch(decreaseCount({ id: item._id }))
+                            dispatch(decreaseCount({ id: product._id }))
                           }
                         >
                           <RemoveIcon />
                         </IconButton>
-                        <Typography>{item.quantity}</Typography>
+                        <Typography>{product.quantity}</Typography>
                         <IconButton
-                          onClick={() =>
-                            dispatch(increaseCount({ id: item._id }))
+                         onClick={() => {
+                          if (product.countInStock < product.quantity + 1) {
+                            toast.error('Sorry. Product is out of stock');
+                          } else {
+                            dispatch(increaseCount({ id: product._id }));
                           }
+                        }}
                         >
                           <AddIcon />
                         </IconButton>
                       </Box>
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                        {currencyFormatter.format(item.price)}
+                        {currencyFormatter.format(product.price)}
                       </Typography>
                     </FlexBox>
                   </Box>
@@ -138,7 +144,7 @@ const CartMenu = () => {
           <Box m="20px 0">
             <FlexBox m="20px 0">
               <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>SUBTOTAL</Typography>
-              <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>${totalPrice}</Typography>
+              <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>{currencyFormatter.format(totalPrice)}</Typography>
             </FlexBox>
             <CustomButton
               sx={{
