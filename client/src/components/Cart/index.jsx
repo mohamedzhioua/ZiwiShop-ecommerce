@@ -1,4 +1,4 @@
-import { Box,   IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
@@ -11,6 +11,8 @@ import { tokens } from "../../theme/theme";
 import useTheme from "../../hooks/useTheme";
 import CartItem from "./CartItem";
 import CartSubtotal from "./CartSubtotal";
+import { useRef } from "react";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 export const FlexBox = styled(Box)`
   display: flex;
@@ -21,6 +23,7 @@ export const FlexBox = styled(Box)`
 const CartMenu = () => {
   const { theme } = useTheme();
   const colors = tokens(theme.palette.mode);
+  const cartRef = useRef(null);
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
@@ -33,7 +36,9 @@ const CartMenu = () => {
     (total, item) => total + Number(item.quantity),
     0
   )
-
+  useOnClickOutside(cartRef, isCartOpen, () =>
+    dispatch(setIsCartOpen({}))
+  );
   return (
     <Box
       display={isCartOpen ? "block" : "none"}
@@ -47,6 +52,7 @@ const CartMenu = () => {
       overflow="auto"
     >
       <Box
+        ref={cartRef}
         position="fixed"
         right="0"
         bottom="0"
@@ -66,14 +72,12 @@ const CartMenu = () => {
             </IconButton>
           </FlexBox>
           <Box>
-          {cart?.map((product) => (
+            {cart?.map((product) => (
               <CartItem key={product._id} product={product} />
             ))}
           </Box>
-
-  
           <Box m="20px 0">
-          <CartSubtotal totalPrice={totalPrice} />
+            <CartSubtotal totalPrice={totalPrice} />
             <CustomButton
               sx={{
                 borderRadius: 0,
