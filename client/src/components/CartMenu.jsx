@@ -15,6 +15,7 @@ import CustomButton from "./ui/CustomButton";
 import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
 import { toTitleCase } from "../utils/toTitleCase";
+import { currencyFormatter } from "../utils/currencyFormatter";
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -31,12 +32,13 @@ const CartMenu = () => {
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
 
   const totalPrice = cart.reduce((total, item) => {
-    return total + Number(item.count)* Number(item.price);
+    return total + Number(item.quantity)* Number(item.price);
   }, 0);
   const itemCount = cart.reduce(
-    (total, item) => total + Number(item.count),
+    (total, item) => total + Number(item.quantity),
     0
   )
+  console.log("🚀 ~ file: CartMenu.jsx:41 ~ CartMenu ~ itemCount:", itemCount)
   return (
     <Box
       display={isCartOpen ? "block" : "none"}
@@ -86,10 +88,6 @@ const CartMenu = () => {
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
                         {toTitleCase(item?.name)}
                       </Typography>
-                      <Typography >
-                        {`${item.category[0].name} ${item.category[0].parentCategory ? `/ ${item.category[0].parentCategory}` : ""
-                          }`}
-                      </Typography>
                       <IconButton
                         onClick={() =>
                           dispatch(removeFromCart({ id: item._id }))
@@ -99,6 +97,10 @@ const CartMenu = () => {
                         <CloseIcon />
                       </IconButton>
                     </FlexBox>
+                      <Typography fontSize={11}  >
+                        {`${item.category[0].name} ${item.category[0].parentCategory ? `/ ${item.category[0].parentCategory}` : ""
+                          }`}
+                      </Typography>
                     <FlexBox m="15px 0">
                       <Box
                         display="flex"
@@ -112,7 +114,7 @@ const CartMenu = () => {
                         >
                           <RemoveIcon />
                         </IconButton>
-                        <Typography>{item.count}</Typography>
+                        <Typography>{item.quantity}</Typography>
                         <IconButton
                           onClick={() =>
                             dispatch(increaseCount({ id: item._id }))
@@ -122,7 +124,7 @@ const CartMenu = () => {
                         </IconButton>
                       </Box>
                       <Typography fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                        {item.price}
+                        {currencyFormatter.format(item.price)}
                       </Typography>
                     </FlexBox>
                   </Box>

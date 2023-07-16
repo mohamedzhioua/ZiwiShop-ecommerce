@@ -212,7 +212,6 @@ function Navbar() {
             >
               <IconButton
                 onClick={() => dispatch(setIsCartOpen({}))}
-
                 aria-label="Shopping Cart"
                 color="primary"
               >
