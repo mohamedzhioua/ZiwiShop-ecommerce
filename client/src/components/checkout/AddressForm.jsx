@@ -35,7 +35,6 @@ const AddressForm = (props) => {
                     name={formattedName("firstName")}
                     error={formattedError("firstName")}
                     helperText={formattedHelper("firstName")}
-                    sx={{ gridColumn: "span 2" }}
                 />
             </Grid>
             <Grid
@@ -52,7 +51,6 @@ const AddressForm = (props) => {
                     name={formattedName("lastName")}
                     error={formattedError("lastName")}
                     helperText={formattedHelper("lastName")}
-                    sx={{ gridColumn: "span 2" }}
                 />
             </Grid>
             <Grid
@@ -69,8 +67,7 @@ const AddressForm = (props) => {
                     name={formattedName("country")}
                     error={formattedError("country")}
                     helperText={formattedHelper("country")}
-                    sx={{ gridColumn: "span 4" }}
-                />
+                 />
             </Grid>
             <Grid
                 xs={12}
@@ -86,7 +83,6 @@ const AddressForm = (props) => {
                     name={formattedName("street1")}
                     error={formattedError("street1")}
                     helperText={formattedHelper("street1")}
-                    sx={{ gridColumn: "span 2" }}
                 />
             </Grid>
             <Grid
@@ -103,7 +99,6 @@ const AddressForm = (props) => {
                     name={formattedName("street2")}
                     error={formattedError("street2")}
                     helperText={formattedHelper("street2")}
-                    sx={{ gridColumn: "span 2" }}
                 />
             </Grid>
             <Grid
@@ -120,7 +115,6 @@ const AddressForm = (props) => {
                     name={formattedName("city")}
                     error={formattedError("city")}
                     helperText={formattedHelper("city")}
-                    sx={{ gridColumn: "span 2" }}
                 />
             </Grid>
             <Grid
@@ -137,7 +131,6 @@ const AddressForm = (props) => {
                     name={formattedName("state")}
                     error={formattedError("state")}
                     helperText={formattedHelper("state")}
-                    sx={{ gridColumn: "1fr" }}
                 />
             </Grid>
             <Grid
@@ -154,7 +147,6 @@ const AddressForm = (props) => {
                     name={formattedName("zipCode")}
                     error={formattedError("zipCode")}
                     helperText={formattedHelper("zipCode")}
-                    sx={{ gridColumn: "1fr" }}
                 />
             </Grid>
         </Grid >
@@ -163,19 +155,19 @@ const AddressForm = (props) => {
 AddressForm.propTypes = {
     type: PropTypes.string.isRequired,
     values: PropTypes.shape({
-      firstName: PropTypes.string.isRequired,
-      lastName: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
-      street1: PropTypes.string.isRequired,
-      street2: PropTypes.string,
-      city: PropTypes.string.isRequired,
-      state: PropTypes.string.isRequired,
-      zipCode: PropTypes.string.isRequired,
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        country: PropTypes.string.isRequired,
+        street1: PropTypes.string.isRequired,
+        street2: PropTypes.string,
+        city: PropTypes.string.isRequired,
+        state: PropTypes.string.isRequired,
+        zipCode: PropTypes.string.isRequired,
     }).isRequired,
     touched: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     handleBlur: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
-  };
-  
+};
+
 export default AddressForm;

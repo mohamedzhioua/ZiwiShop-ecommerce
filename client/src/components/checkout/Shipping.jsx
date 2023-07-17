@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Box, Checkbox, FormControlLabel, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import AddressForm from "./AddressForm";
 import { Stack } from "@mui/system";
 
@@ -60,18 +60,7 @@ const Shipping = (props) => {
     );
 };
 Shipping.propTypes = {
-    values: PropTypes.shape({
-      billingAddress: PropTypes.shape({
-        street: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        postalCode: PropTypes.string.isRequired,
-      }).isRequired,
-      shippingAddress: PropTypes.shape({
-         street: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        postalCode: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
+    values: PropTypes.object.isRequired, 
     touched: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     handleBlur: PropTypes.func.isRequired,
