@@ -31,6 +31,9 @@ const CategoryEdit = lazy(() => import("../pages/dashboard/Category/CategoryEdit
 const BrandList = lazy(() => import("../pages/dashboard/Brand/BrandList"));
 const BrandAdd = lazy(() => import("../pages/dashboard/Brand/BrandAdd"));
 const BrandEdit = lazy(() => import("../pages/dashboard/Brand/BrandEdit"));
+//payment
+const Checkout = lazy(() => import("../pages/checkout/Checkout"));
+
 const Router = () => {
   return (
 
@@ -45,6 +48,7 @@ const Router = () => {
       <Route element={<ProtectedRoute allowedRoles={["ADMIN", "USER"]} />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/productDetails/:id" element={<ProductDetails/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>

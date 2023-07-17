@@ -2,10 +2,8 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
-import {
-  setIsCartOpen,
-} from "../../app/feature/cartSlice";
-// import { useNavigate } from "react-router-dom";
+import {setIsCartOpen} from "../../app/feature/cartSlice";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "../ui/CustomButton";
 import { tokens } from "../../theme/theme";
 import useTheme from "../../hooks/useTheme";
@@ -24,7 +22,7 @@ const CartMenu = () => {
   const { theme } = useTheme();
   const colors = tokens(theme.palette.mode);
   const cartRef = useRef(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
@@ -86,9 +84,8 @@ const CartMenu = () => {
                 m: "20px 0",
               }}
               onClick={() => {
-                // navigate("/checkout");
-                dispatch(setIsCartOpen({}));
-              }}
+                navigate("/checkout");
+               }}
             >
               CHECKOUT
             </CustomButton>
