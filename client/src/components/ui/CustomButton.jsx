@@ -5,6 +5,8 @@ const CustomButton = ({ icon: Icon, children, includeSpacing, sx, ...props }) =>
   const buttonStyle = {
     borderColor: "primary",
     fontSize: "14px",
+    fontWeight: "bold"
+
   };
 
   if (includeSpacing) {
