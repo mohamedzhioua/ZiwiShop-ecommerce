@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
  
 const ImageSection = (props) => {
 const { product, selectedImage, setSelectedImage } = props
-const hasMultipleImages = product?.images?.length > 1;
+ const hasMultipleImages = product?.images?.length > 1;
 
     return (
         <Box flex="1 1 40%" mb="40px">
@@ -42,7 +42,7 @@ const hasMultipleImages = product?.images?.length > 1;
 }
 ImageSection.propTypes = {
     product: PropTypes.object.isRequired,
-    selectedImage: PropTypes.string.isRequired,
+    selectedImage: PropTypes.object,
     setSelectedImage: PropTypes.func.isRequired,
   };
 export default ImageSection

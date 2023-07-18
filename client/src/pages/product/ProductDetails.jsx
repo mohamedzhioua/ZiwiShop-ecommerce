@@ -1,13 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Grid, Link, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProduct } from "../../hooks/useProduct"
 import ImageSection from "../../components/Product/ProductDetails/ImageSection";
 import ActionSection from "../../components/Product/ProductDetails/ActionSection";
 import InformationSection from "../../components/Product/ProductDetails/InformationSection";
+import LoadingSpinner from "../../components/ui/LoadingSpinner/LoadingSpinner";
+import { Link as RouterLink } from 'react-router-dom';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 
-
-const ItemDetails = () => {
+const ProductDetails = () => {
 
     const { id } = useParams();
     const product = useProduct(id);
@@ -19,12 +21,40 @@ const ItemDetails = () => {
     }, [product]);
 
     if (!product) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />;
     }
 
 
     return (
-        <Box width="80%" m="80px auto">
+        <Box width="80%" m="80px auto" >
+                 <Grid container spacing={3} marginBottom={3}>
+                <Grid item>
+                    <Breadcrumbs
+                        aria-label="breadcrumb"
+                        separator={<ChevronRightOutlinedIcon fontSize="small" />}
+                        sx={{ mt:3}}
+                    >
+                        <Link
+                            color="textPrimary"
+                            component={RouterLink}
+                            to="/"
+                            variant="h5"
+                        >
+                            Home
+                        </Link>
+                       
+                        <Typography
+                            color="textSecondary"
+                            variant="h5"
+                        >
+                            ProductDetails
+                        </Typography>
+                    </Breadcrumbs>
+
+                </Grid>
+            </Grid>
+
+
             <Box display="flex" flexWrap="wrap" columnGap="40px">
                 <ImageSection
                     product={product}
@@ -55,8 +85,8 @@ const ItemDetails = () => {
           ))} */}
                 </Box>
             </Box>
-        </Box>
+        </Box >
     );
 };
 
-export default ItemDetails;
+export default ProductDetails;
