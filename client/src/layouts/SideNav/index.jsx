@@ -97,13 +97,13 @@ export const SideNav = (props) => {
                             onClose={onClose} />
                         <SideNavNestedItems
                             item={{
-                                name: 'Categories',
+                                name: 'categories',
                                 childCategories: categories,
                             }}
                             onClose={onClose} />
                         <SideNavNestedItems
                             item={{
-                                name: 'Brands',
+                                name: 'brands',
                                 childCategories: brands,
                             }}
                             onClose={onClose} />

@@ -9,16 +9,9 @@ import useTheme from "./hooks/useTheme";
 import './index.css'
  import useAuth from "./hooks/useAuth";
 import CartMenu from './components/Cart/index';
+import { ScrollToTop } from './utils/scrollToTop';
 
-// const ScrollToTop = () => {
-//   const { pathname } = useLocation();
 
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, [pathname]);
-
-//   return null;
-// };
 
 function App() {
   const auth = useAuth();
@@ -30,6 +23,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <div className="content">
+        <ScrollToTop />
           {auth.isInitialized ? <Router /> : ""}
           <Toaster position="top-center" />
           <CartMenu />
