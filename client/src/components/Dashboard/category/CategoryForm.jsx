@@ -4,7 +4,7 @@ import CustomButton from "../../ui/CustomButton";
 import {
     Autocomplete, Card, CardContent, TextField, Unstable_Grid2 as Grid, Switch, Typography,
 } from "@mui/material";
-import CustomInput from "../ui/CustomInput";
+import CustomInput from "../../ui/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useMounted } from '../../../hooks/use-mounted';

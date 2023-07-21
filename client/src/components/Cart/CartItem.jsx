@@ -48,7 +48,7 @@ const CartItem = (props) => {
         </FlexBox>
         {category && 
         <Typography fontSize={11} >
-          {`${category[0].name} ${category[0].parentCategory ? `/ ${category[0].parentCategory}` : ""
+          {`${category[0]?.name} ${category[0]?.parentCategory ? `/ ${category[0]?.parentCategory}` : ""
             }`}
         </Typography>}
         <FlexBox m="15px 0">

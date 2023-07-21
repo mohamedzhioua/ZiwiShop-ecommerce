@@ -5,43 +5,81 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Container from '@mui/material/Container';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import MenuItem from '@mui/material/MenuItem';
 import useAuth from '../hooks/useAuth';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
-import { Badge, Button, IconButton, Box } from '@mui/material';
+import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
 import DarkButton from '../components/ui/DarkButton';
 import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
 import useTheme from '../hooks/useTheme';
+import BrandsPopover from "./BrandsPopover"
+// import { MobileNavigation } from './mobile';
+import { SideNav } from './SideNav';
 
+
+const brands = [
+  {
+    name: "brands",
+    children: [{
+      _id: '64a858793e772c0aad8c879c',
+      name: 'Adidas'
+    },
+    {
+      _id: '64a858993e772c0aad8c87a1',
+      name: 'Louis Vuitton'
+    },
+    {
+      _id: '64a858b63e772c0aad8c87a6',
+      name: 'GUCCI'
+    },
+    {
+      _id: '64a858cb3e772c0aad8c87ad',
+      name: 'NIKE'
+    },
+    {
+      _id: '64b03983ec95da3aad0ed8b5',
+      name: 'Celio'
+    }]
+  }
+];
 
 
 function Navbar() {
   const { IsLoggedIn, user } = useAuth();
-
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
-  const [anchorElNav, setAnchorElNav] = useState(null);
+  const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+
+  const handleOpenNavMenu = () => {
+    setIsSideNavOpen(true);
+  };
+
+  const handleCloseNavMenu = () => {
+    setIsSideNavOpen(false);
+  };
+
+
+  // const navigationLinks = [
+  //   { name: "Overview", href: "/dashboard/overview" },
+  //   { name: "Sizes", href: "/dashboard/sizes" },
+  //   { name: "Categories", href: "/dashboard/categories" },
+  //   { name: "Brands", href: "/dashboard/brands" },
+  //   { name: "Products", href: "/dashboard/products" },
+  //   { name: "Home", href: "/" },
+  // ];
   const navigationLinks = [
+
     { name: "Overview", href: "/dashboard/overview" },
     { name: "Sizes", href: "/dashboard/sizes" },
     { name: "Categories", href: "/dashboard/categories" },
     { name: "Brands", href: "/dashboard/brands" },
     { name: "Products", href: "/dashboard/products" },
-    { name: "Home", href: "/" },
-
-
+    { name: "Home", href: "/" }
   ];
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
 
   let filteredLinks = navigationLinks.filter(
     (item) => IsLoggedIn || item.name === "Home"
@@ -91,63 +129,24 @@ function Navbar() {
           >
             ZiwiShop
           </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            {isMobileScreen && (
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="primary"
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="primary"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-
-              {filteredLinks.map((item) => (
-                <MenuItem key={item.name} onClick={handleCloseNavMenu}
-                  sx={{
-                    width: 150, borderRadius: 3, px: 1,
-                    py: 0.5, justifyContent: 'center'
-                  }}
-                >
-
-                  <Typography
-
-                    variant="h6"
-                    component={Link}
-                    to={item.href}
-                    sx={{
-                      textDecoration: 'none',
-                      color: theme.palette.primary.main,
-                      fontWeight: "bold"
-                    }}
-                  >
-                    {item.name}
-                  </Typography>
-                </MenuItem>
-
-              ))}
-
-
-            </Menu>
+            {isMobileScreen && isSideNavOpen && (
+              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} brands={brands}
+              />
+            )}
           </Box>
           <Typography
             variant="h5"
@@ -175,7 +174,6 @@ function Navbar() {
                 key={item.name}
                 to={item.href}
                 component={Link}
-                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: "bold" }}
               >{item.name}
               </Button>
@@ -189,6 +187,7 @@ function Navbar() {
             justifyContent="space-between"
             alignItems="center" gap="5px"
           >
+            <BrandsPopover brands={brands} />
             <IconButton
               aria-label="Search"
               color="primary"

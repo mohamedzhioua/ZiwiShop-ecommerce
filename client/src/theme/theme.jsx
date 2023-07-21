@@ -268,6 +268,7 @@ export const getDesignTokens = (mode) => {
           },
         },
       },
+ 
     },
   };
 };

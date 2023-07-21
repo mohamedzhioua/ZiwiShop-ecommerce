@@ -1,7 +1,7 @@
  import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import CustomButton from "../ui/CustomButton";
-import { FaFacebook } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
+ import useAuth from "../../hooks/useAuth";
+import { FacebookIcon } from "../icons";
 
 function FacebookAuth() {
   const { facebookLogin } = useAuth();
@@ -30,7 +30,7 @@ function FacebookAuth() {
             variant="outlined"
             fullWidth
             size="large"
-            icon={FaFacebook}
+            icon={FacebookIcon}
             color="fourthary"
           >
             Continue with Facebook
