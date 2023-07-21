@@ -1,20 +1,17 @@
 import { Box } from '@mui/system';
-import { SideNavNestedItems } from './SideNavNestedItems';
 import SideNavItem from './SideNavItem';
 import PropTypes from 'prop-types';
 
 export const SideNavSection = (props) => {
     const { navigationLinks, onClose } = props;
-    const accordionItems = navigationLinks.filter((item) => item.children);
-    const linkItems = navigationLinks.filter((item) => !item.children);
+
 
     return (
         <Box>
-            {SideNavNestedItems(accordionItems, onClose)}
 
-            {linkItems.map((item) => (
+            {navigationLinks.map((item, index) => (
 
-                <SideNavItem item={item} onClose={onClose} key={item.name}/>
+                <SideNavItem item={item} onClose={onClose} key={`${item.name}-${index}`} />
             ))}
         </Box>
     );

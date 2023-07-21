@@ -1,7 +1,6 @@
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Container from '@mui/material/Container';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -45,8 +44,7 @@ const brands = [
   }
 ];
 
-
-function Navbar() {
+ function Navbar() {
   const { IsLoggedIn, user } = useAuth();
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const { theme } = useTheme();
@@ -144,8 +142,7 @@ function Navbar() {
             )}
 
             {isMobileScreen && isSideNavOpen && (
-              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} brands={brands}
-              />
+              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu}  />
             )}
           </Box>
           <Typography

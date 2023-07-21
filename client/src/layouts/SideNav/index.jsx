@@ -4,11 +4,15 @@ import { Scrollbar } from '../../components/ui/Scrollbar';
 import { SideNavSection } from './SideNavSection';
 import useTheme from '../../hooks/useTheme';
 import SideNavItem from './SideNavItem';
+import { useCallback, useEffect, useState } from 'react';
+import { productApi } from '../../api/productApi';
+import { useMounted } from '../../hooks/use-mounted';
+import SideNavNestedItems from './SideNavNestedItems';
 
 const navigationLinks = [
     {
         name: "Dashboard",
-        children: [
+        childCategories: [
             { name: "Overview", href: "/dashboard/overview" },
             { name: "Sizes", href: "/dashboard/sizes" },
             { name: "Categories", href: "/dashboard/categories" },
@@ -19,9 +23,29 @@ const navigationLinks = [
 ];
 
 export const SideNav = (props) => {
-    const { onClose, open, brands } = props
+    const { onClose, open, } = props
     const { theme } = useTheme();
+    const [categories, setCategories] = useState([])
+    const [brands, setBrands] = useState([])
+    const isMounted = useMounted()
 
+    const Getoptions = useCallback(async () => {
+        try {
+            const response = await productApi.Getoptions();
+            if (isMounted()) {
+                setCategories(response.categories);
+                setBrands(response.brands);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
+
+    useEffect(() => {
+        Getoptions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <Drawer
             anchor="left"
@@ -66,13 +90,22 @@ export const SideNav = (props) => {
                             px: 2
                         }}
                     >
-                        <SideNavItem item={{ name: "Home", href: "/" }}   onClose={onClose} />
-                         
+                        <SideNavItem item={{ name: "Home", href: "/" }} onClose={onClose} />
+
                         <SideNavSection
                             navigationLinks={navigationLinks}
                             onClose={onClose} />
-                        <SideNavSection
-                            navigationLinks={brands}
+                        <SideNavNestedItems
+                            item={{
+                                name: 'Categories',
+                                childCategories: categories,
+                            }}
+                            onClose={onClose} />
+                        <SideNavNestedItems
+                            item={{
+                                name: 'Brands',
+                                childCategories: brands,
+                            }}
                             onClose={onClose} />
                     </Stack>
                     <Stack sx={{ p: 3 }} spacing={1}>

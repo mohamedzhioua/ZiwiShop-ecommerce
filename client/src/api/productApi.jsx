@@ -52,6 +52,7 @@ class ProductApi {
   GetClientOneProduct(id) {
     return this.request('get', `/client/${id}`);
   }
+  
 }
 
 export const productApi = new ProductApi();

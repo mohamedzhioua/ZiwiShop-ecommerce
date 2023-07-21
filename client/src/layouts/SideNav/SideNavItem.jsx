@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom'
 import useTheme from '../../hooks/useTheme'
 import { toTitleCase } from '../../utils/toTitleCase';
 import PropTypes from 'prop-types';
+import { SideNavNestedItems } from './SideNavNestedItems';
 
 const SideNavItem = (props) => {
     const { item, onClose } = props
-    const { name, href } = item
+      const { name, href,childCategories} = item
     const { theme } = useTheme();
-
+    
+    if (childCategories && childCategories.length > 0) {
+        return <SideNavNestedItems item={item} onClose={onClose}/>;
+      }
     return (
+     
         <>
             <ButtonBase
                 key={name}
