@@ -13,8 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
 import useTheme from '../hooks/useTheme';
 import BrandsPopover from "./BrandsPopover"
-// import { MobileNavigation } from './mobile';
-import { SideNav } from './SideNav';
+ import { SideNav } from './SideNav';
 import Logo from '../components/ui/Logo';
 
 
@@ -60,15 +59,6 @@ function Navbar() {
     setIsSideNavOpen(false);
   };
 
-
-  // const navigationLinks = [
-  //   { name: "Overview", href: "/dashboard/overview" },
-  //   { name: "Sizes", href: "/dashboard/sizes" },
-  //   { name: "Categories", href: "/dashboard/categories" },
-  //   { name: "Brands", href: "/dashboard/brands" },
-  //   { name: "Products", href: "/dashboard/products" },
-  //   { name: "Home", href: "/" },
-  // ];
   const navigationLinks = [
 
     { name: "Overview", href: "/dashboard/overview" },

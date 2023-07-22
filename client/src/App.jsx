@@ -7,9 +7,10 @@ import { CssBaseline } from "@mui/material";
 import Navbar from "./layouts/Navbar";
 import useTheme from "./hooks/useTheme";
 import './index.css'
- import useAuth from "./hooks/useAuth";
+import useAuth from "./hooks/useAuth";
 import CartMenu from './components/Cart/index';
 import { ScrollToTop } from './utils/scrollToTop';
+import ScrollToTopBtn from './components/ui/ScrollToTopBtn';
 
 
 
@@ -23,7 +24,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <div className="content">
-        <ScrollToTop />
+          <ScrollToTop />
+          <ScrollToTopBtn />
           {auth.isInitialized ? <Router /> : ""}
           <Toaster position="top-center" />
           <CartMenu />
