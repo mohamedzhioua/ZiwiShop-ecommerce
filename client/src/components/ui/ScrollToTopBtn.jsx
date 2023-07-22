@@ -1,9 +1,11 @@
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 import { Box } from '@mui/system';
 import   { useEffect, useState } from 'react'
+import useTheme from '../../hooks/useTheme';
 
 const ScrollToTopBtn = () => {
     const [showTopBtn, setShowTopBtn] = useState(false);
+    const { theme } = useTheme();
 
     useEffect(() => {
 
@@ -34,13 +36,13 @@ const ScrollToTopBtn = () => {
                     zIndex: "10"
                 }}>
                     <Box onClick={goToTop} sx={{
-                        width: "40px", height: "40px", backgroundColor: "#4d7c8a",
-                        ":hover": { backgroundColor: "#264653" }, transition: 'all .2s linear',
+                        width: "40px", height: "40px", backgroundColor: '#998e76',
+                        ":hover": { backgroundColor: '#7a6a57'}, transition: 'all .2s linear',
                         borderRadius: "5px",
                         display: "flex", alignItems: "center", justifyContent: "center"
                     }}>
                         <ArrowDropUpOutlinedIcon style={{
-                            fontSize: "40px", color: "white", cursor: "pointer",
+                            fontSize: "40px",  color: theme.palette.primary.main, cursor: "pointer",
                         }} />
                     </Box>
                 </Box>
