@@ -14,19 +14,14 @@ const SideNavItem = (props) => {
     if (childCategories && childCategories.length > 0) {
         return <SideNavNestedItems item={item} onClose={onClose}/>;
       }
-      let x;
-      if (!href) {
-         
-             x =  `/search/${name}` 
-          
-       }
+
     return (
      
         <>
             <ButtonBase
                 key={name}
                 component={Link}
-                to={href ? href : x  } 
+                to={href} 
 
                 sx={{
                     alignItems: 'center',

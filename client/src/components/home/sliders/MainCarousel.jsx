@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import useTheme from "../../hooks/useTheme";
+import useTheme from "../../../hooks/useTheme";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+ 
 
-
-const gallery = Object.values(import.meta.glob('../../assets/carousel-images/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }))
+const gallery = Object.values(import.meta.glob('../../../assets/carousel-images/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }))
 
 const MainCarousel = () => {
   const { theme } = useTheme();
@@ -18,7 +18,7 @@ const MainCarousel = () => {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         pagination={{

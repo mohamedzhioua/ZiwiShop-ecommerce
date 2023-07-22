@@ -52,7 +52,9 @@ class ProductApi {
   GetClientOneProduct(id) {
     return this.request('get', `/client/${id}`);
   }
-  
+  GetBrandsCategories() {
+    return this.request('get', `/brandscategories/client/`);
+  }
 }
 
 export const productApi = new ProductApi();

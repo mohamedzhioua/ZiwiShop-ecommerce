@@ -70,7 +70,7 @@ export const SideNavNestedItems = (props) => {
                 {!childCategories && childCategories && childCategories.length > 0 && (
 
                     <MenuItem key={name} onClick={onClose} component={Link}
-                        to={href ? href : x  } 
+                        to={href} 
                         sx={{
                             width: 150, borderRadius: 3, px: 1,
                             py: 0.5, justifyContent: 'center', color: theme.palette.primary.main,

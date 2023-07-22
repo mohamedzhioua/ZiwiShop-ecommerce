@@ -1,5 +1,6 @@
 import ShoppingList from "../components/home/ShoppingList";
-import MainCarousel from "../components/home/MainCarousel";
+import Brands from "../components/home/sliders/Brands";
+ import MainCarousel from "../components/home/sliders/MainCarousel";
 
 
 
@@ -7,7 +8,8 @@ function Home() {
   return (
     < >
       <MainCarousel />
-      <ShoppingList />
+          <Brands/>
+       <ShoppingList />
     </>
   );
 }

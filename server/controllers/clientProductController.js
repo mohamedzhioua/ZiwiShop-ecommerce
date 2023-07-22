@@ -1,6 +1,9 @@
   const Product = require("../models/product");
 const IdParamsValidation = require("../validator/IdParamsValidation");
-
+const Category = require("../models/category");
+const Brand = require("../models/brand");
+const addHrefFieldToBrands = require("../utils/brandsHandler");
+const createCategories = require("../utils/categoriesHandler");
 
 module.exports = {
  //  ---------------------------------------- //GetProducts//--------------------------- //
@@ -105,7 +108,23 @@ module.exports = {
   }
 },
 
+   //  ---------------------------------------- //GetCategories&sizes&Brands//--------------------------- //
 
+   GetBrandsCategories: async (req, res) => {
+    try {
+      const options = {};
+
+       const categories = await Category.find({}).lean().exec();
+       const getBrandNames = await Brand.find({}, { name: 1, _id: 1 }).lean().exec();
+    
+      options.categories = createCategories(categories);
+      options.brands = addHrefFieldToBrands(getBrandNames);
+
+      return res.status(200).json(options);
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
 
  
 };

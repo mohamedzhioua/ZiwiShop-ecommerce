@@ -30,9 +30,9 @@ export const SideNav = (props) => {
     const [brands, setBrands] = useState([])
     const isMounted = useMounted()
 
-    const Getoptions = useCallback(async () => {
+    const GetBrandsCategories = useCallback(async () => {
         try {
-            const response = await productApi.Getoptions();
+            const response = await productApi.GetBrandsCategories();
             if (isMounted()) {
                 setCategories(response.categories);
                 setBrands(response.brands);
@@ -44,7 +44,7 @@ export const SideNav = (props) => {
 
 
     useEffect(() => {
-        Getoptions();
+        GetBrandsCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
@@ -69,7 +69,7 @@ export const SideNav = (props) => {
                         spacing={2}
                         sx={{ p: 3 }}
                     >
-                       <Logo/>
+                        <Logo />
 
                     </Stack>
                     <Stack
@@ -85,11 +85,11 @@ export const SideNav = (props) => {
                         <SideNavSection
                             navigationLinks={navigationLinks}
                             onClose={onClose} />
-                        <SideNavNestedItems
-                            item={{
+                        <SideNavSection
+                            navigationLinks={[{
                                 name: 'categories',
                                 childCategories: categories,
-                            }}
+                            }]}
                             onClose={onClose} />
                         <SideNavNestedItems
                             item={{

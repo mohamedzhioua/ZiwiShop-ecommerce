@@ -11,7 +11,7 @@ module.exports = function ProductValidation(data) {
   data.category = !isEmpty(data.category) ? data.category : "";
   data.sizes = !isEmpty(data.sizes) ? data.sizes : [];
   data.images = !isEmpty(data.images) ? data.images : [];
-  data.quantity = !isEmpty(data.quantity) ? data.quantity : "";
+  data.countInStock = !isEmpty(data.countInStock) ? data.countInStock : "";
   
   // Name checks
   if (validator.isEmpty(data.name)) {
@@ -54,11 +54,11 @@ if (data.sizes.length === 0) {
     errors.images = "You can only choose up to 5 images";
   }
 
-   // Quantity checks
-   if (validator.isEmpty(data.quantity)) {
-    errors.quantity = "Quantity field is required";
-  } else if (!validator.isNumeric(data.quantity)) {
-    errors.quantity = "Quantity must be a valid number";
+   // countInStock checks
+   if (validator.isEmpty(data.countInStock)) {
+    errors.countInStock = "Stock field is required";
+  } else if (!validator.isNumeric(data.countInStock)) {
+    errors.countInStock = "Stock must be a valid number";
   }
 
   return {

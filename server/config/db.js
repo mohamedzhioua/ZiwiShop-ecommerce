@@ -5,7 +5,7 @@ const DB = process.env.DATABASE.replace(
   '<password>',
   process.env.DATABASE_PASSWORD
 );
-
+ 
 mongoose.set('strictQuery', false);
 mongoose
   .connect(DB, {

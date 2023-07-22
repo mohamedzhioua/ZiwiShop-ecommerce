@@ -19,6 +19,7 @@ const ProductAdd = lazy(() => import("../pages/dashboard/Product/ProductAdd"));
 const ProductList = lazy(() => import("../pages/dashboard/Product/ProductList"));
 const ProductEdit = lazy(() => import("../pages/dashboard/Product/ProductEdit"));
 const ProductDetails = lazy(() => import("../pages/product/ProductDetails"));
+const Search  = lazy(() => import("../pages/product/ProductSearch"));
 //size
 const SizeList = lazy(() => import("../pages/dashboard/Size/SizeList"));
 const SizeAdd = lazy(() => import("../pages/dashboard/Size/SizeAdd"));
@@ -49,6 +50,7 @@ const Router = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/productDetails/:id" element={<ProductDetails/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
+        <Route path="/search" element={<Search />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
