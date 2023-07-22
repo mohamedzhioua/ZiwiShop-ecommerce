@@ -1,6 +1,5 @@
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
- import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Container from '@mui/material/Container';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -16,6 +15,7 @@ import useTheme from '../hooks/useTheme';
 import BrandsPopover from "./BrandsPopover"
 // import { MobileNavigation } from './mobile';
 import { SideNav } from './SideNav';
+import Logo from '../components/ui/Logo';
 
 
 const brands = [
@@ -44,7 +44,7 @@ const brands = [
   }
 ];
 
- function Navbar() {
+function Navbar() {
   const { IsLoggedIn, user } = useAuth();
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const { theme } = useTheme();
@@ -110,23 +110,8 @@ const brands = [
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: theme.palette.primary.main,
-              textDecoration: 'none',
-            }}
-          >
-            ZiwiShop
-          </Typography>
+
+          {!isMobileScreen && (<Logo />)}
           <Box sx={{ flexGrow: 1 }}>
             {isMobileScreen && (
               <IconButton
@@ -142,26 +127,10 @@ const brands = [
             )}
 
             {isMobileScreen && isSideNavOpen && (
-              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu}  />
+              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} />
             )}
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              letterSpacing: '.3rem',
-              color: theme.palette.primary.main,
-              textDecoration: 'none',
-            }}
-          >
-            ZiwiShop
-          </Typography>
+          {isMobileScreen && (<Logo />)}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
             {filteredLinks.map((item) => (
@@ -184,7 +153,8 @@ const brands = [
             justifyContent="space-between"
             alignItems="center" gap="5px"
           >
-            <BrandsPopover brands={brands} />
+            {!isMobileScreen && (<BrandsPopover brands={brands} />)}
+
             <IconButton
               aria-label="Search"
               color="primary"

@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { productApi } from '../../api/productApi';
 import { useMounted } from '../../hooks/use-mounted';
 import SideNavNestedItems from './SideNavNestedItems';
+import Logo from '../../components/ui/Logo';
 
 const navigationLinks = [
     {
@@ -68,18 +69,7 @@ export const SideNav = (props) => {
                         spacing={2}
                         sx={{ p: 3 }}
                     >
-                        <Typography
-                            variant="h3"
-                            sx={{
-                                mr: 2,
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            ZiwiShop
-                        </Typography>
+                       <Logo/>
 
                     </Stack>
                     <Stack

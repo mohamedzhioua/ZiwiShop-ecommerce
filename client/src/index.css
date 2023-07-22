@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
-
-.content {
+   @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Edu+SA+Beginner&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Mochiy+Pop+One&family=Pacifico&family=Roboto:ital,wght@0,400;1,300;1,400&family=Rubik+Gemstones&family=Rubik+Moonrocks&display=swap');
+ html,
+.body {
   margin-top: 64px;
   margin-bottom: 64px;
   height: 100%;
   width: 100%;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family:  -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
 }
  
 
