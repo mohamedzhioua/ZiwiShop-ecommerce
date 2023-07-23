@@ -24,7 +24,7 @@ const navigationLinks = [
 ];
 
 export const SideNav = (props) => {
-    const { onClose, open, } = props
+    const { onClose, open } = props
     const { theme } = useTheme();
     const [categories, setCategories] = useState([])
     const [brands, setBrands] = useState([])

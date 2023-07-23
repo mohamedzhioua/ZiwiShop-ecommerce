@@ -1,12 +1,23 @@
-import { Grid } from '@mui/material'
-import { Box, Stack } from '@mui/system'
+import { Unstable_Grid2 as Grid, useMediaQuery } from '@mui/material'
+import { Box } from '@mui/system'
 import ProductCard from '../../components/Product/ProductCard'
-import ProductFilter from '../../components/Product/ProductSearch/ProductFilter'
-import PriceRangeFilter from '../../components/Product/ProductSearch/PriceRangeFilter'
-import SizeAutocomplete from '../../components/Product/ProductSearch/SizeAutocomplete'
+import ProductFilters from '../../components/Product/ProductSearch/ProductFilters'
+import CustomButton from '../../components/ui/CustomButton';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { useState } from 'react';
+import MobileProductFilters from '../../components/Product/ProductSearch/MobileProductFilters';
 
 function ProductSearch() {
+  const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
+  const handleOpenFilterDrawer = () => {
+    setIsFilterDrawerOpen(true);
+  };
+
+  const handleCloseFilterDrawer = () => {
+    setIsFilterDrawerOpen(false);
+  };
 
   const products = [{
     _id: "64b6569edeb45d7e11053f47",
@@ -172,62 +183,26 @@ function ProductSearch() {
       }
     ]
   }]
-  const sizes = [
-    {
-      _id: "64a43ccda385e2aecb90b1df",
-      name: "Extra Large "
-    },
-    {
-      _id: "64a4611e391f376bcaa2bd07",
-      name: "Meduim"
-    },
-    {
-      _id: "64a463c7391f376bcaa2bd12",
-      name: "extra small"
-    },
-    {
-      _id: "64a4641f391f376bcaa2bd1a",
-      name: "small"
-    },
-    {
-      _id: "64a46434391f376bcaa2bd1f",
-      name: "double extra large"
-    },
-    {
-      _id: "64a46449391f376bcaa2bd24",
-      name: "triple extra large"
-    }
-  ]
+
   return (
     <Box width="90%" margin="40px auto">
-      <Grid container spacing={5}>
+      <Grid container spacing={3}>
 
-        <Grid item xs={12} md={3}  spacing={5}>
-          <Stack
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            spacing={5}
-          >
-            <Grid item xs={12}>
-              <PriceRangeFilter />
-            </Grid>
-            <Grid item xs={12}  style={{ width: '100%' }} >
-              <SizeAutocomplete sizes={sizes} />
-            </Grid>
+        <Grid item xs={12} md={3} spacing={5}>
+        {isMobileScreen && isFilterDrawerOpen && (
+              <MobileProductFilters onClose={handleCloseFilterDrawer} open={handleOpenFilterDrawer} />
+            )}
+          {isMobileScreen ? (
+            <CustomButton
+            onClick={handleOpenFilterDrawer}
+            >
+              <FilterListIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Filters
+            </CustomButton>
+          ) : (
+            <ProductFilters />
 
-            {/* <ProductFilter 
-                valueKey="colorId" 
-                name="Colors" 
-                data={colors}
-              /> */}
-
-          </Stack>
+          )}
         </Grid>
-
         <Grid item xs={12} md={9}>
           {products.length === 0 ? "" : (
             <Box
