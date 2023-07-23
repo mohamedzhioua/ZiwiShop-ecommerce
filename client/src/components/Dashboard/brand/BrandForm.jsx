@@ -10,9 +10,6 @@ import { brandApi } from '../../../api/brandApi';
 import { BrandValidationSchema } from './BrandFormValidation';
 
 
-
-
-
 const BrandForm = (props) => {
     const { initialData } = props
     const isMounted = useMounted()

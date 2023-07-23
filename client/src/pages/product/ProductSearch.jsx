@@ -1,8 +1,13 @@
 import { Grid } from '@mui/material'
-import { Box, Container } from '@mui/system'
+import { Box, Stack } from '@mui/system'
 import ProductCard from '../../components/Product/ProductCard'
+import ProductFilter from '../../components/Product/ProductSearch/ProductFilter'
+import PriceRangeFilter from '../../components/Product/ProductSearch/PriceRangeFilter'
+import SizeAutocomplete from '../../components/Product/ProductSearch/SizeAutocomplete'
 
 function ProductSearch() {
+
+
   const products = [{
     _id: "64b6569edeb45d7e11053f47",
     name: "Polo - kaki",
@@ -167,14 +172,60 @@ function ProductSearch() {
       }
     ]
   }]
+  const sizes = [
+    {
+      _id: "64a43ccda385e2aecb90b1df",
+      name: "Extra Large "
+    },
+    {
+      _id: "64a4611e391f376bcaa2bd07",
+      name: "Meduim"
+    },
+    {
+      _id: "64a463c7391f376bcaa2bd12",
+      name: "extra small"
+    },
+    {
+      _id: "64a4641f391f376bcaa2bd1a",
+      name: "small"
+    },
+    {
+      _id: "64a46434391f376bcaa2bd1f",
+      name: "double extra large"
+    },
+    {
+      _id: "64a46449391f376bcaa2bd24",
+      name: "triple extra large"
+    }
+  ]
   return (
     <Box width="90%" margin="40px auto">
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={3}>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <h1>aeazeae</h1>
-            <h1>aeazeae</h1>
-          </div>
+      <Grid container spacing={5}>
+
+        <Grid item xs={12} md={3}  spacing={5}>
+          <Stack
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            spacing={5}
+          >
+            <Grid item xs={12}>
+              <PriceRangeFilter />
+            </Grid>
+            <Grid item xs={12}  style={{ width: '100%' }} >
+              <SizeAutocomplete sizes={sizes} />
+            </Grid>
+
+            {/* <ProductFilter 
+                valueKey="colorId" 
+                name="Colors" 
+                data={colors}
+              /> */}
+
+          </Stack>
         </Grid>
 
         <Grid item xs={12} md={9}>
