@@ -100,12 +100,12 @@ export const SideNav = (props) => {
                     </Stack>
                     <Stack sx={{ p: 3 }} spacing={1}>
                         <Typography variant="subtitle1">
-                            Need help?
+                            Need help? 
                         </Typography>
                         <Typography
                             variant="body2"
                         >
-                            Please check our docs.
+                            Please feel free to contact Us.
                         </Typography>
 
                     </Stack>

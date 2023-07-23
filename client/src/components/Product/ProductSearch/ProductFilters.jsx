@@ -3,10 +3,11 @@ import { Unstable_Grid2 as Grid, IconButton, Typography } from '@mui/material'
 import { Box, Stack } from '@mui/system'
 import FilterListIcon from '@mui/icons-material/FilterList';
 import PriceRangeFilter from './PriceRangeFilter';
-import SizeAutocomplete from './SizeAutocomplete';
+import SizeAutocomplete from './ProductAutocomplete';
 import CustomButton from '../../ui/CustomButton';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-const sizes = [
+import ProductAutocomplete from './ProductAutocomplete';
+const size = [
   {
     _id: "64a43ccda385e2aecb90b1df",
     name: "Extra Large "
@@ -32,6 +33,30 @@ const sizes = [
     name: "triple extra large"
   }
 ]
+const brand = [
+
+  {
+    _id: '64a858793e772c0aad8c879c',
+    name: 'Adidas'
+  },
+  {
+    _id: '64a858993e772c0aad8c87a1',
+    name: 'Louis Vuitton'
+  },
+  {
+    _id: '64a858b63e772c0aad8c87a6',
+    name: 'GUCCI'
+  },
+  {
+    _id: '64a858cb3e772c0aad8c87ad',
+    name: 'NIKE'
+  },
+  {
+    _id: '64b03983ec95da3aad0ed8b5',
+    name: 'Celio'
+  }]
+  
+
 const ProductFilters = (props) => {
   const { onClose, drawerView } = props
 
@@ -44,7 +69,7 @@ const ProductFilters = (props) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}
-        spacing={2}
+        spacing={1}
       >
         <Typography variant="h4" style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: "center" }} alignSelf="flex-start">
           <IconButton>
@@ -64,7 +89,10 @@ const ProductFilters = (props) => {
           <PriceRangeFilter />
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
-          <SizeAutocomplete sizes={sizes} />
+          <ProductAutocomplete data={size} Name="sizes"/>
+        </Grid>
+        <Grid item xs={12} style={{ width: '100%' }} >
+          <ProductAutocomplete data={brand} Name="brand"/>
         </Grid>
       </Stack>
 

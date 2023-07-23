@@ -7,22 +7,22 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const SizeAutocomplete = (props) => {
-    const { sizes } = props;
-    const [selectedSizes, setSelectedSizes] = useState([]);
+const ProductAutocomplete = (props) => {
+    const { data ,Name } = props;
+    const [selectedData, setSelectedData] = useState([]);
 
     return (
         <Stack spacing={2}>
             <Typography variant="h6" fontWeight="bold">
-                Sizes
+                {Name}
             </Typography>
             <Autocomplete
                 style={{ width: '100%' }} 
                 multiple
-                options={sizes.map((item) => ({ _id: item._id, name: item.name }))}
+                options={data.map((item) => ({ _id: item._id, name: item.name }))}
                 onChange={(event, newValue) => {
-                    const selectedSizes = newValue ? newValue.map(size => size.name) : [];
-                    setSelectedSizes(selectedSizes)
+                    const selectedSizes = newValue ? newValue.map(i => i.name) : [];
+                    setSelectedData(selectedSizes)
                 }}
                 isOptionEqualToValue={useCallback((option, value) => {
                     return option?._id === value?._id;
@@ -42,8 +42,8 @@ const SizeAutocomplete = (props) => {
                  renderInput={(params) => (
                     <TextField
                         {...params}
-                        name="sizes"
-                        label="Size"
+                        name={Name}
+                        label={Name}
                     />
                 )}
             />
@@ -51,8 +51,8 @@ const SizeAutocomplete = (props) => {
         </Stack>
     );
 };
-SizeAutocomplete.propTypes = {
-    sizes: PropTypes.array.isRequired,
-
+ProductAutocomplete.propTypes = {
+    data: PropTypes.array.isRequired,
+    Name:PropTypes.string.isRequired,
 };
-export default SizeAutocomplete;
+export default ProductAutocomplete;
