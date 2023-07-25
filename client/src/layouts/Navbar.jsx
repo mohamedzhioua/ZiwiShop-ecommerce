@@ -85,8 +85,7 @@ function Navbar() {
 
   return (
     <Box
-      component="header"
-      sx={{
+       style={{
         display: "flex",
         alignItems: "center",
         backdropFilter: 'blur(6px)',

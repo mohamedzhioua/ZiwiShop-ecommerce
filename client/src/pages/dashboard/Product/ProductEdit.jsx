@@ -62,8 +62,7 @@ useEffect(() => {
           justifyContent: 'space-between',
           marginLeft: '1rem',
           marginRight: '1rem',
-          marginTop: '5rem',
-        }}
+         }}
       >
         <Heading title='Edit product' description='Edit a product.' />
       </Box>

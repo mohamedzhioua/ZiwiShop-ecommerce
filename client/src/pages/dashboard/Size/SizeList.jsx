@@ -56,8 +56,7 @@ function SizeList() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title={`Sizes (${sizes?.length})`} description="Manage sizes for your products" />
 

@@ -19,8 +19,7 @@ function CategoryAdd() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title='Create Category' description='Add a new Category' />
         </Box>

@@ -56,8 +56,7 @@ function BrandList() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title={`Brands (${brands?.length})`} description="Manage brands for your products" />
 

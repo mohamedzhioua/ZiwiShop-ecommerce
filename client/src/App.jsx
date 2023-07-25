@@ -22,15 +22,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Navbar />
-        <div className="content">
+         <Navbar />
           <ScrollToTop />
           <ScrollToTopBtn />
           {auth.isInitialized ? <Router /> : ""}
           <Toaster position="top-center" />
           <CartMenu />
-        </div>
         <Footer />
+       
       </BrowserRouter>
     </ThemeProvider>
 

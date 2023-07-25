@@ -51,8 +51,7 @@ function CategoryList() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title={`Categories (${categories?.length})`} description="Manage Categories for your products" />
 

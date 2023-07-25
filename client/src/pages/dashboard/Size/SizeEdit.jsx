@@ -48,8 +48,7 @@ function SizeAdd() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title='Edit size'  description='Edit a size.' />
         </Box>

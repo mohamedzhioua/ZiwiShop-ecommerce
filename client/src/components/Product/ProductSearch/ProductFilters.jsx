@@ -3,7 +3,6 @@ import { Unstable_Grid2 as Grid, IconButton, Typography } from '@mui/material'
 import { Box, Stack } from '@mui/system'
 import FilterListIcon from '@mui/icons-material/FilterList';
 import PriceRangeFilter from './PriceRangeFilter';
-import SizeAutocomplete from './ProductAutocomplete';
 import CustomButton from '../../ui/CustomButton';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import ProductAutocomplete from './ProductAutocomplete';

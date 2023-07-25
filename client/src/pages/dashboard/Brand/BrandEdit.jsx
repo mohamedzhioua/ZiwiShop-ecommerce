@@ -48,7 +48,6 @@ function BrandEdit() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
           }}
         >
           <Heading title='Edit brand'  description='Edit a brand.' />

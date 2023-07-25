@@ -50,8 +50,7 @@ function CategoryEdit() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title='Edit category' description='Edit a category.' />
         </Box>

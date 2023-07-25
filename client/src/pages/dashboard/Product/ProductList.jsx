@@ -54,8 +54,7 @@ function ProductsList() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-            marginTop: '5rem',
-          }}
+           }}
         >
           <Heading title={`Products (${products.length})`} description="Manage products for your store" />
 
