@@ -1,15 +1,31 @@
 import PropTypes from "prop-types";
 import { Autocomplete, Checkbox, TextField, Typography } from '@mui/material';
-import {  Stack } from '@mui/system';
-import { useState, useCallback } from 'react';
+import { Stack } from '@mui/system';
+import { useState, useCallback, useEffect } from 'react';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const ProductAutocomplete = (props) => {
-    const { data ,Name } = props;
+    const { data, Name, createQueryString } = props;
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     const [selectedData, setSelectedData] = useState([]);
+    
+    useEffect(() => {
+        const queryString = createQueryString({
+            [Name]: selectedData?.length
+                ? // Join data with a dot to make search params prettier
+                selectedData.map((c) => c.name).join(".")
+                : null,
+        });
+        navigate(`${pathname}?${queryString}`);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedData]);
+
 
     return (
         <Stack spacing={2}>
@@ -17,12 +33,11 @@ const ProductAutocomplete = (props) => {
                 {Name}
             </Typography>
             <Autocomplete
-                style={{ width: '100%' }} 
+                style={{ width: '100%' }}
                 multiple
                 options={data.map((item) => ({ _id: item._id, name: item.name }))}
                 onChange={(event, newValue) => {
-                    const selectedSizes = newValue ? newValue.map(i => i.name) : [];
-                    setSelectedData(selectedSizes)
+                    setSelectedData(newValue)
                 }}
                 isOptionEqualToValue={useCallback((option, value) => {
                     return option?._id === value?._id;
@@ -39,7 +54,7 @@ const ProductAutocomplete = (props) => {
                         {option.name}
                     </li>
                 )}
-                 renderInput={(params) => (
+                renderInput={(params) => (
                     <TextField
                         {...params}
                         name={Name}
@@ -53,6 +68,7 @@ const ProductAutocomplete = (props) => {
 };
 ProductAutocomplete.propTypes = {
     data: PropTypes.array.isRequired,
-    Name:PropTypes.string.isRequired,
+    Name: PropTypes.string.isRequired,
+    createQueryString: PropTypes.func.isRequired,
 };
 export default ProductAutocomplete;

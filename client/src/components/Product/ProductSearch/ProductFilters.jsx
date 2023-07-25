@@ -88,10 +88,10 @@ const ProductFilters = (props) => {
           <PriceRangeFilter createQueryString={createQueryString}/>
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
-          <ProductAutocomplete data={size} Name="sizes"/>
+          <ProductAutocomplete data={size} Name="sizes"  createQueryString={createQueryString}/>
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
-          <ProductAutocomplete data={brand} Name="brand"/>
+          <ProductAutocomplete data={brand} Name="brand"  createQueryString={createQueryString}/>
         </Grid>
       </Stack>
 
