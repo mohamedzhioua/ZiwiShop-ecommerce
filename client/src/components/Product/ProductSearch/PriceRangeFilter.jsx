@@ -1,13 +1,29 @@
+import PropTypes from 'prop-types';
 import CustomInput from '../../ui/CustomInput';
 import { Slider, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '../../../hooks/useDebounce';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PriceRangeFilter = (props) => {
-  // const {}=props
+  const { createQueryString } = props
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const minmin = 0;
   const maxmax = 1000;
   const [priceRangeValue, setPriceRangeValue] = useState([0, 1000]);
+  const debouncedPrice = useDebounce(priceRangeValue, 500)
+
+  useEffect(() => {
+    const [min, max] = debouncedPrice
+    const queryString = createQueryString({
+      price_range: `${min}-${max}`,
+    })
+    navigate(`${pathname}?${queryString}`);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedPrice])
 
   const handlePriceRangeChange = (event, newValue) => {
     setPriceRangeValue(newValue);
@@ -53,5 +69,7 @@ const PriceRangeFilter = (props) => {
     </Stack>
   )
 }
-
+PriceRangeFilter.propTypes = {
+  createQueryString: PropTypes.func,
+};
 export default PriceRangeFilter

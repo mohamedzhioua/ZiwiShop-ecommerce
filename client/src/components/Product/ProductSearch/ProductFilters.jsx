@@ -57,7 +57,7 @@ const brand = [
   
 
 const ProductFilters = (props) => {
-  const { onClose, drawerView } = props
+  const { onClose, drawerView , createQueryString } = props
 
   return (
     <Box sx={{ margin: "10px 20px 20px 20px" }}>
@@ -85,7 +85,7 @@ const ProductFilters = (props) => {
             <RemoveRedEyeOutlinedIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> See Products
           </CustomButton>)}
         <Grid item xs={12}>
-          <PriceRangeFilter />
+          <PriceRangeFilter createQueryString={createQueryString}/>
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
           <ProductAutocomplete data={size} Name="sizes"/>
@@ -100,6 +100,7 @@ const ProductFilters = (props) => {
 }
 ProductFilters.propTypes = {
   onClose: PropTypes.func,
+  createQueryString: PropTypes.func,
   drawerView: PropTypes.string,
 };
 export default ProductFilters

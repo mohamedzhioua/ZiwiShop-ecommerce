@@ -228,7 +228,7 @@ function ProductSearch() {
               <FilterListIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Filters
             </CustomButton>
           ) : (
-            <ProductFilters />
+            <ProductFilters createQueryString={createQueryString}/>
 
           )}
         </Grid>
