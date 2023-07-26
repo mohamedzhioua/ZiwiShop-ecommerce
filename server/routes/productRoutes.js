@@ -31,6 +31,7 @@ router.patch(
 router.get("/client/Products", ClientProductController.GetClientProducts);
 router.get("/client/:id", ClientProductController.GetClientOneProduct);
 router.get("/brandscategories/client", ClientProductController.GetBrandsCategories);
+router.get("/search/client", ClientProductController.GetSearchProducts);
  
 
 module.exports = router;
