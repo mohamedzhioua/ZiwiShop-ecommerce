@@ -121,6 +121,6 @@ const ProductSort = (props) => {
 };
 ProductSort.propTypes = {
     sort: PropTypes.string.isRequired,
-    createQueryString: PropTypes.func.isRequired,
+    createQueryString: PropTypes.func ,
 };
 export default ProductSort

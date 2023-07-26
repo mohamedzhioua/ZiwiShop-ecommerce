@@ -189,37 +189,22 @@ function ProductSearch() {
     setIsFilterDrawerOpen(false);
   };
   const { search } = useLocation();
-  const searchParams = new URLSearchParams(search); 
+  const searchParams = new URLSearchParams(search);
   const category = searchParams?.get('category') ?? 'all';
   const query = searchParams?.get('query') ?? 'all';
   const price = searchParams?.get('price') ?? 'all';
   const sort = searchParams?.get("sort") ?? "createdAt.desc"
   const page = searchParams?.get('page') ?? 1;
 
-  const createQueryString = useCallback(
-    (params) => {
-      const newSearchParams = new URLSearchParams(searchParams?.toString());
-
-      for (const [key, value] of Object.entries(params)) {
-        if (value === null) {
-          newSearchParams.delete(key);
-        } else {
-          newSearchParams.set(key, String(value));
-        }
-      }
-      return newSearchParams.toString();
-    },
-    [searchParams] 
-  );
-
+ 
 
   return (
     <Box width="90%" margin="40px auto">
-      <Grid container spacing={3}>
+      <Grid container spacing={1}>
 
-        <Grid item xs={12} md={3} spacing={5}>
+        <Grid item md={3}>
           {isMobileScreen && isFilterDrawerOpen && (
-            <MobileProductFilters onClose={handleCloseFilterDrawer} open={handleOpenFilterDrawer} />
+            <MobileProductFilters onClose={handleCloseFilterDrawer} open={isFilterDrawerOpen}  />
           )}
           {isMobileScreen ? (
             <CustomButton
@@ -228,30 +213,38 @@ function ProductSearch() {
               <FilterListIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Filters
             </CustomButton>
           ) : (
-            <ProductFilters createQueryString={createQueryString}/>
+            <ProductFilters  />
 
           )}
         </Grid>
-        <Grid item xs={12} md={9}>
-          <ProductSort createQueryString={createQueryString} sort={sort}/>
-          {products.length === 0 ? "" : (
-            <Box
-              margin="0 auto"
-              display="grid"
-              gridTemplateColumns="repeat(auto-fill, 300px)"
-              justifyContent="space-around"
-              rowGap="20px"
-              columnGap="1.33%"
-            >
-              {products.map((item) => (
+        <Grid item md={9}>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+            </Grid>
+            <Grid item>
+              <ProductSort   sort={sort} />
+            </Grid>
+            </Grid>
+            <Grid item marginTop='1rem'  >
+              {products.length === 0 ? "" : (
+                <Box
+                  margin="0 auto"
+                  display="grid"
+                  gridTemplateColumns="repeat(auto-fill, 300px)"
+                  justifyContent="space-around"
+                  rowGap="20px"
+                  columnGap="1.33%"
+                >
+                  {products.map((item) => (
 
-                <ProductCard product={item} key={`${item.name}-${item._id}`} />
+                    <ProductCard product={item} key={`${item.name}-${item._id}`} />
 
-              ))}
-            </Box>
-          )}
-        </Grid>
-      </Grid>
+                  ))}
+                </Box>
+              )}
+            </Grid>
+          </Grid>
+       </Grid>
     </Box>
   )
 }

@@ -1,28 +1,33 @@
 import PropTypes from "prop-types";
 import { Autocomplete, Checkbox, TextField, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useTransition } from 'react';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { createQueryString } from "../../../utils/queryString";
+ 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const ProductAutocomplete = (props) => {
-    const { data, Name, createQueryString } = props;
+    const { data, Name } = props;
     const navigate = useNavigate();
-    const { pathname } = useLocation();
+    const location = useLocation();
+     const searchParams = new URLSearchParams(location.search);
     const [selectedData, setSelectedData] = useState([]);
-    
+    const [isPending, startTransition] = useTransition()
+
     useEffect(() => {
-        const queryString = createQueryString({
-            [Name]: selectedData?.length
-                ? // Join data with a dot to make search params prettier
-                selectedData.map((c) => c.name).join(".")
-                : null,
-        });
-        navigate(`${pathname}?${queryString}`);
+        startTransition(() => {
+            const queryString = createQueryString(searchParams,{
+                [Name]: selectedData?.length
+                    ? // Join data with a dot to make search params prettier
+                    selectedData.map((c) => c.name).join(".")
+                    : null,
+            });
+            navigate(`${location.pathname}?${queryString}`);
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedData]);
 
@@ -69,6 +74,5 @@ const ProductAutocomplete = (props) => {
 ProductAutocomplete.propTypes = {
     data: PropTypes.array.isRequired,
     Name: PropTypes.string.isRequired,
-    createQueryString: PropTypes.func.isRequired,
-};
+ };
 export default ProductAutocomplete;
