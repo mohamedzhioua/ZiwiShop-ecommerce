@@ -132,7 +132,7 @@ module.exports = {
   GetSearchProducts: async (req, res) => {
     try {
       const { query } = req;
-       const pageSize = 9;
+      const pageSize = 9;
       const page = query.page || 1;
       const category = query.category || "";
       const price = query.price || "";
@@ -149,7 +149,10 @@ module.exports = {
               },
             }
           : {};
-      const categoryFilter = category && category !== "all" ? { category: mongoose.Types.ObjectId(category) } : {};
+      const categoryFilter =
+        category && category !== "all"
+          ? { category: mongoose.Types.ObjectId(category) }
+          : {};
       const priceFilter =
         price && price !== "all"
           ? {
@@ -166,9 +169,7 @@ module.exports = {
           : {};
 
       const sizeFilter =
-        size && size !== "all"
-          ? { "size.name": { $in: size.split(".") } }
-          : {};
+        size && size !== "all" ? { "size.name": { $in: size.split(".") } } : {};
 
       const sortOption = () => {
         switch (sort) {
@@ -188,79 +189,82 @@ module.exports = {
             return { _id: -1 };
         }
       };
-      // const products = await Product.find({
-      //   ...queryFilter,
-      //   ...categoryFilter,
-      //   ...brandFilter,
-      //   ...sizeFilter,
-      //   ...priceFilter,
-      // })
-      //   .sort(sortOption)
-      //   .skip(pageSize * (page - 1))
-      //   .limit(pageSize);
 
-      // const countProducts = await Product.countDocuments({
-      //   ...queryFilter,
-      //   ...categoryFilter,
-      //   ...brandFilter,
-      //   ...sizeFilter,
-      //   ...priceFilter,
-      // });
-      const products = await Product.aggregate([
-        {
-          $match: {
-            ...queryFilter,
-            ...categoryFilter,
-            ...priceFilter,
-            ...brandFilter,
-            ...sizeFilter,
+      const [products, countProducts] = await Promise.all([
+        Product.aggregate([
+          {
+            $match: {
+              ...queryFilter,
+              ...categoryFilter,
+              ...priceFilter,
+              ...brandFilter,
+              ...sizeFilter,
+            },
           },
-        },
-        {
-          $lookup: {
-            from: "categories",
-            localField: "category",
-            foreignField: "_id",
-            as: "category",
+          {
+            $lookup: {
+              from: "categories",
+              localField: "category",
+              foreignField: "_id",
+              as: "category",
+            },
           },
-        },
-        {
-          $lookup: {
-            from: "categories",
-            localField: "category.parentCategory",
-            foreignField: "_id",
-            as: "parentCategory",
+          {
+            $lookup: {
+              from: "categories",
+              localField: "category.parentCategory",
+              foreignField: "_id",
+              as: "parentCategory",
+            },
           },
-        },
-   {
-    $lookup: {
-      from: "brands", 
-      localField: "brand",
-      foreignField: "_id",
-      as: "brand"
-    }
-  },
-  {
-    $lookup: {
-      from: "sizes",
-      localField: "sizes",
-      foreignField: "_id",
-      as: "sizes"
-    }
-  },
-  {
-    $lookup: {
-      from: "images", 
-      localField: "images",
-      foreignField: "_id",
-      as: "images"
-    }
-  },
-        { $sort: sortOption() },
-        { $skip: (page - 1) * pageSize },
-        { $limit: pageSize },
+          {
+            $lookup: {
+              from: "brands",
+              localField: "brand",
+              foreignField: "_id",
+              as: "brand",
+            },
+          },
+          {
+            $lookup: {
+              from: "sizes",
+              localField: "sizes",
+              foreignField: "_id",
+              as: "sizes",
+            },
+          },
+          {
+            $lookup: {
+              from: "images",
+              localField: "images",
+              foreignField: "_id",
+              as: "images",
+            },
+          },
+          { $sort: sortOption() },
+          { $skip: (page - 1) * pageSize },
+          { $limit: pageSize },
+        ]),
+        Product.countDocuments({
+          ...queryFilter,
+          ...categoryFilter,
+          ...priceFilter,
+          ...brandFilter,
+          ...sizeFilter,
+        }),
       ]);
-       return res.status(200).json(products);
+       const totalPages = Math.ceil(countProducts / pageSize);
+       const sizes =  products.map((product) => product.sizes).flat()
+       const brands = products.map((product) => product.brand[0])
+      const result = {
+        products,
+        countProducts,
+        page,
+        pages: totalPages,
+        brands,
+        sizes,
+      };
+       return res.status(200).json(result);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
