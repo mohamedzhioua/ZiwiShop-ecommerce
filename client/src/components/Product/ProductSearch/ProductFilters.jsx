@@ -88,7 +88,7 @@ const ProductFilters = (props) => {
           <PriceRangeFilter  />
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
-          <ProductAutocomplete data={size} Name="sizes"   />
+          <ProductAutocomplete data={size} Name="size"   />
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
           <ProductAutocomplete data={brand} Name="brand"  />
@@ -100,5 +100,6 @@ const ProductFilters = (props) => {
 }
 ProductFilters.propTypes = {
   onClose: PropTypes.func,
+  drawerView: PropTypes.bool,
  };
 export default ProductFilters

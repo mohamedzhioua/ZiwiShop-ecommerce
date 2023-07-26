@@ -55,6 +55,9 @@ class ProductApi {
   GetBrandsCategories() {
     return this.request('get', `/brandscategories/client/`);
   }
+  GetSearchProducts(data) {
+    return this.request('get', `/search/client?page=${data.page}&query=${data.query}&category=${data.category}&price=${data.price}&sort=${data.sort}&brand=${data.brand}&size=${data.size}`);
+  }
 }
 
 export const productApi = new ProductApi();

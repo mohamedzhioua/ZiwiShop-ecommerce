@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import { ListItemText, Menu, MenuItem } from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CustomButton from "../../ui/CustomButton";
 import { styled, alpha } from '@mui/material/styles';
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import { createQueryString } from "../../../utils/queryString";
 
 
 const sortOptions = [
@@ -66,10 +67,10 @@ const StyledMenu = styled((props) => (
 }));
 
 const ProductSort = (props) => {
-    const { createQueryString, sort } = props
+    const {sort } = props
     const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const [anchorEl, setAnchorEl] = useState(null);
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -80,11 +81,11 @@ const ProductSort = (props) => {
 
     };
     const handleMenuItemClick = (value) => {
-        const queryString = createQueryString({
+        const queryString = createQueryString(searchParams,{
             sort: value,
         });
 
-        navigate(`${pathname}?${queryString}`);
+        navigate(`${location.pathname}?${queryString}`);
         setAnchorEl(null);
 
     };
@@ -121,6 +122,5 @@ const ProductSort = (props) => {
 };
 ProductSort.propTypes = {
     sort: PropTypes.string.isRequired,
-    createQueryString: PropTypes.func ,
-};
+ };
 export default ProductSort
