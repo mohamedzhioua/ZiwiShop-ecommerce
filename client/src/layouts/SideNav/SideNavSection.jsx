@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export const SideNavSection = (props) => {
     const { navigationLinks, onClose } = props;
-
+ 
     return (
         <Box>
             {navigationLinks.map((item, index) => (

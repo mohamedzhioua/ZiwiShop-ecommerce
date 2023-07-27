@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import CustomInput from '../../ui/CustomInput';
+ import CustomInput from '../../ui/CustomInput';
 import { Slider, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useEffect, useState  } from 'react';

@@ -4,9 +4,6 @@ import { Scrollbar } from '../../components/ui/Scrollbar';
 import { SideNavSection } from './SideNavSection';
 import useTheme from '../../hooks/useTheme';
 import SideNavItem from './SideNavItem';
-import { useCallback, useEffect, useState } from 'react';
-import { productApi } from '../../api/productApi';
-import { useMounted } from '../../hooks/use-mounted';
 import SideNavNestedItems from './SideNavNestedItems';
 import Logo from '../../components/ui/Logo';
 
@@ -24,29 +21,9 @@ const navigationLinks = [
 ];
 
 export const SideNav = (props) => {
-    const { onClose, open } = props
+    const { onClose, open ,categories,brands } = props
     const { theme } = useTheme();
-    const [categories, setCategories] = useState([])
-    const [brands, setBrands] = useState([])
-    const isMounted = useMounted()
-
-    const GetBrandsCategories = useCallback(async () => {
-        try {
-            const response = await productApi.GetBrandsCategories();
-            if (isMounted()) {
-                setCategories(response.categories);
-                setBrands(response.brands);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
-
-
-    useEffect(() => {
-        GetBrandsCategories();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+ 
     return (
         <Drawer
             anchor="left"
@@ -118,5 +95,6 @@ export const SideNav = (props) => {
 SideNav.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.func.isRequired,
-
+    categories:PropTypes.array.isRequired,
+    brands:PropTypes.array.isRequired,
 };

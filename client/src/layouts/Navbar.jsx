@@ -4,7 +4,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Container from '@mui/material/Container';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import useAuth from '../hooks/useAuth';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
@@ -12,36 +12,13 @@ import DarkButton from '../components/ui/DarkButton';
 import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
 import useTheme from '../hooks/useTheme';
-import BrandsPopover from "./BrandsPopover"
- import { SideNav } from './SideNav';
+import { SideNav } from './SideNav';
 import Logo from '../components/ui/Logo';
+import { productApi } from '../api/productApi';
+import { useMounted } from '../hooks/use-mounted';
+import CategoriesPopover from './categoriesDropDown';
 
 
-const brands = [
-  {
-    name: "brands",
-    children: [{
-      _id: '64a858793e772c0aad8c879c',
-      name: 'Adidas'
-    },
-    {
-      _id: '64a858993e772c0aad8c87a1',
-      name: 'Louis Vuitton'
-    },
-    {
-      _id: '64a858b63e772c0aad8c87a6',
-      name: 'GUCCI'
-    },
-    {
-      _id: '64a858cb3e772c0aad8c87ad',
-      name: 'NIKE'
-    },
-    {
-      _id: '64b03983ec95da3aad0ed8b5',
-      name: 'Celio'
-    }]
-  }
-];
 
 function Navbar() {
   const { IsLoggedIn, user } = useAuth();
@@ -66,7 +43,7 @@ function Navbar() {
     { name: "Categories", href: "/dashboard/categories" },
     { name: "Brands", href: "/dashboard/brands" },
     { name: "Products", href: "/dashboard/products" },
-    { name: "Home", href: "/" }
+
   ];
 
   let filteredLinks = navigationLinks.filter(
@@ -82,10 +59,31 @@ function Navbar() {
       (item) => item.name === "Home" || item.name === "Profile"
     );
   }
+  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
+  const isMounted = useMounted()
+
+  const GetBrandsCategories = useCallback(async () => {
+    try {
+      const response = await productApi.GetBrandsCategories();
+      if (isMounted()) {
+        setCategories(response.categories);
+        setBrands(response.brands);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    GetBrandsCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box
-       style={{
+      style={{
         display: "flex",
         alignItems: "center",
         backdropFilter: 'blur(6px)',
@@ -116,7 +114,7 @@ function Navbar() {
             )}
 
             {isMobileScreen && isSideNavOpen && (
-              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} />
+              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} categories={categories} brands={brands} />
             )}
           </Box>
           {isMobileScreen && (<Logo />)}
@@ -135,14 +133,21 @@ function Navbar() {
 
             ))}
 
-
+            <Button
+              variant='h4'
+              to={"/"}
+              component={Link}
+              sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: "bold" }}
+            >Home
+            </Button>
           </Box>
           <Box
             display="flex"
             justifyContent="space-between"
             alignItems="center" gap="5px"
           >
-            {!isMobileScreen && (<BrandsPopover brands={brands} />)}
+            {!isMobileScreen && (<CategoriesPopover categories={categories}
+            />)}
 
             <IconButton
               aria-label="Search"

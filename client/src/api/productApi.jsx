@@ -56,7 +56,7 @@ class ProductApi {
     return this.request('get', `/brandscategories/client/`);
   }
   GetSearchProducts(data) {
-    return this.request('get', `/search/client?page=${data.page}&query=${data.query}&category=${data.category}&price=${data.price}&sort=${data.sort}&brand=${data.brand}&size=${data.size}`);
+     return this.request('get', `/shop/search?page=${data.page}&query=${data.query}&category=${data.category}&price=${data.price}&sort=${data.sort}&brand=${data.brand}&size=${data.size}`);
   }
 }
 

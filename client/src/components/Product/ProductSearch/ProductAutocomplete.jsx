@@ -21,7 +21,7 @@ const ProductAutocomplete = (props) => {
         const queryString = createQueryString(searchParams, {
             [Name]: selectedData?.length
                 ? // Join data with a dot to make search params prettier
-                selectedData.map((c) => c.name).join(".")
+                selectedData?.map((c) => c.name).join(".")
                 : null,
         });
         navigate(`${location.pathname}?${queryString}`);
@@ -37,7 +37,7 @@ const ProductAutocomplete = (props) => {
             <Autocomplete
                 style={{ width: '100%' }}
                 multiple
-                options={data.map((item) => ({ _id: item._id, name: item.name }))}
+                options={data?.map((item) => ({ _id: item._id, name: item.name }))}
                 onChange={(event, newValue) => {
                     setSelectedData(newValue)
                 }}

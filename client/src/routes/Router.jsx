@@ -50,7 +50,7 @@ const Router = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/productDetails/:id" element={<ProductDetails/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
-        <Route path="/search" element={<Search />} />
+        <Route path="/shop/search" element={<Search />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>

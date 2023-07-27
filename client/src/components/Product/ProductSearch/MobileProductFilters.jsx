@@ -4,7 +4,7 @@ import useTheme from '../../../hooks/useTheme';
 import { Drawer } from '@mui/material';
 
 const MobileProductFilters = (props) => {
-    const { onClose, open   } = props
+    const { onClose, open , sizes , brands } = props
     const { theme } = useTheme();
     return (
         <Drawer
@@ -22,12 +22,14 @@ const MobileProductFilters = (props) => {
             }}
         >
 
-                 <ProductFilters onClose={onClose}   drawerView/>
+                 <ProductFilters onClose={onClose} sizes={sizes} brands={brands}  />
          </Drawer>
     );
 }
 MobileProductFilters.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
+    sizes: PropTypes.array.isRequired,
+    brands: PropTypes.array.isRequired,
 };
 export default MobileProductFilters

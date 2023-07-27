@@ -4,7 +4,7 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CustomButton from "../../ui/CustomButton";
 import { styled, alpha } from '@mui/material/styles';
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { createQueryString } from "../../../utils/queryString";
 
 
@@ -72,7 +72,7 @@ const ProductSort = (props) => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-
+ 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -96,7 +96,7 @@ const ProductSort = (props) => {
                 onClick={handleClick}
             >
                 Sort
-                <ExpandMoreOutlinedIcon />
+                <ExpandMoreOutlinedIcon  sx={{ marginLeft: 1, height: '1rem', width: '1rem' }}/>
             </CustomButton>
             <StyledMenu
                 anchorEl={anchorEl}
