@@ -1,4 +1,4 @@
-import { Unstable_Grid2 as Grid, Pagination, Typography, useMediaQuery } from '@mui/material'
+import { Unstable_Grid2 as Grid,Typography, useMediaQuery } from '@mui/material'
 import { Box } from '@mui/system'
 import ProductCard from '../../components/Product/ProductCard'
 import ProductFilters from '../../components/Product/ProductSearch/ProductFilters'
@@ -10,9 +10,8 @@ import ProductSort from '../../components/Product/ProductSearch/ProductSort';
 import { useLocation } from 'react-router-dom';
 import { useMounted } from '../../hooks/use-mounted';
 import { productApi } from '../../api/productApi';
-import { createQueryString } from '../../utils/queryString';
-import { PaginationButton } from '../../components/ui/PaginationButton';
-
+import PaginationButton from '../../components/ui/PaginationButton';
+ 
 
 function ProductSearch() {
   const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -34,7 +33,7 @@ function ProductSearch() {
   const price = searchParams?.get('price_range') ?? 'all';
   const sort = searchParams?.get("sort") ?? "createdAt.desc"
   const page = searchParams?.get('page') ?? 1;
-  const per_page = searchParams?.get("per_page") ?? "9"
+  const per_page = searchParams?.get("per_page") ?? 9
 
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState()
@@ -145,6 +144,7 @@ function ProductSearch() {
               per_page={per_page}
               sort={sort}
               isPending={loading}
+              isMobileScreen={isMobileScreen}
             />
             :
             null
