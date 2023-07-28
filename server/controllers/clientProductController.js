@@ -2,6 +2,7 @@ const Product = require("../models/product");
 const IdParamsValidation = require("../validator/IdParamsValidation");
 const Category = require("../models/category");
 const Brand = require("../models/brand");
+const Size = require("../models/size");
 const addHrefFieldToBrands = require("../utils/brandsHandler");
 const createCategories = require("../utils/categoriesHandler");
 const mongoose = require("mongoose");
@@ -175,14 +176,21 @@ module.exports = {
               },
             }
           : {};
+      //brand filter
+      const brandNames = brand.split(".");
+      const Brands = await Brand.find({ name: { $in: brandNames } }, "_id");
 
+      const BIds = Brands.map((b) => b._id);
       const brandFilter =
-        brand && brand !== "all"
-          ? { "brand.name": { $in: brand.split(".") } }
-          : {};
+        brand && brand !== "all" ? { brand: { $in: BIds } } : {};
 
-      const sizeFilter =
-        size && size !== "all" ? { "size.name": { $in: size.split(".") } } : {};
+      //sizes filter
+      const sizeNames = size.split(".");
+      const Sizes = await Size.find({ name: { $in: sizeNames } }, "_id");
+
+      const SIds = Sizes.map((size) => size._id);
+
+      const sizeFilter = size && size !== "all" ? { sizes: { $in: SIds } } : {};
 
       const sortOption = () => {
         switch (sort) {
@@ -267,8 +275,10 @@ module.exports = {
         }),
       ]);
       const totalPages = Math.ceil(countProducts / pageSize);
-      const sizes = products.map((product) => product.sizes).flat();
-      const brands = products.map((product) => product.brand[0]);
+      const sizeIds = await Product.find().distinct("sizes");
+      const sizes = await Size.find({ _id: { $in: sizeIds } });
+      const brandIds = await Product.find().distinct("brand");
+      const brands = await Brand.find({ _id: { $in: brandIds } });
       const result = {
         products,
         countProducts,

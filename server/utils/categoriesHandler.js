@@ -15,7 +15,7 @@ const createCategories = (categories, parentCategory = null) => {
       name: cate.name,
       parentCategory: cate.parentCategory,
       childCategories: createCategories(categories, cate._id),
-      href : `shop/search?category=${cate._id}`
+      href : `ZiwiShop/search?category=${cate._id}`
     });
   }
 

@@ -31,7 +31,7 @@ router.patch(
 router.get("/client/Products", ClientProductController.GetClientProducts);
 router.get("/client/:id", ClientProductController.GetClientOneProduct);
 router.get("/brandscategories/client", ClientProductController.GetBrandsCategories);
-router.get("/shop/search", ClientProductController.GetSearchProducts);
+router.get("/ZiwiShop/search", ClientProductController.GetSearchProducts);
  
 
 module.exports = router;
