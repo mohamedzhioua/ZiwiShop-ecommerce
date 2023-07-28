@@ -46,19 +46,6 @@ function Navbar() {
 
   ];
 
-  let filteredLinks = navigationLinks.filter(
-    (item) => IsLoggedIn || item.name === "Home"
-  );
-
-  if (IsLoggedIn && user?.role === "ADMIN") {
-    // If logged in and role is ADMIN, show all navigation links
-    filteredLinks = navigationLinks;
-  } else if (IsLoggedIn && user?.role !== "ADMIN") {
-    // If logged in but not an ADMIN, show only Home and Profile
-    filteredLinks = filteredLinks.filter(
-      (item) => item.name === "Home" || item.name === "Profile"
-    );
-  }
   const [categories, setCategories] = useState([])
   const [brands, setBrands] = useState([])
   const isMounted = useMounted()
@@ -119,20 +106,23 @@ function Navbar() {
           </Box>
           {isMobileScreen && (<Logo />)}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-
-            {filteredLinks.map((item) => (
-
-              <Button
-                variant='h4'
-                key={item.name}
-                to={item.href}
-                component={Link}
-                sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: "bold" }}
-              >{item.name}
-              </Button>
-
-            ))}
-
+            <>
+              {IsLoggedIn && user?.role === 'ADMIN' ? (
+                navigationLinks.map((item) => (
+                  <Button
+                    variant="h4"
+                    key={item.name}
+                    to={item.href}
+                    component={Link}
+                    sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: 'bold' }}
+                  >
+                    {item.name}
+                  </Button>
+                ))
+              ) : (
+                null
+              )}
+            </>
             <Button
               variant='h4'
               to={"/"}
@@ -140,14 +130,14 @@ function Navbar() {
               sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: "bold" }}
             >Home
             </Button>
+            {!isMobileScreen && (<CategoriesPopover categories={categories}
+            />)}
           </Box>
           <Box
             display="flex"
             justifyContent="space-between"
             alignItems="center" gap="5px"
           >
-            {!isMobileScreen && (<CategoriesPopover categories={categories}
-            />)}
 
             <IconButton
               aria-label="Search"

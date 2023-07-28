@@ -12,7 +12,8 @@ const CategoriesPopover = (props) => {
   const { categories } = props
      const { theme } = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const allCategory = { name: 'All', href: '/ZiwiShop/search' };
+  const categoriesWithAll = [allCategory, ...categories];
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -76,7 +77,7 @@ const CategoriesPopover = (props) => {
       >
 
 
-        {categories.map((categorie, index) => (
+        {categoriesWithAll.map((categorie, index) => (
 
           <MenuItems
             key={`${categorie.name}-${index}`}

@@ -18,7 +18,7 @@ const ShoppingList = () => {
   const navigate = useNavigate();
 
   const handleSeeMoreClick = () => {
-    navigate("/shop/search");
+    navigate("/ZiwiShop/search");
   };
   const handleChange = (event, newValue) => {
     setValue(newValue);

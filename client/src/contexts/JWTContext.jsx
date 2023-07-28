@@ -7,7 +7,7 @@ const initialState = {
   isInitialized: false,
   user: null,
  };
-
+ 
 const handlers = {
   INITIALIZE: (state, action) => {
     const { IsLoggedIn, user } = action.payload;

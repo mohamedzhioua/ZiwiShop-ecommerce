@@ -6,6 +6,7 @@ import useTheme from '../../hooks/useTheme';
 import SideNavItem from './SideNavItem';
 import SideNavNestedItems from './SideNavNestedItems';
 import Logo from '../../components/ui/Logo';
+import useAuth from '../../hooks/useAuth';
 
 const navigationLinks = [
     {
@@ -21,9 +22,10 @@ const navigationLinks = [
 ];
 
 export const SideNav = (props) => {
-    const { onClose, open ,categories,brands } = props
+    const { onClose, open, categories, brands } = props
     const { theme } = useTheme();
- 
+    const { IsLoggedIn, user } = useAuth();
+
     return (
         <Drawer
             anchor="left"
@@ -59,9 +61,13 @@ export const SideNav = (props) => {
                     >
                         <SideNavItem item={{ name: "Home", href: "/" }} onClose={onClose} />
 
-                        <SideNavSection
-                            navigationLinks={navigationLinks}
-                            onClose={onClose} />
+                        {IsLoggedIn && user?.role === 'ADMIN' ?
+                            (<SideNavSection
+                                navigationLinks={navigationLinks}
+                                onClose={onClose} />
+                            ) : (
+                                null
+                            )}
                         <SideNavSection
                             navigationLinks={[{
                                 name: 'categories',
@@ -77,7 +83,7 @@ export const SideNav = (props) => {
                     </Stack>
                     <Stack sx={{ p: 3 }} spacing={1}>
                         <Typography variant="subtitle1">
-                            Need help? 
+                            Need help?
                         </Typography>
                         <Typography
                             variant="body2"
@@ -95,6 +101,6 @@ export const SideNav = (props) => {
 SideNav.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.func.isRequired,
-    categories:PropTypes.array.isRequired,
-    brands:PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired,
+    brands: PropTypes.array.isRequired,
 };

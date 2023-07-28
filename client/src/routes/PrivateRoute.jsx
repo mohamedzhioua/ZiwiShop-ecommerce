@@ -8,6 +8,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
   const { IsLoggedIn, user } = useAuth();
  
   if (!IsLoggedIn) {
+
      return <Navigate to="/signin" replace />;
   }
 

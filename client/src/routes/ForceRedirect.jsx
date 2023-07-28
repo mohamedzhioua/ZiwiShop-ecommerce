@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { Navigate, Outlet } from "react-router-dom";
+ import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import React from "react";
 import LoadingSpinner from "../components/ui/LoadingSpinner/LoadingSpinner";
@@ -15,7 +14,5 @@ const ForceRedirect = () => {
     </React.Suspense>
   );
 };
-ForceRedirect.propTypes = {
-  children: PropTypes.node
-};
+ 
 export default ForceRedirect;

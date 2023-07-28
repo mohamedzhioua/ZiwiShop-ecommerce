@@ -1,10 +1,11 @@
-import { lazy } from "react";
+import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import ForceRedirect from "./ForceRedirect";
 import NotFound from "../pages/NotFound";
 import NoAccess from "../pages/NoAccess";
 import ProtectedRoute from "./PrivateRoute";
 import { CategoryProvider } from "../contexts/CategoryContext"
+import LoadingSpinner from "../components/ui/LoadingSpinner/LoadingSpinner";
 
 
 
@@ -39,7 +40,9 @@ const Router = () => {
   return (
 
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Suspense fallback={<LoadingSpinner/>}><Home /></Suspense>} />
+        <Route path="/ZiwiShop/search" element={<Suspense fallback={<LoadingSpinner/>}><Search /></Suspense>} />
+        <Route path="/productDetails/:id" element={<Suspense fallback={<LoadingSpinner/>}><ProductDetails/></Suspense>}/>
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />
@@ -48,9 +51,7 @@ const Router = () => {
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN", "USER"]} />}>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/productDetails/:id" element={<ProductDetails/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
-        <Route path="/shop/search" element={<Search />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
