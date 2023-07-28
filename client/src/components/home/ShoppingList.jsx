@@ -2,29 +2,36 @@ import { useCallback, useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
- import { Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
- import { productApi } from "../../api/productApi";
+import { productApi } from "../../api/productApi";
 import { useMounted } from "../../hooks/use-mounted";
 import ProductCard from "../Product/ProductCard";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CustomButton from "../ui/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 
 const ShoppingList = () => {
   const [value, setValue] = useState("all");
-  const breakPoint = useMediaQuery("(min-width:600px)");
+  const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const navigate = useNavigate();
 
+  const handleSeeMoreClick = () => {
+    navigate("/shop/search");
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const [products, setProducts] = useState([])
+  const [data, setData] = useState()
   const isMounted = useMounted()
 
   const GetClientProducts = useCallback(async () => {
     try {
       const response = await productApi.GetClientProducts();
       if (isMounted()) {
-        setProducts(response);
+        setData(response);
       }
     } catch (error) {
       console.error(error);
@@ -58,7 +65,7 @@ const ShoppingList = () => {
         value={value}
         onChange={handleChange}
         centered
-        TabIndicatorProps={{ sx: { display: breakPoint ? "block" : "none" } }}
+        TabIndicatorProps={{ sx: { display: isMobileScreen ? "block" : "none" } }}
         sx={{
           m: "25px",
           "& .MuiTabs-flexContainer": {
@@ -79,10 +86,15 @@ const ShoppingList = () => {
         rowGap="20px"
         columnGap="1.33%"
       >
-        {value === "all" &&
-          products.map((product) => (
+        {value === "all" && data?.products?.length > 0 ? (
+          data?.products.map((product) => (
             <ProductCard product={product} key={`${product.name}-${product._id}`} />
-          ))}
+          ))
+        ) : (
+          <Typography textAlign="center">Sorry, No results</Typography>
+        )}
+
+
         {/* {value === "newArrivals" &&
           newArrivalsItems.map((item) => (
             <ProductCard item={item} key={`${item.name}-${item.id}`} />
@@ -95,6 +107,13 @@ const ShoppingList = () => {
           topRatedItems.map((item) => (
             <ProductCard item={item} key={`${item.name}-${item.id}`} />
           ))} */}
+      </Box>
+      <Box textAlign="center" mt={2} onClick={handleSeeMoreClick}>
+        <CustomButton
+        endIcon={ <ArrowForwardIcon />}
+        >
+          See More
+        </CustomButton>
       </Box>
     </Box>
   );

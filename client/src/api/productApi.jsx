@@ -47,7 +47,7 @@ class ProductApi {
     return this.request('patch', `/${id}/image`, data);
   }
   GetClientProducts() {
-    return this.request('get', '/client/Products');
+    return this.request('get', `/client/Products`);
   }
   GetClientOneProduct(id) {
     return this.request('get', `/client/${id}`);

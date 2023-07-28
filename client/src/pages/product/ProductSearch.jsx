@@ -144,6 +144,7 @@ function ProductSearch() {
               per_page={per_page}
               sort={sort}
               isPending={loading}
+              searchParams={searchParams}
               isMobileScreen={isMobileScreen}
             />
             :

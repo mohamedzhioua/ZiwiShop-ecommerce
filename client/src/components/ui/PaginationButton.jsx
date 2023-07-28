@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import {Stack } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { createQueryString } from "../../utils/queryString";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "./CustomButton"
 import PropTypes from "prop-types";
 
@@ -14,11 +14,11 @@ const  PaginationButton =(props) => {
     per_page,
     sort,
     isPending,
+    searchParams,
     siblingCount = 1,
   } = props
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  
   
   // Memoize pagination range to avoid unnecessary re-renders
   const paginationRange = useMemo(() => {
@@ -192,6 +192,7 @@ PaginationButton.propTypes = {
   isPending: PropTypes.bool,
   siblingCount: PropTypes.number,
   isMobileScreen: PropTypes.bool,
+  searchParams: PropTypes.string,
 };
 
 export default PaginationButton;
