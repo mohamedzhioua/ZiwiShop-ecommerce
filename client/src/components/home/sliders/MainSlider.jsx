@@ -7,9 +7,9 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 
-const gallery = Object.values(import.meta.glob('../../../assets/carousel-images/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }))
+const gallery = Object.values(import.meta.glob('../../../assets/slider-images/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }))
 
-const MainCarousel = () => {
+const MainSlider = () => {
   const { theme } = useTheme();
   const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
@@ -30,11 +30,11 @@ const MainCarousel = () => {
         className="mySwiper"
       >
         {gallery.map((texture, index) => (
-          <SwiperSlide key={`carousel-image-${index}`} >
+          <SwiperSlide key={`slider-image-${index}`} >
             <Box>
               <img
                 src={texture}
-                alt={`carousel-${index}`}
+                alt={`slider-${index}`}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -78,4 +78,4 @@ const MainCarousel = () => {
   );
 };
 
-export default MainCarousel;
+export default MainSlider;
