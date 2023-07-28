@@ -17,10 +17,11 @@ import "swiper/css/navigation";
             }}>
                 <Swiper
                     slidesPerView={1}
+                    centeredSlides={true}
                     spaceBetween={30}
                     loop={true}
                     autoplay={{
-                        delay: 5000,
+                        delay: 2000,
                         disableOnInteraction: false,
                     }}
                     breakpoints={{
@@ -43,7 +44,7 @@ import "swiper/css/navigation";
                     }}
                     modules={[Autoplay]}
                     className="mySwiper"
-                >
+                 >
                     {sliderContent.map((texture, index) => (
 
                         <SwiperSlide key={`slider-image-${index}`} style={{
