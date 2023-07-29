@@ -7,7 +7,8 @@ import {
     Unstable_Grid2 as Grid,
     List,
     OutlinedInput,
-    Typography
+    Typography,
+    useMediaQuery
 } from '@mui/material';
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { useSelector } from "react-redux";
@@ -31,6 +32,7 @@ const calculateAmounts = (products) => {
 
 export const CheckoutSummary = () => {
     const cart = useSelector((state) => state.cart.cart);
+    const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const { shippingTax, subtotal, total } = calculateAmounts(cart);
 
@@ -40,17 +42,25 @@ export const CheckoutSummary = () => {
 
     return (
         <Grid container spacing={3}>
-            <Grid xs={12} md={6} >
-                <Box sx={{ maxHeight: '500px' , overflow: 'auto' }}>
-                    <List>
-                        <Scrollbar>
-                            {cart.map((product) => (
-                                <CartItem key={product._id} product={product} />
-                            ))}
-                        </Scrollbar>
-                    </List>
-                </Box>
-            </Grid>
+    <Grid xs={12} md={6}>
+       {!isMobileScreen ? (
+        <List sx={{ maxHeight: '300px', overflow: 'auto' }}>
+          <Scrollbar>
+            {cart.map((product) => (
+              <CartItem key={product._id} product={product} />
+            ))}
+          </Scrollbar>
+        </List>
+      ) : (
+        <List>
+          <Scrollbar>
+            {cart.map((product) => (
+              <CartItem key={product._id} product={product} />
+            ))}
+          </Scrollbar>
+        </List>
+      )}
+    </Grid>
             <Grid xs={12} md={6} >
                 <Card>
                     <CardContent >
