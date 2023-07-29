@@ -1,12 +1,16 @@
 import { useSelector } from "react-redux";
-import { Box, Stepper, Step, StepLabel } from "@mui/material";
+import {
+    Box, Stepper, Step, StepLabel, Unstable_Grid2 as Grid,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
-import Payment from "../../components/checkout/Payment";
 import { checkoutInitialValues, checkoutSchema } from "../../components/checkout/CheckoutFormValidation";
 import CustomButton from "../../components/ui/CustomButton";
 import Billing from "../../components/checkout/Billing";
- 
+import ContactInfo from "../../components/checkout/ContactInfo";
+import PaymentMethod from "../../components/checkout/PaymentMethod";
+import { CheckoutSummary } from "../../components/checkout/CheckoutSummary";
+
 // import { loadStripe } from "@stripe/stripe-js";
 
 // const stripePromise = loadStripe(
@@ -18,14 +22,17 @@ const Checkout = () => {
     const cart = useSelector((state) => state.cart.cart);
     const isFirstStep = activeStep === 0;
     const isSecondStep = activeStep === 1;
+    const isThirdStep = activeStep === 2;
+    const isFourthStep = activeStep === 3;
 
     const handleFormSubmit = async (values, actions) => {
         if (isFirstStep) {
-            // Save billing information to localStorage
             localStorage.setItem("billingInfo", JSON.stringify(values));
         } else if (isSecondStep) {
-            // Save payment information to localStorage
-            localStorage.setItem("paymentInfo", JSON.stringify(values));
+            localStorage.setItem("billingInfo", JSON.stringify(values));
+        }
+        else if (isThirdStep) {
+            localStorage.setItem("billingInfo", JSON.stringify(values));
         }
         setActiveStep(activeStep + 1);
         // if (isSecondStep) {
@@ -56,13 +63,11 @@ const Checkout = () => {
     //       sessionId: session.id,
     //     });
     //   }
-    const initialValues =
-        activeStep === 0
-            ? JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues
-            : JSON.parse(localStorage.getItem("paymentInfo")) || checkoutInitialValues;
+
+
     const formik = useFormik({
         onSubmit: handleFormSubmit,
-        initialValues: initialValues,
+        initialValues: JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues,
         validationSchema: checkoutSchema[activeStep]
     });
 
@@ -82,7 +87,13 @@ const Checkout = () => {
                     <StepLabel>Billing</StepLabel>
                 </Step>
                 <Step>
-                    <StepLabel>Payment</StepLabel>
+                    <StepLabel>Contact Info</StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Payment </StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Place Order </StepLabel>
                 </Step>
             </Stepper>
             <Box>
@@ -98,7 +109,7 @@ const Checkout = () => {
                         />
                     )}
                     {isSecondStep && (
-                        <Payment
+                        <ContactInfo
                             values={values}
                             errors={errors}
                             touched={touched}
@@ -106,38 +117,54 @@ const Checkout = () => {
                             handleChange={handleChange}
                         />
                     )}
-                    <Box display="flex" justifyContent="space-between" gap="50px">
-                        {!isFirstStep && (
+                    {isThirdStep && (
+                        <PaymentMethod
+                            values={values}
+                            errors={errors}
+                            touched={touched}
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
+                        />
+                    )}
+                    {isFourthStep && (
+                        < CheckoutSummary />
+                    )
+                    }
+                    <Grid container spacing={3}>
+                        <Grid xs={12} md={6} >
+                            {!isFirstStep && (
+                                <CustomButton
+                                    fullWidth
+                                    color="primary"
+                                    variant="contained"
+                                    sx={{
+                                        boxShadow: "none",
+                                        borderRadius: 0,
+                                        padding: "15px 40px",
+                                    }}
+                                    onClick={() => setActiveStep(activeStep - 1)}
+                                >
+                                    Back
+                                </CustomButton>
+                            )}
+                        </Grid>
+                        <Grid xs={12} md={6} >
                             <CustomButton
                                 fullWidth
+                                type="submit"
                                 color="primary"
                                 variant="contained"
                                 sx={{
                                     boxShadow: "none",
-                                    color: "white",
                                     borderRadius: 0,
                                     padding: "15px 40px",
-                                }}
-                                onClick={() => setActiveStep(activeStep - 1)}
-                            >
-                                Back
-                            </CustomButton>
-                        )}
-                        <CustomButton
-                            fullWidth
-                            type="submit"
-                            color="primary"
-                            variant="contained"
-                            sx={{
-                                boxShadow: "none",
-                                borderRadius: 0,
-                                padding: "15px 40px",
 
-                            }}
-                        >
-                            {!isSecondStep ? "Next" : "Place Order"}
-                        </CustomButton>
-                    </Box>
+                                }}
+                            >
+                                {!isFourthStep ? "Next" : "Place Order"}
+                            </CustomButton>
+                        </Grid>
+                    </Grid>
                 </form>
 
             </Box>

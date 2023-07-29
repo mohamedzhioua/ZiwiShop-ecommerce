@@ -6,8 +6,7 @@ import { getIn } from "formik";
 
 const Billing = (props) => {
     const { values, touched, errors, handleBlur, handleChange } = props
-    console.log("🚀 ~ file: Billing.jsx:9 ~ Billing ~ values:", values)
-    const formattedName = (field) => `billingAddress.${field}`;
+     const formattedName = (field) => `billingAddress.${field}`;
 
     const formattedError = (field) =>
         Boolean(

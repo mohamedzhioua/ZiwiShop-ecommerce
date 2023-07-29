@@ -3,9 +3,9 @@ import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import CustomInput from "../ui/CustomInput";
 import { Stack } from "@mui/system";
 
-const Payment = (props) => {
+const ContactInfo = (props) => {
     const { values, touched, errors, handleBlur, handleChange } = props;
-
+  
     return (
         <Box m="30px 0">
             <Stack spacing={2}>
@@ -45,10 +45,10 @@ const Payment = (props) => {
     );
 };
 
-Payment.propTypes = {
+ContactInfo.propTypes = {
     values: PropTypes.shape({
-        email: PropTypes.number.isRequired,
-        phoneNumber: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        phoneNumber: PropTypes.number.isRequired,
     }).isRequired,
     touched: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
@@ -56,4 +56,4 @@ Payment.propTypes = {
     handleChange: PropTypes.func.isRequired,
 };
 
-export default Payment;
+export default ContactInfo;

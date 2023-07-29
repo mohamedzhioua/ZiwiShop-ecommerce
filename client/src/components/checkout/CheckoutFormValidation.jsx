@@ -13,6 +13,7 @@ export const checkoutInitialValues = {
   },
   email: "",
   phoneNumber: "",
+  paymentMethod: ""
 };
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -21,7 +22,6 @@ export const checkoutSchema = [
     billingAddress: Yup.object().shape({
       firstName: Yup.string().required("First name is required").min(2, "First name must be at least 2 characters"),
       lastName: Yup.string().required("Last name is required").min(2, "Last name must be at least 2 characters"),
-      country: Yup.string().required("Country name is required"),
       street1: Yup.string().required("Street address is required").min(5, "Street address must be at least 5 characters"),
       street2: Yup.string(),
       city: Yup.string().required("City is required"),
@@ -37,6 +37,10 @@ export const checkoutSchema = [
   }),
   Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+    phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required("Phone number is required"),
   }),
-];
+    Yup.object().shape({
+      paymentMethod: Yup.string().required("Payment method is required"),
+
+  }),
+ ];
