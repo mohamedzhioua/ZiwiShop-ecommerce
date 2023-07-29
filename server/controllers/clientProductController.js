@@ -154,6 +154,7 @@ module.exports = {
       const size = query.size || "";
       const sort = query.sort || "";
       const searchQuery = query.query || "";
+      // query Filter
       const queryFilter =
         searchQuery && searchQuery !== "all"
           ? {
@@ -163,10 +164,12 @@ module.exports = {
               },
             }
           : {};
+          // category Filter
       const categoryFilter =
         category && category !== "all"
           ? { category: mongoose.Types.ObjectId(category) }
           : {};
+          // price Filter
       const priceFilter =
         price && price !== "all"
           ? {
@@ -179,17 +182,13 @@ module.exports = {
       //brand filter
       const brandNames = brand.split(".");
       const Brands = await Brand.find({ name: { $in: brandNames } }, "_id");
-
       const BIds = Brands.map((b) => b._id);
-      const brandFilter =
-        brand && brand !== "all" ? { brand: { $in: BIds } } : {};
+      const brandFilter = brand && brand !== "all" ? { brand: { $in: BIds } } : {};
 
       //sizes filter
       const sizeNames = size.split(".");
       const Sizes = await Size.find({ name: { $in: sizeNames } }, "_id");
-
       const SIds = Sizes.map((size) => size._id);
-
       const sizeFilter = size && size !== "all" ? { sizes: { $in: SIds } } : {};
 
       const sortOption = () => {
