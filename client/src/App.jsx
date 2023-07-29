@@ -23,7 +23,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Navbar />
-        {isInitialized ? <Router /> : ""}
+      {isInitialized ? <Router /> : ""}
         <Toaster position="top-center" />
         <CartMenu />
         <Footer />

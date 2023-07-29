@@ -9,13 +9,11 @@ const SocialAuth = () => {
             spacing={1}>
             <Grid
                 xs={12}
-
             >
                 <GoogleAuth />
             </Grid>
             <Grid
                 xs={12}
-
             >
                 <FacebookAuth />
             </Grid>

@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
-import { Box,  Stepper, Step, StepLabel } from "@mui/material";
+import { Box, Stepper, Step, StepLabel } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
- import Payment from "../../components/checkout/Payment";
+import Payment from "../../components/checkout/Payment";
 import { checkoutInitialValues, checkoutSchema } from "../../components/checkout/CheckoutFormValidation";
 import CustomButton from "../../components/ui/CustomButton";
 import Billing from "../../components/checkout/Billing";
+ 
 // import { loadStripe } from "@stripe/stripe-js";
 
 // const stripePromise = loadStripe(
@@ -19,6 +20,13 @@ const Checkout = () => {
     const isSecondStep = activeStep === 1;
 
     const handleFormSubmit = async (values, actions) => {
+        if (isFirstStep) {
+            // Save billing information to localStorage
+            localStorage.setItem("billingInfo", JSON.stringify(values));
+        } else if (isSecondStep) {
+            // Save payment information to localStorage
+            localStorage.setItem("paymentInfo", JSON.stringify(values));
+        }
         setActiveStep(activeStep + 1);
         // if (isSecondStep) {
         //   makePayment(values);
@@ -48,9 +56,13 @@ const Checkout = () => {
     //       sessionId: session.id,
     //     });
     //   }
+    const initialValues =
+        activeStep === 0
+            ? JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues
+            : JSON.parse(localStorage.getItem("paymentInfo")) || checkoutInitialValues;
     const formik = useFormik({
         onSubmit: handleFormSubmit,
-        initialValues: checkoutInitialValues,
+        initialValues: initialValues,
         validationSchema: checkoutSchema[activeStep]
     });
 
@@ -61,7 +73,7 @@ const Checkout = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-     } = formik;
+    } = formik;
 
     return (
         <Box width="80%" m="100px auto">
@@ -83,7 +95,7 @@ const Checkout = () => {
                             touched={touched}
                             handleBlur={handleBlur}
                             handleChange={handleChange}
-                         />
+                        />
                     )}
                     {isSecondStep && (
                         <Payment
@@ -92,7 +104,7 @@ const Checkout = () => {
                             touched={touched}
                             handleBlur={handleBlur}
                             handleChange={handleChange}
-                         />
+                        />
                     )}
                     <Box display="flex" justifyContent="space-between" gap="50px">
                         {!isFirstStep && (
@@ -118,9 +130,9 @@ const Checkout = () => {
                             variant="contained"
                             sx={{
                                 boxShadow: "none",
-                                 borderRadius: 0,
+                                borderRadius: 0,
                                 padding: "15px 40px",
-                                
+
                             }}
                         >
                             {!isSecondStep ? "Next" : "Place Order"}

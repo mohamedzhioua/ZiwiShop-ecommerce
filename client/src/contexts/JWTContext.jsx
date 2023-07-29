@@ -172,6 +172,9 @@ export const AuthProvider = (props) => {
   const logout = async () => {
     try {
       localStorage.removeItem("userDetails");
+      localStorage.removeItem("paymentInfo");
+      localStorage.removeItem("billingInfo");
+      localStorage.removeItem("cartItems");
       dispatch({ type: "LOGOUT" });
     } catch (err) {
       console.error(err);

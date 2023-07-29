@@ -6,6 +6,7 @@ import { getIn } from "formik";
 
 const Billing = (props) => {
     const { values, touched, errors, handleBlur, handleChange } = props
+    console.log("🚀 ~ file: Billing.jsx:9 ~ Billing ~ values:", values)
     const formattedName = (field) => `billingAddress.${field}`;
 
     const formattedError = (field) =>
@@ -17,7 +18,8 @@ const Billing = (props) => {
     const formattedHelper = (field) =>
         getIn(touched, formattedName(field)) && getIn(errors, formattedName(field));
 
-
+    const formattedValue = (field) =>
+        getIn(values, formattedName(field))
 
     return (
         <Box m="30px auto">
@@ -37,7 +39,7 @@ const Billing = (props) => {
                             label="First Name"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.firstName}
+                            value={formattedValue("firstName")}
                             name={formattedName("firstName")}
                             error={formattedError("firstName")}
                             helperText={formattedHelper("firstName")}
@@ -51,7 +53,7 @@ const Billing = (props) => {
                             label="Last Name"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.lastName}
+                            value={formattedValue("lastName")}
                             name={formattedName("lastName")}
                             error={formattedError("lastName")}
                             helperText={formattedHelper("lastName")}
@@ -65,7 +67,7 @@ const Billing = (props) => {
                             label="Country"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.country}
+                            value={formattedValue("country")}
                             name={formattedName("country")}
                             error={formattedError("country")}
                             helperText={formattedHelper("country")}
@@ -79,7 +81,7 @@ const Billing = (props) => {
                             label="Street Address"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.street1}
+                            value={formattedValue("street1")}
                             name={formattedName("street1")}
                             error={formattedError("street1")}
                             helperText={formattedHelper("street1")}
@@ -92,7 +94,7 @@ const Billing = (props) => {
                             label="Street Address 2 (optional)"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.street2}
+                            value={formattedValue("street2")}
                             name={formattedName("street2")}
                             error={formattedError("street2")}
                             helperText={formattedHelper("street2")}
@@ -106,7 +108,7 @@ const Billing = (props) => {
                             label="City"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.city}
+                            value={formattedValue("city")}
                             name={formattedName("city")}
                             error={formattedError("city")}
                             helperText={formattedHelper("city")}
@@ -120,7 +122,7 @@ const Billing = (props) => {
                             label="State"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.state}
+                            value={formattedValue("state")}
                             name={formattedName("state")}
                             error={formattedError("state")}
                             helperText={formattedHelper("state")}
@@ -134,7 +136,7 @@ const Billing = (props) => {
                             label="Zip Code"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.zipCode}
+                            value={formattedValue("zipCode")}
                             name={formattedName("zipCode")}
                             error={formattedError("zipCode")}
                             helperText={formattedHelper("zipCode")}

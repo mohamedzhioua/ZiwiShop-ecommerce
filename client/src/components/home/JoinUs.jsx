@@ -1,16 +1,13 @@
 import {
     Box, 
-    Divider, 
-    TextField, Typography
+     TextField, Typography
 } from "@mui/material";
 import CustomButton from "../ui/CustomButton";
 import { Link } from "react-router-dom";
 import { Stack } from "@mui/system";
-import useTheme from "../../hooks/useTheme";
-
+ 
 const JoinUs = () => {
-    const { theme } = useTheme();
-
+ 
     return (
         <>
          
@@ -69,7 +66,6 @@ const JoinUs = () => {
             </Stack>
 
         </Box>
-        <Divider sx={{ my: 2, borderColor: theme.palette.primary.main }} />
         </>
     );
 }
