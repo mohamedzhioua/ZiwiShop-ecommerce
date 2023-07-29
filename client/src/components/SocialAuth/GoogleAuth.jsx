@@ -6,7 +6,7 @@ import CustomButton from "../ui/CustomButton";
 import { GoogleIcon } from "../icons";
 
 
-const GoogleAuth = ( ) => {
+const GoogleAuth = () => {
   const { googleLogin } = useAuth();
 
 

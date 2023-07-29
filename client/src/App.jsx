@@ -15,21 +15,20 @@ import ScrollToTopBtn from './components/ui/ScrollToTopBtn';
 
 
 function App() {
-  const {isInitialized} = useAuth();
+  const { isInitialized } = useAuth();
   const { theme } = useTheme();
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-         <Navbar />
-          <ScrollToTop />
-          <ScrollToTopBtn />
-          {isInitialized ? <Router /> : ""}
-          <Toaster position="top-center" />
-          <CartMenu />
+        <Navbar />
+        {isInitialized ? <Router /> : ""}
+        <Toaster position="top-center" />
+        <CartMenu />
         <Footer />
-       
+        <ScrollToTop />
+        <ScrollToTopBtn />
       </BrowserRouter>
     </ThemeProvider>
 

@@ -49,11 +49,8 @@ const JoinUs = () => {
                         />
                     </Box>
 
-                    <CustomButton variant='contained'  >
-
-                       
+                    <CustomButton    >   
                             Subscribe
- 
                     </CustomButton>
 
                 </Box>

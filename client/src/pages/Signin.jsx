@@ -4,20 +4,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Avatar from '@mui/material/Avatar';
 import CustomInput from "../components/ui/CustomInput";
-import GoogleAuth from "../components/SocialAuth/GoogleAuth";
-import FacebookAuth from "../components/SocialAuth/FacebookAuth";
-import { Link, Container, Grid, Typography } from "@material-ui/core";
+import { Link, Container, Unstable_Grid2 as Grid, Typography } from "@mui/material";
 import CustomButton from "../components/ui/CustomButton";
 import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from '../hooks/useAuth';
- import { Box } from "@mui/system";
+import { Box } from "@mui/system";
 import { CardContent } from "@mui/material";
- import { tokens } from "../theme/theme";
+import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
+import SocialAuth from "../components/SocialAuth";
 
 function Signin() {
   const { login } = useAuth();
-   const {theme} = useTheme();
+  const { theme } = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
   const initialValues = {
@@ -115,15 +114,11 @@ function Signin() {
                   {isSubmitting ? "Signing in..." : "Continue"}
                 </CustomButton>
               </Grid>
-              <Grid item xs={12}>
-                <GoogleAuth />
-              </Grid>
-              <Grid item xs={12}>
-                <FacebookAuth />
+              <Grid item xs={12} >
+                <SocialAuth />
               </Grid>
 
-              <Grid container style={{ marginTop: '10px' }}
-              >
+              <Grid container style={{ marginTop: '10px'}}>
                 <Grid item xs>
                   <Link
                     style={{ color: colors.grey[100] }}

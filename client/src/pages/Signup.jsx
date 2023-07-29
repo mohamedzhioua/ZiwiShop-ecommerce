@@ -10,6 +10,7 @@ import CustomButton from "../components/ui/CustomButton";
  import useAuth from "../hooks/useAuth";
  import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
+import SocialAuth from "../components/SocialAuth";
 
 const Signup = () => {
   const { register } = useAuth();
@@ -148,6 +149,9 @@ const Signup = () => {
                 >
                   {isSubmitting ? "Sign Up..." : "Continue"}
                 </CustomButton>
+              </Grid>
+              <Grid item xs={12} >
+                <SocialAuth />
               </Grid>
               <Grid container style={{ marginTop: '10px', display: 'grid', placeItems: 'center' }}>
                 <Link
