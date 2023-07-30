@@ -23,13 +23,12 @@ const OrderSchema = new Schema(
     ],
     shippingAddress: {
       fullName: { type: String, required: true },
-      address: { type: String, required: true },
       country: { type: String, required: true },
       city: { type: String, required: true },
       state: { type: String, required: true },
       street1: { type: String, required: true },
       street2: { type: String },
-      zipCode: { type: String, required: true },
+      zipCode: { type: Number, required: true },
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {

@@ -6,7 +6,7 @@ module.exports = {
   //  ---------------------------------------- //CreatOrder//--------------------------- //
 
   CreateOrder: async (req, res) => {
-    try {
+      try {
     const {
       orderItems,
       shippingAddress,
@@ -17,16 +17,17 @@ module.exports = {
       email,
       phoneNumber,
     } = req.body;
-    const { errors, isValid } = OrderValidation(req.body);
-
+      const { errors, isValid } = OrderValidation(req.body);
+    
     if (!isValid) {
       return res.status(400).json(errors);
     }
-      const newOrder = await Order.create({
+    const { firstName, lastName } = shippingAddress;
+       const newOrder = await Order.create({
         orderItems,
         shippingAddress: {
-          ...shippingAddress,  
-          fullName: `${firstName} ${lastName}`,  
+           fullName: `${firstName} ${lastName}`,  
+           ...shippingAddress,
         },
         paymentMethod,
         itemsPrice,
@@ -36,9 +37,9 @@ module.exports = {
         userPhone: phoneNumber,
         user: req.user._id,
       });
-      return res.status(201).json(newOrder);
+        return res.status(201).json(newOrder);
     } catch (error) {
-      return res.status(500).send("Error: " + error.message);
+       return res.status(500).send("Error: " + error.message);
     }
   },
 };

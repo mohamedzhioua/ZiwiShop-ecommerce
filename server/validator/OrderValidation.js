@@ -16,35 +16,32 @@ module.exports = function OrderValidation(data) {
   }
 
   // ShippingAddress checks
-  if (!data.shippingAddress) {
-    errors.shippingAddress = "Shipping address is required";
-  } else {
-    const { firstName,lastName, address, country, city, state, street1, zipCode } = data.shippingAddress;
-    if (validator.isEmpty(firstName)) {
-      errors.shippingAddress = "firstNameis required for shipping";
-    }
-    if (validator.isEmpty(lastName)) {
-        errors.shippingAddress = "lastName is required for shipping";
-      }
-    if (validator.isEmpty(address)) {
-      errors.shippingAddress = "Address is required for shipping";
-    }
-    if (validator.isEmpty(country)) {
-      errors.shippingAddress = "Country is required for shipping";
-    }
-    if (validator.isEmpty(city)) {
-      errors.shippingAddress = "City is required for shipping";
-    }
-    if (validator.isEmpty(state)) {
-      errors.shippingAddress = "State is required for shipping";
-    }
-    if (validator.isEmpty(street1)) {
-      errors.shippingAddress = "Street1 is required for shipping";
-    }
-    if (validator.isEmpty(zipCode)) {
-      errors.shippingAddress = "Zip code is required for shipping";
-    }
-  }
+  // if (!data.shippingAddress) {
+  //   errors.shippingAddress = "Shipping address is required";
+  // } else {
+  //   const { firstName,lastName, country, city, state, street1, zipCode } = data.shippingAddress;
+  //   if (validator.isEmpty(firstName)) {
+  //     errors.shippingAddress = "firstNameis required for shipping";
+  //   }
+  //   if (validator.isEmpty(lastName)) {
+  //       errors.shippingAddress = "lastName is required for shipping";
+  //     }
+  //   if (validator.isEmpty(country)) {
+  //     errors.shippingAddress = "Country is required for shipping";
+  //   }
+  //   if (validator.isEmpty(city)) {
+  //     errors.shippingAddress = "City is required for shipping";
+  //   }
+  //   if (validator.isEmpty(state)) {
+  //     errors.shippingAddress = "State is required for shipping";
+  //   }
+  //   if (validator.isEmpty(street1)) {
+  //     errors.shippingAddress = "Street1 is required for shipping";
+  //   }
+  //   if (validator.isEmpty(zipCode)) {
+  //     errors.shippingAddress = "Zip code is required for shipping";
+  //   }
+  // }
 
   // PaymentMethod checks
   if (validator.isEmpty(data.paymentMethod)) {
@@ -61,20 +58,22 @@ module.exports = function OrderValidation(data) {
     errors.phoneNumber = "Invalid user phone number";
   }
 
-  // ItemsPrice checks
-  if (!data.itemsPrice || !validator.isNumeric(data.itemsPrice.toString(), { no_symbols: true })) {
+// ItemsPrice checks
+if (typeof data.itemsPrice !== "number" || data.itemsPrice <= 0) {
     errors.itemsPrice = "Invalid items price";
   }
+  
 
   // ShippingPrice checks
-  if (!data.shippingPrice || !validator.isNumeric(data.shippingPrice.toString(), { no_symbols: true })) {
+  if (typeof data.shippingPrice !== "number" || data.shippingPrice <= 0) {
     errors.shippingPrice = "Invalid shipping price";
   }
 
 
   // TotalPrice checks
-  if (!data.totalPrice || !validator.isNumeric(data.totalPrice.toString(), { no_symbols: true })) {
-    errors.totalPrice = "Invalid total price";
+ 
+  if (typeof data.totalPrice !== "number" || data.totalPrice <= 0) {
+    errors.totalPrice = "Invalid total  price";
   }
 
   return {
