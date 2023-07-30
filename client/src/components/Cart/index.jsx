@@ -2,7 +2,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
-import {setIsCartOpen} from "../../app/feature/cartSlice";
+import { setIsCartOpen } from "../../app/feature/cartSlice";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../ui/CustomButton";
 import { tokens } from "../../theme/theme";
@@ -75,20 +75,26 @@ const CartMenu = () => {
             ))}
           </Box>
           <Box m="20px 0">
-            <CartSubtotal totalPrice={totalPrice} />
-            <CustomButton
-              sx={{
-                borderRadius: 0,
-                minWidth: "100%",
-                padding: "20px 40px",
-                m: "20px 0",
-              }}
-              onClick={() => {
-                navigate("/checkout");
-               }}
-            >
-              CHECKOUT
-            </CustomButton>
+            {cart.length > 0 ? (
+              <>            <CartSubtotal totalPrice={totalPrice} />
+                <CustomButton
+                  sx={{
+                    borderRadius: 0,
+                    minWidth: "100%",
+                    padding: "20px 40px",
+                    m: "20px 0",
+                  }}
+                  onClick={() => {
+                    navigate("/checkout");
+                  }}
+                >
+                  CHECKOUT
+                </CustomButton>
+              </>
+
+            ) : (
+              <Typography variant="h5" color="error">Your cart is empty.</Typography>
+            )}
           </Box>
         </Box>
       </Box>

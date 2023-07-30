@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import {
-    Box, Stepper, Step, StepLabel, Unstable_Grid2 as Grid,
+    Box, Stepper, Step, StepLabel, Unstable_Grid2 as Grid, Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -25,7 +25,7 @@ const Checkout = () => {
     const initialStep = JSON.parse(localStorage.getItem("step")) || 0
     const [activeStep, setActiveStep] = useState(initialStep);
     const cart = useSelector((state) => state.cart.cart);
-     const isFirstStep = activeStep === 0;
+    const isFirstStep = activeStep === 0;
     const isSecondStep = activeStep === 1;
     const isThirdStep = activeStep === 2;
     const isFourthStep = activeStep === 3;
@@ -36,22 +36,22 @@ const Checkout = () => {
 
         setActiveStep(activeStep + 1);
         if (isFourthStep) {
-            placeOrderHandler(values,actions);
+            placeOrderHandler(values, actions);
         }
 
         actions.setTouched({});
     };
-  
-    const placeOrderHandler = async (values,actions) => {
+
+    const placeOrderHandler = async (values, actions) => {
         try {
             let response;
-           
-                response = orderApi.CreateOrder(values);
+
+            response = orderApi.CreateOrder(values);
             toast.promise(
                 response,
                 {
                     loading: 'Placing the order',
-                    error:   'Error while Placing the order',
+                    error: 'Error while Placing the order',
                     success: ' order Created !'
                 },
             );
@@ -60,7 +60,7 @@ const Checkout = () => {
                     if (isMounted()) {
                         actions.setStatus({ success: true });
                         actions.setSubmitting(false);
-                     }
+                    }
                 })
                 .catch((error) => {
                     if (isMounted()) {
@@ -100,7 +100,7 @@ const Checkout = () => {
 
 
     const formik = useFormik({
-        onSubmit: (values, actions) => handleFormSubmit(values, actions, activeStep, isFourthStep),        initialValues: JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues,
+        onSubmit: (values, actions) => handleFormSubmit(values, actions, activeStep, isFourthStep), initialValues: JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues,
         validationSchema: checkoutSchema[activeStep]
     });
 
@@ -162,30 +162,33 @@ const Checkout = () => {
                     )}
                     {isFourthStep && (
                         <CheckoutSummary
-                        setFieldValue={formik.setFieldValue} 
+                            setFieldValue={formik.setFieldValue}
                             onEditStep={handleEditStep}
                         />
                     )
                     }
                     <Grid container spacing={3}>
+                   
+                            <Grid xs={12} md={6} >
+                                {!isFirstStep && (
+                                    <CustomButton
+                                        fullWidth
+                                        color="primary"
+                                        variant="contained"
+                                        sx={{
+                                            boxShadow: "none",
+                                            borderRadius: 0,
+                                            padding: "15px 40px",
+                                        }}
+                                        onClick={() => setActiveStep(activeStep - 1)}
+                                    >
+                                        Back
+                                    </CustomButton>
+                                )}
+                            </Grid>
+                          
                         <Grid xs={12} md={6} >
-                            {!isFirstStep && (
-                                <CustomButton
-                                    fullWidth
-                                    color="primary"
-                                    variant="contained"
-                                    sx={{
-                                        boxShadow: "none",
-                                        borderRadius: 0,
-                                        padding: "15px 40px",
-                                    }}
-                                    onClick={() => setActiveStep(activeStep - 1)}
-                                >
-                                    Back
-                                </CustomButton>
-                            )}
-                        </Grid>
-                        <Grid xs={12} md={6} >
+                        {cart.length > 0 ? (
                             <CustomButton
                                 fullWidth
                                 type="submit"
@@ -201,6 +204,9 @@ const Checkout = () => {
                             >
                                 {!isFourthStep ? "Next" : isSubmitting ? "loading..." : "Place Order"}
                             </CustomButton>
+                            ) : (
+                                <Typography variant="h5" color="error">Add something to your cart </Typography>
+                              )}
                         </Grid>
                     </Grid>
                 </form>
