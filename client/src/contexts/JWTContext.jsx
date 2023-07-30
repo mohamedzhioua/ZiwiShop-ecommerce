@@ -6,8 +6,8 @@ const initialState = {
   IsLoggedIn: false,
   isInitialized: false,
   user: null,
- };
- 
+};
+
 const handlers = {
   INITIALIZE: (state, action) => {
     const { IsLoggedIn, user } = action.payload;
@@ -25,14 +25,14 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-     };
+    };
   },
   LOGOUT: (state) => {
     return {
       ...state,
       IsLoggedIn: false,
       user: null,
-     
+
 
     };
   },
@@ -51,7 +51,7 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-      
+
 
     };
   },
@@ -61,7 +61,7 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-      
+
 
     };
   },
@@ -172,9 +172,9 @@ export const AuthProvider = (props) => {
   const logout = async () => {
     try {
       localStorage.removeItem("userDetails");
-      localStorage.removeItem("paymentInfo");
       localStorage.removeItem("billingInfo");
       localStorage.removeItem("cartItems");
+      localStorage.removeItem("step"); 
       dispatch({ type: "LOGOUT" });
     } catch (err) {
       console.error(err);

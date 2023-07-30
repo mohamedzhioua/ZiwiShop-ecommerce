@@ -9,7 +9,7 @@ import CustomButton from "../../components/ui/CustomButton";
 import Billing from "../../components/checkout/Billing";
 import ContactInfo from "../../components/checkout/ContactInfo";
 import PaymentMethod from "../../components/checkout/PaymentMethod";
-import { CheckoutSummary } from "../../components/checkout/CheckoutSummary";
+import CheckoutSummary from "../../components/checkout/CheckoutSummary";
 
 // import { loadStripe } from "@stripe/stripe-js";
 
@@ -18,7 +18,8 @@ import { CheckoutSummary } from "../../components/checkout/CheckoutSummary";
 // );
 
 const Checkout = () => {
-    const [activeStep, setActiveStep] = useState(0);
+    const initialStep = JSON.parse(localStorage.getItem("step")) || 0
+    const [activeStep, setActiveStep] = useState(initialStep);
     const cart = useSelector((state) => state.cart.cart);
     const isFirstStep = activeStep === 0;
     const isSecondStep = activeStep === 1;
@@ -26,20 +27,18 @@ const Checkout = () => {
     const isFourthStep = activeStep === 3;
 
     const handleFormSubmit = async (values, actions) => {
-        if (isFirstStep) {
-            localStorage.setItem("billingInfo", JSON.stringify(values));
-        } else if (isSecondStep) {
-            localStorage.setItem("billingInfo", JSON.stringify(values));
-        }
-        else if (isThirdStep) {
-            localStorage.setItem("billingInfo", JSON.stringify(values));
-        }
+        localStorage.setItem("billingInfo", JSON.stringify(values));
+        localStorage.setItem("step", JSON.stringify(activeStep));
+
         setActiveStep(activeStep + 1);
         // if (isSecondStep) {
         //   makePayment(values);
         // }
 
         actions.setTouched({});
+    };
+    const handleEditStep = (step) => {
+        setActiveStep(step);
     };
 
     //   async function makePayment(values) {
@@ -127,7 +126,9 @@ const Checkout = () => {
                         />
                     )}
                     {isFourthStep && (
-                        < CheckoutSummary />
+                        <CheckoutSummary
+                            onEditStep={handleEditStep}
+                        />
                     )
                     }
                     <Grid container spacing={3}>
