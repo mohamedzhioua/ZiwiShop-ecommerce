@@ -45,7 +45,7 @@ module.exports = {
       const newBrand = await Brand.create({
         name,
       });
-      return res.status(200).json(newBrand);
+      return res.status(201).json(newBrand);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }

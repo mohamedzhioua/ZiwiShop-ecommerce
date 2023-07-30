@@ -6,7 +6,7 @@ const { isAuth } = require("../middlewares/checkAuth");
 
 // router.get("/", OrderController.GetBrands);
 
-router.post("/", isAuth, OrderController.CreatOrder);
+router.post("/", isAuth, OrderController.CreateOrder);
 
  
 

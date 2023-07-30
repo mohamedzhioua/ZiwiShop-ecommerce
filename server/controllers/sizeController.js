@@ -124,7 +124,7 @@ module.exports = {
 
       await size.remove();
 
-      return res.status(200).json();
+      return res.status(201).json();
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }

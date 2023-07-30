@@ -30,7 +30,7 @@ const orderRoutes = require("./routes/orderRoutes");
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/size", sizeRoutes);
-app.use("/api/v1/category", categoryRoutes);
+app.use("/api/v1/category",categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/brand", brandRoutes);
 app.use("/api/v1/order", orderRoutes);

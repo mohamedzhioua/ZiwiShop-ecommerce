@@ -70,7 +70,7 @@ module.exports = {
         isFeatured,
       });
 
-      return res.status(200).json(newProduct);
+      return res.status(201).json(newProduct);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
