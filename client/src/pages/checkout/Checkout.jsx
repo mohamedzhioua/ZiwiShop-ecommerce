@@ -10,6 +10,9 @@ import Billing from "../../components/checkout/Billing";
 import ContactInfo from "../../components/checkout/ContactInfo";
 import PaymentMethod from "../../components/checkout/PaymentMethod";
 import CheckoutSummary from "../../components/checkout/CheckoutSummary";
+import { toast } from "react-hot-toast";
+import { useMounted } from "../../hooks/use-mounted";
+import { orderApi } from "../../api/orderApi";
 
 // import { loadStripe } from "@stripe/stripe-js";
 
@@ -18,6 +21,7 @@ import CheckoutSummary from "../../components/checkout/CheckoutSummary";
 // );
 
 const Checkout = () => {
+    const isMounted = useMounted()
     const initialStep = JSON.parse(localStorage.getItem("step")) || 0
     const [activeStep, setActiveStep] = useState(initialStep);
     const cart = useSelector((state) => state.cart.cart);
@@ -27,21 +31,51 @@ const Checkout = () => {
     const isFourthStep = activeStep === 3;
 
     const handleFormSubmit = async (values, actions) => {
-        console.log("🚀 ~ file: Checkout.jsx:30 ~ handleFormSubmit ~ values:", values)
         localStorage.setItem("billingInfo", JSON.stringify(values));
         localStorage.setItem("step", JSON.stringify(activeStep));
 
         setActiveStep(activeStep + 1);
-        // if (isSecondStep) {
-        //   makePayment(values);
-        // }
+        if (isFourthStep) {
+            placeOrderHandler(values,actions);
+        }
 
         actions.setTouched({});
+    };
+  
+    const placeOrderHandler = async (values,actions) => {
+        try {
+            let response;
+           
+                response = orderApi.CreateOrder(values);
+            toast.promise(
+                response,
+                {
+                    loading: 'Placing the order',
+                    error:   'Error while Placing the order',
+                    success: ' order Created !'
+                },
+            );
+            response
+                .then(() => {
+                    if (isMounted()) {
+                        actions.setStatus({ success: true });
+                        actions.setSubmitting(false);
+                     }
+                })
+                .catch((error) => {
+                    if (isMounted()) {
+                        actions.setStatus({ success: false });
+                        actions.setErrors(error);
+                        actions.setSubmitting(false);
+                    }
+                });
+        } catch (err) {
+            toast.error('Something went wrong!');
+        }
     };
     const handleEditStep = (step) => {
         setActiveStep(step);
     };
-
     //   async function makePayment(values) {
     //     const stripe = await stripePromise;
     //     const requestBody = {
@@ -66,8 +100,7 @@ const Checkout = () => {
 
 
     const formik = useFormik({
-        onSubmit: handleFormSubmit,
-        initialValues: JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues,
+        onSubmit: (values, actions) => handleFormSubmit(values, actions, activeStep, isFourthStep),        initialValues: JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues,
         validationSchema: checkoutSchema[activeStep]
     });
 
@@ -78,6 +111,7 @@ const Checkout = () => {
         handleChange,
         handleBlur,
         handleSubmit,
+        isSubmitting,
     } = formik;
 
     return (
@@ -156,6 +190,7 @@ const Checkout = () => {
                                 fullWidth
                                 type="submit"
                                 color="primary"
+                                disabled={isSubmitting}
                                 variant="contained"
                                 sx={{
                                     boxShadow: "none",
@@ -164,7 +199,7 @@ const Checkout = () => {
 
                                 }}
                             >
-                                {!isFourthStep ? "Next" : "Place Order"}
+                                {!isFourthStep ? "Next" : isSubmitting ? "loading..." : "Place Order"}
                             </CustomButton>
                         </Grid>
                     </Grid>

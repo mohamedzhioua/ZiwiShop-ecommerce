@@ -26,9 +26,10 @@ export const checkoutSchema = [
     billingAddress: Yup.object().shape({
       firstName: Yup.string().required("First name is required").min(2, "First name must be at least 2 characters"),
       lastName: Yup.string().required("Last name is required").min(2, "Last name must be at least 2 characters"),
+      city: Yup.string().required("City is required"),
       street1: Yup.string().required("Street address is required").min(5, "Street address must be at least 5 characters"),
       street2: Yup.string(),
-      city: Yup.string().required("City is required"),
+      country: Yup.string().required("country is required"),
       state: Yup.string().required("State is required"),
       zipCode: Yup
         .number()

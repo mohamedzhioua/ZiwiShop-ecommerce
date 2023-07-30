@@ -62,6 +62,7 @@ const CheckoutSummary = (props) => {
         setFieldValue("shippingPrice", shippingTax);
         setFieldValue("totalPrice", total);
       }, [extractedFields, setFieldValue, subtotal, shippingTax, total]);
+      
     return (
         <Grid container spacing={3}>
             <Grid xs={12} md={6}>

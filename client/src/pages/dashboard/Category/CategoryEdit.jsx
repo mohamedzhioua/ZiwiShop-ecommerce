@@ -3,9 +3,9 @@ import { Box, Container } from '@mui/system';
 import Heading from '../../../components/ui/Heading'
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import CategoryForm from '../../../components/dashboard/category/CategoryForm';
 import { categoryApi } from '../../../api/categoryApi';
 import useCategory from '../../../hooks/useCategory';
+import CategoryForm from '../../../components/Dashboard/category/CategoryForm';
 
 
 const useCategorie = (id) => {
@@ -50,7 +50,7 @@ function CategoryEdit() {
             justifyContent: 'space-between',
             marginLeft: '1rem',
             marginRight: '1rem',
-           }}
+          }}
         >
           <Heading title='Edit category' description='Edit a category.' />
         </Box>

@@ -30,11 +30,11 @@ const CategoryForm = (props) => {
         isLeaf: false,
     };
     const initialCategoryId = initialData ? initialData.parentCategory : null;
-    
-     useEffect(() => {
+ 
+    useEffect(() => {
         if (initialCategoryId) {
             const category = categoryParents?.find((item) => item.name === initialCategoryId);
-             setSelectedCategory(category);
+            setSelectedCategory(category);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialCategoryId]);
@@ -43,7 +43,7 @@ const CategoryForm = (props) => {
         values,
         { setErrors, setStatus, setSubmitting }
     ) => {
-         try {
+        try {
             let response;
             if (initialData) {
                 response = categoryApi.UpdateCategory(initialData._id, values);
@@ -127,7 +127,7 @@ const CategoryForm = (props) => {
                                 value={selectedCategory}
                                 onChange={(event, newValue) => {
                                     setSelectedCategory(newValue);
-                                    formik.setFieldValue('parentCategory', newValue ? newValue.id : '');
+                                     formik.setFieldValue('parentCategory', newValue ? newValue.id : '');
                                 }}
                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                 onBlur={handleBlur}
