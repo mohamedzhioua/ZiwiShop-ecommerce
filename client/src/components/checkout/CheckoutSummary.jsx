@@ -51,7 +51,7 @@ const CheckoutSummary = (props) => {
             quantity: product.quantity,
             images: product.images.map((image) => image._id),
             price: product.price,
-            productID: product._id,
+            product: product._id,
           };
         });
       }, [cart]);
@@ -104,19 +104,19 @@ const CheckoutSummary = (props) => {
                                     </Box>
                                     <Typography variant="subtitle1">Full Name:</Typography>
                                     <Typography variant="body1">
-                                        {`${billingInfo.billingAddress.firstName} ${billingInfo.billingAddress.lastName}`}
+                                        {`${billingInfo.shippingAddress.firstName} ${billingInfo.shippingAddress.lastName}`}
                                     </Typography>
                                     <Typography variant="subtitle1">Address:</Typography>
-                                    <Typography variant="body1">{billingInfo.billingAddress.street1}</Typography>
+                                    <Typography variant="body1">{billingInfo.shippingAddress.street1}</Typography>
                                     <br />
-                                    {billingInfo.billingAddress.street2 && (
+                                    {billingInfo.shippingAddress.street2 && (
                                         <>
-                                            <Typography variant="body1">{`${billingInfo.billingAddress.street2}, `}</Typography>
-                                            <Typography variant="body1">{billingInfo.billingAddress.city}</Typography>
+                                            <Typography variant="body1">{`${billingInfo.shippingAddress.street2}, `}</Typography>
+                                            <Typography variant="body1">{billingInfo.shippingAddress.city}</Typography>
                                         </>
                                     )}
-                                    <Typography variant="body1">{`${billingInfo.billingAddress.state} ${billingInfo.billingAddress.zipCode}`}</Typography>
-                                    <Typography variant="body1">{billingInfo.billingAddress.country}</Typography>
+                                    <Typography variant="body1">{`${billingInfo.shippingAddress.state} ${billingInfo.shippingAddress.zipCode}`}</Typography>
+                                    <Typography variant="body1">{billingInfo.shippingAddress.country}</Typography>
                                 </Box>
                             </Box>
                             <Box sx={{ mt: 2 }}>

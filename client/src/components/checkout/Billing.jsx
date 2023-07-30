@@ -6,7 +6,7 @@ import { getIn } from "formik";
 
 const Billing = (props) => {
     const { values, touched, errors, handleBlur, handleChange } = props
-     const formattedName = (field) => `billingAddress.${field}`;
+     const formattedName = (field) => `shippingAddress.${field}`;
 
     const formattedError = (field) =>
         Boolean(

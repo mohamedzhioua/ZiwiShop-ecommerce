@@ -18,8 +18,7 @@ class OrderApi {
   }
 
   CreateOrder(data) {
-    console.log("🚀 ~ file: orderApi.jsx:21 ~ OrderApi ~ CreateOrder ~ data:", data)
-    return this.request('post', '/', data);
+     return this.request('post', '/', data);
   }
  
  

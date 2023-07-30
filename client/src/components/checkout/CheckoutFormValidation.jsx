@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const checkoutInitialValues = {
-  billingAddress: {
+  shippingAddress: {
     firstName: "",
     lastName: "",
     country: "",
@@ -23,7 +23,7 @@ export const checkoutInitialValues = {
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 export const checkoutSchema = [
   Yup.object().shape({
-    billingAddress: Yup.object().shape({
+    shippingAddress: Yup.object().shape({
       firstName: Yup.string().required("First name is required").min(2, "First name must be at least 2 characters"),
       lastName: Yup.string().required("Last name is required").min(2, "Last name must be at least 2 characters"),
       city: Yup.string().required("City is required"),
