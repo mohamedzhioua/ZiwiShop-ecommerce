@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const SizeController = require("../controllers/sizeController");
+const { isAuth, isAdmin } = require("../middlewares/checkAuth");
 
+router.get("/", isAuth, isAdmin, SizeController.GetSizes);
 
-router.get("/", SizeController.GetSizes);
+router.get("/:id", isAuth, isAdmin, SizeController.GetOneSize);
 
-router.get("/:id", SizeController.GetOneSize);
+router.post("/add", isAuth, isAdmin, SizeController.AddSize);
 
-router.post("/add", SizeController.AddSize);
+router.patch("/:id", isAuth, isAdmin, SizeController.UpdateSize);
 
-router.patch("/:id", SizeController.UpdateSize);
-
-router.delete("/:id", SizeController.DeleteSize);
+router.delete("/:id", isAuth, isAdmin, SizeController.DeleteSize);
 
 module.exports = router;

@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const BrandController = require("../controllers/BrandController");
+const BrandController = require("../controllers/brandController");
+const { isAuth, isAdmin } = require("../middlewares/checkAuth");
+  
 
+router.get("/", isAuth, isAdmin,BrandController.GetBrands);
 
-router.get("/", BrandController.GetBrands);
+router.get("/:id", isAuth,isAdmin, BrandController.GetOneBrand);
 
-router.get("/:id", BrandController.GetOneBrand);
+router.post("/add", isAuth,isAdmin, BrandController.AddBrand);
 
-router.post("/add", BrandController.AddBrand);
+router.patch("/:id", isAuth,isAdmin, BrandController.UpdateBrand);
 
-router.patch("/:id", BrandController.UpdateBrand);
-
-router.delete("/:id", BrandController.DeleteBrand);
+router.delete("/:id",  isAuth,isAdmin, BrandController.DeleteBrand);
 
 module.exports = router;

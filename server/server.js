@@ -26,12 +26,14 @@ const sizeRoutes = require("./routes/sizeRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const brandRoutes = require("./routes/brandRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/size", sizeRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/brand", brandRoutes);
+app.use("/api/v1/order", orderRoutes);
 
 app.listen(PORT, function () {
   console.log(`Server Runs Perfectly at http://localhost:${PORT}`);
