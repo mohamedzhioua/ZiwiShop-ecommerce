@@ -6,7 +6,7 @@ import {
     CardContent,
     Divider,
     Unstable_Grid2 as Grid,
-    List,
+     List,
     OutlinedInput,
     Typography,
     useMediaQuery
@@ -17,6 +17,7 @@ import CartItem from '../Cart/CartItem';
 import { Scrollbar } from '../ui/Scrollbar';
 import CustomButton from '../ui/CustomButton';
 import { Stack } from '@mui/system';
+import { useEffect, useMemo } from "react";
 
 const calculateAmounts = (products) => {
 
@@ -34,7 +35,7 @@ const calculateAmounts = (products) => {
 };
 
 const CheckoutSummary = (props) => {
-    const { onEditStep } = props
+    const { onEditStep, setFieldValue } = props
     const cart = useSelector((state) => state.cart.cart);
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const billingInfo = JSON.parse(localStorage.getItem("billingInfo"))
@@ -43,6 +44,24 @@ const CheckoutSummary = (props) => {
     const formattedShippingTax = currencyFormatter.format(shippingTax);
     const formattedSubtotal = currencyFormatter.format(subtotal);
     const formattedTotal = currencyFormatter.format(total);
+    const extractedFields = useMemo(() => {
+        return cart.map((product) => {
+          return {
+            name: product.name,
+            quantity: product.quantity,
+            images: product.images.map((image) => image._id),
+            price: product.price,
+            productID: product._id,
+          };
+        });
+      }, [cart]);
+    
+      useEffect(() => {
+        setFieldValue("orderItems", extractedFields);
+        setFieldValue("itemsPrice", subtotal);
+        setFieldValue("shippingPrice", shippingTax);
+        setFieldValue("totalPrice", total);
+      }, [extractedFields, setFieldValue, subtotal, shippingTax, total]);
     return (
         <Grid container spacing={3}>
             <Grid xs={12} md={6}>
@@ -131,7 +150,6 @@ const CheckoutSummary = (props) => {
                             <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
                                 Order Summary
                             </Typography>
-
                             <OutlinedInput fullWidth placeholder="Discount Code" size="small" sx={{ mt: 2 }} />
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                                 <Button type="button">Apply Coupon</Button>
@@ -161,6 +179,7 @@ const CheckoutSummary = (props) => {
 
 CheckoutSummary.propTypes = {
     onEditStep: PropTypes.func.isRequired,
+    setFieldValue: PropTypes.func.isRequired,
 };
 
 export default CheckoutSummary;

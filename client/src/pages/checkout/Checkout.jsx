@@ -21,12 +21,13 @@ const Checkout = () => {
     const initialStep = JSON.parse(localStorage.getItem("step")) || 0
     const [activeStep, setActiveStep] = useState(initialStep);
     const cart = useSelector((state) => state.cart.cart);
-    const isFirstStep = activeStep === 0;
+     const isFirstStep = activeStep === 0;
     const isSecondStep = activeStep === 1;
     const isThirdStep = activeStep === 2;
     const isFourthStep = activeStep === 3;
 
     const handleFormSubmit = async (values, actions) => {
+        console.log("🚀 ~ file: Checkout.jsx:30 ~ handleFormSubmit ~ values:", values)
         localStorage.setItem("billingInfo", JSON.stringify(values));
         localStorage.setItem("step", JSON.stringify(activeStep));
 
@@ -127,6 +128,7 @@ const Checkout = () => {
                     )}
                     {isFourthStep && (
                         <CheckoutSummary
+                        setFieldValue={formik.setFieldValue} 
                             onEditStep={handleEditStep}
                         />
                     )
