@@ -16,32 +16,40 @@ module.exports = function OrderValidation(data) {
   }
 
   // ShippingAddress checks
-  // if (!data.shippingAddress) {
-  //   errors.shippingAddress = "Shipping address is required";
-  // } else {
-  //   const { firstName,lastName, country, city, state, street1, zipCode } = data.shippingAddress;
-  //   if (validator.isEmpty(firstName)) {
-  //     errors.shippingAddress = "firstNameis required for shipping";
-  //   }
-  //   if (validator.isEmpty(lastName)) {
-  //       errors.shippingAddress = "lastName is required for shipping";
-  //     }
-  //   if (validator.isEmpty(country)) {
-  //     errors.shippingAddress = "Country is required for shipping";
-  //   }
-  //   if (validator.isEmpty(city)) {
-  //     errors.shippingAddress = "City is required for shipping";
-  //   }
-  //   if (validator.isEmpty(state)) {
-  //     errors.shippingAddress = "State is required for shipping";
-  //   }
-  //   if (validator.isEmpty(street1)) {
-  //     errors.shippingAddress = "Street1 is required for shipping";
-  //   }
-  //   if (validator.isEmpty(zipCode)) {
-  //     errors.shippingAddress = "Zip code is required for shipping";
-  //   }
-  // }
+  if (!data.shippingAddress) {
+    errors.shippingAddress = "Shipping address is required";
+  } else {
+    const { firstName, lastName, country, city, state, street1, zipCode } = data.shippingAddress;
+     const addressErrors = [];
+  
+    if (validator.isEmpty(firstName)) {
+      addressErrors.push("First name is required for shipping");
+    }
+    if (validator.isEmpty(lastName)) {
+      addressErrors.push("Last name is required for shipping");
+    }
+    if (validator.isEmpty(country)) {
+      addressErrors.push("Country is required for shipping");
+    }
+    if (validator.isEmpty(city)) {
+      addressErrors.push("City is required for shipping");
+    }
+    if (validator.isEmpty(state)) {
+      addressErrors.push("State is required for shipping");
+    }
+    if (validator.isEmpty(street1)) {
+      addressErrors.push("Street1 is required for shipping");
+    }
+    if (validator.isEmpty(zipCode.toString())) {
+      addressErrors.push("Zip code is required for shipping");
+    }
+  
+  
+    if (addressErrors.length > 0) {
+      errors.shippingAddress = addressErrors.join(", ");
+    }
+  }
+  
 
   // PaymentMethod checks
   if (validator.isEmpty(data.paymentMethod)) {
