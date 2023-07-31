@@ -73,7 +73,7 @@ if (typeof data.itemsPrice !== "number" || data.itemsPrice <= 0) {
   
 
   // ShippingPrice checks
-  if (typeof data.shippingPrice !== "number" || data.shippingPrice <= 0) {
+  if (typeof data.shippingPrice !== "number" || data.shippingPrice < 0) {
     errors.shippingPrice = "Invalid shipping price";
   }
 

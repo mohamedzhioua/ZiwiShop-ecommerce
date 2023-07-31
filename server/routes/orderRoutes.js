@@ -8,6 +8,8 @@ const { isAuth } = require("../middlewares/checkAuth");
 
 router.post("/", isAuth, OrderController.CreateOrder);
 
+router.get("/:id", isAuth, OrderController.GetOneOrder);
+
  
 
 module.exports = router;
