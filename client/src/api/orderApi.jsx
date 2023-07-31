@@ -21,7 +21,9 @@ class OrderApi {
      return this.request('post', '/', data);
   }
  
- 
+  GetOneOrder(id) {
+    return this.request('get', `/${id}`);
+  }
 }
 
 export const orderApi = new OrderApi();

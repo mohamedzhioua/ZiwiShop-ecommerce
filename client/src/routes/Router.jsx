@@ -35,6 +35,10 @@ const BrandAdd = lazy(() => import("../pages/dashboard/Brand/BrandAdd"));
 const BrandEdit = lazy(() => import("../pages/dashboard/Brand/BrandEdit"));
 //payment
 const Checkout = lazy(() => import("../pages/checkout/Checkout"));
+//order
+const Order = lazy(() => import("../pages/order/Order"));
+const OrderHistory = lazy(() => import("../pages/order/OrderHistory"));
+
 
 const Router = () => {
   return (
@@ -51,7 +55,9 @@ const Router = () => {
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN", "USER"]} />}>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/checkout" element={<Checkout/>}/>
+        <Route path="/checkout" element={<Checkout/>}/> 
+        <Route path="/order/:id" element={<Order/>}/>
+        <Route path="/OrderHistory" element={<OrderHistory/>}/>
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>

@@ -13,6 +13,7 @@ import CheckoutSummary from "../../components/checkout/CheckoutSummary";
 import { toast } from "react-hot-toast";
 import { useMounted } from "../../hooks/use-mounted";
 import { orderApi } from "../../api/orderApi";
+import { useNavigate } from "react-router-dom";
 
 // import { loadStripe } from "@stripe/stripe-js";
 
@@ -22,6 +23,7 @@ import { orderApi } from "../../api/orderApi";
 
 const Checkout = () => {
     const isMounted = useMounted()
+    const navigate = useNavigate();
     const initialStep = JSON.parse(localStorage.getItem("step")) || 0
     const [activeStep, setActiveStep] = useState(initialStep);
     const cart = useSelector((state) => state.cart.cart);
@@ -44,33 +46,22 @@ const Checkout = () => {
 
     const placeOrderHandler = async (values, actions) => {
         try {
-            let response;
-
-            response = orderApi.CreateOrder(values);
-            toast.promise(
-                response,
-                {
-                    loading: 'Placing the order',
-                    error: 'Error while Placing the order',
-                    success: ' order Created !'
-                },
-            );
-            response
-                .then(() => {
-                    if (isMounted()) {
-                        actions.setStatus({ success: true });
-                        actions.setSubmitting(false);
-                    }
-                })
-                .catch((error) => {
-                    if (isMounted()) {
-                        actions.setStatus({ success: false });
-                        actions.setErrors(error);
-                        actions.setSubmitting(false);
-                    }
-                });
-        } catch (err) {
-            toast.error('Something went wrong!');
+           const  response = await orderApi.CreateOrder(values);
+             if (isMounted()) {
+                actions.setStatus({ success: true });
+                actions.setSubmitting(false);
+                // localStorage.removeItem('cartItems');
+                // localStorage.removeItem('billingInfo');
+                // localStorage.removeItem('step');
+                toast.success('Order Created');
+                navigate(`/order/${response._id}`);
+            }
+        } catch (error) {
+            if (isMounted()) {
+                actions.setStatus({ success: false });
+                actions.setErrors(error);
+                actions.setSubmitting(false);
+             }
         }
     };
     const handleEditStep = (step) => {
@@ -168,45 +159,45 @@ const Checkout = () => {
                     )
                     }
                     <Grid container spacing={3}>
-                   
-                            <Grid xs={12} md={6} >
-                                {!isFirstStep && (
-                                    <CustomButton
-                                        fullWidth
-                                        color="primary"
-                                        variant="contained"
-                                        sx={{
-                                            boxShadow: "none",
-                                            borderRadius: 0,
-                                            padding: "15px 40px",
-                                        }}
-                                        onClick={() => setActiveStep(activeStep - 1)}
-                                    >
-                                        Back
-                                    </CustomButton>
-                                )}
-                            </Grid>
-                          
-                        <Grid xs={12} md={6} >
-                        {cart.length > 0 ? (
-                            <CustomButton
-                                fullWidth
-                                type="submit"
-                                color="primary"
-                                disabled={isSubmitting}
-                                variant="contained"
-                                sx={{
-                                    boxShadow: "none",
-                                    borderRadius: 0,
-                                    padding: "15px 40px",
 
-                                }}
-                            >
-                                {!isFourthStep ? "Next" : isSubmitting ? "loading..." : "Place Order"}
-                            </CustomButton>
+                        <Grid xs={12} md={6} >
+                            {!isFirstStep && (
+                                <CustomButton
+                                    fullWidth
+                                    color="primary"
+                                    variant="contained"
+                                    sx={{
+                                        boxShadow: "none",
+                                        borderRadius: 0,
+                                        padding: "15px 40px",
+                                    }}
+                                    onClick={() => setActiveStep(activeStep - 1)}
+                                >
+                                    Back
+                                </CustomButton>
+                            )}
+                        </Grid>
+
+                        <Grid xs={12} md={6} >
+                            {cart.length > 0 ? (
+                                <CustomButton
+                                    fullWidth
+                                    type="submit"
+                                    color="primary"
+                                    disabled={isSubmitting}
+                                    variant="contained"
+                                    sx={{
+                                        boxShadow: "none",
+                                        borderRadius: 0,
+                                        padding: "15px 40px",
+
+                                    }}
+                                >
+                                    {!isFourthStep ? "Next" : isSubmitting ? "loading..." : "Place Order"}
+                                </CustomButton>
                             ) : (
                                 <Typography variant="h5" color="error">Add something to your cart </Typography>
-                              )}
+                            )}
                         </Grid>
                     </Grid>
                 </form>
