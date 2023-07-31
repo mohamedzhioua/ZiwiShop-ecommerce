@@ -21,6 +21,9 @@ app.use(
     credentials: true
   })
 );
+app.get("/api/keys/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
+});
 const userRoutes = require("./routes/userRoutes");
 const sizeRoutes = require("./routes/sizeRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
