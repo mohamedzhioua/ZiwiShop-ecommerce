@@ -66,23 +66,21 @@ const CheckoutSummary = (props) => {
     return (
         <Grid container spacing={3}>
             <Grid xs={12} md={6}>
-                {!isMobileScreen ? (
-                    <List sx={{ maxHeight: '800px', overflow: 'auto' }}>
+            <Stack spacing={3}>
+                    <List
+                        sx={{
+                            maxHeight: '800px',
+                            overflow: 'auto',
+                            ...(isMobileScreen && { flexGrow: 1 }),
+                        }}
+                    >
                         <Scrollbar>
                             {cart.map((product) => (
                                 <CartItem key={product._id} product={product} />
                             ))}
                         </Scrollbar>
                     </List>
-                ) : (
-                    <List>
-                        <Scrollbar>
-                            {cart.map((product) => (
-                                <CartItem key={product._id} product={product} />
-                            ))}
-                        </Scrollbar>
-                    </List>
-                )}
+                    </Stack>
             </Grid>
             <Grid xs={12} md={6} >
                 <Stack spacing={3}>

@@ -13,6 +13,7 @@ import { Scrollbar } from '../ui/Scrollbar';
 import PropTypes from 'prop-types';
 import { Stack } from '@mui/system';
  import OrderItems from './OrderItem';
+ import { currencyFormatter } from "../../utils/currencyFormatter";
 
 
 const OneOrder = (props) => {
@@ -103,16 +104,16 @@ const OneOrder = (props) => {
                         <Divider sx={{ my: 2 }} />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Typography variant="h5">Subtotal</Typography>
-                            <Typography variant="h5">{order.itemsPrice}</Typography>
+                            <Typography variant="h5">{currencyFormatter.format(order.itemsPrice)}</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Typography variant="h5">Shipping Tax</Typography>
-                            <Typography variant="h5">{order.shippingPrice}</Typography>
+                            <Typography variant="h5">{currencyFormatter.format(order.shippingPrice)}</Typography>
                         </Box>
                         <Divider sx={{ my: 2 }} />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Typography variant="h5">Order Total</Typography>
-                            <Typography variant="h5">{order.totalPrice}</Typography>
+                            <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
                     </CardContent>
                 </Card>
