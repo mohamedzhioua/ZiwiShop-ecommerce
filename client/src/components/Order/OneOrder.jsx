@@ -1,135 +1,123 @@
 import {
+    Alert,
     Box,
-    Button,
-    Card,
+     Card,
     CardContent,
     Divider,
     Unstable_Grid2 as Grid,
-     List,
-    OutlinedInput,
-    Typography,
+    List,
+     Typography,
     useMediaQuery
-  } from '@mui/material';
+} from '@mui/material';
 import { Scrollbar } from '../ui/Scrollbar';
 import PropTypes from 'prop-types';
 import { Stack } from '@mui/system';
+ import OrderItems from './OrderItem';
 
 
 const OneOrder = (props) => {
-    const {order} =props
+    const { order } = props
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
-  return (
-    <Grid container spacing={3}>
-    <Grid xs={12} md={6}>
-        {!isMobileScreen ? (
-            <List sx={{ maxHeight: '800px', overflow: 'auto' }}>
-                <Scrollbar>
-                    {order.map((product) => (
-                        <CartItem key={product._id} product={product} />
-                    ))}
-                </Scrollbar>
-            </List>
-        ) : (
-            <List>
-                <Scrollbar>
-                    {cart.map((product) => (
-                        <CartItem key={product._id} product={product} />
-                    ))}
-                </Scrollbar>
-            </List>
-        )}
-    </Grid>
-    <Grid xs={12} md={6} >
-        <Stack spacing={3}>
-
-            <Card>
-                <CardContent>
-                    <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
-                        Preview Order
-                    </Typography>
-                    <Box>
-                        <Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Typography variant="h4" fontWeight="600">
-                                    Billing Address:
+    return (
+        <Grid container spacing={3}>
+            <Grid xs={12} md={6}>
+                <Stack spacing={3}>
+                    <List
+                        sx={{
+                            maxHeight: '800px',
+                            overflow: 'auto',
+                            ...(isMobileScreen && { flexGrow: 1 }),
+                        }}
+                    >
+                        <Scrollbar>
+                            {order?.orderItems?.map((product) => (
+                                <OrderItems key={product._id} product={product} />
+                            ))}
+                        </Scrollbar>
+                    </List>
+                    <Card>
+                        <CardContent>
+                            <Stack spacing={1} sx={{ marginBottom: 2 }}>
+                                <Typography variant="h4" fontWeight="700">
+                                    Shipping Address :
                                 </Typography>
-                                <CustomButton variant="outlined" size="small" >
-                                    Edit
-                                </CustomButton>
-                            </Box>
-                            <Typography variant="subtitle1">Full Name:</Typography>
-                            <Typography variant="body1">
-                                {`${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`}
-                            </Typography>
-                            <Typography variant="subtitle1">Address:</Typography>
-                            <Typography variant="body1">{order.shippingAddress.street1}</Typography>
-                            <br />
-                            {order.shippingAddress.street2 && (
-                                <>
-                                    <Typography variant="body1">{`${order.shippingAddress.street2}, `}</Typography>
-                                    <Typography variant="body1">{order.shippingAddress.city}</Typography>
-                                </>
-                            )}
-                            <Typography variant="body1">{`${order.shippingAddress.state} ${order.shippingAddress.zipCode}`}</Typography>
-                            <Typography variant="body1">{order.shippingAddress.country}</Typography>
+                                <Box>
+                                    <Typography variant="h5" fontWeight="600">Full Name:</Typography>
+                                    <Typography variant="subtitle1">
+                                        {order.shippingAddress.fullName}
+                                    </Typography>
+                                    <Typography variant="h5" fontWeight="600">Address:</Typography>
+                                    <Typography variant="subtitle1">{`${order.shippingAddress.country} ${order.shippingAddress.street1} ${order.shippingAddress.city} ${order.shippingAddress.state}  ${order.shippingAddress.zipCode}`}</Typography>
+                                    <br />
+                                    {order.shippingAddress.street2 && (
+                                        <>
+                                            <Typography variant="subtitle1">{`${order.shippingAddress.street2}`}</Typography>
+                                        </>
+                                    )}
+                                </Box>
+                                {
+                                    order.isDelivered ?
+                                        (
+                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Delivered at ${order?.deliveredAt}`}
+                                            </Alert>
+                                        ) : (
+                                            <Alert severity="error" style={{ fontSize: "17px" }}>Still Not delivred Yet</Alert>
+                                        )
+                                }
+
+                            </Stack>
+                            <Stack spacing={1}>
+                                <Typography variant="h4" fontWeight="700">
+                                    Payment :
+                                </Typography>
+                                <Box>
+                                    <Typography variant="h5" fontWeight="600">
+                                        Payment Method:
+                                    </Typography>
+
+                                    <Typography variant="subtitle1">{order.paymentMethod}</Typography>
+                                </Box>
+                                {
+                                    order.isPaid ?
+                                        (
+                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Delivered at ${order?.paidAt}`}
+                                            </Alert>
+                                        ) : (
+                                            <Alert severity="error" style={{ fontSize: "17px" }}>Still Not Paid Yet</Alert>
+                                        )
+                                }
+                            </Stack>
+                        </CardContent>
+                    </Card>
+                </Stack>
+            </Grid>
+            <Grid xs={12} md={6} >
+
+
+                <Card>
+                    <CardContent >
+                        <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
+                            Order Summary
+                        </Typography>
+                        <Divider sx={{ my: 2 }} />
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography variant="h5">Subtotal</Typography>
+                            <Typography variant="h5">{order.itemsPrice}</Typography>
                         </Box>
-                    </Box>
-                    <Box sx={{ mt: 2 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Typography variant="h4" fontWeight="600">
-                                Contact Information:
-                            </Typography>
-                            <CustomButton variant="outlined" size="small" >
-                                Edit
-                            </CustomButton>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography variant="h5">Shipping Tax</Typography>
+                            <Typography variant="h5">{order.shippingPrice}</Typography>
                         </Box>
-                        <Typography variant="subtitle1">Email:</Typography>
-                        <Typography variant="body1">{order.email}</Typography>
-                        <Typography variant="subtitle1">Phone Number:</Typography>
-                        <Typography variant="body1">{order.phoneNumber}</Typography>
-                    </Box>
-                    <Box sx={{ mt: 2 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Typography variant="h4" fontWeight="600">
-                                Payment Method:
-                            </Typography>
-                            <CustomButton variant="outlined" size="small"  >
-                                Edit
-                            </CustomButton>
+                        <Divider sx={{ my: 2 }} />
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography variant="h5">Order Total</Typography>
+                            <Typography variant="h5">{order.totalPrice}</Typography>
                         </Box>
-                        <Typography variant="body1">{order.paymentMethod}</Typography>
-                    </Box>
-                </CardContent>
-            </Card>
-            <Card>
-                <CardContent >
-                    <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
-                        Order Summary
-                    </Typography>
-                    <OutlinedInput fullWidth placeholder="Discount Code" size="small" sx={{ mt: 2 }} />
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                        <Button type="button">Apply Coupon</Button>
-                    </Box>
-                    <Divider sx={{ my: 2 }} />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h5">Subtotal</Typography>
-                        <Typography variant="h5">{formattedSubtotal}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h5">Shipping Tax</Typography>
-                        <Typography variant="h5">{formattedShippingTax}</Typography>
-                    </Box>
-                    <Divider sx={{ my: 2 }} />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h5">Total</Typography>
-                        <Typography variant="h5">{formattedTotal}</Typography>
-                    </Box>
-                </CardContent>
-            </Card>
-        </Stack>
-    </Grid>
-</Grid>  )
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid >)
 }
 OneOrder.propTypes = {
     order: PropTypes.object,
