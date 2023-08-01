@@ -6,10 +6,10 @@ import {
     ListItemText,
     Typography,
 } from '@mui/material';
+import { currencyFormatter } from '../../utils/currencyFormatter';
 const OrderItems = (props) => {
     const { product } = props
-    console.log("🚀 ~ file: OrderItem.jsx:11 ~ OrderItems ~ product:", product)
-    return (
+     return (
         <ListItem
             disableGutters
             key={product._id}
@@ -51,7 +51,7 @@ const OrderItems = (props) => {
                         sx={{ mt: 1 }}
                         variant="body1"
                     >
-                        {product.price}
+                        {currencyFormatter.format(product.price)}
                     </Typography>
                 )}
             />

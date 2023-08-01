@@ -1,42 +1,46 @@
 import {
     Alert,
     Box,
-     Card,
+    Card,
     CardContent,
     Divider,
     Unstable_Grid2 as Grid,
     List,
-     Typography,
+    Typography,
     useMediaQuery
 } from '@mui/material';
 import { Scrollbar } from '../ui/Scrollbar';
 import PropTypes from 'prop-types';
 import { Stack } from '@mui/system';
- import OrderItems from './OrderItem';
- import { currencyFormatter } from "../../utils/currencyFormatter";
-
+import OrderItems from './OrderItem';
+import { currencyFormatter } from "../../utils/currencyFormatter";
+import PaypalButtons from '../ui/PaypalButtons';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { orderApi } from '../../api/orderApi';
 
 const OneOrder = (props) => {
-    const { order } = props
+    const { data } = props
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const [order , setOrder]=useState(data)
 
+ const payOrder = async (id, details) => {
+    try {
+      const response = await orderApi.PayOrder(id, details);
+      toast.success('Order is paid');
+      setOrder(response); 
+      toast.success('Order has been updated successfully!');
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+  useEffect(() => {
+    setOrder(data);
+  }, [data]);
     return (
         <Grid container spacing={3}>
-            <Grid xs={12} md={6}>
+            <Grid xs={12} md={8}>
                 <Stack spacing={3}>
-                    <List
-                        sx={{
-                            maxHeight: '800px',
-                            overflow: 'auto',
-                            ...(isMobileScreen && { flexGrow: 1 }),
-                        }}
-                    >
-                        <Scrollbar>
-                            {order?.orderItems?.map((product) => (
-                                <OrderItems key={product._id} product={product} />
-                            ))}
-                        </Scrollbar>
-                    </List>
                     <Card>
                         <CardContent>
                             <Stack spacing={1} sx={{ marginBottom: 2 }}>
@@ -82,20 +86,32 @@ const OneOrder = (props) => {
                                 {
                                     order.isPaid ?
                                         (
-                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Delivered at ${order?.paidAt}`}
+                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Paid at ${order?.paidAt}`}
                                             </Alert>
                                         ) : (
                                             <Alert severity="error" style={{ fontSize: "17px" }}>Still Not Paid Yet</Alert>
                                         )
                                 }
                             </Stack>
+
+                            <List
+                                sx={{
+                                    maxHeight: '800px',
+                                    overflow: 'auto',
+                                    ...(isMobileScreen && { flexGrow: 1 }),
+                                }}
+                            >
+                                <Scrollbar>
+                                    {order?.orderItems?.map((product) => (
+                                        <OrderItems key={product._id} product={product} />
+                                    ))}
+                                </Scrollbar>
+                            </List>
                         </CardContent>
                     </Card>
                 </Stack>
             </Grid>
-            <Grid xs={12} md={6} >
-
-
+            <Grid xs={12} md={4} >
                 <Card>
                     <CardContent >
                         <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
@@ -115,12 +131,21 @@ const OneOrder = (props) => {
                             <Typography variant="h5">Order Total</Typography>
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
+                        <Box sx={{ mt: 2 }}>
+                            {!order.isPaid && (
+                                <PaypalButtons
+                                    totalPrice={order?.totalPrice}
+                                    id={order?._id}
+                                    payOrder={payOrder}
+                                />
+                            )}
+                        </Box>
                     </CardContent>
                 </Card>
             </Grid>
         </Grid >)
 }
 OneOrder.propTypes = {
-    order: PropTypes.object,
+    data: PropTypes.object,
 };
 export default OneOrder

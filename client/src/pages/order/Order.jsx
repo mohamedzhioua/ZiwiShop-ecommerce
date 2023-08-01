@@ -56,7 +56,7 @@ return (
         marginLeft: '1rem',
         marginRight: '1rem',
       }} />
-    <OneOrder  order={order}/>
+    <OneOrder  data={order}/>
   </Container >
 
 </>
