@@ -4,7 +4,7 @@ const OrderController = require("../controllers/orderController");
 const { isAuth } = require("../middlewares/checkAuth");
  
 
-// router.get("/", OrderController.GetBrands);
+router.get("/mine",isAuth, OrderController.GetMyOrders);
 
 router.post("/", isAuth, OrderController.CreateOrder);
 

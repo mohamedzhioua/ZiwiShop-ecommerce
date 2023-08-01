@@ -93,7 +93,24 @@ module.exports = {
       const updatedOrder = await order.save();
 
       return res.status(200).json(updatedOrder);
-      
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
+  //  ---------------------------------------- //GetMine//--------------------------- //
+  GetMyOrders: async (req, res) => {
+    try {
+      const orders = await Order.find({ user: req.user._id })
+        .populate({
+          path: "orderItems.images",
+          model: "image",
+        })
+        .lean();
+      if (!orders) {
+        return res.status(404).json("order not found");
+      }
+
+      return res.status(200).json(orders);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
