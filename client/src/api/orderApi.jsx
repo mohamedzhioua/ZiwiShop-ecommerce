@@ -25,7 +25,6 @@ class OrderApi {
     return this.request('get', `/${id}`);
   }
   PayOrder(id , data ) {
-    console.log("🚀 ~ file: orderApi.jsx:28 ~ OrderApi ~ PayOrder ~ id , data:", id , data)
     return this.request('patch', `/${id}/pay`, data);
   }
 }

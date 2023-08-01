@@ -22,21 +22,21 @@ import { orderApi } from '../../api/orderApi';
 const OneOrder = (props) => {
     const { data } = props
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
-  const [order , setOrder]=useState(data)
+    const [order, setOrder] = useState(data)
 
- const payOrder = async (id, details) => {
-    try {
-      const response = await orderApi.PayOrder(id, details);
-      toast.success('Order is paid');
-      setOrder(response); 
-      toast.success('Order has been updated successfully!');
-    } catch (err) {
-      toast.error(err);
-    }
-  };
-  useEffect(() => {
-    setOrder(data);
-  }, [data]);
+    const payOrder = async (id, details) => {
+        try {
+            const response = await orderApi.PayOrder(id, details);
+            toast.success('Order is paid');
+            setOrder(response);
+        } catch (err) {
+            toast.error(err);
+        }
+    };
+    useEffect(() => {
+        setOrder(data);
+    }, [data]);
+
     return (
         <Grid container spacing={3}>
             <Grid xs={12} md={8}>

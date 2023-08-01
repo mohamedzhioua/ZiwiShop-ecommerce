@@ -28,9 +28,7 @@ const PaypalButtons = (props) => {
 
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
-       console.log("🚀 ~ file: PaypalButtons.jsx:29 ~ details:", details)
-       payOrder(id, details); 
-    
+        payOrder(id, details);    
     });
   }
   const  onError = (err) => {
