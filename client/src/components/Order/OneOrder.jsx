@@ -18,6 +18,7 @@ import PaypalButtons from '../ui/PaypalButtons';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { orderApi } from '../../api/orderApi';
+import { formatDate } from '../../utils/dateFormatter';
 
 const OneOrder = (props) => {
     const { data } = props
@@ -64,7 +65,7 @@ const OneOrder = (props) => {
                                 {
                                     order.isDelivered ?
                                         (
-                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Delivered at ${order?.deliveredAt}`}
+                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Delivered at ${formatDate(order?.deliveredAt)}`}
                                             </Alert>
                                         ) : (
                                             <Alert severity="error" style={{ fontSize: "17px" }}>Still Not delivred Yet</Alert>
@@ -86,7 +87,7 @@ const OneOrder = (props) => {
                                 {
                                     order.isPaid ?
                                         (
-                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Paid at ${order?.paidAt}`}
+                                            <Alert severity="success" style={{ fontSize: "17px" }}>{`Paid at ${formatDate(order?.paidAt)}`}
                                             </Alert>
                                         ) : (
                                             <Alert severity="error" style={{ fontSize: "17px" }}>Still Not Paid Yet</Alert>

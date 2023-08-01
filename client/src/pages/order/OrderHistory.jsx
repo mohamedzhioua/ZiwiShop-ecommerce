@@ -4,6 +4,7 @@ import { Divider } from "@mui/material"
 import OrderHistoryTable from "../../components/Order/orderHistoryTable"
  
 function OrderHistory() {
+  const data = []
   return (
     <>
     <Container maxWidth='xl' >
@@ -25,7 +26,7 @@ function OrderHistory() {
         marginLeft: '1rem',
         marginRight: '1rem',
       }} />
-    <OrderHistoryTable   />
+    <OrderHistoryTable  data={data}  />
   </Container >
 
 </>
