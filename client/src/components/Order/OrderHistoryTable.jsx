@@ -5,6 +5,7 @@ import { pagination } from "../../utils/paginations";
 import { useNavigate } from "react-router-dom";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { formatDate } from '../../utils/dateFormatter';
+import PropTypes from 'prop-types';
 
 
 const OrderHistoryTable = (props) => {
@@ -98,5 +99,7 @@ const OrderHistoryTable = (props) => {
         </>
     )
 }
-
+OrderHistoryTable.propTypes = {
+    data: PropTypes.array,
+};
 export default OrderHistoryTable

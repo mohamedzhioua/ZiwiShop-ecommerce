@@ -22,12 +22,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
+       <div className='content-wrap'>
         <Navbar />
       {isInitialized ? <Router /> : ""}
         <Toaster position="top-center" />
         <CartMenu />
+        </div>
         <Footer />
-        <ScrollToTop />
+         <ScrollToTop />
         <ScrollToTopBtn />
       </BrowserRouter>
     </ThemeProvider>
