@@ -97,7 +97,7 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
-  //  ---------------------------------------- //GetMine//--------------------------- //
+  //  ---------------------------------------- //GetMyOrders//--------------------------- //
   GetMyOrders: async (req, res) => {
     try {
       const orders = await Order.find({ user: req.user._id })
