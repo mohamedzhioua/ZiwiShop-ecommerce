@@ -5,10 +5,10 @@ import { pagination } from "../../utils/paginations";
 import { useNavigate } from "react-router-dom";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { formatDate } from '../../utils/dateFormatter';
- 
+
 
 const OrderHistoryTable = (props) => {
-    const { data   } = props
+    const { data } = props
     const navigate = useNavigate();
 
     const [page, setPage] = useState(0);
@@ -32,7 +32,8 @@ const OrderHistoryTable = (props) => {
                             <TableRow>
                                 <TableCell>Order ID  </TableCell>
                                 <TableCell>Order date</TableCell>
-                                <TableCell>Paid</TableCell>
+                                <TableCell>Total Price</TableCell>
+                                 <TableCell>Paid</TableCell>
                                 <TableCell>delivered</TableCell>
                                 <TableCell align="right">Actions</TableCell>
                             </TableRow>
@@ -62,18 +63,20 @@ const OrderHistoryTable = (props) => {
                                                 </TableCell>
                                                 <TableCell>
                                                     <Typography color="text.primary">{item.isPaid
-                                                        ? item.paidAt.substring(0, 10)
+                                                        ? formatDate(item.paidAt)
                                                         : 'No'}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
                                                     <Typography color="text.primary"> {item.isDelivered
-                                                        ? item.deliveredAt.substring(0, 10)
+                                                        ? formatDate(item.deliveredAt)
                                                         : 'No'}</Typography>
                                                 </TableCell>
                                                 <TableCell align="right">
-                                                         <Button type="button">Details</Button>
-                                                 </TableCell>
+                                                    <Button type="button" onClick={() => {
+                                                        navigate(`/order/${item._id}`);
+                                                    }}>Details</Button>
+                                                </TableCell>
                                             </TableRow>
                                         </Fragment>
                                     );
@@ -84,7 +87,7 @@ const OrderHistoryTable = (props) => {
                 </Scrollbar>
                 <TablePagination
                     component="div"
-                    count={data.length}
+                    count={data?.length}
                     onPageChange={onPageChange}
                     onRowsPerPageChange={onRowsPerPageChange}
                     page={page}

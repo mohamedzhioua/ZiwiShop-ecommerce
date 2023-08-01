@@ -94,7 +94,6 @@ const AccountPopover = () => {
                             }}
                         >
                             <IconButton
-                                aria-label="Search"
                                 color="primary"
                             >
                                 <PersonOutlineOutlinedIcon />
@@ -104,6 +103,23 @@ const AccountPopover = () => {
                                 primary={(
                                     <Typography variant="h4" >
                                         Profile
+                                    </Typography>
+                                )}
+                            />
+                        </ListItemButton>
+                        <ListItemButton
+                            component={Link}
+                            to="/OrderHistory"
+                            sx={{
+                                borderRadius: 1,
+                                px: 1,
+                                py: 0.5
+                            }}
+                        >
+                            <ListItemText
+                                primary={(
+                                    <Typography variant="h4" >
+                                       Order History
                                     </Typography>
                                 )}
                             />

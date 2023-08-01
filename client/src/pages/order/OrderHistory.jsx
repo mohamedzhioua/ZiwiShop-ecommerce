@@ -2,9 +2,30 @@ import { Box, Container } from "@mui/system"
 import Heading from "../../components/ui/Heading"
 import { Divider } from "@mui/material"
 import OrderHistoryTable from "../../components/Order/orderHistoryTable"
+import { useCallback, useEffect, useState } from "react"
+import { orderApi } from "../../api/orderApi"
+import { useMounted } from "../../hooks/use-mounted"
  
 function OrderHistory() {
-  const data = []
+  const [orders, setOrders] = useState([])
+  const isMounted = useMounted()
+
+  const GetMyOrders = useCallback(async () => {
+    try {
+      const response = await orderApi.GetMyOrders();
+      if (isMounted()) {
+        setOrders(response);
+       }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    GetMyOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
     <Container maxWidth='xl' >
@@ -26,7 +47,7 @@ function OrderHistory() {
         marginLeft: '1rem',
         marginRight: '1rem',
       }} />
-    <OrderHistoryTable  data={data}  />
+    <OrderHistoryTable  data={orders}  />
   </Container >
 
 </>
