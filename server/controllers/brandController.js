@@ -70,7 +70,7 @@ module.exports = {
       const brand = await Brand.findById(id);
 
       if (!brand) {
-        return res.status(400).json("Brand not found");
+        return res.status(404).json("Brand not found");
       }
 
       brand.name = name || brand.name;
@@ -94,7 +94,7 @@ module.exports = {
       const brand = await Brand.findById(id).lean();
 
       if (!brand) {
-        return res.status(400).json("Brand not found");
+        return res.status(404).json("Brand not found");
       }
 
       return res.status(200).json(brand);
@@ -116,7 +116,7 @@ module.exports = {
       const brand = await Brand.findById(id);
 
       if (!brand) {
-        return res.status(400).json("Brand not found");
+        return res.status(404).json("Brand not found");
       }
 
       await brand.remove();

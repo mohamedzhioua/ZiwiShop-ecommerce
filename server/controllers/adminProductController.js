@@ -192,7 +192,7 @@ module.exports = {
       const product = await Product.findById(id);
 
       if (!image) {
-        return res.status(400).json("image not found");
+        return res.status(404).json("image not found");
       }
       await removeFromCloudinary(cloudinary_id);
       await image.remove();
@@ -224,7 +224,7 @@ module.exports = {
       }
       const product = await Product.findById(id);
       if (!product) {
-        return res.status(400).json("product not found");
+        return res.status(404).json("product not found");
       }
       const createdImages = await handleImages(req.body.images);
 

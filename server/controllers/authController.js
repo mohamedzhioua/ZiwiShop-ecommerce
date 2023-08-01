@@ -54,7 +54,7 @@ module.exports = {
           if (!user) {
             errors.email =
               "Email does not exist ! please Enter the right Email or You can make account";
-            return res.status(400).json(errors);
+            return res.status(404).json(errors);
           }
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
