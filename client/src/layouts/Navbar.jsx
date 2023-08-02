@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import useAuth from '../hooks/useAuth';
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AccountPopover from './AccountPopover ';
 import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
 import DarkButton from '../components/ui/DarkButton';
@@ -27,6 +27,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const location = useLocation();
 
   const handleOpenNavMenu = () => {
     setIsSideNavOpen(true);
@@ -78,7 +79,7 @@ function Navbar() {
         top: 0,
         left: 0,
         width: '100%',
-        height: '60px',
+        height: '80px',
         zIndex: 1,
       }}
     >
@@ -114,7 +115,15 @@ function Navbar() {
                     key={item.name}
                     to={item.href}
                     component={Link}
-                    sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: 'bold' }}
+                    sx={{
+                       my: 2,
+                        color: theme.palette.primary.main,
+                         display: 'block',
+                          fontWeight: 'bold',
+                          fontSize:'14px' ,
+                          borderBottom: `${location.pathname === item.href ? '2px solid #998e76' : 'none'}`,
+                          transition: 'all .15s linear'
+                        }}
                   >
                     {item.name}
                   </Button>
@@ -127,7 +136,14 @@ function Navbar() {
               variant='h4'
               to={"/"}
               component={Link}
-              sx={{ my: 2, color: theme.palette.primary.main, display: 'block', fontWeight: "bold" }}
+              sx={{ my: 2, 
+                color: theme.palette.primary.main, 
+                display: 'block', 
+                fontWeight: 'bold',
+                fontSize:'14px',
+                borderBottom: `${location.pathname === "/" ? '2px solid #998e76' : 'none'}`,
+                transition: 'all .15s linear'
+               }}
             >Home
             </Button>
             {!isMobileScreen && (<CategoriesPopover categories={categories}

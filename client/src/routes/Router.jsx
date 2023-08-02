@@ -5,7 +5,7 @@ import NotFound from "../pages/NotFound";
 import NoAccess from "../pages/NoAccess";
 import ProtectedRoute from "./PrivateRoute";
 import { CategoryProvider } from "../contexts/CategoryContext"
-import LoadingSpinner from "../components/ui/LoadingSpinner/LoadingSpinner";
+import Splash from "../components/ui/Splash";
 
 
 
@@ -44,9 +44,9 @@ const Router = () => {
   return (
 
     <Routes>
-      <Route path="/" element={<Suspense fallback={<LoadingSpinner/>}><Home /></Suspense>} />
-        <Route path="/ZiwiShop/search" element={<Suspense fallback={<LoadingSpinner/>}><Search /></Suspense>} />
-        <Route path="/productDetails/:id" element={<Suspense fallback={<LoadingSpinner/>}><ProductDetails/></Suspense>}/>
+      <Route path="/" element={<Suspense fallback={<Splash/>}><Home /></Suspense>} />
+        <Route path="/ZiwiShop/search" element={<Suspense fallback={<Splash/>}><Search /></Suspense>} />
+        <Route path="/productDetails/:id" element={<Suspense fallback={<Splash/>}><ProductDetails/></Suspense>}/>
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />

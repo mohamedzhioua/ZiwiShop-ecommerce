@@ -11,6 +11,7 @@ import useAuth from "./hooks/useAuth";
 import CartMenu from './components/Cart/index';
 import { ScrollToTop } from './utils/scrollToTop';
 import ScrollToTopBtn from './components/ui/ScrollToTopBtn';
+import Splash from './components/ui/Splash';
 
 
 
@@ -24,7 +25,7 @@ function App() {
       <BrowserRouter>
        <div className='content-wrap'>
         <Navbar />
-      {isInitialized ? <Router /> : ""}
+      {isInitialized ? <Router /> : <Splash/>}
         <Toaster position="top-center" />
         <CartMenu />
         </div>

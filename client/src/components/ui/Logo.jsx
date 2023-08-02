@@ -14,7 +14,7 @@ function Logo() {
             sx={{
                 cursor: "pointer",
                   textDecoration: 'none',
-             }}
+              }}
         >
             ZiwiShop
         </Typography>

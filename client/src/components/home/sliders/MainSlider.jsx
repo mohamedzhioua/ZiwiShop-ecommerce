@@ -1,6 +1,5 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import useTheme from "../../../hooks/useTheme";
-import 'swiper/css';
+ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -10,8 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const gallery = Object.values(import.meta.glob('../../../assets/slider-images/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }))
 
 const MainSlider = () => {
-  const { theme } = useTheme();
-  const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+   const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
   return (
     <Box>
@@ -55,7 +53,7 @@ const MainSlider = () => {
                 margin={isMobileScreen ? "0 auto" :undefined }
                 maxWidth={isMobileScreen ?  "200px" : "100%"}
                 >
-                <Typography variant={isMobileScreen ? 'h5' : 'h2'} sx={{ color: theme.palette.primary.main }}>
+                <Typography variant={isMobileScreen ? 'h5' : 'h2'} fontWeight="bold" sx={{ color: "#ffffff" }}>
                   Level up your style with our collections
                 </Typography>
                 <Typography
@@ -63,7 +61,7 @@ const MainSlider = () => {
                   fontWeight="bold"
                   sx={{
                     textDecoration: "underline",
-                    color: theme.palette.primary.main,
+                    color:  "#ffffff",
                   }}
                 >
                   Discover More

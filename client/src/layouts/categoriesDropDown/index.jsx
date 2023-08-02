@@ -34,13 +34,12 @@ const CategoriesPopover = (props) => {
 
         }}
       >
-        <Button  sx={{ my: 2, color: theme.palette.primary.main, display: 'inline-flex', fontWeight: "bold" }}>
+        <Button  sx={{ my: 2, color: theme.palette.primary.main, display: 'inline-flex',  fontWeight: 'bold',fontSize:'14px' }}>
           categories
           <SvgIcon
                     sx={{
                         fontSize: 16,
                         ml: 2,
-                        
                     }}
                 >
           {!anchorEl ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon />}
