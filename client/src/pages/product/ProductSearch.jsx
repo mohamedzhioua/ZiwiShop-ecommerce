@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { useMounted } from '../../hooks/use-mounted';
 import { productApi } from '../../api/productApi';
 import PaginationButton from '../../components/ui/PaginationButton';
+import Splash from '../../components/ui/Splash';
  
 
 function ProductSearch() {
@@ -35,15 +36,14 @@ function ProductSearch() {
   const page = searchParams?.get('page') ?? 1;
   const per_page = searchParams?.get("per_page") ?? 9
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [data, setData] = useState()
   const isMounted = useMounted()
 
 
   useEffect(() => {
     const GetSearchProducts = async () => {
-      setLoading(true)
-      const obj = {
+       const obj = {
         category: category,
         brand: brand,
         size: size,
@@ -59,8 +59,8 @@ function ProductSearch() {
           setLoading(false)
         }
       } catch (error) {
-        setLoading(false)
         console.error(error);
+        setLoading(false)
       }
     }
 
@@ -102,41 +102,25 @@ function ProductSearch() {
             </Grid>
           </Grid>
           <Grid item marginTop='1rem'>
-            {
-              loading && data === null ?
-                <Grid item>
-                  <Typography variant='h3' sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontWeight: 'bold'
-                  }}> Loading.......</Typography>
-                </Grid>
-                : data?.products?.length === 0 ?
-
-                  (
-                    <Grid item>
-                      <Typography>Sorry, No results</Typography>
-                    </Grid>
-                  )
-
-                  : (
-                    <Box
-                      margin="0 auto"
-                      display="grid"
-                      gridTemplateColumns="repeat(auto-fill, 300px)"
-                      justifyContent="space-around"
-                      rowGap="20px"
-                      columnGap="1.33%"
-                    >
-                      {data?.products?.map((item) => (
-
-                        <ProductCard product={item} key={`${item.name}-${item._id}`} />
-
-                      ))}
-                    </Box>
-                  )}
-          </Grid>
+      {loading && !data   ? (
+        <Splash /> 
+      ) : data?.products?.length === 0 ? (
+        <Typography>Sorry, No results</Typography>
+      ) : (
+        <Box
+          margin="0 auto"
+          display="grid"
+          gridTemplateColumns="repeat(auto-fill, 300px)"
+          justifyContent="space-around"
+          rowGap="20px"
+          columnGap="1.33%"
+        >
+          {data?.products?.map((item) => (
+            <ProductCard product={item} key={`${item.name}-${item._id}`} />
+          ))}
+        </Box>
+      )}
+    </Grid>
           {data?.products?.length ?
             <PaginationButton
               pageCount={data?.pages}

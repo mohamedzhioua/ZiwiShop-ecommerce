@@ -10,6 +10,7 @@ import ProductCard from "../Product/ProductCard";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CustomButton from "../ui/CustomButton";
 import { useNavigate } from "react-router-dom";
+import Splash from "../ui/Splash";
 
 
 const ShoppingList = () => {
@@ -26,15 +27,19 @@ const ShoppingList = () => {
 
   const [data, setData] = useState()
   const isMounted = useMounted()
+  const [loading, setLoading] = useState(true);
 
   const GetClientProducts = useCallback(async () => {
     try {
+
       const response = await productApi.GetClientProducts();
       if (isMounted()) {
         setData(response);
+        setLoading(false)
       }
     } catch (error) {
       console.error(error);
+      setLoading(false)
     }
   }, []);
 
@@ -86,15 +91,17 @@ const ShoppingList = () => {
         rowGap="20px"
         columnGap="1.33%"
       >
-        {value === "all" && data?.products?.length > 0 ? (
+           {loading && !data  ? (
+        <Splash/>
+      ) : (
+        value === "all" && data?.products?.length > 0 ? (
           data?.products.map((product) => (
             <ProductCard product={product} key={`${product.name}-${product._id}`} />
           ))
         ) : (
           <Typography textAlign="center">Sorry, No results</Typography>
-        )}
-
-
+        )
+      )}
         {/* {value === "newArrivals" &&
           newArrivalsItems.map((item) => (
             <ProductCard item={item} key={`${item.name}-${item.id}`} />

@@ -5,9 +5,9 @@ import { useProduct } from "../../hooks/useProduct"
 import ImageSection from "../../components/Product/ProductDetails/ImageSection";
 import ActionSection from "../../components/Product/ProductDetails/ActionSection";
 import InformationSection from "../../components/Product/ProductDetails/InformationSection";
-import LoadingSpinner from "../../components/ui/LoadingSpinner/LoadingSpinner";
-import { Link as RouterLink } from 'react-router-dom';
+ import { Link as RouterLink } from 'react-router-dom';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import Splash from "../../components/ui/Splash";
 
 const ProductDetails = () => {
 
@@ -21,7 +21,7 @@ const ProductDetails = () => {
     }, [product]);
 
     if (!product) {
-        return <LoadingSpinner />;
+        return <Splash />;
     }
 
 
