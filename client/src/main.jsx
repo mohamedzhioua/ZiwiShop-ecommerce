@@ -14,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Provider store={store}>
         <AuthProvider>
           <PayPalScriptProvider deferLoading={true}>
-
             <App />
           </PayPalScriptProvider>
         </AuthProvider>
