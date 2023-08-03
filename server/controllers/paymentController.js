@@ -5,7 +5,7 @@ module.exports = {
 
   getstripeapikey: async (req, res) => {
     try {
-      res.status(200).json({ stripeApikey: process.env.STRIPE_API_KEY });
+      res.status(200).json(process.env.STRIPE_API_KEY);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
