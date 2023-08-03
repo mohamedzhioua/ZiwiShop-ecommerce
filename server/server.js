@@ -21,15 +21,18 @@ app.use(
     credentials: true
   })
 );
+
 app.get("/api/keys/paypal", (req, res) => {
-  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
+  res.send(process.env.PAYPAL_CLIENT_ID || "sandbox");
 });
+
 const userRoutes = require("./routes/userRoutes");
 const sizeRoutes = require("./routes/sizeRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const brandRoutes = require("./routes/brandRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/size", sizeRoutes);
@@ -37,6 +40,7 @@ app.use("/api/v1/category",categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/brand", brandRoutes);
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
 app.listen(PORT, function () {
   console.log(`Server Runs Perfectly at http://localhost:${PORT}`);
