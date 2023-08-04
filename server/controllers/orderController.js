@@ -69,7 +69,7 @@ module.exports = {
   //  ---------------------------------------- //PayOrder//--------------------------- //
 
   PayOrder: async (req, res) => {
-    try {
+     try {
       const { id } = req.params;
       const { errors, isValid } = IdParamsValidation(req.params);
       if (!isValid) {
