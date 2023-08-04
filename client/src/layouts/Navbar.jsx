@@ -44,7 +44,7 @@ function Navbar() {
     { name: "Categories", href: "/dashboard/categories" },
     { name: "Brands", href: "/dashboard/brands" },
     { name: "Products", href: "/dashboard/products" },
-
+    { name: "Orders", href: "/dashboard/orders" },
   ];
 
   const [categories, setCategories] = useState([])

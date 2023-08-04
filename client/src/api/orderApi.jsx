@@ -30,6 +30,9 @@ class OrderApi {
   GetMyOrders() {
     return this.request('get', `/mine`);
   }
+  GetAllOrders(){
+    return this.request('get', `/all`);
+  }
 }
 
 export const orderApi = new OrderApi();

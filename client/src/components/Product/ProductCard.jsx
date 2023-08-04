@@ -12,7 +12,6 @@ import useTheme from '../../hooks/useTheme';
 
 const ProductCard = (props) => {
   const { product, width } = props
-  console.log("🚀 ~ file: ProductCard.jsx:15 ~ ProductCard ~ product:", product)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { mode, theme } = useTheme();

@@ -23,11 +23,15 @@ import StripePayment from '../payment/StripePayment';
 import { paymentApi } from '../../api/PaymentApi';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import useAuth from '../../hooks/useAuth';
 
 const OneOrder = (props) => {
     const { data } = props
+    const { user } = useAuth();
+    console.log("🚀 ~ file: OneOrder.jsx:31 ~ OneOrder ~ user:", user)
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [order, setOrder] = useState(data)
+    console.log("🚀 ~ file: OneOrder.jsx:33 ~ OneOrder ~ order:", order)
     const [clientSecret, setClientSecret] = useState("");
     const [stripePromise, setStripePromise] = useState(null);
 
@@ -43,13 +47,13 @@ const OneOrder = (props) => {
         if (order) {
             const fetchClientSecret = async () => {
                 const totalPriceCents = Math.round(order.totalPrice * 100);
-                 const clientSecret = await paymentApi.paymentProcess(totalPriceCents);
+                const clientSecret = await paymentApi.paymentProcess(totalPriceCents);
                 setClientSecret(clientSecret);
             };
             fetchClientSecret();
         }
     }, [order]);
-    
+
 
     const payOrder = async (id, details) => {
         try {
@@ -158,24 +162,26 @@ const OneOrder = (props) => {
                             <Typography variant="h5">Order Total</Typography>
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
-                        <Box sx={{ mt: 2 }}>
-                            {!order.isPaid && order.paymentMethod === "paypal" && (
-                                <PaypalPayment
-                                    totalPrice={order?.totalPrice}
-                                    id={order?._id}
-                                    payOrder={payOrder}
-                                />
-                            )}
-                            {!order.isPaid && order.paymentMethod === 'stripe' && clientSecret && stripePromise && (
-                                <Elements stripe={stripePromise} options={{ clientSecret }}>
-                                    <StripePayment
+                        {user?.role === "ADMIN" && order.userEmail === user.email && (
+                            <Box sx={{ mt: 2 }}>
+                                {!order.isPaid && order.paymentMethod === "paypal" && (
+                                    <PaypalPayment
+                                        totalPrice={order?.totalPrice}
                                         id={order?._id}
                                         payOrder={payOrder}
                                     />
-                                </Elements>
+                                )}
+                                {!order.isPaid && order.paymentMethod === 'stripe' && clientSecret && stripePromise && (
+                                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                        <StripePayment
+                                            id={order?._id}
+                                            payOrder={payOrder}
+                                        />
+                                    </Elements>
 
-                            )}
-                        </Box>
+                                )}
+                            </Box>
+                        )}
                     </CardContent>
                 </Card>
             </Grid>

@@ -5,35 +5,33 @@ import { useProduct } from "../../hooks/useProduct"
 import ImageSection from "../../components/Product/ProductDetails/ImageSection";
 import ActionSection from "../../components/Product/ProductDetails/ActionSection";
 import InformationSection from "../../components/Product/ProductDetails/InformationSection";
- import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import Splash from "../../components/ui/Splash";
 import { productApi } from "../../api/productApi";
-import CartItem from "../../components/Cart/CartItem";
 import ProductCard from "../../components/Product/ProductCard";
- const ProductDetails = () => {
+const ProductDetails = () => {
 
     const { id } = useParams();
     const product = useProduct(id);
     const [selectedImage, setSelectedImage] = useState('');
-    const [relatedProducts, setRelatedProducts] = useState( );
-    console.log("🚀 ~ file: ProductDetails.jsx:18 ~ ProductDetails ~ relatedProducts:", relatedProducts)
+    const [relatedProducts, setRelatedProducts] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
         const getRelatedProducts = async () => {
-          if (product?.category?._id) {
-            try {
-              const response = await productApi.getRelatedProducts(product.category._id);
-              setRelatedProducts(response);
-            } catch (error) {
-              console.error(error);
+            if (product?.category?._id) {
+                try {
+                    const response = await productApi.getRelatedProducts(product.category._id);
+                    setRelatedProducts(response);
+                } catch (error) {
+                    console.error(error);
+                }
             }
-          }
         }
-      
+
         getRelatedProducts();
-      }, [product]);
-      
+    }, [product]);
+
     useEffect(() => {
         setSelectedImage(product?.images[0])
     }, [product]);
@@ -44,7 +42,7 @@ import ProductCard from "../../components/Product/ProductCard";
 
 
     return (
-        <Box width="80%" m="80px auto" >
+        <Box width="80%" m="30px auto" >
             <Grid container spacing={3} marginBottom={3}>
                 <Grid item>
                     <Breadcrumbs
@@ -99,8 +97,8 @@ import ProductCard from "../../components/Product/ProductCard";
                     justifyContent="space-between"
                 >
                     {relatedProducts?.slice(0, 3).map((item, i) => (
-            <ProductCard key={`${item.name}-${i}`} product={item} />
-          ))}
+                        <ProductCard key={`${item.name}-${i}`} product={item} />
+                    ))}
                 </Box>
             </Box>
         </Box >

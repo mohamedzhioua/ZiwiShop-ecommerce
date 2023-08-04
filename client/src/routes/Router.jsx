@@ -38,6 +38,7 @@ const Checkout = lazy(() => import("../pages/checkout/Checkout"));
 //order
 const Order = lazy(() => import("../pages/order/Order"));
 const OrderHistory = lazy(() => import("../pages/order/OrderHistory"));
+const AllOrders = lazy(() => import("../pages/dashboard/Orders"));
 
 
 const Router = () => {
@@ -89,6 +90,8 @@ const Router = () => {
         <Route path="/dashboard/brands" element={<BrandList />} />
         <Route path="/dashboard/brands/add" element={<BrandAdd />} />
         <Route path="/dashboard/brands/edit/:id" element={<BrandEdit />} />
+                {/* orders  */}
+        <Route path="/dashboard/orders" element={<AllOrders />} />
 
         <Route path="/dashboard/overview" element={<Overview />} />
       </Route>

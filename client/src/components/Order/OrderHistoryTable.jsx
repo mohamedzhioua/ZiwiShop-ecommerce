@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { formatDate } from '../../utils/dateFormatter';
 import PropTypes from 'prop-types';
-
+ 
 
 const OrderHistoryTable = (props) => {
     const { data } = props
