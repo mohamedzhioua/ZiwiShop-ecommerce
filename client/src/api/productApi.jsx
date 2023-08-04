@@ -58,6 +58,9 @@ class ProductApi {
   GetSearchProducts(data) {
      return this.request('get', `/ZiwiShop/search?page=${data.page}&query=${data.query}&category=${data.category}&price=${data.price}&sort=${data.sort}&brand=${data.brand}&size=${data.size}`);
   }
+  getRelatedProducts(id) {
+     return this.request('get', `/relatedProducts/${id}`);
+  }
 }
 
 export const productApi = new ProductApi();

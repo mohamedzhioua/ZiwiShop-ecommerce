@@ -5,7 +5,7 @@ import {
 import { PaymentElement } from "@stripe/react-stripe-js";
 import PropTypes from 'prop-types';
 import { useState } from "react";
-import CustomButton from "./CustomButton"
+import CustomButton from "../ui/CustomButton"
 import { toast } from "react-hot-toast";
 
 const StripePayment = (props) => {

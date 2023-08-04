@@ -12,6 +12,7 @@ import useTheme from '../../hooks/useTheme';
 
 const ProductCard = (props) => {
   const { product, width } = props
+  console.log("🚀 ~ file: ProductCard.jsx:15 ~ ProductCard ~ product:", product)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { mode, theme } = useTheme();
@@ -25,10 +26,10 @@ const ProductCard = (props) => {
         ref={hoverRef}
       >
         <img
-          alt={product.name}
+          alt={product?.name}
           width="300px"
           height="400px"
-          src={product.images[0].url}
+          src={product?.images[0]?.url}
         />
         <Box
           display={isHovered ? "block" : "none"}
@@ -45,7 +46,7 @@ const ProductCard = (props) => {
               borderRadius="3px"
             >
               <CustomButton
-                onClick={() => navigate(`/productDetails/${product._id}`)}
+                onClick={() => navigate(`/productDetails/${product?._id}`)}
                 variant="outlined"
                 sx={{
                   color: mode === "dark" ? "black" : "",
@@ -66,10 +67,10 @@ const ProductCard = (props) => {
 
       <Box mt="3px">
         <Typography color={theme.palette.neutral.light}>
-          {product.category[0].name}
+          {product?.category[0]?.name}
         </Typography>
-        <Typography>{toTitleCase(product.name)}</Typography>
-        <Typography fontWeight="bold">{currencyFormatter.format(product.price)}</Typography>
+        <Typography>{toTitleCase(product?.name)}</Typography>
+        <Typography fontWeight="bold">{currencyFormatter.format(product?.price)}</Typography>
       </Box>
     </Box>
   );

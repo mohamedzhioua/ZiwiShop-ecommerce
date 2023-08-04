@@ -14,12 +14,12 @@ import PropTypes from 'prop-types';
 import { Stack } from '@mui/system';
 import OrderItems from './OrderItem';
 import { currencyFormatter } from "../../utils/currencyFormatter";
-import PaypalButtons from '../ui/PaypalButtons';
+import PaypalPayment from '../payment/PaypalPayment.jsx';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { orderApi } from '../../api/orderApi';
 import { formatDate } from '../../utils/dateFormatter';
-import StripePayment from '../ui/StripePayment';
+import StripePayment from '../payment/StripePayment';
 import { paymentApi } from '../../api/PaymentApi';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -43,8 +43,7 @@ const OneOrder = (props) => {
         if (order) {
             const fetchClientSecret = async () => {
                 const totalPriceCents = Math.round(order.totalPrice * 100);
-                console.log("🚀 ~ file: OneOrder.jsx:46 ~ fetchClientSecret ~ totalPriceCents:", totalPriceCents)
-                const clientSecret = await paymentApi.paymentProcess(totalPriceCents);
+                 const clientSecret = await paymentApi.paymentProcess(totalPriceCents);
                 setClientSecret(clientSecret);
             };
             fetchClientSecret();
@@ -161,7 +160,7 @@ const OneOrder = (props) => {
                         </Box>
                         <Box sx={{ mt: 2 }}>
                             {!order.isPaid && order.paymentMethod === "paypal" && (
-                                <PaypalButtons
+                                <PaypalPayment
                                     totalPrice={order?.totalPrice}
                                     id={order?._id}
                                     payOrder={payOrder}

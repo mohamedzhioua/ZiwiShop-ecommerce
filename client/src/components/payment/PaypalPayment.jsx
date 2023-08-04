@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import { toast } from "react-hot-toast";
  
-const PaypalButtons = (props) => {
+const PaypalPayment = (props) => {
   const { totalPrice , id ,payOrder} = props
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -68,9 +68,9 @@ const PaypalButtons = (props) => {
     </>
   )
 }
-PaypalButtons.propTypes = {
+PaypalPayment.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   id:PropTypes.string.isRequired,
   payOrder:PropTypes.func.isRequired
 }
-export default PaypalButtons
+export default PaypalPayment
