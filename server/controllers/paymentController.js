@@ -12,18 +12,16 @@ module.exports = {
   },
   //  ---------------------------------------- //paymentProcess//--------------------------- //
   paymentProcess: async (req, res) => {
-    try {
-      const myPayment = await stripe.paymentIntents.create({
-        amount: req.body.amount,
+     try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: req.body.totalPrice,
         currency: "USD",
         metadata: {
           company: "ZiwiShop",
         },
+        automatic_payment_methods: { enabled: true },
       });
-      res.status(200).json({
-        success: true,
-        client_secret: myPayment.client_secret,
-      });
+      res.status(200).json(paymentIntent.client_secret);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }

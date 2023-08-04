@@ -4,7 +4,7 @@ const PaymentController = require("../controllers/paymentController");
 const { isAuth } = require("../middlewares/checkAuth");
 
 
-router.post("/process", isAuth,PaymentController.paymentProcess );
+router.post("/create-payment-intent", isAuth,PaymentController.paymentProcess );
 
 router.get("/stripeapikey", isAuth, PaymentController.getstripeapikey);
 
