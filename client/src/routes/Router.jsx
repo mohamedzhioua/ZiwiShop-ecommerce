@@ -6,7 +6,10 @@ import NoAccess from "../pages/NoAccess";
 import ProtectedRoute from "./PrivateRoute";
 import { CategoryProvider } from "../contexts/CategoryContext"
 import Splash from "../components/ui/Splash";
-
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { useEffect, useState } from 'react';
+import { paymentApi } from "../api/PaymentApi";
 
 
 const Home = lazy(() => import("../pages/Home"));
@@ -20,7 +23,7 @@ const ProductAdd = lazy(() => import("../pages/dashboard/Product/ProductAdd"));
 const ProductList = lazy(() => import("../pages/dashboard/Product/ProductList"));
 const ProductEdit = lazy(() => import("../pages/dashboard/Product/ProductEdit"));
 const ProductDetails = lazy(() => import("../pages/product/ProductDetails"));
-const Search  = lazy(() => import("../pages/product/ProductSearch"));
+const Search = lazy(() => import("../pages/product/ProductSearch"));
 //size
 const SizeList = lazy(() => import("../pages/dashboard/Size/SizeList"));
 const SizeAdd = lazy(() => import("../pages/dashboard/Size/SizeAdd"));
@@ -41,12 +44,21 @@ const OrderHistory = lazy(() => import("../pages/order/OrderHistory"));
 
 
 const Router = () => {
+  const [stripePromise, setStripePromise] = useState(null);
+   useEffect(() => {
+  const fetchStripeApiKey = async () =>{
+      const publishableKey = await paymentApi.getstripeapikey();
+      setStripePromise(loadStripe(publishableKey));
+    }
+    fetchStripeApiKey();
+  }, []);
+ 
   return (
 
     <Routes>
-      <Route path="/" element={<Suspense fallback={<Splash/>}><Home /></Suspense>} />
-        <Route path="/ZiwiShop/search" element={<Suspense fallback={<Splash/>}><Search /></Suspense>} />
-        <Route path="/productDetails/:id" element={<Suspense fallback={<Splash/>}><ProductDetails/></Suspense>}/>
+      <Route path="/" element={<Suspense fallback={<Splash />}><Home /></Suspense>} />
+      <Route path="/ZiwiShop/search" element={<Suspense fallback={<Splash />}><Search /></Suspense>} />
+      <Route path="/productDetails/:id" element={<Suspense fallback={<Splash />}><ProductDetails /></Suspense>} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />
@@ -55,16 +67,20 @@ const Router = () => {
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN", "USER"]} />}>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/checkout" element={<Checkout/>}/> 
-        <Route path="/order/:id" element={<Order/>}/>
-        <Route path="/OrderHistory" element={<OrderHistory/>}/>
+
+        <Route path="/checkout" element={<Checkout />} />
+        {stripePromise && (
+          <Route path="/order/:id" element={<Elements stripe={stripePromise}><Order /></Elements>} />
+        )}
+
+        <Route path="/OrderHistory" element={<OrderHistory />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
         {/* products  */}
         <Route path="/dashboard/products" element={<ProductList />} />
         <Route path="/dashboard/products/add" element={<ProductAdd />} />
-        <Route path="/dashboard/products/edit/:id"  element={<ProductEdit />} />
+        <Route path="/dashboard/products/edit/:id" element={<ProductEdit />} />
         {/* size  */}
         <Route path="/dashboard/sizes" element={<SizeList />} />
         <Route path="/dashboard/sizes/add" element={<SizeAdd />} />

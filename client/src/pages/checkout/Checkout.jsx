@@ -15,11 +15,7 @@ import { useMounted } from "../../hooks/use-mounted";
 import { orderApi } from "../../api/orderApi";
 import { useNavigate } from "react-router-dom";
 
-// import { loadStripe } from "@stripe/stripe-js";
-
-// const stripePromise = loadStripe(
-//   "pk_test_51LgU7yConHioZHhlAcZdfDAnV9643a7N1CMpxlKtzI1AUWLsRyrord79GYzZQ6m8RzVnVQaHsgbvN1qSpiDegoPi006QkO0Mlc"
-// );
+ 
 
 const Checkout = () => {
     const isMounted = useMounted()

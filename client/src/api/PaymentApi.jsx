@@ -20,7 +20,9 @@ class PaymentApi {
   getstripeapikey() {
     return this.request('get', '/stripeapikey');
   }
- 
+  paymentProcess(totalPrice) {
+    return this.request('post', '/create-payment-intent',{totalPrice});
+  }
 }
 
 export const paymentApi = new PaymentApi();

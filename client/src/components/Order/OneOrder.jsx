@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { orderApi } from '../../api/orderApi';
 import { formatDate } from '../../utils/dateFormatter';
+import StripePayment from '../ui/StripePayment';
 
 const OneOrder = (props) => {
     const { data } = props
@@ -133,8 +134,15 @@ const OneOrder = (props) => {
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
                         <Box sx={{ mt: 2 }}>
-                            {!order.isPaid && (
+                            {!order.isPaid && order.paymentMethod === "paypal" && (
                                 <PaypalButtons
+                                    totalPrice={order?.totalPrice}
+                                    id={order?._id}
+                                    payOrder={payOrder}
+                                />
+                            )}
+                            {!order.isPaid && order.paymentMethod === 'stripe' && (
+                                <StripePayment
                                     totalPrice={order?.totalPrice}
                                     id={order?._id}
                                     payOrder={payOrder}
