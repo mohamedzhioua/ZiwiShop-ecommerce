@@ -20,11 +20,37 @@ import { toast } from 'react-hot-toast';
 import { orderApi } from '../../api/orderApi';
 import { formatDate } from '../../utils/dateFormatter';
 import StripePayment from '../ui/StripePayment';
+import { paymentApi } from '../../api/PaymentApi';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 const OneOrder = (props) => {
     const { data } = props
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [order, setOrder] = useState(data)
+    const [clientSecret, setClientSecret] = useState("");
+    const [stripePromise, setStripePromise] = useState(null);
+
+    useEffect(() => {
+        const fetchStripeApiKey = async () => {
+            const publishableKey = await paymentApi.getstripeapikey();
+            setStripePromise(loadStripe(publishableKey));
+        }
+        fetchStripeApiKey();
+    }, []);
+
+    useEffect(() => {
+        if (order) {
+            const fetchClientSecret = async () => {
+                const totalPriceCents = Math.round(order.totalPrice * 100);
+                console.log("🚀 ~ file: OneOrder.jsx:46 ~ fetchClientSecret ~ totalPriceCents:", totalPriceCents)
+                const clientSecret = await paymentApi.paymentProcess(totalPriceCents);
+                setClientSecret(clientSecret);
+            };
+            fetchClientSecret();
+        }
+    }, [order]);
+    
 
     const payOrder = async (id, details) => {
         try {
@@ -141,12 +167,14 @@ const OneOrder = (props) => {
                                     payOrder={payOrder}
                                 />
                             )}
-                            {!order.isPaid && order.paymentMethod === 'stripe' && (
-                                <StripePayment
-                                    totalPrice={order?.totalPrice}
-                                    id={order?._id}
-                                    payOrder={payOrder}
-                                />
+                            {!order.isPaid && order.paymentMethod === 'stripe' && clientSecret && stripePromise && (
+                                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                    <StripePayment
+                                        id={order?._id}
+                                        payOrder={payOrder}
+                                    />
+                                </Elements>
+
                             )}
                         </Box>
                     </CardContent>

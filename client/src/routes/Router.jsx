@@ -6,10 +6,7 @@ import NoAccess from "../pages/NoAccess";
 import ProtectedRoute from "./PrivateRoute";
 import { CategoryProvider } from "../contexts/CategoryContext"
 import Splash from "../components/ui/Splash";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import { useEffect, useState } from 'react';
-import { paymentApi } from "../api/PaymentApi";
+
 
 
 const Home = lazy(() => import("../pages/Home"));
@@ -44,16 +41,9 @@ const OrderHistory = lazy(() => import("../pages/order/OrderHistory"));
 
 
 const Router = () => {
-  const [stripePromise, setStripePromise] = useState(null);
-   useEffect(() => {
-  const fetchStripeApiKey = async () =>{
-      const publishableKey = await paymentApi.getstripeapikey();
-      setStripePromise(loadStripe(publishableKey));
-    }
-    fetchStripeApiKey();
-  }, []);
  
-  return (
+
+   return (
 
     <Routes>
       <Route path="/" element={<Suspense fallback={<Splash />}><Home /></Suspense>} />
@@ -69,9 +59,8 @@ const Router = () => {
         <Route path="/profile" element={<Profile />} />
 
         <Route path="/checkout" element={<Checkout />} />
-        {stripePromise && (
-          <Route path="/order/:id" element={<Elements stripe={stripePromise}><Order /></Elements>} />
-        )}
+        
+          <Route path="/order/:id" element={<Order /> } />
 
         <Route path="/OrderHistory" element={<OrderHistory />} />
       </Route>
