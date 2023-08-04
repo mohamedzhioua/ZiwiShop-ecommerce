@@ -123,33 +123,6 @@ module.exports = {
           category.parentCategory = parentCategory.name;
         }
       }
-      // try {
-      //   const { id } = req.params;
-      //   const { errors, isValid } = IdParamsValidation(req.params);
-      //   if (!isValid) {
-      //     return res.status(400).json(errors);
-      //   }
-
-      //   const category = await Category.findById(id)
-      //     .populate("parentCategory", "name isLeaf") // Include the 'isLeaf' field in the population
-      //     .lean();
-
-      //   if (!category) {
-      //     return res.status(400).json("Category not found");
-      //   }
-
-      //   if (category.parentCategory) {
-      //     if (category.parentCategory.isLeaf) {
-      //       const parentCategory = await Category.findById(
-      //         category.parentCategory._id // Use the '_id' field to query the parent category
-      //       ).lean();
-      //       if (parentCategory) {
-      //         category.parentCategory = parentCategory.name;
-      //       }
-      //     } else {
-      //       category.parentCategory = category.parentCategory.name;
-      //     }
-      //   }
 
       return res.status(200).json(category);
     } catch (error) {

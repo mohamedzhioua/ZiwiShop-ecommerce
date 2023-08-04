@@ -114,7 +114,7 @@ module.exports = {
         );
 
       if (!product) {
-        return res.status(404).json({ message: "Product not found" });
+        return res.status(404).json("Product not found");
       }
 
       return res.status(200).json(product);
@@ -291,4 +291,37 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
+  //  ---------------------------------------- //getRelatedProducts//--------------------------- //
+
+  getRelatedProducts: async (req, res) => {
+  try {
+    const { id } = req.params;
+     const { errors, isValid } = IdParamsValidation(req.params);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+   const  relatedProducts = await Product.find({category:mongoose.Types.ObjectId(id)})
+    .populate("images", "_id url")
+   .populate("sizes", "_id name value")
+   .populate({
+     path: "category",
+     select: "_id name parentCategory",
+     populate: {
+       path: "parentCategory",
+       select: "name",
+     },
+   })
+   .select(
+     "_id name price countInStock images sizes category brand isFeatured isArchived description"
+   );
+ 
+ if (!relatedProducts) {
+   return res.status(404).json( "relatedProducts not found");
+ }
+    return res.status(200).json(relatedProducts);
+  } catch (error) {
+    return res.status(500).send("Error: " + error.message);    
+  }
+  }
+
 };

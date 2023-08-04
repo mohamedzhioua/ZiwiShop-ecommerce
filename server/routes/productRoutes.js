@@ -43,5 +43,6 @@ router.get(
   ClientProductController.GetBrandsCategories
 );
 router.get("/ZiwiShop/search", ClientProductController.GetSearchProducts);
+router.get("/relatedProducts/:id", ClientProductController.getRelatedProducts);
 
 module.exports = router;
