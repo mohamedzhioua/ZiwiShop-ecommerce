@@ -115,4 +115,22 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
+   //  ---------------------------------------- //GetAllOrders//--------------------------- //
+   GetAllOrders: async (req, res) => {
+    try {
+      const orders = await Order.find()
+        .populate({
+          path: "orderItems.images",
+          model: "image",
+        })
+        .lean();
+      if (!orders) {
+        return res.status(404).json("order not found");
+      }
+
+      return res.status(200).json(orders);
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
 };
