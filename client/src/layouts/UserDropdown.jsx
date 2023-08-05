@@ -21,7 +21,7 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 }))
 
 const UserDropdown = () => {
-    const [anchorElUser, setAnchorElUser] = useState(null);
+     const [anchorElUser, setAnchorElUser] = useState(null);
     const navigate = useNavigate();
     const { user, IsLoggedIn, logout } = useAuth();
 
@@ -52,7 +52,7 @@ const UserDropdown = () => {
                     display: 'flex',
 
                 }}
-                badgeContent={<BadgeContentSpan />}
+                badgeContent={IsLoggedIn ? <BadgeContentSpan/>  : ""}
                 overlap='circular'
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 

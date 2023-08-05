@@ -85,7 +85,7 @@ const WeeklyOverview = () => {
         }
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <Chart type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
+        <Chart type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 0, 65] }]} />
         <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
           <Typography variant='h5'fontWeight='bold' sx={{ mr: 4 }}>
             45%

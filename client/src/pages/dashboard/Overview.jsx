@@ -38,21 +38,21 @@ function Overview() {
       }}
         container
         spacing={3}>
-             <Grid
+        <Grid
           xs={12}
           md={4}
         >
-          <Trophy/>
+          <Trophy />
         </Grid>
         <Grid
           xs={12}
           md={8}
         >
-          <StatisticsCard /> 
+          <StatisticsCard />
         </Grid>
         <Grid
           xs={12}
-          md={8}
+          md={12}
         >
           <WeeklyOverview />
         </Grid>

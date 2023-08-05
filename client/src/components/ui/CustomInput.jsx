@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
-
+import { IconButton, InputAdornment } from "@mui/material";
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { useState } from "react";
 const CustomInput = ({
   label,
   placeholder,
@@ -15,13 +18,18 @@ const CustomInput = ({
   required
 }) => {
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
 
     <TextField
-    required={ required}
+      required={required}
       label={label}
       placeholder={placeholder}
-      type={type}
+      type={showPassword ? 'text' : type}
       name={name}
       variant="outlined"
       fullWidth
@@ -31,7 +39,17 @@ const CustomInput = ({
       error={error}
       helperText={helperText}
       multiline={multiline}
-
+      InputProps={
+        type === "password" && {
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton edge="end" onClick={handleClickShowPassword}>
+                {showPassword ? <RemoveRedEyeOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }
+      }
     />
   )
 };
