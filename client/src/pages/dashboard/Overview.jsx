@@ -5,6 +5,7 @@ import Heading from "../../components/ui/Heading"
 import { Box, Container } from "@mui/system"
 import StatisticsCard from "../../components/Dashboard/overview/StatisticsCard"
 import Trophy from "../../components/Dashboard/overview/Trophy"
+import WeeklyOverview from "../../components/Dashboard/overview/WeeklyOverview"
 
 
 function Overview() {
@@ -47,7 +48,13 @@ function Overview() {
           xs={12}
           md={8}
         >
-          <StatisticsCard />
+          <StatisticsCard /> 
+        </Grid>
+        <Grid
+          xs={12}
+          md={8}
+        >
+          <WeeklyOverview />
         </Grid>
       </Grid>
     </>

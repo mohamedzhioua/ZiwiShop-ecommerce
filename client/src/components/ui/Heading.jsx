@@ -6,10 +6,10 @@ const Heading = (props) => {
     const { title, description ,titleStyle} = props
     return (
         <div>
-            <Typography variant={titleStyle ? titleStyle : 'h1'} sx={{fontWeight:"bold"}}>
+            <Typography variant={titleStyle ? titleStyle : 'h1'} sx={{fontWeight:"bold",  letterSpacing: '0.15px !important' }}>
                 {toTitleCase(title)}
             </Typography>
-            <Typography variant="h5">
+            <Typography variant="h5" sx={{letterSpacing: '0.15px !important' }}>
                 {toTitleCase(description)}
             </Typography>
         </div>
