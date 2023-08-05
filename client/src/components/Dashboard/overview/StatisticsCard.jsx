@@ -2,14 +2,15 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Avatar from '@mui/material/Avatar'
-  import Typography from '@mui/material/Typography'
+import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
- import PhonelinkOutlinedIcon from '@mui/icons-material/PhonelinkOutlined';
+import PhonelinkOutlinedIcon from '@mui/icons-material/PhonelinkOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import Heading from '../../ui/Heading'
 import { Stack } from '@mui/system'
+import { currencyFormatter } from '../../../utils/currencyFormatter'
 
 const renderStats = () => {
   return (
@@ -52,7 +53,7 @@ const renderStats = () => {
           </Avatar>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant='h5' fontWeight='bold'>Customers</Typography>
-            <Typography variant='h6'fontWeight='bold'>12.5k</Typography>
+            <Typography variant='h6' fontWeight='bold'>12.5k</Typography>
           </Box>
         </Box>
       </Grid>
@@ -94,7 +95,8 @@ const renderStats = () => {
           </Avatar>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant='h5' fontWeight='bold'>Revenue</Typography>
-            <Typography variant='h6' fontWeight='bold'>$88k</Typography>
+            <Typography variant='h6' fontWeight='bold'>{currencyFormatter.format(88)}
+            </Typography>
           </Box>
         </Box>
       </Grid>
@@ -106,12 +108,12 @@ const renderStats = () => {
 const StatisticsCard = () => {
   return (
     <Card>
-      <CardContent sx={{ pt: theme => `${theme.spacing(5)} !important` }} >
+      <CardContent sx={{ pt: theme => `${theme.spacing(5)} !important` , mb: 3}} >
         <Stack spacing={3} >
-      <Heading title="" description="Total 48.5% growth this month"/>
-        <Grid container spacing={[5, 0]}>
-          {renderStats()}
-        </Grid>
+          <Heading title="statics" titleStyle="h5" description="Total 48.5% growth this month" />
+          <Grid container spacing={[5, 0]}>
+            {renderStats()}
+          </Grid>
         </Stack>
       </CardContent>
     </Card>

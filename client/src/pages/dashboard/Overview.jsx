@@ -4,6 +4,7 @@ import {
 import Heading from "../../components/ui/Heading"
 import { Box, Container } from "@mui/system"
 import StatisticsCard from "../../components/Dashboard/overview/StatisticsCard"
+import Trophy from "../../components/Dashboard/overview/Trophy"
 
 
 function Overview() {
@@ -36,9 +37,15 @@ function Overview() {
       }}
         container
         spacing={3}>
+             <Grid
+          xs={12}
+          md={4}
+        >
+          <Trophy/>
+        </Grid>
         <Grid
           xs={12}
-          md={12}
+          md={8}
         >
           <StatisticsCard />
         </Grid>
