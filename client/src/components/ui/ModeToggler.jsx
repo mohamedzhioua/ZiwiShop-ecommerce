@@ -3,7 +3,7 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import useTheme from "../../hooks/useTheme";
 
-const NightModeToggle = () => {
+const ModeToggler = () => {
   const { mode, toggleColorMode } = useTheme();
 
   return (
@@ -16,4 +16,4 @@ const NightModeToggle = () => {
   );
 };
 
-export default NightModeToggle;
+export default ModeToggler;

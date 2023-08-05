@@ -7,7 +7,7 @@ import useAuth from '../hooks/useAuth';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
  import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
-import DarkButton from '../components/ui/DarkButton';
+import ModeToggler from '../components/ui/ModeToggler';
 import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
 import useTheme from '../hooks/useTheme';
@@ -161,7 +161,7 @@ function Navbar() {
             >
               <SearchOutlinedIcon />
             </IconButton>
-            <DarkButton />
+            <ModeToggler />
             <Badge
               badgeContent={cart.reduce((a, c) => a + Number(c.quantity), 0)}
               color="secondary"
