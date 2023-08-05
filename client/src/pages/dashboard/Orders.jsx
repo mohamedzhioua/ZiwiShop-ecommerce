@@ -39,7 +39,7 @@ function Orders() {
         marginTop: '1rem',
        }}
     >
-      <Heading title='orders'  description={``} />
+      <Heading title={`orders (${orders?.length})`} description={``} />
     </Box>
     <Divider
       sx={{

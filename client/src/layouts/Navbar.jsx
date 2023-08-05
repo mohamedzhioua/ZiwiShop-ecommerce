@@ -6,8 +6,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import useAuth from '../hooks/useAuth';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
-import AccountPopover from './AccountPopover ';
-import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
+ import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
 import DarkButton from '../components/ui/DarkButton';
 import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from '../app/feature/cartSlice';
@@ -17,6 +16,7 @@ import Logo from '../components/ui/Logo';
 import { productApi } from '../api/productApi';
 import { useMounted } from '../hooks/use-mounted';
 import CategoriesPopover from './categoriesDropDown';
+import UserDropdown from './UserDropdown';
 
 
 
@@ -186,7 +186,7 @@ function Navbar() {
                 <ShoppingCartOutlinedIcon />
               </IconButton>
             </Badge>
-            <AccountPopover />
+            <UserDropdown />
           </Box>
         </Toolbar>
       </Container>

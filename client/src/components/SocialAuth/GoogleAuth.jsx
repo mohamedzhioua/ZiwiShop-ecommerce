@@ -41,7 +41,7 @@ const GoogleAuth = () => {
             variant="outlined"
             fullWidth
             size="large"
-            icon={GoogleIcon}
+            startIcon={<GoogleIcon/>}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
             color="primary"

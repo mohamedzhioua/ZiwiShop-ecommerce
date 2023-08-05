@@ -1,11 +1,26 @@
-import { Avatar, Divider, IconButton, ListItemButton, ListItemText, Popover, Typography } from '@mui/material'
+import { Avatar, Badge, Divider, IconButton, ListItemButton, ListItemText, Popover, Typography } from '@mui/material'
 import { useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
 import CustomButton from '../components/ui/CustomButton';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-const AccountPopover = () => {
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import { styled } from '@mui/material/styles'
+
+
+
+const BadgeContentSpan = styled('span')(({ theme }) => ({
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    backgroundColor: theme.palette.success.main,
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
+}))
+
+const UserDropdown = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const navigate = useNavigate();
     const { user, IsLoggedIn, logout } = useAuth();
@@ -28,23 +43,25 @@ const AccountPopover = () => {
     };
     return (
         < >
-            <Box
+            <Badge
                 onClick={handleOpenUserMenu}
                 sx={{
                     '&:hover': {
                         cursor: "pointer"
                     }, alignItems: 'center',
-                    display: 'flex'
+                    display: 'flex',
+
                 }}
+                badgeContent={<BadgeContentSpan />}
+                overlap='circular'
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+
             >
                 <Avatar
-                    sx={{
-                        height: 34,
-                        width: 34
-                    }}
+                    sx={{ width: 40, height: 40 }}
                     src={user?.image}
                 />
-            </Box>
+            </Badge>
             <Popover
                 slotProps={{
                     paper: {
@@ -75,13 +92,28 @@ const AccountPopover = () => {
 
                 {IsLoggedIn ? (
                     <>
-                        <Box sx={{ p: 2 }} >
-                            <Typography variant="h5" sx={{
-                                fontFamily: 'monospace',
-                                letterSpacing: '.3rem', align: 'center', fontWeight: "bold"
-                            }}>
-                                {`${(user?.name)}`}
-                            </Typography>
+                        <Box sx={{ pt: 2, pb: 3, px: 4 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Badge
+                                    badgeContent={<BadgeContentSpan />}
+                                    overlap='circular'
+                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+
+                                >
+                                    <Avatar
+                                        sx={{ width: '2.5rem', height: '2.5rem'  }}
+                                        src={user?.image}
+                                    />
+                                </Badge>
+                                <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
+                                    <Typography sx={{ fontFamily: 'monospace', letterSpacing: '.3rem', align: 'center', fontWeight: "bold" }}>
+                                        {`${(user?.name)}`}
+                                    </Typography>
+                                    <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+                                        {`${(user?.role === "USER" ? "Client" : user?.role)}`}
+                                    </Typography>
+                                </Box>
+                            </Box>
                         </Box>
                         <Divider />
                         <ListItemButton
@@ -116,10 +148,41 @@ const AccountPopover = () => {
                                 py: 0.5
                             }}
                         >
+                            <IconButton
+                                color="primary"
+                            >
+                                <ShoppingBasketOutlinedIcon />
+
+                            </IconButton>
                             <ListItemText
                                 primary={(
                                     <Typography variant="h4" >
-                                       Order History
+
+                                        Order History
+                                    </Typography>
+                                )}
+                            />
+                        </ListItemButton>
+                        <ListItemButton
+                            component={Link}
+                            to="/OrderHistory"
+                            sx={{
+                                borderRadius: 1,
+                                px: 1,
+                                py: 0.5
+                            }}
+                        >
+                            <IconButton
+                                color="primary"
+                            >
+                                <HelpOutlineOutlinedIcon />
+
+                            </IconButton>
+                            <ListItemText
+                                primary={(
+                                    <Typography variant="h4" >
+
+                                        FAQ
                                     </Typography>
                                 )}
                             />
@@ -130,9 +193,11 @@ const AccountPopover = () => {
                                 fullWidth
                                 onClick={LogoutHandler}
                                 variant="outlined"
+                                startIcon={<ExitToAppOutlinedIcon />}
 
                             >
                                 Logout
+
                             </CustomButton>
                         </Box>
                     </>
@@ -159,9 +224,9 @@ const AccountPopover = () => {
                         </CustomButton>
                     </Box>
                 )}
-            </Popover>
+            </Popover >
         </>
     )
 }
 
-export default AccountPopover 
+export default UserDropdown 

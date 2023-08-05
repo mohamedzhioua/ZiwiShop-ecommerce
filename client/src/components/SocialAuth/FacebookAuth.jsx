@@ -30,8 +30,8 @@ function FacebookAuth() {
             variant="outlined"
             fullWidth
             size="large"
-            icon={FacebookIcon}
-            color="fourthary"
+            startIcon={<FacebookIcon/>}
+             color="fourthary"
           >
             Continue with Facebook
 
