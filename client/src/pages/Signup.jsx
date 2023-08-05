@@ -7,14 +7,14 @@ import { Box, Link, Container, Grid, Typography, CardContent } from "@material-u
 import { useState } from "react";
 import CustomInput from "../components/ui/CustomInput";
 import CustomButton from "../components/ui/CustomButton";
- import useAuth from "../hooks/useAuth";
- import { tokens } from "../theme/theme";
+import useAuth from "../hooks/useAuth";
+import { tokens } from "../theme/theme";
 import useTheme from "../hooks/useTheme";
 import SocialAuth from "../components/SocialAuth";
 
 const Signup = () => {
   const { register } = useAuth();
-   const {theme} = useTheme();
+  const { theme } = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
 
