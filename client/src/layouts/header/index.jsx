@@ -2,21 +2,21 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Container from '@mui/material/Container';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
- import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
-import ModeToggler from '../components/ui/ModeToggler';
+import { Badge, Button, IconButton, Box, useMediaQuery } from '@mui/material';
+import ModeToggler from '../../components/ui/ModeToggler';
 import { useDispatch, useSelector } from "react-redux";
-import { setIsCartOpen } from '../app/feature/cartSlice';
-import useTheme from '../hooks/useTheme';
-import { SideNav } from './SideNav';
-import Logo from '../components/ui/Logo';
-import { productApi } from '../api/productApi';
-import { useMounted } from '../hooks/use-mounted';
-import CategoriesPopover from './categoriesDropDown';
+import { setIsCartOpen } from '../../app/feature/cartSlice';
+import useTheme from '../../hooks/useTheme';
+import { SideNav } from '../SideNav';
+import Logo from '../../components/ui/Logo';
+import { productApi } from '../../api/productApi';
+import { useMounted } from '../../hooks/use-mounted';
 import UserDropdown from './UserDropdown';
+import CategoriesDropDown from './categoriesDropDown';
+import Searchbar from './Searchbar';
 
 
 
@@ -116,14 +116,14 @@ function Navbar() {
                     to={item.href}
                     component={Link}
                     sx={{
-                       my: 2,
-                        color: theme.palette.primary.main,
-                         display: 'block',
-                          fontWeight: 'bold',
-                          fontSize:'14px' ,
-                          borderBottom: `${location.pathname === item.href ? '2px solid #998e76' : 'none'}`,
-                          transition: 'all .15s linear'
-                        }}
+                      my: 2,
+                      color: theme.palette.primary.main,
+                      display: 'block',
+                      fontWeight: 'bold',
+                      fontSize: '14px',
+                      borderBottom: `${location.pathname === item.href ? '2px solid #998e76' : 'none'}`,
+                      transition: 'all .15s linear'
+                    }}
                   >
                     {item.name}
                   </Button>
@@ -136,17 +136,18 @@ function Navbar() {
               variant='h4'
               to={"/"}
               component={Link}
-              sx={{ my: 2, 
-                color: theme.palette.primary.main, 
-                display: 'block', 
+              sx={{
+                my: 2,
+                color: theme.palette.primary.main,
+                display: 'block',
                 fontWeight: 'bold',
-                fontSize:'14px',
+                fontSize: '14px',
                 borderBottom: `${location.pathname === "/" ? '2px solid #998e76' : 'none'}`,
                 transition: 'all .15s linear'
-               }}
+              }}
             >Home
             </Button>
-            {!isMobileScreen && (<CategoriesPopover categories={categories}
+            {!isMobileScreen && (<CategoriesDropDown categories={categories}
             />)}
           </Box>
           <Box
@@ -155,12 +156,8 @@ function Navbar() {
             alignItems="center" gap="5px"
           >
 
-            <IconButton
-              aria-label="Search"
-              color="primary"
-            >
-              <SearchOutlinedIcon />
-            </IconButton>
+           
+            <Searchbar />
             <ModeToggler />
             <Badge
               badgeContent={cart.reduce((a, c) => a + Number(c.quantity), 0)}

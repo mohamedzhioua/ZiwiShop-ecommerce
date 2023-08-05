@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import Popover from '@mui/material/Popover';
 import { Button, SvgIcon } from '@mui/material';
-import useTheme from '../../hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import MenuItems from './MenuItems'
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
  
-const CategoriesPopover = (props) => {
+const CategoriesDropDown = (props) => {
   const { categories } = props
      const { theme } = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -91,8 +91,8 @@ const CategoriesPopover = (props) => {
 
   );
 };
-CategoriesPopover.propTypes = {
+CategoriesDropDown.propTypes = {
   categories: PropTypes.array.isRequired,
 };
-export default CategoriesPopover
+export default CategoriesDropDown
 

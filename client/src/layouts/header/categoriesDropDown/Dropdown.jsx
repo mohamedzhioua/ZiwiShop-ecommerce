@@ -1,6 +1,6 @@
 import { ButtonBase, Collapse, MenuItem, SvgIcon, Typography } from '@mui/material';
 import { useCallback, useState } from 'react'
-import { toTitleCase } from '../../utils/toTitleCase';
+import { toTitleCase } from '../../../utils/toTitleCase';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/system';
 import MenuItems from './MenuItems';

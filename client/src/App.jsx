@@ -4,14 +4,14 @@ import { Toaster } from 'react-hot-toast';
 import Footer from "./layouts/Footer";
 import Router from "./routes/Router";
 import { CssBaseline } from "@mui/material";
-import Navbar from "./layouts/Navbar";
-import useTheme from "./hooks/useTheme";
+ import useTheme from "./hooks/useTheme";
 import './index.css'
 import useAuth from "./hooks/useAuth";
 import CartMenu from './components/Cart/index';
 import { ScrollToTop } from './utils/scrollToTop';
 import ScrollToTopBtn from './components/ui/ScrollToTopBtn';
 import Splash from './components/ui/Splash';
+import Navbar from './layouts/header';
 
 
 
