@@ -3,8 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
-// ----------------------------------------------------------------------
-
+ 
 const HEADER_MOBILE = 84;
 const HEADER_DESKTOP = 92;
 

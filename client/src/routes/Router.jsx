@@ -13,6 +13,7 @@ const Home = lazy(() => import("../pages/Home"));
 const Profile = lazy(() => import("../pages/Profile"));
 const Login = lazy(() => import("../pages/Signin"));
 const Register = lazy(() => import("../pages/Signup"));
+const FAQ = lazy(() => import("../pages/FAQ"));
 //dashboard
 const Overview = lazy(() => import("../pages/dashboard/Overview"));
 //product
@@ -50,6 +51,7 @@ const Router = () => {
       <Route path="/" element={<Suspense fallback={<Splash />}><Home /></Suspense>} />
       <Route path="/ZiwiShop/search" element={<Suspense fallback={<Splash />}><Search /></Suspense>} />
       <Route path="/productDetails/:id" element={<Suspense fallback={<Splash />}><ProductDetails /></Suspense>} />
+      <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />

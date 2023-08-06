@@ -165,7 +165,7 @@ const UserDropdown = () => {
                         </ListItemButton>
                         <ListItemButton
                             component={Link}
-                            to="/OrderHistory"
+                            to="/ZiwiShop/FAQ"
                             sx={{
                                 borderRadius: 1,
                                 px: 1,
