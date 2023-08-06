@@ -77,11 +77,10 @@ export const SideNavNestedItems = (props) => {
                         }}
                     >
                         <Typography
-                            variant="h6"
+                            variant="h5"
                             sx={{
                                 textDecoration: 'none',
-                                fontWeight: "bold"
-                            }}
+                             }}
                         >
                             {toTitleCase(name)}
                         </Typography>

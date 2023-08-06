@@ -4,7 +4,6 @@ import { Scrollbar } from '../../components/ui/Scrollbar';
 import { SideNavSection } from './SideNavSection';
 import useTheme from '../../hooks/useTheme';
 import SideNavItem from './SideNavItem';
-import SideNavNestedItems from './SideNavNestedItems';
 import Logo from '../../components/ui/Logo';
 import useAuth from '../../hooks/useAuth';
 
@@ -23,7 +22,7 @@ const navigationLinks = [
 ];
 
 export const SideNav = (props) => {
-    const { onClose, open, categories, brands } = props
+    const { onClose, open, categories } = props
     const { theme } = useTheme();
     const { IsLoggedIn, user } = useAuth();
 
@@ -75,12 +74,7 @@ export const SideNav = (props) => {
                                 childCategories: categories,
                             }]}
                             onClose={onClose} />
-                        <SideNavNestedItems
-                            item={{
-                                name: 'brands',
-                                childCategories: brands,
-                            }}
-                            onClose={onClose} />
+                        
                     </Stack>
                     <Stack sx={{ p: 3 }} spacing={1}>
                         <Typography variant="subtitle1">
@@ -103,5 +97,4 @@ SideNav.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.func.isRequired,
     categories: PropTypes.array.isRequired,
-    brands: PropTypes.array.isRequired,
 };

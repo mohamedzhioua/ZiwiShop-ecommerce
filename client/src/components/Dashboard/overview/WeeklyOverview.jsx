@@ -77,7 +77,7 @@ const WeeklyOverview = (props) => {
   return (
     <Card>
       <CardHeader
-        title='Monthly Overview'
+        title='Weekly Overview'
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
