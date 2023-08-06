@@ -125,7 +125,7 @@ module.exports = {
         })
         .lean();
       if (!orders) {
-        return res.status(404).json("order not found");
+        return res.status(404).json("no orders found");
       }
 
       return res.status(200).json(orders);
