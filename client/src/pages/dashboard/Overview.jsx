@@ -6,9 +6,31 @@ import { Box, Container } from "@mui/system"
 import StatisticsCard from "../../components/Dashboard/overview/StatisticsCard"
 import Trophy from "../../components/Dashboard/overview/Trophy"
 import WeeklyOverview from "../../components/Dashboard/overview/WeeklyOverview"
+import { useCallback, useEffect, useState } from "react"
+import { dashboardApi } from "../../api/dashboardApi"
+import { useMounted } from "../../hooks/use-mounted"
 
 
 function Overview() {
+  const [data, setData] = useState([])
+   const isMounted = useMounted()
+  const getInfo = useCallback(async () => {
+    try {
+      const response = await dashboardApi.getInfo();
+      if (isMounted()) {
+        setData(response);
+       }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    getInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Container maxWidth='xl' >
@@ -48,7 +70,7 @@ function Overview() {
           xs={12}
           md={8}
         >
-          <StatisticsCard />
+          <StatisticsCard data={data}/>
         </Grid>
         <Grid
           xs={12}
