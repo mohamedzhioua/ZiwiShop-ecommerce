@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/system";
 import Heading from "../components/ui/Heading";
 import { Divider } from "@mui/material";
-import CreateAccordion from "../components/ui/Accordion";
+import CustomAccordion from "../components/ui/CustomAccordion";
 
 
 const faqData = [
@@ -55,7 +55,7 @@ function FAQ() {
                     }} />
                 <Box sx={{ marginX: 'auto', marginTop: 3 }}>
                     {faqData.map((item, index) => (
-                        <CreateAccordion
+                        <CustomAccordion
                             key={index}
                             tabIndex={index + 2}
                             question={item.question}

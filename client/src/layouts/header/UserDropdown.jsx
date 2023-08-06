@@ -119,6 +119,7 @@ const UserDropdown = () => {
                         <ListItemButton
                             component={Link}
                             to="/profile"
+                            onClick={handleCloseUserMenu}
                             sx={{
                                 borderRadius: 1,
                                 px: 1,
@@ -141,6 +142,7 @@ const UserDropdown = () => {
                         </ListItemButton>
                         <ListItemButton
                             component={Link}
+                            onClick={handleCloseUserMenu}
                             to="/OrderHistory"
                             sx={{
                                 borderRadius: 1,
@@ -166,6 +168,7 @@ const UserDropdown = () => {
                         <ListItemButton
                             component={Link}
                             to="/ZiwiShop/FAQ"
+                            onClick={handleCloseUserMenu}
                             sx={{
                                 borderRadius: 1,
                                 px: 1,

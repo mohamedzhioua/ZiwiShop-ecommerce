@@ -4,7 +4,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 
-const CreateAccordion = (props) => {
+const CustomAccordion = (props) => {
  const {tabIndex, question, answer}=props
  
 const [activeTab, setActiveTab] = useState(0);
@@ -38,10 +38,10 @@ const [activeTab, setActiveTab] = useState(0);
 </Accordion>
 )
 }
-CreateAccordion.propTypes = {
+CustomAccordion.propTypes = {
     tabIndex: PropTypes.number.isRequired,
     question: PropTypes.string.isRequired,
     answer: PropTypes.string.isRequired,
 };
 
-export default CreateAccordion
+export default CustomAccordion
