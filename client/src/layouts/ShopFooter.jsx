@@ -30,8 +30,7 @@ const ShopFooter = () => {
                             fontSize: { xs: "10.5px", md: "12px", xl: "12.5px" },
                             fontWeight: "500", lineHeight: "20px",
                         }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                             ZiwiShop offers trendy apparel through its user-friendly e-commerce platform, blending style, convenience, and quality for fashion enthusiasts worldwide.
                         </Typography>
                     </Box>
 

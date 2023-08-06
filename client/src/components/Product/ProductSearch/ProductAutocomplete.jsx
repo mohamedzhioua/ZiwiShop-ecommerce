@@ -11,12 +11,12 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const ProductAutocomplete = (props) => {
-    const { data, Name } = props;
+    const { data, Name} = props;
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const [selectedData, setSelectedData] = useState([]);
-
+ 
     useEffect(() => {
         const queryString = createQueryString(searchParams, {
             [Name]: selectedData?.length
@@ -35,6 +35,7 @@ const ProductAutocomplete = (props) => {
                 {Name}
             </Typography>
             <Autocomplete
+            value={selectedData}
                 style={{ width: '100%' }}
                 multiple
                 options={data?.map((item) => ({ _id: item._id, name: item.name }))}

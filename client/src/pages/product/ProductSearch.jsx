@@ -1,5 +1,5 @@
-import { Unstable_Grid2 as Grid,Typography, useMediaQuery } from '@mui/material'
-import { Box } from '@mui/system'
+import { Unstable_Grid2 as Grid, Typography, useMediaQuery } from '@mui/material'
+import { Box, Stack } from '@mui/system'
 import ProductCard from '../../components/Product/ProductCard'
 import ProductFilters from '../../components/Product/ProductSearch/ProductFilters'
 import CustomButton from '../../components/ui/CustomButton';
@@ -12,7 +12,8 @@ import { useMounted } from '../../hooks/use-mounted';
 import { productApi } from '../../api/productApi';
 import PaginationButton from '../../components/ui/PaginationButton';
 import Splash from '../../components/ui/Splash';
- 
+import Heading from '../../components/ui/Heading';
+
 
 function ProductSearch() {
   const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -43,7 +44,7 @@ function ProductSearch() {
 
   useEffect(() => {
     const GetSearchProducts = async () => {
-       const obj = {
+      const obj = {
         category: category,
         brand: brand,
         size: size,
@@ -85,6 +86,7 @@ function ProductSearch() {
           md={9}>
           <Grid container justifyContent={isMobileScreen ? "space-around" : "space-between"} alignItems="center">
             <Grid item>
+
               {isMobileScreen && (
                 <>
                   <CustomButton
@@ -102,25 +104,29 @@ function ProductSearch() {
             </Grid>
           </Grid>
           <Grid item marginTop='1rem'>
-      {loading && !data   ? (
-        <Splash /> 
-      ) : data?.products?.length === 0 ? (
-        <Typography>Sorry, No results</Typography>
-      ) : (
-        <Box
-          margin="0 auto"
-          display="grid"
-          gridTemplateColumns="repeat(auto-fill, 300px)"
-          justifyContent="space-around"
-          rowGap="20px"
-          columnGap="1.33%"
-        >
-          {data?.products?.map((item) => (
-            <ProductCard product={item} key={`${item.name}-${item._id}`} />
-          ))}
-        </Box>
-      )}
-    </Grid>
+            {loading && !data ? (
+              <Splash />
+            ) : data?.products?.length === 0 ? (
+              <Typography>Sorry, No results</Typography>
+            ) : (
+              <Stack spacing={2}>
+                <Heading title={` Product ( ${data?.products?.length})`} titleStyle='h3' description="" />
+                <Box
+                  margin="0 auto"
+                  display="grid"
+                  gridTemplateColumns="repeat(auto-fill, 300px)"
+                  justifyContent="space-around"
+                  rowGap="20px"
+                  columnGap="1.33%"
+                >
+                  {data?.products?.map((item) => (
+                    <ProductCard product={item} key={`${item.name}-${item._id}`} />
+                  ))}
+                </Box>
+              </Stack>
+            )}
+
+          </Grid>
           {data?.products?.length ?
             <PaginationButton
               pageCount={data?.pages}

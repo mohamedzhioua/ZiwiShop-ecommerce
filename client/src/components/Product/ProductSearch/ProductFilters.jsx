@@ -6,11 +6,19 @@ import PriceRangeFilter from './PriceRangeFilter';
 import CustomButton from '../../ui/CustomButton';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import ProductAutocomplete from './ProductAutocomplete';
- 
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
 
 const ProductFilters = (props) => {
-  const { onClose ,  sizes=[] , brands=[]} = props
+  const { onClose, sizes = [], brands = [] } = props
 
+  const navigate = useNavigate();
+  const [priceRangeValue, setPriceRangeValue] = useState([0, 1000]);
+  const handleClearFilters = () => {
+    setPriceRangeValue([0, 1000]);
+    navigate(`/ziwiShop/search`);
+  }
 
   return (
     <Box sx={{ margin: "10px 20px 20px 20px" }}>
@@ -38,13 +46,22 @@ const ProductFilters = (props) => {
             <RemoveRedEyeOutlinedIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> See Products
           </CustomButton>)}
         <Grid item xs={12}>
-          <PriceRangeFilter  />
+          <PriceRangeFilter
+            priceRangeValue={priceRangeValue}
+            setPriceRangeValue={setPriceRangeValue}
+
+          />
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
-          <ProductAutocomplete data={sizes} Name="size"   />
+          <ProductAutocomplete data={sizes} Name="size" />
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }} >
-          <ProductAutocomplete data={brands} Name="brand"  />
+          <ProductAutocomplete data={brands} Name="brand" />
+        </Grid>
+        <Grid item xs={12} style={{ width: '100%' }} >
+          <CustomButton variant='outlined' fullwidh onClick={handleClearFilters}>
+            clear filters
+          </CustomButton>
         </Grid>
       </Stack>
 
@@ -52,8 +69,8 @@ const ProductFilters = (props) => {
   )
 }
 ProductFilters.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   sizes: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
- };
+};
 export default ProductFilters
