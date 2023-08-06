@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { Accordion, AccordionSummary, AccordionDetails, Typography, SvgIcon, Divider } from '@mui/material';
-import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { Box, Container } from "@mui/system";
 import Heading from "../components/ui/Heading";
+import { Divider } from "@mui/material";
+import CreateAccordion from "../components/ui/Accordion";
 
 
 const faqData = [
@@ -32,34 +31,7 @@ const faqData = [
     },
 ];
 function FAQ() {
-    const [activeTab, setActiveTab] = useState(0);
 
-    const toggleTab = (tab) => {
-        if (activeTab === tab) {
-            setActiveTab(0);
-        } else {
-            setActiveTab(tab);
-        }
-    };
-    const createAccordion = (tabIndex, question, answer) => (
-        <Accordion
-            key={tabIndex}
-            expanded={activeTab === tabIndex}
-            onChange={() => toggleTab(tabIndex)}
-            elevation={activeTab === tabIndex ? 1 : 0}
-        >
-            <AccordionSummary
-                expandIcon={<SvgIcon>{activeTab === tabIndex ? <ExpandMoreIcon /> : <ExpandMoreIcon />}</SvgIcon>}
-            >
-                <Typography variant="h5" fontWeight='bold'>
-                    {question}
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <Typography variant="h5">{answer}</Typography>
-            </AccordionDetails>
-        </Accordion>
-    );
     return (
 
         <>
@@ -81,8 +53,15 @@ function FAQ() {
                         marginLeft: '1rem',
                         marginRight: '1rem',
                     }} />
-                <Box sx={{ marginX: 'auto', marginTop: 3}}>
-                    {faqData.map((item, index) => createAccordion(index + 2 , item.question, item.answer))}
+                <Box sx={{ marginX: 'auto', marginTop: 3 }}>
+                    {faqData.map((item, index) => (
+                        <CreateAccordion
+                            key={index}
+                            tabIndex={index + 2}
+                            question={item.question}
+                            answer={item.answer}
+                        />
+                    ))}
                 </Box>
             </Container >
 
