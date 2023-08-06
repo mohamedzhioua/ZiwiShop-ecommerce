@@ -30,12 +30,33 @@ module.exports = {
           },
         },
       ]);
-
+      const today = new Date();
+      const lastWeek = new Date(today);
+      lastWeek.setDate(today.getDate() - 7);
+      const soldOrderStatistics = await Order.aggregate([
+        { $match: { isPaid: true, createdAt: { $gte: lastWeek } } },
+        {
+          $group: {
+            _id: { $dayOfWeek: '$createdAt' },
+            totalRevenue: { $sum: { $multiply: ['$totalPrice', 1] } }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ]);
+  
+      const dailyRevenue = Array(7).fill(0);
+      soldOrderStatistics.forEach(stat => {
+        dailyRevenue[stat._id - 1] = stat.totalRevenue;
+      });
+  
+  
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const info = {
         userCount,
         productsInStock:totalProductsInStock,
         paidOrderCount,
         totalRevenue:revenueResult.length > 0 ? revenueResult[0].totalRevenue : 0,
+        dailyRevenue
       };
 
       res.status(200).json(info);
