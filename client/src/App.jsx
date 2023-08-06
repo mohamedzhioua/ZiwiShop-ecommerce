@@ -12,12 +12,13 @@ import { ScrollToTop } from './utils/scrollToTop';
 import ScrollToTopBtn from './components/ui/ScrollToTopBtn';
 import Splash from './components/ui/Splash';
 import Navbar from './layouts/header';
+import ShopFooter from './layouts/ShopFooter';
 
 
 
 
 function App() {
-  const { isInitialized } = useAuth();
+  const { user,isInitialized } = useAuth();
   const { theme } = useTheme();
 
   return (
@@ -30,6 +31,7 @@ function App() {
               <Toaster position="top-center" />
               <CartMenu />
             </div>
+          {!user?.role==="ADMIN" &&(<ShopFooter/>)}
             <Footer />
             <ScrollToTop />
             <ScrollToTopBtn />
