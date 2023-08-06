@@ -76,7 +76,7 @@ function Overview() {
           xs={12}
           md={12}
         >
-          <WeeklyOverview />
+          <WeeklyOverview data={data?.dailyRevenue} />
         </Grid>
       </Grid>
     </>
