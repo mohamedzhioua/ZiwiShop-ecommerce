@@ -23,23 +23,7 @@ exports.uploadToCloudinary = async (file, path) => {
     }
   });
 };
-
-exports.getImages = async (path, max, sort) => {
-  return new Promise((resolve, reject) => {
-    cloudinary.v2.search
-      .expression(`${path}`)
-      .sort_by('created_at', `${sort}`)
-      .max_results(max)
-      .execute()
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((error) => {
-        reject(error);
-        console.log({ message: error.message })
-      });
-  });
-};
+ 
  
 exports.removeFromCloudinary = async (publicId ) => {
     await cloudinary.uploader.destroy(publicId ,(error, result) => {
