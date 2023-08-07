@@ -69,7 +69,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const { name, parentCategory, isLeaf } = req.body;
-        const { errors, isValid } = CategoryValidation(req.body);
+      const { errors, isValid } = CategoryValidation(req.body);
       const { errors: paramsErrors, isValid: isParamsValid } =
         IdParamsValidation(req.params);
       if (!isValid) {
@@ -79,20 +79,20 @@ module.exports = {
         return res.status(400).json(paramsErrors);
       }
       const category = await Category.findById(id);
-       if (!category) {
+      if (!category) {
         return res.status(400).json("Category not found");
       }
-       
+
       const updatedCategory = await Category.findByIdAndUpdate(
         id,
         {
           name,
-          parentCategory : parentCategory === "" ? null : parentCategory,
+          parentCategory: parentCategory === "" ? null : parentCategory,
           isLeaf,
         },
         { new: true }
       );
-       return res.status(200).json(updatedCategory);
+      return res.status(200).json(updatedCategory);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
