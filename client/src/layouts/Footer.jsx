@@ -1,12 +1,13 @@
-import { IconButton, Tooltip, Typography } from "@mui/material";
+import {  IconButton, Tooltip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { makeStyles } from "@material-ui/core/styles";
-
+ 
 
 
 const useStyles = makeStyles((theme) => ({
   footer: {
+ 
     padding: theme.spacing(4, 0),
     display: "flex", alignItems: "center",
     justifyContent: "center",
@@ -25,12 +26,13 @@ const Footer = () => {
 
 
   return (
+<>
 
-    <footer className={classes.footer} >
+     <footer className={classes.footer} style={{ borderTop: '1px solid #ccc'  }} >
 
-      <Typography variant="h5" sx={{
-        fontWeight: "600"
-      }}>
+       <Typography variant="h5" sx={{
+        fontWeight: "600",
+       }}>
         Copyright © 2023, Zhioua Mohamed
       </Typography>
 
@@ -43,8 +45,8 @@ const Footer = () => {
           </Tooltip>
         </a>
       </Link>
-
     </footer>
+    </>
   );
 };
 

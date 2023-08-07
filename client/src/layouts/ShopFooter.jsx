@@ -1,4 +1,4 @@
-import { Box,   Typography } from "@mui/material";
+import { Box, Unstable_Grid2 as Grid, Typography } from "@mui/material";
 import paypal from '../assets/cards/paypal.svg'
 import visa from '../assets/cards/visa.svg'
 import mastercard from '../assets/cards/mastercard.svg'
@@ -8,40 +8,34 @@ import Logo from "../components/ui/Logo";
 const ShopFooter = () => {
 
     return (
-        <Box sx={{
-            maxWidth: '1576px', m: 'auto', px: { xs: "20px", xl: "40px" },
-            mt: { xs: "100px", md: "120px" }, pb: "10px",
+        <Grid container spacing={4} sx={{
+            marginTop: '1rem',
+            marginLeft: '2rem',
+            marginRight: '1rem',
+            marginBottom: '1rem'
         }}>
 
-             <Box sx={{
-                display: 'flex', pb: "50px", flexWrap: { xs: "wrap", xl: "nowrap" },
-                alignItems: "start", justifyContent: { xl: "space-between" }, gap: "50px",
-                borderBottom: "1px solid #d3d3d3",
-            }}>
 
-                 <Box sx={{
-                    width: { xs: "350px", xl: "390px" },
-                }}>
-
-                     <Logo />
-
-                     <Box sx={{ mt: "10px" }}>
+            <Grid xs={12} md={4}>
+                <Box >
+                    <Logo />
+                    <Box sx={{ mt: "10px" }}>
                         <Typography variant="grayText" component="p" sx={{
                             fontSize: { xs: "10.5px", md: "12px", xl: "12.5px" },
                             fontWeight: "500", lineHeight: "20px",
                         }}>
-                             ZiwiShop offers trendy apparel through its user-friendly e-commerce platform, blending style, convenience, and quality for fashion enthusiasts worldwide.
+                            ZiwiShop offers trendy apparel through its user-friendly e-commerce platform, blending style, convenience, and quality for fashion enthusiasts worldwide.
                         </Typography>
                     </Box>
-
                 </Box>
-
-                 <Box sx={{
-                    width: { xs: "350px", md: "350px", xl: "420px" }, display: 'flex',
+            </Grid>
+            <Grid xs={12} md={4}>
+                <Box sx={{
+                    display: 'flex',
                     gap: { xs: "30px", xl: "50px" }
                 }}>
 
-                     <Box sx={{
+                    <Box sx={{
                         display: 'flex', flexDirection: 'column', gap: '9px',
                     }}>
                         <Typography variant="body2" fontWeight={600}
@@ -71,7 +65,7 @@ const ShopFooter = () => {
                         </Typography>
                     </Box>
 
-                     <Box display='flex' flexDirection='column' gap='9px'>
+                    <Box display='flex' flexDirection='column' gap='9px'>
                         <Typography variant="body2" fontWeight={600}
                             sx={{ cursor: "pointer", fontSize: { xs: "11px", md: "13px" } }}
                         >
@@ -94,7 +88,7 @@ const ShopFooter = () => {
                         </Typography>
                     </Box>
 
-                     <Box display='flex' flexDirection='column' gap='9px'>
+                    <Box display='flex' flexDirection='column' gap='9px'>
                         <Typography variant="body2" fontWeight={600}
                             sx={{ cursor: "pointer", fontSize: { xs: "11px", md: "14px" } }}
                         >
@@ -113,15 +107,13 @@ const ShopFooter = () => {
                     </Box>
 
                 </Box>
-
-                 <Box sx={{
-                    width: "390px", display: 'flex',
+            </Grid>
+            <Grid xs={12} md={4}>
+                <Box sx={{
+                    display: 'flex',
                     flexDirection: 'column',
                 }}>
-
-                  
-
-                     <Box sx={{
+                    <Box sx={{
                         display: 'flex', alignItems: "center",
                         justifyContent: "start", gap: "7px",
                     }}>
@@ -131,10 +123,9 @@ const ShopFooter = () => {
                     </Box>
 
                 </Box>
+            </Grid>
 
-
-            </Box>
-        </Box>
+        </Grid>
     );
 }
 

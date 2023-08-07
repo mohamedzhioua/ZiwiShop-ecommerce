@@ -13,6 +13,7 @@ import { productApi } from '../../api/productApi';
 import PaginationButton from '../../components/ui/PaginationButton';
 import Splash from '../../components/ui/Splash';
 import Heading from '../../components/ui/Heading';
+import ShopFooter from '../../layouts/ShopFooter';
 
 
 function ProductSearch() {
@@ -71,78 +72,81 @@ function ProductSearch() {
 
 
   return (
-    <Box width="90%" margin="40px auto">
-      <Grid container spacing={1}>
+    < >
+      <Box width="90%" margin="40px auto">
+        <Grid container spacing={1}>
 
-        <Grid xs={12}
-          md={3}>
-          {isMobileScreen ? (
-            <MobileProductFilters onClose={handleCloseFilterDrawer} open={isFilterDrawerOpen} sizes={data?.sizes} brands={data?.brands} />
-          ) : (
-            <ProductFilters sizes={data?.sizes} brands={data?.brands} />
-          )}
-        </Grid>
-        <Grid xs={12}
-          md={9}>
-          <Grid container justifyContent={isMobileScreen ? "space-around" : "space-between"} alignItems="center">
-            <Grid item>
-
-              {isMobileScreen && (
-                <>
-                  <CustomButton
-                    onClick={handleOpenFilterDrawer}
-                  >
-                    <FilterListIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Filters
-                  </CustomButton>
-
-                </>
-
-              )}
-            </Grid>
-            <Grid item>
-              <ProductSort sort={sort} />
-            </Grid>
-          </Grid>
-          <Grid item marginTop='1rem'>
-            {loading && !data ? (
-              <Splash />
-            ) : data?.products?.length === 0 ? (
-              <Typography>Sorry, No results</Typography>
+          <Grid xs={12}
+            md={3}>
+            {isMobileScreen ? (
+              <MobileProductFilters onClose={handleCloseFilterDrawer} open={isFilterDrawerOpen} sizes={data?.sizes} brands={data?.brands} />
             ) : (
-              <Stack spacing={2}>
-                <Heading title={` Product ( ${data?.products?.length})`} titleStyle='h3' description="" />
-                <Box
-                  margin="0 auto"
-                  display="grid"
-                  gridTemplateColumns="repeat(auto-fill, 300px)"
-                  justifyContent="space-around"
-                  rowGap="20px"
-                  columnGap="1.33%"
-                >
-                  {data?.products?.map((item) => (
-                    <ProductCard product={item} key={`${item.name}-${item._id}`} />
-                  ))}
-                </Box>
-              </Stack>
+              <ProductFilters sizes={data?.sizes} brands={data?.brands} />
             )}
-
           </Grid>
-          {data?.products?.length ?
-            <PaginationButton
-              pageCount={data?.pages}
-              page={page}
-              per_page={per_page}
-              sort={sort}
-              isPending={loading}
-              searchParams={searchParams}
-              isMobileScreen={isMobileScreen}
-            />
-            :
-            null
-          }
+          <Grid xs={12}
+            md={9}>
+            <Grid container justifyContent={isMobileScreen ? "space-around" : "space-between"} alignItems="center">
+              <Grid item>
+
+                {isMobileScreen && (
+                  <>
+                    <CustomButton
+                      onClick={handleOpenFilterDrawer}
+                    >
+                      <FilterListIcon sx={{ marginRight: 1, height: '1rem', width: '1rem' }} /> Filters
+                    </CustomButton>
+
+                  </>
+
+                )}
+              </Grid>
+              <Grid item>
+                <ProductSort sort={sort} />
+              </Grid>
+            </Grid>
+            <Grid item marginTop='1rem'>
+              {loading && !data ? (
+                <Splash />
+              ) : data?.products?.length === 0 ? (
+                <Typography>Sorry, No results</Typography>
+              ) : (
+                <Stack spacing={2}>
+                  <Heading title={` Product ( ${data?.products?.length})`} titleStyle='h3' description="" />
+                  <Box
+                    margin="0 auto"
+                    display="grid"
+                    gridTemplateColumns="repeat(auto-fill, 300px)"
+                    justifyContent="space-around"
+                    rowGap="20px"
+                    columnGap="1.33%"
+                  >
+                    {data?.products?.map((item) => (
+                      <ProductCard product={item} key={`${item.name}-${item._id}`} />
+                    ))}
+                  </Box>
+                </Stack>
+              )}
+
+            </Grid>
+            {data?.products?.length ?
+              <PaginationButton
+                pageCount={data?.pages}
+                page={page}
+                per_page={per_page}
+                sort={sort}
+                isPending={loading}
+                searchParams={searchParams}
+                isMobileScreen={isMobileScreen}
+              />
+              :
+              null
+            }
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+      <ShopFooter />
+    </>
   )
 }
 
