@@ -77,7 +77,7 @@ const BrandForm = (props) => {
         <Card>
             <CardContent>
                 <form onSubmit={handleSubmit} noValidate>
-                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
                         <CustomInput
                             required
                             name="name"

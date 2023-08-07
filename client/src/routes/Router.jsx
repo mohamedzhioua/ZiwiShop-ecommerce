@@ -11,8 +11,9 @@ import Splash from "../components/ui/Splash";
 
 const Home = lazy(() => import("../pages/Home"));
 const Profile = lazy(() => import("../pages/Profile"));
-const Login = lazy(() => import("../pages/Signin"));
-const Register = lazy(() => import("../pages/Signup"));
+const Login = lazy(() => import("../pages/auth/Signin"));
+const Register = lazy(() => import("../pages/auth/Signup"));
+const ForgetPassword = lazy(() => import("../pages/auth/ForgetPassword"));
 const FAQ = lazy(() => import("../pages/FAQ"));
 //dashboard
 const Overview = lazy(() => import("../pages/dashboard/Overview"));
@@ -51,7 +52,8 @@ const Router = () => {
       <Route path="/" element={<Suspense fallback={<Splash />}><Home /></Suspense>} />
       <Route path="/ZiwiShop/search" element={<Suspense fallback={<Splash />}><Search /></Suspense>} />
       <Route path="/productDetails/:id" element={<Suspense fallback={<Splash />}><ProductDetails /></Suspense>} />
-      <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} />
+      <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} /> 
+       <Route path="/ForgetPassword" element={<Suspense fallback={<Splash />}><ForgetPassword /></Suspense>} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />

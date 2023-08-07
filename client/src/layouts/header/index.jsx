@@ -147,7 +147,7 @@ function Navbar() {
               }}
             >Home
             </Button>
-            {IsLoggedIn && user?.role !== 'ADMIN' && !isMobileScreen && (<CategoriesDropDown categories={categories}
+            {!isMobileScreen && (<CategoriesDropDown categories={categories}
             />)}
           </Box>
           <Box
