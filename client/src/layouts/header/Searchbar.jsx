@@ -4,7 +4,7 @@ import { Input, Slide, IconButton, InputAdornment, ClickAwayListener } from '@mu
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../../components/ui/CustomButton';
-
+ 
 
 const HEADER_MOBILE = 84;
 const HEADER_DESKTOP = 92;
@@ -31,7 +31,7 @@ const Searchbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-
+ 
   const handleOpen = () => {
     setOpen(!open);
   };

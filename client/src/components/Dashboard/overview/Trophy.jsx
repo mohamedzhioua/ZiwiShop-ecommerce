@@ -19,11 +19,11 @@ const Trophy = () => {
     return (
         <Card sx={{ position: 'relative' }}>
             <CardContent>
-                <Typography variant='h5' fontWeight='bold'>Chemise 100% Coton - Marron</Typography>
-                <Typography variant='h5' sx={{ letterSpacing: '0.25px' }}>
-                    Top Selling Product of the Month
+                <Typography variant='h5' fontWeight='bold'> Top Selling Product of the Month</Typography>
+                <Typography variant='h6' sx={{ letterSpacing: '0.25px' }}fontWeight='600'>
+                Chemise 100% Coton - Marron
                 </Typography>
-                <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
+                <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }} fontWeight='bold'>
                 {currencyFormatter.format(42.8)}
                 </Typography>
                 <CustomButton size='small' variant='contained' onClick={()=>navigate('/dashboard/orders')}>

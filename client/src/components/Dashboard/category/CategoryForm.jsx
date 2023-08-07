@@ -18,11 +18,11 @@ import { Stack } from '@mui/system';
 
 const CategoryForm = (props) => {
     const { initialData, categoryParents } = props;
-    const isMounted = useMounted()
+     const isMounted = useMounted()
     const navigate = useNavigate()
     const { saveCategories } = useCategory()
     const [selectedCategory, setSelectedCategory] = useState(null);
- 
+    
 
     const initialValues = initialData || {
         name: "",
@@ -30,11 +30,12 @@ const CategoryForm = (props) => {
         isLeaf: false,
     };
     const initialCategoryId = initialData ? initialData.parentCategory : null;
- 
+  
     useEffect(() => {
         if (initialCategoryId) {
             const category = categoryParents?.find((item) => item.name === initialCategoryId);
             setSelectedCategory(category);
+            formik.setFieldValue('parentCategory', category._id );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialCategoryId]);
@@ -127,7 +128,7 @@ const CategoryForm = (props) => {
                                 value={selectedCategory}
                                 onChange={(event, newValue) => {
                                     setSelectedCategory(newValue);
-                                     formik.setFieldValue('parentCategory', newValue ? newValue.id : '');
+                                     formik.setFieldValue('parentCategory', newValue ? newValue.id : '' );
                                 }}
                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                 onBlur={handleBlur}

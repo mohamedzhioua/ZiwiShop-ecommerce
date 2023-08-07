@@ -21,7 +21,7 @@ export function CategoryProvider({ children }) {
       useEffect(() => {
         GetCategoryParents();
             // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+      }, [children]);
       
     const saveCategories = (updatedCategories) => {
         setCategories(updatedCategories);

@@ -4,7 +4,7 @@ import Card from '@mui/material/Card'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import PhonelinkOutlinedIcon from '@mui/icons-material/PhonelinkOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
@@ -29,10 +29,10 @@ const renderStats = (data) => {
               backgroundColor: 'secondary.main'
             }}
           >
-            <TrendingUpOutlinedIcon sx={{ fontSize: '1.75rem' }} />
+            <ShoppingCartOutlinedIcon sx={{ fontSize: '1.75rem' }} />
           </Avatar>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography variant='h5' fontWeight='bold'>Payed Orders</Typography>
+            <Typography variant='h5' fontWeight='bold'>Orders to deliver</Typography>
             <Typography variant='h6' fontWeight='bold'>{data?.paidOrderCount}</Typography>
           </Box>
         </Box>

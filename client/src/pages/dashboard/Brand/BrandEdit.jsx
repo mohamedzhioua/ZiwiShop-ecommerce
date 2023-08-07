@@ -1,10 +1,10 @@
 import { Divider } from '@mui/material'
 import { Box, Container } from '@mui/system';
-import Heading from '../../../ui/components/Heading'
- import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-  import { brandApi } from '../../../api/brandApi';
-import BrandForm from '../../../../components/dashboard/brand/BrandForm';
+import Heading from '../../../components/ui/Heading';
+import { brandApi } from '../../../api/brandApi';
+import BrandForm from '../../../components/dashboard/brand/BrandForm';
 
 
 const useBrand = (id) => {
@@ -29,14 +29,14 @@ const useBrand = (id) => {
 };
 function BrandEdit() {
   const { id } = useParams();
-   const brand = useBrand(id);
- 
+  const brand = useBrand(id);
+
 
   if (!brand) {
     return null;
   }
 
- 
+
 
   return (
     <>
@@ -50,7 +50,7 @@ function BrandEdit() {
             marginRight: '1rem',
           }}
         >
-          <Heading title='Edit brand'  description='Edit a brand.' />
+          <Heading title='Edit brand' description='Edit a brand.' />
         </Box>
         <Divider
           sx={{
@@ -58,7 +58,7 @@ function BrandEdit() {
             marginLeft: '1rem',
             marginRight: '1rem',
           }} />
-        <BrandForm  initialData={brand}/>
+        <BrandForm initialData={brand} />
       </Container >
 
     </>
