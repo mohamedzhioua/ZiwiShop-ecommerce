@@ -6,14 +6,14 @@ const PaymentMethod = ({ values, touched, errors, handleBlur, handleChange }) =>
  
   const paymentMethods = [
     {
-      label: 'Visa Credit/Debit Card',
-      value: 'visa'
-    },
-    {
       label: 'PayPal',
       value: 'paypal'
     },
-    { value: "stripe", label: "Stripe" }
+    { value: "stripe", label: "Stripe" },
+    {
+      value: 'cash',
+      label: 'Payment at Home'
+    }
   ];
 
   return (
