@@ -8,20 +8,21 @@ import { SideNavNestedItems } from './SideNavNestedItems';
 
 const SideNavItem = (props) => {
     const { item, onClose } = props
-      const { name, href,childCategories} = item
+    const { name, href, childCategories, icon } = item
     const { theme } = useTheme();
-    
+
     if (childCategories && childCategories.length > 0) {
-        return <SideNavNestedItems item={item} onClose={onClose}/>;
-      }
+        return <SideNavNestedItems item={item} onClose={onClose} />;
+    }
 
     return (
-     
+
         <>
+
             <ButtonBase
                 key={name}
                 component={Link}
-                to={href} 
+                to={href}
 
                 sx={{
                     alignItems: 'center',
@@ -34,7 +35,21 @@ const SideNavItem = (props) => {
                     width: '100%',
                 }}
                 onClick={onClose}
-            >
+            > 
+            {icon && (
+                <Box
+                    component="span"
+                    sx={{
+                        alignItems: 'center',
+                        color: 'secondary',
+                        display: 'inline-flex',
+                        justifyContent: 'center',
+                        mr: 2,
+                    }}
+                >
+                    {icon}
+                </Box>
+            )}
                 <Box
                     component="span"
                     sx={{

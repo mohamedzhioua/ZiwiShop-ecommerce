@@ -13,15 +13,16 @@ export const SideNavNestedItems = (props) => {
     const { item, onClose } = props
     const [open, setOpen] = useState(false);
     const { theme } = useTheme();
-    const { name, href, childCategories } = item
+    const { name, href, childCategories, icon } = item
 
     const handleToggle = useCallback(() => {
         setOpen((prevOpen) => !prevOpen);
     }, []);
 
-      
+
     return (
         <>
+
             <ButtonBase
                 key={name}
                 onClick={handleToggle}
@@ -36,7 +37,20 @@ export const SideNavNestedItems = (props) => {
                     width: '100%',
 
                 }}
-            >
+            >{icon && (
+                <Box
+                    component="span"
+                    sx={{
+                        alignItems: 'center',
+                        color: 'secondary',
+                        display: 'inline-flex',
+                        justifyContent: 'center',
+                        mr: 2,
+                    }}
+                >
+                    {icon}
+                </Box>
+            )}
                 <Box
                     component="span"
                     sx={{
@@ -47,6 +61,7 @@ export const SideNavNestedItems = (props) => {
                         fontWeight: "600",
                     }}
                 >
+
                     {toTitleCase(name)}
                 </Box>
                 <SvgIcon
@@ -70,7 +85,7 @@ export const SideNavNestedItems = (props) => {
                 {!childCategories && childCategories && childCategories.length > 0 && (
 
                     <MenuItem key={name} onClick={onClose} component={Link}
-                        to={href} 
+                        to={href}
                         sx={{
                             width: 150, borderRadius: 3, px: 1,
                             py: 0.5, justifyContent: 'center', color: theme.palette.primary.main,
@@ -80,7 +95,7 @@ export const SideNavNestedItems = (props) => {
                             variant="h5"
                             sx={{
                                 textDecoration: 'none',
-                             }}
+                            }}
                         >
                             {toTitleCase(name)}
                         </Typography>

@@ -101,7 +101,7 @@ function Navbar() {
               </IconButton>
             )}
 
-            {isMobileScreen && isSideNavOpen && (
+            { isMobileScreen && isSideNavOpen && (
               <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} categories={categories} brands={brands} />
             )}
           </Box>
@@ -147,7 +147,7 @@ function Navbar() {
               }}
             >Home
             </Button>
-            {!isMobileScreen && (<CategoriesDropDown categories={categories}
+            {IsLoggedIn && user?.role !== 'ADMIN' && !isMobileScreen && (<CategoriesDropDown categories={categories}
             />)}
           </Box>
           <Box

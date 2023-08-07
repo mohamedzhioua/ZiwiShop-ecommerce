@@ -3,13 +3,19 @@ import { Drawer, Stack, Typography } from '@mui/material';
 import { Scrollbar } from '../../components/ui/Scrollbar';
 import { SideNavSection } from './SideNavSection';
 import useTheme from '../../hooks/useTheme';
-import SideNavItem from './SideNavItem';
 import Logo from '../../components/ui/Logo';
 import useAuth from '../../hooks/useAuth';
+import { styled } from '@mui/system';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 const navigationLinks = [
     {
+        name: "Home", href: "/", icon: <HomeOutlinedIcon />
+    },
+    {
         name: "Dashboard",
+        icon: <GridViewOutlinedIcon />,
         childCategories: [
             { name: "Overview", href: "/dashboard/overview" },
             { name: "Sizes", href: "/dashboard/sizes" },
@@ -20,6 +26,11 @@ const navigationLinks = [
         ]
     },
 ];
+const StyledScrollBar = styled(Scrollbar)(() => ({
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+    position: 'relative',
+}));
 
 export const SideNav = (props) => {
     const { onClose, open, categories } = props
@@ -27,20 +38,20 @@ export const SideNav = (props) => {
     const { IsLoggedIn, user } = useAuth();
 
     return (
-        <Drawer
-            anchor="left"
-            onClose={onClose}
-            open={open}
-            PaperProps={{
-                sx: {
-                    width: "max(280px, 30%)",
-                    backdropFilter: 'blur(6px)',
-                    backgroundColor: theme.palette.background.paper,
-                }
-            }}
-        >
+        <StyledScrollBar >
+            <Drawer
+                anchor="left"
+                onClose={onClose}
+                open={open}
+                PaperProps={{
+                    sx: {
+                        width: "max(280px, 30%)",
+                        backdropFilter: 'blur(6px)',
+                        backgroundColor: theme.palette.background.paper,
+                    }
+                }}
+            >
 
-            <Scrollbar>
                 <Stack sx={{ height: '100%' }} >
                     <Stack
                         alignItems="center"
@@ -59,7 +70,6 @@ export const SideNav = (props) => {
                             px: 2
                         }}
                     >
-                        <SideNavItem item={{ name: "Home", href: "/" }} onClose={onClose} />
 
                         {IsLoggedIn && user?.role === 'ADMIN' ?
                             (<SideNavSection
@@ -74,7 +84,7 @@ export const SideNav = (props) => {
                                 childCategories: categories,
                             }]}
                             onClose={onClose} />
-                        
+
                     </Stack>
                     <Stack sx={{ p: 3 }} spacing={1}>
                         <Typography variant="subtitle1">
@@ -88,8 +98,8 @@ export const SideNav = (props) => {
 
                     </Stack>
                 </Stack>
-            </Scrollbar>
-        </Drawer>
+            </Drawer>
+        </StyledScrollBar>
     );
 };
 
