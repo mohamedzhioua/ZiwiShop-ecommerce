@@ -155,15 +155,17 @@ module.exports = {
       const sort = query.sort || "";
       const searchQuery = query.query || "";
       // query Filter
-      const queryFilter =
-        searchQuery && searchQuery !== "all"
+      const bran = await Brand.find({ name: { $regex: searchQuery, $options: "i" } }, "_id");
+       
+      const queryFilter = searchQuery && searchQuery !== "all"
           ? {
-              name: {
-                $regex: searchQuery,
-                $options: "i",
-              },
+              $or: [
+                { name: { $regex: searchQuery, $options: "i" } },
+                { brand: { $in: bran.map(brand => brand._id) } },
+               ],
             }
           : {};
+      
           // category Filter
       const categoryFilter =
         category && category !== "all"
