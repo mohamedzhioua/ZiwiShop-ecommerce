@@ -3,9 +3,11 @@ const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
 const User = require("../models/user");
+const Token = require("../models/token");
 const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
 const sendMail = require("../utils/sendMail");
+const IdParamsValidation = require("../validator/IdParamsValidation");
 
 const signToken = (id) => {
   return jwt.sign({ userId: id }, process.env.TOKEN_KEY, {
@@ -14,9 +16,7 @@ const signToken = (id) => {
 };
 
 const createActivationToken = (user) => {
-  return jwt.sign(user, process.env.ACTIVATION_SECRET, {
-    expiresIn: "5m",
-  });
+  return jwt.sign(user, process.env.ACTIVATION_SECRET);
 };
 
 module.exports = {
@@ -30,25 +30,29 @@ module.exports = {
       if (!isValid) {
         return res.status(400).json(errors);
       }
-      const exisitingUser = await User.findOne({ email });
+      let exisitingUser = await User.findOne({ email });
       if (exisitingUser) {
-        errors.email = "User already exists";
+        errors.email = "User with given email already Exist";
         return res.status(404).json(errors);
       }
+      const hashedpassword = await bcrypt.hash(password, 8);
+      exisitingUser = await User.create({
+        name,
+        email,
+        password: hashedpassword,
+      });
+
       const user = {
         name: name,
         email: email,
-        password: password,
       };
+
       const activationToken = createActivationToken(user);
-      const activationUrl = `${process.env.FRONTEND_URL}/activation/${activationToken}`;
+      const activationUrl = `${process.env.FRONTEND_URL}/activation/${exisitingUser._id}/verify/${activationToken}`;
       await sendMail({
         email: user.email,
         subject: "Activate your account",
-        message: `<h1> 💌 Email Account Activation 💌 </h1>
-        Hello ${user.name}, we appreciate you joining us on ZiwiShop .
-         <br> we hope you click on the link to activate your account 🔐🔑📧.<br>
-        <a href= ${activationUrl}>Activate Account</a>`,
+        message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
       });
       res
         .status(201)
@@ -62,37 +66,27 @@ module.exports = {
   //  ---------------------------------------- //activation method to signin //--------------------------- //
 
   activation: async (req, res) => {
-    const  {activation_token} = req.body;
-     console.log("🚀 ~ file: authController.js:66 ~ activation: ~ activation_token:", activation_token)
-     try {
-      const newUser = jwt.verify(
-        activation_token,
-        process.env.ACTIVATION_SECRET
-      );
-      if (!newUser) {
-        return res.status(404).json("Invalid token");
-      }
-      const { name, email, password } = newUser;
+    const { activationToken } = req.params;
+    const { id } = req.params;
 
-      let user = await User.findOne({ email });
-      if (user) {
-        return res.status(400).json("User already exists");
-      } else {
-        const hashedpassword = await bcrypt.hash(password, 8);
-        user = await User.create({
-          name,
-          email,
-          password: hashedpassword,
-        });
-        const token = signToken(user._id);
-        res.status(201).json({
-          token,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          image: user.image,
-        });
+    try {
+      const user = await User.findById(id);
+      if (!user) {
+        return res.status(404).json("Invalid link");
       }
+
+      const Existtoken = await Token.findOne({
+        token: activationToken,
+        userId: id,
+      });
+
+      if (!Existtoken) {
+        return res.status(404).json("Invalid link");
+      }
+      await User.updateOne({ _id: user._id, verified: true });
+      await Existtoken.remove();
+
+      res.status(201).json("Email verified successfully");
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
@@ -104,30 +98,49 @@ module.exports = {
 
     try {
       if (!isValid) {
-        res.status(400).json(errors);
-      } else {
-        await User.findOne({ email }).then(async (user) => {
-          if (!user) {
-            errors.email =
-              "Email does not exist ! please Enter the right Email or You can make account";
-            return res.status(404).json(errors);
-          }
-          const passwordMatch = await bcrypt.compare(password, user.password);
-          if (!passwordMatch) {
-            errors.password = "Wrong Password";
-            return res.status(400).json(errors);
-          } else {
-            const token = signToken(user._id);
-            res.status(200).json({
-              token,
-              name: user.name,
-              email: user.email,
-              role: user.role,
-              image: user.image,
-            });
-          }
-        });
+        return res.status(400).json(errors);
       }
+      const userExist = await User.findOne({ email });
+      if (!userExist) {
+        errors.email =
+          "Email does not exist ! please Enter the right Email or You can make account";
+        return res.status(404).json(errors);
+      }
+      const passwordMatch = await bcrypt.compare(password, userExist.password);
+      if (!passwordMatch) {
+        errors.password = "Wrong Password";
+        return res.status(400).json(errors);
+      }
+      if (!userExist.verified) {
+        let token = await Token.findOne({ userId: userExist._id });
+        if (!token) {
+          const user = {
+            name: userExist.name,
+            email: userExist.email,
+          };
+
+          const activationToken = createActivationToken(user);
+          const activationUrl = `${process.env.FRONTEND_URL}/activation/${userExist._id}/verify/${activationToken}`;
+          await sendMail({
+            email: userExist.email,
+            subject: "Activate your account",
+            message: `Hello ${userExist.name}, please click on the link to activate your account: ${activationUrl}`,
+          });
+          return res
+            .status(400)
+            .json(
+              `please check your email:- ${userExist.email} to activate your account!`
+            );
+        }
+      }
+      const token = signToken(userExist._id);
+     res.status(200).json({
+        token,
+        name: userExist.name,
+        email: userExist.email,
+        role: userExist.role,
+        image: userExist.image,
+      });
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }

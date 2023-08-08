@@ -4,7 +4,7 @@ const AuthController = require("../controllers/authController");
 
 router.post("/createUser", AuthController.createUser);
 
-router.post("/activation", AuthController.activation);
+router.post("/activation/:activationToken", AuthController.activation);
 
 router.post("/signin", AuthController.signin);
 
