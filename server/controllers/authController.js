@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 const User = require("../models/user");
 const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
+const ResetValidation = require("../validator/ResetValidation");
 const sendMail = require("../utils/sendMail");
 const IdParamsValidation = require("../validator/IdParamsValidation");
 
@@ -18,6 +19,9 @@ const createActivationToken = (user) => {
   return jwt.sign(user, process.env.ACTIVATION_SECRET);
 };
 
+const createResetPasswordToken = (user) => {
+  return jwt.sign(user, process.env.RESET_PASSWORD_SECRET);
+};
 module.exports = {
   //  ---------------------------------------- //signup method to create a new user//--------------------------- //
 
@@ -53,11 +57,10 @@ module.exports = {
         subject: "Activate your account",
         message: `Hello ${exisitingUser.name}, please click on the link to activate your account: ${activationUrl}`,
       });
-      res
-        .status(201)
-        .json(
-          {success:true ,message:`please check your email:- ${exisitingUser.email} to activate your account!`}
-        );
+      res.status(201).json({
+        success: true,
+        message: `please check your email:- ${exisitingUser.email} to activate your account!`,
+      });
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
@@ -67,7 +70,7 @@ module.exports = {
   verifyemail: async (req, res) => {
     const { query } = req;
     const activationToken = query.activationToken;
- 
+
     if (!activationToken) {
       return res.status(401).json("Invalid token");
     }
@@ -76,7 +79,7 @@ module.exports = {
         activationToken,
         process.env.ACTIVATION_SECRET
       );
-       const user = await User.findById(decoded.userId);
+      const user = await User.findById(decoded.userId);
       if (!user) {
         return res.status(404).json("Invalid token");
       }
@@ -90,7 +93,6 @@ module.exports = {
         role: user.role,
         image: user.image,
       });
-       
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
@@ -116,10 +118,8 @@ module.exports = {
         return res.status(400).json(errors);
       }
       if (!userExist.verified) {
-          return res
-            .status(401)
-            .json( "Please Verifiy Your Email and Try again" );
-        }
+        return res.status(401).json("Please Verifiy Your Email and Try again");
+      }
       const token = signToken(userExist._id);
       res.status(200).json({
         token,
@@ -127,6 +127,79 @@ module.exports = {
         email: userExist.email,
         role: userExist.role,
         image: userExist.image,
+      });
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
+  //  ---------------------------------------- //forgetPassword method to add a new user//--------------------------- //
+  forgetPassword: async (req, res) => {
+    const email = req.body.email;
+    try {
+      if (!email) {
+        return res.status(400).json("email is required");
+      }
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json("Email could not be sent");
+      }
+
+      const resetPasswordToken = createResetPasswordToken({
+        userId: user._id,
+        email: user.email,
+      });
+      user.resetPasswordToken = resetPasswordToken;
+      await user.save();
+      const reseturl = `${process.env.FRONTEND_URL}/resetpassword?resetPasswordToken=${resetPasswordToken}`;
+      await sendMail({
+        email: user.email,
+        subject: "RESET YOUR PASSWORD",
+        message: `Hello ${user.name}, please click on the link to creact A new password: ${reseturl}`,
+      });
+      res.status(200).json({
+        success: true,
+        message: `please check your email:- ${user.email} to Reset your password!`,
+      });
+    } catch (error) {
+      return res.status(500).send("Error: " + error.message);
+    }
+  },
+  //  ---------------------------------------- //resetpassword method to let the user creat a new password //--------------------------- //
+  resetpassword: async (req, res) => {
+    const { password, confirmPassword } = req.body;
+     const { query } = req;
+    const resetPasswordToken = query.resetPasswordToken;
+    const { errors, isValid } = ResetValidation(req.body);
+
+    try {
+      if (!resetPasswordToken) {
+        return res.status(401).json("Unauthoriazed");
+      }
+      const decoded = jwt.verify(
+        resetPasswordToken,
+        process.env.RESET_PASSWORD_SECRET
+      );
+      const user = await User.findOne({
+        _id: decoded.userId,
+        resetPasswordToken: resetPasswordToken,
+      });
+      if (!user) {
+        return res.status(404).json("Wrong Reset Password token");
+      }
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+      const hashedpassword = await bcrypt.hash(password, 8);
+      user.password = hashedpassword;
+      user.resetPasswordToken = undefined;
+      await user.save();
+      const token = signToken(user._id);
+      res.status(200).json({
+        token,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        image: user.image,
       });
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
