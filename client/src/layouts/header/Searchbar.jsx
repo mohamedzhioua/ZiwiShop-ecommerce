@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Input, Slide, IconButton, InputAdornment, ClickAwayListener } from '@mui/material';
+import { Input, Slide, IconButton, ClickAwayListener } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../../components/ui/CustomButton';
- 
+
 
 const HEADER_MOBILE = 84;
 const HEADER_DESKTOP = 92;
@@ -27,11 +27,12 @@ const StyledSearchbar = styled('Box')(({ theme }) => ({
   },
 }));
 
+
 const Searchbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
- 
+
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -66,11 +67,11 @@ const Searchbar = () => {
                 autoFocus
                 fullWidth
                 disableUnderline
-                placeholder="Search…"
+                placeholder="Search for products, brands and more…"
                 startAdornment={
-                  <InputAdornment position="start">
-                    <SearchOutlinedIcon sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-                  </InputAdornment>
+                  <IconButton position="start" color='primary'>
+                    <SearchOutlinedIcon sx={{ width: 20, height: 20 }} />
+                  </IconButton>
                 }
                 sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
               />

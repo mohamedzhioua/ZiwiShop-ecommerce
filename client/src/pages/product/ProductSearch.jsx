@@ -28,7 +28,7 @@ function ProductSearch() {
     setIsFilterDrawerOpen(false);
   };
   const { search } = useLocation();
-  const searchParams = new URLSearchParams(search);
+   const searchParams = new URLSearchParams(search);
   const category = searchParams?.get('category') ?? 'all';
   const brand = searchParams?.get('brand') ?? 'all';
   const size = searchParams?.get('size') ?? 'all';

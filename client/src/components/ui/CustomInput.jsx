@@ -26,6 +26,8 @@ const CustomInput = ({
   return (
 
     <TextField
+    inputProps={{style: {fontSize: 15}}}  
+    InputLabelProps={{style: {fontSize: 15}}}  
       required={required}
       label={label}
       placeholder={placeholder}

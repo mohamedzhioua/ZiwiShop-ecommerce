@@ -4,8 +4,11 @@ import { useMounted } from "../../hooks/use-mounted";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import CustomButton from "../ui/CustomButton";
-import { FormHelperText, TextField } from "@mui/material";
+import { FormHelperText, Link, TextField } from "@mui/material";
 import { Stack } from "@mui/system";
+import { Link as RouterLink } from "react-router-dom";
+import { tokens } from "../../theme/theme";
+import useTheme from "../../hooks/useTheme";
 
 
 const initialValues = {
@@ -20,6 +23,8 @@ const validationSchema = Yup.object({
     .required('Email is required')
 });
 const Forgetpassword = () => {
+  const { theme } = useTheme();
+  const colors = tokens(theme.palette.mode);
   const isMounted = useMounted()
   const navigate = useNavigate()
   const { forgotPassword } = useAuth();
@@ -98,7 +103,22 @@ const Forgetpassword = () => {
         >
           {isSubmitting ? "loading..." : "Send reset link"}
         </CustomButton>
+        <Link
+        component={RouterLink}
+        style={{
+          color: colors.grey[100], textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'underline',
+          }
+        }}
+        to="/signin"
+        variant="h5"
+      >
+        {"Remember your password?"}
+      </Link>
       </Stack>
+
+     
     </form>
   )
 }

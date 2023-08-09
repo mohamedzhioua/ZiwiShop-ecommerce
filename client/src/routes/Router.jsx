@@ -15,6 +15,8 @@ const Login = lazy(() => import("../pages/auth/Signin"));
 const Register = lazy(() => import("../pages/auth/Signup"));
 const ForgetPassword = lazy(() => import("../pages/auth/ForgetPassword"));
 const FAQ = lazy(() => import("../pages/FAQ"));
+const EmailVerfication = lazy(() => import("../pages/auth/EmailVerfication"));
+
 //dashboard
 const Overview = lazy(() => import("../pages/dashboard/Overview"));
 //product
@@ -44,16 +46,17 @@ const AllOrders = lazy(() => import("../pages/dashboard/Orders"));
 
 
 const Router = () => {
- 
 
-   return (
+
+  return (
 
     <Routes>
       <Route path="/" element={<Suspense fallback={<Splash />}><Home /></Suspense>} />
       <Route path="/ZiwiShop/search" element={<Suspense fallback={<Splash />}><Search /></Suspense>} />
       <Route path="/productDetails/:id" element={<Suspense fallback={<Splash />}><ProductDetails /></Suspense>} />
-      <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} /> 
-       <Route path="/ForgetPassword" element={<Suspense fallback={<Splash />}><ForgetPassword /></Suspense>} />
+      <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} />
+      <Route path="/ForgetPassword" element={<Suspense fallback={<Splash />}><ForgetPassword /></Suspense>} />
+      <Route path="/emailverification" element={<EmailVerfication />} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />
@@ -64,8 +67,8 @@ const Router = () => {
         <Route path="/profile" element={<Profile />} />
 
         <Route path="/checkout" element={<Checkout />} />
-        
-          <Route path="/order/:id" element={<Order /> } />
+
+        <Route path="/order/:id" element={<Order />} />
 
         <Route path="/OrderHistory" element={<OrderHistory />} />
       </Route>
@@ -94,7 +97,7 @@ const Router = () => {
         <Route path="/dashboard/brands" element={<BrandList />} />
         <Route path="/dashboard/brands/add" element={<BrandAdd />} />
         <Route path="/dashboard/brands/edit/:id" element={<BrandEdit />} />
-                {/* orders  */}
+        {/* orders  */}
         <Route path="/dashboard/orders" element={<AllOrders />} />
 
         <Route path="/dashboard/overview" element={<Overview />} />

@@ -30,9 +30,15 @@ class AuthApi {
     return this.request('post', '/googleLogin', idToken);
   }
 
-  register(data) {
+  signup(data) {
     return this.request('post', '/signup', data);
   }
+
+  emailverification(activationToken) {
+    
+     return this.request('post', `/emailverification?activationToken=${activationToken}`);
+  }
+
 
 }
 

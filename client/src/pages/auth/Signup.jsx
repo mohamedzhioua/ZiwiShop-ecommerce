@@ -7,14 +7,14 @@ import { Box, Link, Container, Grid, Typography, CardContent } from "@material-u
 import { useState } from "react";
 import CustomInput from "../../components/ui/CustomInput";
 import CustomButton from "../../components/ui/CustomButton";
-import useAuth from "../../hooks/useAuth";
 import { tokens } from "../../theme/theme";
 import useTheme from "../../hooks/useTheme";
 import SocialAuth from "../../components/SocialAuth";
+ import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
   const { register } = useAuth();
-  const { theme } = useTheme();
+   const { theme } = useTheme();
   const colors = tokens(theme.palette.mode);
   const [serverErrors, setServerErrors] = useState({});
 
@@ -27,12 +27,19 @@ const Signup = () => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(
+        /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/,
+        "Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long"
+      ),
   });
+  
 
   const onSubmit = async (values, { setStatus, setSubmitting }) => {
     try {
-      await register(values.email, values.name, values.password);
+     await register({email:values.email, name:values.name, password:values.password});
+
     } catch (error) {
       console.error(error);
       setServerErrors(error);

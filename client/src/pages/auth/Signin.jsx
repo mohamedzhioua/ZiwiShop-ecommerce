@@ -13,6 +13,7 @@ import { CardContent } from "@mui/material";
 import { tokens } from "../../theme/theme";
 import useTheme from "../../hooks/useTheme";
 import SocialAuth from "../../components/SocialAuth";
+import { toast } from "react-hot-toast";
 
 function Signin() {
   const { login } = useAuth();
@@ -31,9 +32,9 @@ function Signin() {
 
   const onSubmitHandler = async (values, { setStatus, setSubmitting }) => {
     try {
-      await login(values.email, values.password);
+       await login(values.email, values.password);
     } catch (error) {
-      console.error(error);
+      toast.error(error);
       setServerErrors(error);
       setStatus({ success: false });
       setSubmitting(false);

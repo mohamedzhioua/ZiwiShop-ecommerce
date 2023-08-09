@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { createContext, useEffect, useReducer } from "react";
 import { authApi } from "../api/authApi";
+import { toast } from 'react-hot-toast';
 
 const initialState = {
   IsLoggedIn: false,
@@ -157,10 +158,14 @@ export const AuthProvider = (props) => {
     });
 
   };
-  const register = async (email, name, password) => {
+  const register = async (data) => {
 
-    const user = await authApi.register({ email, name, password });
-    localStorage.setItem("userDetails", JSON.stringify(user));
+    const user = await authApi.signup(data);
+    if(user.success === true){
+      toast.success(user.message);
+    }
+
+     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "REGISTER",
       payload: {
@@ -174,7 +179,7 @@ export const AuthProvider = (props) => {
       localStorage.removeItem("userDetails");
       localStorage.removeItem("billingInfo");
       localStorage.removeItem("cartItems");
-      localStorage.removeItem("step"); 
+      localStorage.removeItem("step");
       dispatch({ type: "LOGOUT" });
     } catch (err) {
       console.error(err);
