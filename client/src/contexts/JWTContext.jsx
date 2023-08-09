@@ -178,17 +178,10 @@ export const AuthProvider = (props) => {
   const register = async (data) => {
 
     const user = await authApi.signup(data);
+    console.log("🚀 ~ file: JWTContext.jsx:181 ~ register ~ user:", user)
     if(user.success === true){
       toast.success(user.message);
     }
-
-     localStorage.setItem("userDetails", JSON.stringify(user));
-    dispatch({
-      type: "REGISTER",
-      payload: {
-        user,
-      },
-    });
   };
 
   const logout = async () => {
