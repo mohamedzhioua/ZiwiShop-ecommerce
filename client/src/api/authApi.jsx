@@ -38,9 +38,11 @@ class AuthApi {
      return this.request('post', `/emailverification?activationToken=${activationToken}`);
   }
   forgotPassword(data) {
-     return this.request('post', '/resetpassword' , data);
+     return this.request('post', '/forgotpassword' , data);
  }
-
+ resetpassword(data) {
+  return this.request('post',  `/resetpassword?resetPasswordToken=${data.resetPasswordToken}`, data);
+}
 }
 
 export const authApi = new AuthApi();

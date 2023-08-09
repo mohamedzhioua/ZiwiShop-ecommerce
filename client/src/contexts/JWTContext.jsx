@@ -72,6 +72,14 @@ VERIFY_EMAIL: (state, action) => {
     user,
   };
 },
+RESET_PASSWORD: (state, action) => {
+  const { user } = action.payload;
+  return {
+    ...state,
+    IsLoggedIn: true,
+    user,
+  };
+},
 };
 
 const reducer = (state, action) =>
@@ -86,6 +94,7 @@ const AuthContext = createContext({
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
   verifyemail:() => Promise.resolve(),
+  resetpassword:() => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -150,6 +159,16 @@ export const AuthProvider = (props) => {
       },
     });
   };
+  const resetpassword = async (resetPasswordToken , password ,confirmPassword) => {
+    const user = await authApi.resetpassword({resetPasswordToken , password ,confirmPassword});
+    localStorage.setItem("userDetails", JSON.stringify(user));
+    dispatch({
+      type: "RESET_PASSWORD",
+      payload: {
+        user,
+      },
+    });
+  };
   const facebookLogin = async (userID, accessToken) => {
     const user = await authApi.facebookLogin({
       userID,
@@ -205,6 +224,7 @@ export const AuthProvider = (props) => {
         facebookLogin,
         googleLogin,
         verifyemail,
+        resetpassword,
       }}
     >
       {children}

@@ -1,15 +1,15 @@
-import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../ui/CustomInput";
-import { Link, Unstable_Grid2 as Grid } from "@mui/material";
+import { Unstable_Grid2 as Grid } from "@mui/material";
 import CustomButton from "../ui/CustomButton";
 import useAuth from '../../hooks/useAuth';
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const initialValues = {
     password: '',
-    cPassword: ''
+    confirmPassword: ''
 };
 
 const passwordValidationSchema = Yup.object({
@@ -19,27 +19,29 @@ const passwordValidationSchema = Yup.object({
             /^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[A-Z])(?=.*[a-z]).{8,}$/,
             "Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long"
         ),
-    cPassword: Yup.string()
+    confirmPassword: Yup.string()
         .required('Confirm Password is required')
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
 const ResetPasswordForm = () => {
     const [serverErrors, setServerErrors] = useState({});
-    const { login } = useAuth();
-
+    const { resetpassword } = useAuth();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const resetPasswordToken = searchParams?.get('resetPasswordToken')
+  
 
 
     const onSubmit = async (values, { setStatus, setSubmitting }) => {
         try {
-            await register({ email: values.email, cPassword: values.name, password: values.password });
+            await resetpassword( resetPasswordToken , values.password , values.confirmPassword);
 
         } catch (error) {
             console.error(error);
             setServerErrors(error);
             setStatus({ success: false });
             setSubmitting(false);
-
         }
     };
 
@@ -82,12 +84,12 @@ const ResetPasswordForm = () => {
                         label="Confirm New Password"
                         placeholder="name@example.com"
                         type="password"
-                        name="cPassword"
-                        value={values.cPassword}
+                        name="confirmPassword"
+                        value={values.confirmPassword}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={touched.cPassword && !!(errors.cPassword || serverErrors.cPassword)}
-                        helperText={touched.cPassword && (errors.cPassword || serverErrors.cPassword)}
+                        error={touched.confirmPassword && !!(errors.confirmPassword || serverErrors.confirmPassword)}
+                        helperText={touched.confirmPassword && (errors.confirmPassword || serverErrors.confirmPassword)}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -98,9 +100,7 @@ const ResetPasswordForm = () => {
                         disabled={isSubmitting}
                         fullWidth
                         sx={{
-                            '@media (min-width: 600px)': {
-                              width: '50%',
-                            },
+                            
                             padding: '15px',
                             borderRadius: '16px',
                             cursor: 'pointer',
