@@ -1,36 +1,41 @@
-import { Divider } from "@mui/material"
+import { Paper, Typography } from "@mui/material"
 import Forgetpassword from "../../components/auth/ForgetPassword"
-import Heading from "../../components/ui/Heading"
-import { Box, Container } from "@mui/system"
+import { styled } from "@mui/system";
+
+
+const CenteredContainer = styled('div')({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '80vh',
+});
+
+const CustomPaper = styled(Paper)({
+    width: '75%',
+    '@media (min-width: 600px)': {
+        width: '50%',
+    },
+    padding: '20px',
+    borderRadius: '16px',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)',
+    color: 'primary',
+});
+const SpacedTypography = styled(Typography)({
+    marginBottom: '20px', 
+});
 
 function ForgetPassword() {
     return (
-        <>
-            <Container maxWidth="xs">
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginLeft: '1rem',
-                        marginRight: '1rem',
-                        marginTop:'5rem'
-                    }}
-                >
-                    <Heading
-                        titleStyle='h4'
-                        title="Forgot password"
-                        description="Lost your password? Please enter your email address. You will receive a link to create a new password via email."
-                    />
-                </Box>
-                <Divider
-                    sx={{
-                        marginY: 2,
-                        
-                    }} />
+        <CenteredContainer>
+            <CustomPaper>
+                <SpacedTypography variant="h2" fontWeight='bold'align='center'>Password Reset</SpacedTypography>
+                <SpacedTypography variant="h4">  Enter Your <b>Email address</b> that you used to register. We'll
+                    send you an email with your name and a link to reset your password.</SpacedTypography>
                 <Forgetpassword />
-            </Container>
-        </>
+            </CustomPaper>
+        </CenteredContainer>
     );
 }
 

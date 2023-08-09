@@ -56,11 +56,11 @@ const Router = () => {
       <Route path="/productDetails/:id" element={<Suspense fallback={<Splash />}><ProductDetails /></Suspense>} />
       <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} />
       <Route path="/ForgetPassword" element={<Suspense fallback={<Splash />}><ForgetPassword /></Suspense>} />
-      <Route path="/emailverification" element={<EmailVerfication />} />
 
       <Route element={<ForceRedirect />}>
         <Route path="/signin" element={<Login />} />
         <Route path="/signup" element={<Register />} />
+        <Route path="/emailverification" element={<EmailVerfication />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["ADMIN", "USER"]} />}>

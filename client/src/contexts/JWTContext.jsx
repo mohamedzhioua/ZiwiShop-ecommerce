@@ -62,10 +62,16 @@ const handlers = {
       ...state,
       IsLoggedIn: true,
       user,
-
-
     };
   },
+VERIFY_EMAIL: (state, action) => {
+  const { user } = action.payload;
+  return {
+    ...state,
+    IsLoggedIn: true,
+    user,
+  };
+},
 };
 
 const reducer = (state, action) =>
@@ -79,6 +85,7 @@ const AuthContext = createContext({
   googleLogin: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
+  verifyemail:() => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -128,6 +135,16 @@ export const AuthProvider = (props) => {
     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "LOGIN",
+      payload: {
+        user,
+      },
+    });
+  };
+  const verifyemail = async (activationToken) => {
+    const user = await authApi.emailverification(activationToken );
+    localStorage.setItem("userDetails", JSON.stringify(user));
+    dispatch({
+      type: "VERIFY_EMAIL",
       payload: {
         user,
       },
@@ -197,6 +214,7 @@ export const AuthProvider = (props) => {
         register,
         facebookLogin,
         googleLogin,
+        verifyemail,
       }}
     >
       {children}

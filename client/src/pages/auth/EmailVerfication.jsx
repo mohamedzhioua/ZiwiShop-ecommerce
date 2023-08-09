@@ -1,29 +1,29 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
-import { Link as RouterLink } from 'react-router-dom';
 import { Paper, Typography } from '@mui/material';
-import { authApi } from "../../api/authApi";
 import CustomButton from "../../components/ui/CustomButton";
+import useAuth from "../../hooks/useAuth";
 
 function EmailVerfication() {
   const [error, setError] = useState('');
-  const [isverified, setIsverified] = useState(false);
+  const [loading, setLoading] = useState(false); 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const activationToken = searchParams?.get('activationToken')
 
+  const { verifyemail } = useAuth();
 
   const handleVerfication = async () => {
+    setLoading(true);  
+    setError(''); 
     try {
-      const res = await authApi.emailverification(activationToken);
-      if (res && res.success === true) {
-        setIsverified(true);
-      }
-    } catch (error) {
-      setError("Invalid Token! Please request a Email verification again by Login"
-      );
-    }
+      await verifyemail(activationToken);
+   } catch (error) {
+     setError(error);
+   } finally {
+     setLoading(false);  
+   }
   };
 
 
@@ -32,12 +32,8 @@ function EmailVerfication() {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '20px',
-    '@media (min-width: 600px)': {
-      gap: '52px',
-    },
     width: '100%',
-    height: '100vh',
+    height: '80vh',
   });
 
   const CustomPaper = styled(Paper)({
@@ -52,28 +48,11 @@ function EmailVerfication() {
   });
 
 
-  const CustomLink = styled(Link)({
-    color: 'white',
-    '&:hover': {
-      fontSize: '18px',
-    },
-  });
+
   return (
     <CenteredContainer>
       <CustomPaper>
-        {isverified ? (
-          <div>
-            <Typography variant="h4" fontWeight="bold">
-              Email verified Successfully.
-            </Typography>
-            <Typography align="center">
-              Please{' '}
-              <CustomLink component={RouterLink} to="/auth/signin">
-                Login Now.
-              </CustomLink>
-            </Typography>
-          </div>
-        ) : error ? (
+        {error ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Typography variant="h4" fontWeight="bold" align="center" color="error">
               {error}
@@ -81,23 +60,30 @@ function EmailVerfication() {
           </div>
         ) : (
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
-            <Typography variant="h4" fontWeight="bold">
+            <Typography variant="h2" fontWeight='bold' align='center'>
               Email Verification
             </Typography>
-            <Typography variant="body1" align="center" fontSize="16px">
-              Click on the Link below to Verify Your email.
+            <Typography variant="h4" align="center" >
+              Click on the Link below to Verify Your <b>email</b>.
             </Typography>
-            <CustomButton variant="contained" sx={{
-              width: '50%',
-              padding: '15px',
-              borderRadius: '16px',
-               fontWeight: 'bold',
-              cursor: 'pointer',
-              '&:hover': {
-                transform: 'scale(1.1)',
-              },
-            }} onClick={handleVerfication}>
-              Verify Email
+            <CustomButton
+              variant="contained"
+              fullWidth
+              color="secondary"
+              sx={{
+                '@media (min-width: 600px)': {
+                  width: '50%',
+                },
+                padding: '15px',
+                borderRadius: '16px',
+                cursor: 'pointer',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                },
+              }}
+              onClick={handleVerfication}
+            >
+              {loading ? "Verifying....." :'Verify Email'}
             </CustomButton>
           </div>
         )}

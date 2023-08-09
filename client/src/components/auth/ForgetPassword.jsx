@@ -9,6 +9,7 @@ import { Stack } from "@mui/system";
 import { Link as RouterLink } from "react-router-dom";
 import { tokens } from "../../theme/theme";
 import useTheme from "../../hooks/useTheme";
+import CustomInput from "../ui/CustomInput";
 
 
 const initialValues = {
@@ -70,8 +71,8 @@ const Forgetpassword = () => {
       noValidate
       onSubmit={handleSubmit}
     >
-      <Stack spacing={2}>
-        <TextField
+      <Stack spacing={2} alignItems='center'>
+        <CustomInput
           required
           error={!!(touched.email && errors.email)}
           fullWidth
@@ -99,26 +100,38 @@ const Forgetpassword = () => {
           type="submit"
           color='secondary'
           variant="contained"
-          sx={{ mt: 2 }}
+          sx={{
+            mt: 2,
+            '@media (min-width: 600px)': {
+              width: '50%',
+            },
+            padding: '15px',
+            borderRadius: '16px',
+            cursor: 'pointer',
+            '&:hover': {
+              transform: 'scale(1.1)',
+            },
+          }}
+
         >
           {isSubmitting ? "loading..." : "Send reset link"}
         </CustomButton>
         <Link
-        component={RouterLink}
-        style={{
-          color: colors.grey[100], textDecoration: 'none',
-          '&:hover': {
-            textDecoration: 'underline',
-          }
-        }}
-        to="/signin"
-        variant="h5"
-      >
-        {"Remember your password?"}
-      </Link>
+          component={RouterLink}
+          style={{
+            color: colors.grey[100], textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+            }
+          }}
+          to="/signin"
+          variant="h5"
+        >
+          {"Remember your password?"}
+        </Link>
       </Stack>
 
-     
+
     </form>
   )
 }

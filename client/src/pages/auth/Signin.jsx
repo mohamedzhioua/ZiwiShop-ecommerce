@@ -2,11 +2,9 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Avatar from '@mui/material/Avatar';
 import CustomInput from "../../components/ui/CustomInput";
 import { Link, Container, Unstable_Grid2 as Grid, Typography } from "@mui/material";
 import CustomButton from "../../components/ui/CustomButton";
-import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from '../../hooks/useAuth';
 import { Box } from "@mui/system";
 import { CardContent } from "@mui/material";
@@ -32,7 +30,7 @@ function Signin() {
 
   const onSubmitHandler = async (values, { setStatus, setSubmitting }) => {
     try {
-       await login(values.email, values.password);
+      await login(values.email, values.password);
     } catch (error) {
       toast.error(error);
       setServerErrors(error);
@@ -68,10 +66,8 @@ function Signin() {
           display: 'grid',
           placeItems: 'center',
         }}>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <FaRegUserCircle />
-          </Avatar>
-          <Typography variant="h5">
+
+          <Typography variant="h3" fontWeight="bold">
             Sign in
           </Typography>
         </Box>
@@ -80,7 +76,8 @@ function Signin() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <CustomInput
-                  label="Email*"
+                  required
+                  label="Email"
                   placeholder="name@example.com"
                   type="text"
                   name="email"
@@ -93,7 +90,8 @@ function Signin() {
               </Grid>
               <Grid item xs={12}>
                 <CustomInput
-                  label="Password*"
+                  required
+                  label="Password"
                   placeholder="password"
                   type="password"
                   name="password"
@@ -139,7 +137,7 @@ function Signin() {
                       }
                     }}
                     to="/ForgetPassword"
-                  variant="h5"
+                    variant="h5"
                     component={RouterLink}
                   >
                     {'Forgot password?'}
@@ -147,7 +145,7 @@ function Signin() {
                 </Grid>
                 <Grid item>
                   <Link
-                   component={RouterLink}
+                    component={RouterLink}
                     style={{
                       color: colors.grey[100], textDecoration: 'none',
                       '&:hover': {
