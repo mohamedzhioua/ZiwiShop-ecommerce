@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Box, Typography, Unstable_Grid2 as Grid, TextField } from "@mui/material";
 import { Stack } from "@mui/system";
 import CustomInput from "../ui/CustomInput";
 import { getIn } from "formik";
-
+import Autocomplete from '@mui/material/Autocomplete';
+import { countries } from '../../utils/countries'
 const Billing = (props) => {
     const { values, touched, errors, handleBlur, handleChange } = props
-     const formattedName = (field) => `shippingAddress.${field}`;
+    const formattedName = (field) => `shippingAddress.${field}`;
 
     const formattedError = (field) =>
         Boolean(
@@ -59,17 +60,27 @@ const Billing = (props) => {
                         />
                     </Grid>
                     <Grid xs={12} md={12}>
-                        <CustomInput
-                            required
-                            fullWidth
-                            type="text"
-                            label="Country"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
+                        <Autocomplete
                             value={formattedValue("country")}
-                            name={formattedName("country")}
-                            error={formattedError("country")}
-                            helperText={formattedHelper("country")}
+                            options={countries}
+                            autoHighlight
+                            onChange={(event, newValue) => {
+                                handleChange(formattedName("country"))(newValue); 
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    onChange={handleChange}
+                                    required
+                                    fullWidth
+                                    label="Country"
+                                    variant="outlined"
+                                    name={formattedName("country")}
+                                    onBlur={handleBlur}
+                                    error={formattedError("country")}
+                                    helperText={formattedHelper("country")}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid xs={12} md={6}>

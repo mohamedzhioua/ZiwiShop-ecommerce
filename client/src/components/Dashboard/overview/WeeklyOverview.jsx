@@ -16,7 +16,7 @@ const WeeklyOverview = (props) => {
   const options = {
     chart: {
       parentHeightOffset: 0,
-      toolbar: { show: true },
+      toolbar: { show: false },
       foreColor: theme.palette.primary.main,
 
     },

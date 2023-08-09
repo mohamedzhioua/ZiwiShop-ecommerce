@@ -63,29 +63,7 @@ const Checkout = () => {
     const handleEditStep = (step) => {
         setActiveStep(step);
     };
-    //   async function makePayment(values) {
-    //     const stripe = await stripePromise;
-    //     const requestBody = {
-    //       userName: [values.firstName, values.lastName].join(" "),
-    //       email: values.email,
-    //       products: cart.map(({ id, count }) => ({
-    //         id,
-    //         count,
-    //       })),
-    //     };
-
-    //     const response = await fetch("http://localhost:2000/api/orders", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(requestBody),
-    //     });
-    //     const session = await response.json();
-    //     await stripe.redirectToCheckout({
-    //       sessionId: session.id,
-    //     });
-    //   }
-
-
+  
     const formik = useFormik({
         onSubmit: (values, actions) => handleFormSubmit(values, actions, activeStep, isFourthStep), initialValues: JSON.parse(localStorage.getItem("billingInfo")) || checkoutInitialValues,
         validationSchema: checkoutSchema[activeStep]
