@@ -31,8 +31,6 @@ const ResetPasswordForm = () => {
     const searchParams = new URLSearchParams(location.search);
     const resetPasswordToken = searchParams?.get('resetPasswordToken')
   
-
-
     const onSubmit = async (values, { setStatus, setSubmitting }) => {
         try {
             await resetpassword( resetPasswordToken , values.password , values.confirmPassword);
@@ -44,7 +42,6 @@ const ResetPasswordForm = () => {
             setSubmitting(false);
         }
     };
-
 
     const formik = useFormik({
         initialValues,

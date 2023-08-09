@@ -37,9 +37,11 @@ class AuthApi {
   emailverification(activationToken) {
      return this.request('post', `/emailverification?activationToken=${activationToken}`);
   }
+
   forgotPassword(data) {
      return this.request('post', '/forgotpassword' , data);
  }
+ 
  resetpassword(data) {
   return this.request('post',  `/resetpassword?resetPasswordToken=${data.resetPasswordToken}`, data);
 }
