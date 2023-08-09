@@ -7,7 +7,6 @@ const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
 const ResetValidation = require("../validator/ResetValidation");
 const sendMail = require("../utils/sendMail");
-const IdParamsValidation = require("../validator/IdParamsValidation");
 
 const signToken = (id) => {
   return jwt.sign({ userId: id }, process.env.TOKEN_KEY, {
@@ -52,11 +51,13 @@ module.exports = {
 
       const activationToken = createActivationToken(user);
       const activationUrl = `${process.env.FRONTEND_URL}/emailverification?activationToken=${activationToken}`;
-      await sendMail({
-        email: exisitingUser.email,
-        subject: "Activate your account",
-        message: `Hello ${exisitingUser.name}, please click on the link to activate your account: ${activationUrl}`,
-      });
+      await sendMail(
+        exisitingUser.email,
+        activationUrl,
+        exisitingUser.name,
+        "Email Verification",
+        "varificationmail"
+      );
       res.status(201).json({
         success: true,
         message: `please check your email:- ${exisitingUser.email} to activate your account!`,
@@ -151,11 +152,13 @@ module.exports = {
       user.resetPasswordToken = resetPasswordToken;
       await user.save();
       const reseturl = `${process.env.FRONTEND_URL}/resetpassword?resetPasswordToken=${resetPasswordToken}`;
-      await sendMail({
-        email: user.email,
-        subject: "RESET YOUR PASSWORD",
-        message: `Hello ${user.name}, please click on the link to creact A new password: ${reseturl}`,
-      });
+      await sendMail( 
+        user.email,
+        reseturl,
+        user.name,
+        "RESET YOUR PASSWORD",
+        "forgotpasswordmail"
+       );
       res.status(200).json({
         success: true,
         message: `please check your email:- ${user.email} to Reset your password!`,
@@ -167,7 +170,7 @@ module.exports = {
   //  ---------------------------------------- //resetpassword method to let the user creat a new password //--------------------------- //
   resetpassword: async (req, res) => {
     const { password, confirmPassword } = req.body;
-     const { query } = req;
+    const { query } = req;
     const resetPasswordToken = query.resetPasswordToken;
     const { errors, isValid } = ResetValidation(req.body);
 
