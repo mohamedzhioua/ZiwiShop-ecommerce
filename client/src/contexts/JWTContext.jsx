@@ -181,7 +181,6 @@ export const AuthProvider = (props) => {
       toast.success(user.message);
     }
   };
-
   const logout = async () => {
     try {
       localStorage.removeItem("userDetails");

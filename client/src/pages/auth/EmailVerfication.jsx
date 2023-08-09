@@ -33,11 +33,11 @@ function EmailVerfication() {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '80vh',
+    height: '78vh',
   });
 
   const CustomPaper = styled(Paper)({
-    width: '75%',
+    width: '85%',
     '@media (min-width: 600px)': {
       width: '50%',
     },

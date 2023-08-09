@@ -1,8 +1,8 @@
 import { Typography, Paper } from "@mui/material";
 import { styled } from "@mui/system";
-import SigninForm from "../../components/auth/SigninForm";
+import ResetPasswordForm from "../../components/auth/ResetPasswordForm";
 
-function Signin() {
+function ResetPassword() {
 
   const CenteredContainer = styled('div')({
     display: 'flex',
@@ -30,9 +30,9 @@ function Signin() {
 
       <CustomPaper>
         <Typography variant="h2" fontWeight="bold" align="center" marginBottom='20px'>
-          Sign in
+        Password Reset
         </Typography>
-        <SigninForm />
+        <ResetPasswordForm />
       </CustomPaper>
     </CenteredContainer>
 
@@ -41,4 +41,4 @@ function Signin() {
 
 }
 
-export default Signin;
+export default ResetPassword;

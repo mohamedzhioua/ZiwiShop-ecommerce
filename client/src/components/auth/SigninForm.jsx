@@ -120,7 +120,7 @@ const SigninForm = () => {
                       textDecoration: 'underline',
                     }
                   }}
-                  to="/ForgetPassword"
+                  to="/forgotpassword"
                   variant="h5"
                   component={RouterLink}
                 >

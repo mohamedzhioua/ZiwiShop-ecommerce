@@ -1,6 +1,7 @@
 import { Paper, Typography } from "@mui/material"
 import Forgetpassword from "../../components/auth/ForgetPassword"
 import { styled } from "@mui/system";
+import { useState } from "react";
 
 
 const CenteredContainer = styled('div')({
@@ -9,11 +10,11 @@ const CenteredContainer = styled('div')({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '80vh',
+    height: '78vh',
 });
 
 const CustomPaper = styled(Paper)({
-    width: '75%',
+    width: '85%',
     '@media (min-width: 600px)': {
         width: '50%',
     },
@@ -23,17 +24,30 @@ const CustomPaper = styled(Paper)({
     color: 'primary',
 });
 const SpacedTypography = styled(Typography)({
-    marginBottom: '20px', 
+    marginBottom: '20px',
 });
 
 function ForgetPassword() {
+    const [successMessage, setSuccessMessage] = useState('');
+
+    const handleSuccess = (message) => {
+        setSuccessMessage(message);
+    };
     return (
         <CenteredContainer>
             <CustomPaper>
-                <SpacedTypography variant="h2" fontWeight='bold'align='center'>Password Reset</SpacedTypography>
-                <SpacedTypography variant="h5">  Enter Your <b>Email address</b> that you used to register. We'll
-                    send you an email with your name and a link to reset your password.</SpacedTypography>
-                <Forgetpassword />
+                {successMessage ? (
+                    <Typography variant='h3' fontWeight='bold' align='center' >
+                        {successMessage}
+                    </Typography>
+                ) : (
+                    <>
+                        <SpacedTypography variant="h2" fontWeight='bold' align='center'>Password Reset</SpacedTypography>
+                        <SpacedTypography variant="h5">  Enter Your <b>Email address</b> that you used to register. We'll
+                            send you an email with your name and a link to reset your password.</SpacedTypography>
+                        <Forgetpassword onSuccess={handleSuccess} />
+                    </>
+                )}
             </CustomPaper>
         </CenteredContainer>
     );
