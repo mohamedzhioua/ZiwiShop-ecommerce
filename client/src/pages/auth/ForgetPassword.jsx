@@ -31,7 +31,7 @@ function ForgetPassword() {
         <CenteredContainer>
             <CustomPaper>
                 <SpacedTypography variant="h2" fontWeight='bold'align='center'>Password Reset</SpacedTypography>
-                <SpacedTypography variant="h4">  Enter Your <b>Email address</b> that you used to register. We'll
+                <SpacedTypography variant="h5">  Enter Your <b>Email address</b> that you used to register. We'll
                     send you an email with your name and a link to reset your password.</SpacedTypography>
                 <Forgetpassword />
             </CustomPaper>
