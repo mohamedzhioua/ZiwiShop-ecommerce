@@ -1,6 +1,6 @@
 import { Divider ,Box, Container} from '@mui/material'
 import Heading from '../../../components/ui/Heading'
-import SizeForm from '../../../components/dashboard/size/SizeForm';
+import SizeForm from '../../../components/Dashboard/size/SizeForm';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { sizeApi } from '../../../api/sizeApi';

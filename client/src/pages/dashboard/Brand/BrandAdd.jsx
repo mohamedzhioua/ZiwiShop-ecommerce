@@ -1,6 +1,6 @@
 import { Divider ,Box, Container} from '@mui/material'
 import Heading from '../../../components/ui/Heading'
-import BrandForm from '../../../components/dashboard/brand/BrandForm';
+import BrandForm from '../../../components/Dashboard/brand/BrandForm';
 
 
 function CategoryAdd() {

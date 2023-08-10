@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import Heading from '../../../components/ui/Heading';
 import { brandApi } from '../../../api/brandApi';
-import BrandForm from '../../../components/dashboard/brand/BrandForm';
+import BrandForm from '../../../components/Dashboard/brand/BrandForm';
 
 
 const useBrand = (id) => {

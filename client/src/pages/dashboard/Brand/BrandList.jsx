@@ -3,7 +3,7 @@ import CustomButton from '../../../components/ui/CustomButton'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import { Divider ,Box, Container} from '@mui/material'
-import BrandListTable from '../../../components/dashboard/brand/BrandListTable';
+import BrandListTable from '../../../components/Dashboard/brand/BrandListTable';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useMounted } from '../../../hooks/use-mounted';

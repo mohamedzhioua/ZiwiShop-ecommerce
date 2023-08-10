@@ -1,6 +1,6 @@
 import { Divider ,Box, Container} from '@mui/material'
 import Heading from '../../../components/ui/Heading'
-import SizeForm from '../../../components/dashboard/size/SizeForm';
+import SizeForm from '../../../components/Dashboard/size/SizeForm';
 
 
 function SizeAdd() {
