@@ -20,6 +20,8 @@
    - 🔗 Search and Filters
    - 🔗 Orders and Sales
    - 🔗 Payment Options
+   - 🔗 Contributing
+   - 🔗 License
  
  ---
  ###  Introduction
