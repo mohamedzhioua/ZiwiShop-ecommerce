@@ -1,6 +1,6 @@
  import Heading from "../../components/ui/Heading"
 import { Divider ,Box, Container} from "@mui/material"
-import OrderHistoryTable from "../../components/Order/orderHistoryTable"
+import OrderHistoryTable from "../../components/Order/OrderHistoryTable"
 import { useCallback, useEffect, useState } from "react"
 import { orderApi } from "../../api/orderApi"
 import { useMounted } from "../../hooks/use-mounted"
