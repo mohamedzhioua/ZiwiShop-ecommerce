@@ -6,12 +6,12 @@ import {
     Divider,
     Unstable_Grid2 as Grid,
     List,
+    Stack,
     Typography,
     useMediaQuery
 } from '@mui/material';
 import { Scrollbar } from '../ui/Scrollbar';
 import PropTypes from 'prop-types';
-import { Stack } from '@mui/system';
 import OrderItems from './OrderItem';
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import PaypalPayment from '../payment/PaypalPayment.jsx';

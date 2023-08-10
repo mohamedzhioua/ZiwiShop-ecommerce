@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import { toTitleCase } from '../../utils/toTitleCase';
-import { Stack } from '@mui/system';
+import { Stack } from '@mui/material';
 
 const Heading = (props) => {
     const { title, description ,titleStyle} = props

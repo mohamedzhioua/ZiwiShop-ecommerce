@@ -1,6 +1,5 @@
-import { ButtonBase, MenuItem } from '@mui/material'
+import { ButtonBase, MenuItem, Box } from '@mui/material'
 import { toTitleCase } from '../../../utils/toTitleCase'
-import { Box } from '@mui/system'
 import { Link } from 'react-router-dom'
 import Dropdown from './Dropdown'
 import PropTypes from 'prop-types';

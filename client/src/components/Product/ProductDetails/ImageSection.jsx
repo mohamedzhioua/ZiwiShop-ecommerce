@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import { ImageList, ImageListItem } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, ImageList, ImageListItem } from "@mui/material";
 
  
 const ImageSection = (props) => {

@@ -1,6 +1,5 @@
  import CustomInput from '../../ui/CustomInput';
-import { Slider, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
+import { Slider, Typography ,Stack } from '@mui/material';
 import { useEffect  } from 'react';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { useLocation, useNavigate } from 'react-router-dom';

@@ -2,7 +2,7 @@ import { Avatar, Badge, Divider, IconButton, ListItemButton, ListItemText, Popov
 import { useState } from 'react'
 import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import CustomButton from '../../components/ui/CustomButton';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';

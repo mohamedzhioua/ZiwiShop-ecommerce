@@ -1,5 +1,5 @@
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import   { useEffect, useState } from 'react'
 import useTheme from '../../hooks/useTheme';
 

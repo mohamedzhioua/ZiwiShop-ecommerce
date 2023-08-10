@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
-import { Box, Stack } from '@mui/system';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'; 
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import CustomButton from './ui/CustomButton';
-import { Avatar, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from '@mui/material';
 import { bytesToSize } from '../utils/bytesToSize';
 import { productApi } from '../api/productApi';
 import { toast } from 'react-hot-toast';

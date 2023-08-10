@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Unstable_Grid2 as Grid, IconButton, Typography } from '@mui/material'
-import { Box, Stack } from '@mui/system'
+import { Box, Stack } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList';
 import PriceRangeFilter from './PriceRangeFilter';
 import CustomButton from '../../ui/CustomButton';

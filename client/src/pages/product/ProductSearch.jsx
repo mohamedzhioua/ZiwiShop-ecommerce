@@ -1,5 +1,4 @@
-import { Unstable_Grid2 as Grid, Typography, useMediaQuery } from '@mui/material'
-import { Box, Stack } from '@mui/system'
+import { Unstable_Grid2 as Grid, Typography, useMediaQuery, Box, Stack } from '@mui/material'
 import ProductCard from '../../components/Product/ProductCard'
 import ProductFilters from '../../components/Product/ProductSearch/ProductFilters'
 import CustomButton from '../../components/ui/CustomButton';
@@ -28,7 +27,7 @@ function ProductSearch() {
     setIsFilterDrawerOpen(false);
   };
   const { search } = useLocation();
-   const searchParams = new URLSearchParams(search);
+  const searchParams = new URLSearchParams(search);
   const category = searchParams?.get('category') ?? 'all';
   const brand = searchParams?.get('brand') ?? 'all';
   const size = searchParams?.get('size') ?? 'all';

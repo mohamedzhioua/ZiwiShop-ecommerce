@@ -1,6 +1,6 @@
  import Lottie from "react-lottie";
 import animationData from "../../assets/animations/ZiwiShope_Spach_animation.json"
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 
 const Splash = () => {
   const defaultOptions = {

@@ -5,7 +5,6 @@ import { SideNavSection } from './SideNavSection';
 import useTheme from '../../hooks/useTheme';
 import Logo from '../../components/ui/Logo';
 import useAuth from '../../hooks/useAuth';
-import { styled } from '@mui/system';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
@@ -26,11 +25,7 @@ const navigationLinks = [
         ]
     },
 ];
-const StyledScrollBar = styled(Scrollbar)(() => ({
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    position: 'relative',
-}));
+ 
 
 export const SideNav = (props) => {
     const { onClose, open, categories } = props
@@ -38,7 +33,11 @@ export const SideNav = (props) => {
     const { IsLoggedIn, user } = useAuth();
 
     return (
-        <StyledScrollBar >
+        <Scrollbar style={{
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            position: 'relative',
+        }} >
             <Drawer
                 anchor="left"
                 onClose={onClose}
@@ -99,7 +98,7 @@ export const SideNav = (props) => {
                     </Stack>
                 </Stack>
             </Drawer>
-        </StyledScrollBar>
+        </Scrollbar>
     );
 };
 

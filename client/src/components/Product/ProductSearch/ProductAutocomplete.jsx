@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import { Autocomplete, Checkbox, TextField, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
+import { Autocomplete, Checkbox, Stack, TextField, Typography } from '@mui/material';
 import { useState, useCallback, useEffect } from 'react';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';

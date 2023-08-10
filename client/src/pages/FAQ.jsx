@@ -1,6 +1,5 @@
-import { Box, Container } from "@mui/system";
+import { Box, Container ,Divider } from "@mui/material";
 import Heading from "../components/ui/Heading";
-import { Divider } from "@mui/material";
 import CustomAccordion from "../components/ui/CustomAccordion";
 
 

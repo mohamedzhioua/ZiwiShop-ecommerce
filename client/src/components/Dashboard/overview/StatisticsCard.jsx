@@ -9,9 +9,9 @@ import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOu
 import PhonelinkOutlinedIcon from '@mui/icons-material/PhonelinkOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import Heading from '../../ui/Heading'
-import { Stack } from '@mui/system'
 import { currencyFormatter } from '../../../utils/currencyFormatter'
 import PropTypes from 'prop-types';
+import { Stack } from '@mui/material'
 
 const renderStats = (data) => {
   return (

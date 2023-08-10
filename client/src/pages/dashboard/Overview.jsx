@@ -1,8 +1,7 @@
 import {
-  Divider, Unstable_Grid2 as Grid,
+  Divider, Unstable_Grid2 as Grid,Box, Container
 } from "@mui/material"
 import Heading from "../../components/ui/Heading"
-import { Box, Container } from "@mui/system"
 import StatisticsCard from "../../components/Dashboard/overview/StatisticsCard"
 import Trophy from "../../components/Dashboard/overview/Trophy"
 import WeeklyOverview from "../../components/Dashboard/overview/WeeklyOverview"

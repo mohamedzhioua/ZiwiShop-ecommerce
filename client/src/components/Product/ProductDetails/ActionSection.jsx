@@ -1,5 +1,4 @@
-import {  Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+import {  Box, Stack, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { toTitleCase } from "../../../utils/toTitleCase";
 import { currencyFormatter } from "../../../utils/currencyFormatter";

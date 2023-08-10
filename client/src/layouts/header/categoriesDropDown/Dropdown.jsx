@@ -1,8 +1,7 @@
-import { ButtonBase, Collapse, MenuItem, SvgIcon, Typography } from '@mui/material';
+import { ButtonBase, Collapse, MenuItem, SvgIcon, Typography,Box } from '@mui/material';
 import { useCallback, useState } from 'react'
 import { toTitleCase } from '../../../utils/toTitleCase';
 import { Link } from 'react-router-dom';
-import { Box } from '@mui/system';
 import MenuItems from './MenuItems';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';

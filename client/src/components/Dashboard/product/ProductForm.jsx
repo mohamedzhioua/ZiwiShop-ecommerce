@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { Stack } from "@mui/system";
 import {
     Autocomplete,
     Card,
@@ -8,7 +7,7 @@ import {
     Unstable_Grid2 as Grid,
     Switch,
     TextField,
-    Typography,
+    Typography,Stack
 } from "@mui/material";
 import FileDropzone from "../../FileDropzone";
 import { useNavigate } from "react-router-dom";

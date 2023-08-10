@@ -9,14 +9,14 @@ import {
      List,
     OutlinedInput,
     Typography,
-    useMediaQuery
+    useMediaQuery,
+    Stack
 } from '@mui/material';
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { useSelector } from "react-redux";
 import CartItem from '../Cart/CartItem';
 import { Scrollbar } from '../ui/Scrollbar';
 import CustomButton from '../ui/CustomButton';
-import { Stack } from '@mui/system';
 import { useEffect, useMemo } from "react";
 
 const calculateAmounts = (products) => {

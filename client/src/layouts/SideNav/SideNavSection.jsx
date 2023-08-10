@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import SideNavItem from './SideNavItem';
 import PropTypes from 'prop-types';
 

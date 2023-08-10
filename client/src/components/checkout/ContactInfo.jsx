@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Box, Typography, Unstable_Grid2 as Grid,Stack } from "@mui/material";
 import CustomInput from "../ui/CustomInput";
-import { Stack } from "@mui/system";
-
+ 
 const ContactInfo = (props) => {
     const { values, touched, errors, handleBlur, handleChange } = props;
   
