@@ -219,7 +219,11 @@ Ziwishop provides multiple payment options for customers, including Stripe and P
 Contributions are welcome! Please open an issue if you have any questions or suggestions. Your contributions will be acknowledged. Contact me for more information.
  
  ---
- 
+ ## License
+
+Licensed under the MIT License. Check the [LICENSE](./LICENSE) file for details.
+
+
 <h2> 
 With Ziwishop, you have a comprehensive Clothes Ecommerce application that offers a rich set of features for both administrators and customers. Start using the app to provide a seamless and enjoyable shopping experience. For any questions or assistance, contact me . Happy selling! </h2>
 
@@ -228,50 +232,4 @@ With Ziwishop, you have a comprehensive Clothes Ecommerce application that offer
 
 
 
-
- 
-  -  Welcome to the documentation for the Ziwishop Clothes Ecommerce App built using the MERN (MongoDB, Express, React, Node.js) stack with a Vite frontend project. This document will guide you through the key features and functionalities of the application.
-
-   - 🔗 Table of Contents
-   - 🔗 Introduction
-   - 🔗 Tech Stack
-   - 🔗 Key Features
-   - 🔗 Getting Started
-   - 🔗 Installation
-   - 🔗 Usage
-   - 🔗 Authentication
-   - 🔗 Admin Dashboard
-   - 🔗 User Interface
-   - 🔗 Categories
-   - 🔗 Products
-   - 🔗 Brands
-   - 🔗 Sizes
-   - 🔗 Image Management
-   - 🔗 Search and Filters
-   - 🔗 Orders and Sales
-   - 🔗 Payment Options
- 
- ---
- ###  Introduction
--  Ziwishop is a comprehensive Clothes Ecommerce application that offers a seamless shopping experience for both customers and administrators.  
-
--  It all began with a small old project built using 'npx create-react-app' with Bootstrap styling. However, from just trying to transform it to mui and add linkedin auth , finding myself reimagining the project using the MERN stack  with a Vite frontend project and Material-UI (MUI) version 5 for a more responsive and dynamic user interface. inspired by celio and some  other ecommerce sites... 
- 
--  old Version Demo : 
-
- <img src="https://github.com/mohamedzhioua/mern-stack-social-authentication/blob/main/client/src/assets/mern-stack-social-authentication_demo.gif" >
-
-
-  ---
-### :space_invader: Tech Stack
-
-[![My Skills](https://skillicons.dev/icons?i=js,react,materialui,nodejs,express,mongodb)](https://skillicons.dev)
-
-<img src="https://camo.githubusercontent.com/451061eb9714c2135705a1ad757017cc943627ca474d8a20e78209214469bf72/68747470733a2f2f6437756d7169637069373236332e636c6f756466726f6e742e6e65742f696d672f70726f647563742f65306364363161372d316336352d343561302d393765652d3737363364646335313533612f39383834313664302d323562632d346264322d623864622d6633343764306131393335642e706e67"> 
- 
-  
----
-### Key Features
-
-  - 🔗 Fully responsive design to provide optimal user experience on various devices.
 
