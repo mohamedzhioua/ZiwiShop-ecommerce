@@ -75,7 +75,7 @@ const WeeklyOverview = (props) => {
   }
 
   return (
-    <Card>
+    <Card sx={{marginBottom:'14px'}}>
       <CardHeader
         title='Weekly Overview'
         titleTypographyProps={{

@@ -46,7 +46,7 @@ function ProductsList() {
   }, []);
   return (
     <>
-      <Container maxWidth='xl' >
+      <Container maxWidth='xl'  sx={{marginBottom:'14px'}}>
         <Box
           sx={{
             display: 'flex',

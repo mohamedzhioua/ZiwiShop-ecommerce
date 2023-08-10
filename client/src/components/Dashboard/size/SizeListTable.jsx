@@ -75,13 +75,13 @@ const SizeListTable = (props) => {
                 onConfirm={onDelete}
                 loading={loading}
             />
-            <Card>
+            <Card >
                 <TableSearchBar
                     handleQueryChange={handleQueryChange}
                     query={query}
                 />
                 <Scrollbar>
-                    <Table sx={{ minWidth: 700 }}>
+                    <Table sx={{ minWidth: 700 }} >
                         <TableHead>
                             <TableRow>
                                 <TableCell>Name</TableCell>
