@@ -33,6 +33,9 @@ class OrderApi {
   GetAllOrders(){
     return this.request('get', `/all`);
   }
+  DeleteOrder(id){
+    return this.request('delete', `/${id}`);
+  }
 }
 
 export const orderApi = new OrderApi();

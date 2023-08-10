@@ -48,24 +48,22 @@ function Navbar() {
   ];
 
   const [categories, setCategories] = useState([])
-  const [brands, setBrands] = useState([])
   const isMounted = useMounted()
 
-  const GetBrandsCategories = useCallback(async () => {
+  const GetCategories = useCallback(async () => {
     try {
-      const response = await productApi.GetBrandsCategories();
+      const response = await productApi.GetCategories();
       if (isMounted()) {
-        setCategories(response.categories);
-        setBrands(response.brands);
+        setCategories(response);
       }
     } catch (error) {
       console.error(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   useEffect(() => {
-    GetBrandsCategories();
+    GetCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -101,8 +99,8 @@ function Navbar() {
               </IconButton>
             )}
 
-            { isMobileScreen && isSideNavOpen && (
-              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} categories={categories} brands={brands} />
+            {isMobileScreen && isSideNavOpen && (
+              <SideNav onClose={handleCloseNavMenu} open={handleOpenNavMenu} categories={categories}  />
             )}
           </Box>
           {isMobileScreen && (<Logo />)}
@@ -156,7 +154,7 @@ function Navbar() {
             alignItems="center" gap="5px"
           >
 
-           
+
             <Searchbar />
             <ModeToggler />
             <Badge

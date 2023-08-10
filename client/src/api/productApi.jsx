@@ -27,7 +27,7 @@ class ProductApi {
   GetProducts() {
     return this.request('get', '/');
   }
-  
+
   GetOneProduct(id) {
     return this.request('get', `/${id}`);
   }
@@ -37,7 +37,7 @@ class ProductApi {
   }
 
   UpdateProduct(id, data) {
-    return this.request('patch', `/${id}`, data,this.config);
+    return this.request('patch', `/${id}`, data, this.config);
   }
 
   DeleteProduct(id) {
@@ -52,14 +52,14 @@ class ProductApi {
   GetClientOneProduct(id) {
     return this.request('get', `/client/${id}`);
   }
-  GetBrandsCategories() {
-    return this.request('get', `/brandscategories/client/`);
+  GetCategories() {
+    return this.request('get', `/categories/client/`);
   }
   GetSearchProducts(data) {
-     return this.request('get', `/ZiwiShop/search?page=${data.page}&query=${data.query}&category=${data.category}&price=${data.price}&sort=${data.sort}&brand=${data.brand}&size=${data.size}`);
+    return this.request('get', `/ZiwiShop/search?page=${data.page}&query=${data.query}&category=${data.category}&price=${data.price}&sort=${data.sort}&brand=${data.brand}&size=${data.size}`);
   }
   getRelatedProducts(id) {
-     return this.request('get', `/relatedProducts/${id}`);
+    return this.request('get', `/relatedProducts/${id}`);
   }
 }
 

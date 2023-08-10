@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 const OrderHistoryTable = (props) => {
     const { data } = props
+    console.log("🚀 ~ file: OrderHistoryTable.jsx:13 ~ OrderHistoryTable ~ data:", data)
     const navigate = useNavigate();
 
     const [page, setPage] = useState(0);
@@ -32,6 +33,7 @@ const OrderHistoryTable = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Order ID  </TableCell>
+                                <TableCell>Order Owner  </TableCell>
                                 <TableCell>Order date</TableCell>
                                 <TableCell>Total Price</TableCell>
                                  <TableCell>Paid</TableCell>
@@ -51,31 +53,34 @@ const OrderHistoryTable = (props) => {
                             <TableBody>
                                 {paginatedData.map((item) => {
                                     return (
-                                        <Fragment key={item._id}>
-                                            <TableRow key={item._id} hover>
+                                        <Fragment key={item?._id}>
+                                            <TableRow key={item?._id} hover>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{item._id}</Typography>
+                                                    <Typography color="text.primary">{item?._id}</Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{formatDate(item.createdAt)}</Typography>
+                                                    <Typography color="text.primary">{item?.shippingAddress?.fullName}</Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{currencyFormatter.format(item.totalPrice)}</Typography>
+                                                    <Typography color="text.primary">{formatDate(item?.createdAt)}</Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="text.primary">{item.isPaid
-                                                        ? formatDate(item.paidAt)
+                                                    <Typography color="text.primary">{currencyFormatter.format(item?.totalPrice)}</Typography>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Typography color="text.primary">{item?.isPaid
+                                                        ? formatDate(item?.paidAt)
                                                         : 'No'}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="text.primary"> {item.isDelivered
-                                                        ? formatDate(item.deliveredAt)
+                                                    <Typography color="text.primary"> {item?.isDelivered
+                                                        ? formatDate(item?.deliveredAt)
                                                         : 'No'}</Typography>
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <Button type="button" onClick={() => {
-                                                        navigate(`/order/${item._id}`);
+                                                        navigate(`/order/${item?._id}`);
                                                     }}>Details</Button>
                                                 </TableCell>
                                             </TableRow>

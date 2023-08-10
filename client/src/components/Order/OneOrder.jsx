@@ -24,14 +24,15 @@ import { paymentApi } from '../../api/PaymentApi';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import useAuth from '../../hooks/useAuth';
+import CustomButton from '../ui/CustomButton';
+import { useNavigate } from 'react-router-dom';
 
 const OneOrder = (props) => {
     const { data } = props
     const { user } = useAuth();
-    console.log("🚀 ~ file: OneOrder.jsx:31 ~ OneOrder ~ user:", user)
+    const navigate = useNavigate()
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [order, setOrder] = useState(data)
-    console.log("🚀 ~ file: OneOrder.jsx:33 ~ OneOrder ~ order:", order)
     const [clientSecret, setClientSecret] = useState("");
     const [stripePromise, setStripePromise] = useState(null);
 
@@ -68,8 +69,17 @@ const OneOrder = (props) => {
         setOrder(data);
     }, [data]);
 
+    const DeleteOrder = async () => {
+        try {
+            await orderApi.DeleteOrder(order?._id);
+            toast.success('Order is deleted');
+            navigate('/OrderHistory')
+        } catch (err) {
+            toast.error(err);
+        }
+    };
     return (
-        <Grid container spacing={3}  sx={{ marginBottom: 2 }}>
+        <Grid container spacing={3} sx={{ marginBottom: 2 }}>
             <Grid xs={12} md={8}>
                 <Stack spacing={3}>
                     <Card>
@@ -164,6 +174,7 @@ const OneOrder = (props) => {
                         </Box>
                         {user?.role === "ADMIN" && order.userEmail === user.email && (
                             <Box sx={{ mt: 2 }}>
+
                                 {!order.isPaid && order.paymentMethod === "paypal" && (
                                     <PaypalPayment
                                         totalPrice={order?.totalPrice}
@@ -182,6 +193,17 @@ const OneOrder = (props) => {
                                 )}
                             </Box>
                         )}
+                        {!order.isPaid &&
+                            <Box sx={{ mt: 2 }}>
+                                <CustomButton
+                                    color="error"
+                                    size="large"
+                                    fullwidh
+                                    onClick={DeleteOrder}
+                                >
+                                    delete order
+                                </CustomButton>
+                            </Box>}
                     </CardContent>
                 </Card>
             </Grid>
