@@ -7,7 +7,8 @@ import {
     Unstable_Grid2 as Grid,
     Switch,
     TextField,
-    Typography,Stack
+    Typography,
+    Stack
 } from "@mui/material";
 import FileDropzone from "../../FileDropzone";
 import { useNavigate } from "react-router-dom";

@@ -2,7 +2,7 @@ import Heading from "../../../components/ui/Heading"
 import { Box, Container, Divider } from "@mui/material"
 import { productApi } from "../../../api/productApi"
 import { useCallback, useEffect, useState } from "react"
-import ProductForm from "../../../components/dashboard/product/ProductForm"
+import ProductForm from '../../../components/dashboard/product/ProductForm'
 
 
 function ProductAdd() {
