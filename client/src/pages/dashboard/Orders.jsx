@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading';
 import { Divider, Box, Container } from '@mui/material';
-import OrderHistoryTable from '../../components/Order/orderHistoryTable';
+import OrderHistoryTable from '../../components/Order/OrderHistoryTable';
 import { useMounted } from '../../hooks/use-mounted';
 import { orderApi } from '../../api/orderApi';
 

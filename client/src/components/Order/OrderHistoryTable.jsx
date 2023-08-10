@@ -10,9 +10,7 @@ import PropTypes from 'prop-types';
 
 const OrderHistoryTable = (props) => {
     const { data } = props
-    console.log("🚀 ~ file: OrderHistoryTable.jsx:13 ~ OrderHistoryTable ~ data:", data)
     const navigate = useNavigate();
-
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
 
