@@ -224,7 +224,7 @@ Contributions are welcome! Please open an issue if you have any questions or sug
 Licensed under the MIT License. Check the [LICENSE](./LICENSE) file for details.
 
 
-<h2> 
+<h3> 
 With Ziwishop, you have a comprehensive Clothes Ecommerce application that offers a rich set of features for both administrators and customers. Start using the app to provide a seamless and enjoyable shopping experience. For any questions or assistance, contact me . Happy selling! </h2>
 
 <h4>If you're interested in showing your support for my efforts, please consider giving a ⭐ star to my repository. Alternatively, you're welcome to get in touch with me, and we can share a coffee together ☕️❤️‍🔥.</h4>
