@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
+const hbs = require('nodemailer-express-handlebars');
 const path = require("path");
 
 const sendMail = async (to, url, name, subject, template) => {
