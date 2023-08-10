@@ -1,6 +1,6 @@
  # Ziwishop Clothes Ecommerce App Documentation
  
-  -  Welcome to the documentation for the Ziwishop Clothes Ecommerce App built using the MERN (MongoDB, Express, React, Node.js) stack with a Vite frontend project. This document will guide you through the key features and functionalities of the application.
+  -  Welcome to the documentation for the Ziwishop Clothes an open source e-commerce built using the MERN stack (MongoDB, Express, React, Node.js) with a Vite frontend project. This document will guide you through the key features and functionalities of the application.
 
    - 🔗 Table of Contents
    - 🔗 Introduction
@@ -39,7 +39,7 @@
 
 <img src="https://camo.githubusercontent.com/451061eb9714c2135705a1ad757017cc943627ca474d8a20e78209214469bf72/68747470733a2f2f6437756d7169637069373236332e636c6f756466726f6e742e6e65742f696d672f70726f647563742f65306364363161372d316336352d343561302d393765652d3737363364646335313533612f39383834313664302d323562632d346264322d623864622d6633343764306131393335642e706e67"> 
  
- <img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/paypal-strirpe.png">
+ <img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/paypal-strirpe.jpeg">
   
 ---
 ### Key Features
