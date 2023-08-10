@@ -56,7 +56,7 @@ module.exports = {
         activationUrl,
         exisitingUser.name,
         "Email Verification",
-        "varificationmail"
+        "verificationmail"
       );
       res.status(201).json({
         success: true,

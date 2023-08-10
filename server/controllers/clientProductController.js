@@ -123,21 +123,16 @@ module.exports = {
     }
   },
 
-  //  ---------------------------------------- //GetCategories&sizes&Brands//--------------------------- //
+  //  ---------------------------------------- //GetCategories//--------------------------- //
 
-  GetBrandsCategories: async (req, res) => {
+  GetCategories: async (req, res) => {
     try {
       const options = {};
 
-      const categories = await Category.find({}).lean().exec();
-      const getBrandNames = await Brand.find({}, { name: 1, _id: 1 })
-        .lean()
-        .exec();
-
-      options.categories = createCategories(categories);
-      options.brands = addHrefFieldToBrands(getBrandNames);
-
-      return res.status(200).json(options);
+      let categories = await Category.find({}).lean().exec();
+          categories = createCategories(categories);
+ 
+      return res.status(200).json(categories);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }

@@ -13,4 +13,6 @@ router.get("/:id", isAuth, OrderController.GetOneOrder);
 
 router.patch("/:id/pay", isAuth, OrderController.PayOrder) 
 
+router.delete("/:id", isAuth, OrderController.DeleteOrder) 
+ 
 module.exports = router;

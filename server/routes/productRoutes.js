@@ -39,8 +39,8 @@ router.get(
 );
 router.get("/client/:id", ClientProductController.GetClientOneProduct);
 router.get(
-  "/brandscategories/client",
-  ClientProductController.GetBrandsCategories
+  "/categories/client",
+  ClientProductController.GetCategories
 );
 router.get("/ZiwiShop/search", ClientProductController.GetSearchProducts);
 router.get("/relatedProducts/:id", ClientProductController.getRelatedProducts);

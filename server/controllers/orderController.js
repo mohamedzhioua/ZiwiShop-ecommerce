@@ -124,7 +124,7 @@ module.exports = {
           model: "image",
         })
         .lean();
-      if (!orders) {
+       if (!orders) {
         return res.status(404).json("no orders found");
       }
 
@@ -133,4 +133,27 @@ module.exports = {
       return res.status(500).send("Error: " + error.message);
     }
   },
+  //  ---------------------------------------- //DeleteOrder//--------------------------- //
+  DeleteOrder: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const { errors, isValid } = IdParamsValidation(req.params);
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+  
+        const order = await Order.findById(id);
+  
+        if (!order) {
+          return res.status(404).json("order not found");
+        }
+  
+        await order.remove();
+  
+        return res.status(201).json();
+      } catch (error) {
+        return res.status(500).send("Error: " + error.message);
+      }
+    },
+ 
 };
