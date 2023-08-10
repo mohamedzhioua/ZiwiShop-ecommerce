@@ -1,8 +1,9 @@
- # Ziwishop Clothes Ecommerce App Documentation
- 
+ # [Ziwishop](https://ziwishop.netlify.app/) Clothes Ecommerce App Documentation
+ [![Netlify Status](https://api.netlify.com/api/v1/badges/3e36481c-2866-41c1-b42a-e21846c5687a/deploy-status)](https://app.netlify.com/sites/ziwishop/deploys)
+  
   -  Welcome to the documentation for the Ziwishop Clothes an open source e-commerce built using the MERN stack (MongoDB, Express, React, Node.js) with a Vite frontend project. This document will guide you through the key features and functionalities of the application.
 
-   - 🔗 Table of Contents
+   ### Table of Contents
    - 🔗 Introduction
    - 🔗 Tech Stack
    - 🔗 Key Features
@@ -47,6 +48,7 @@
 ### Key Features
 
   - [x] Fully **responsive design** to provide optimal user experience on various devices.
+  - [x] **Props validation** implemented throughout the project to ensure data integrity and proper component usage.
   - [x] User authentication via **Google** and **Facebook** for easy access.
   - [x] **Admin dashboard** for administrators to manage the platform efficiently.
   - [x] User-friendly interface for customers to explore and purchase products.
