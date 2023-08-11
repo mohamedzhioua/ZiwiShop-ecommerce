@@ -6,7 +6,10 @@ const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
 const ResetValidation = require("../validator/ResetValidation");
 const sendMail = require("../utils/sendMail");
-const { getGoogleOAuthTokens } = require("../utils/getGoogleOAuthTokens");
+const {
+  getGoogleOAuthTokens,
+  getGoogleUser,
+} = require("../utils/googleOAuthService");
 
 const signToken = (id) => {
   return jwt.sign({ userId: id }, process.env.TOKEN_KEY, {
@@ -219,7 +222,11 @@ module.exports = {
 
       // get user with tokens
       const googleUser = await getGoogleUser({ id_token, access_token });
-      console.log("🚀 ~ file: authController.js:222 ~ googleOauthHandler: ~ googleUser:", googleUser)
+
+      if (!googleUser.verified_email) {
+        return res.status(403).send("Google account is not verified");
+      }
+
       // const { email_verified, email, name } = response.payload;
       // const image = response.payload.picture;
 

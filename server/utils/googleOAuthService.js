@@ -34,3 +34,27 @@ exports.getGoogleOAuthTokens = async ({ code }) => {
     throw new Error(error.message);
   }
 };
+exports.getGoogleUser = async ({ id_token, access_token }) => {
+  try {
+    const url = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${id_token}`,
+      },
+    });
+
+    if (!res.ok) {
+      const errorResponse = await res.json();
+      console.error(errorResponse.error);
+      throw new Error("Error fetching Google user");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+};
