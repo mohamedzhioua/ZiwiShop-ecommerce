@@ -92,7 +92,7 @@ export const SideNav = (props) => {
                         <Typography
                             variant="body2"
                         >
-                            Please feel free to contact Us.
+                            Please feel free to contact Us on contact.zhiouamohamed@gmail.com
                         </Typography>
 
                     </Stack>

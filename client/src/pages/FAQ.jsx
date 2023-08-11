@@ -1,4 +1,4 @@
-import { Box, Container ,Divider } from "@mui/material";
+import { Box, Container, Divider } from "@mui/material";
 import Heading from "../components/ui/Heading";
 import CustomAccordion from "../components/ui/CustomAccordion";
 
@@ -6,7 +6,8 @@ import CustomAccordion from "../components/ui/CustomAccordion";
 const faqData = [
     {
         question: 'What is your return policy?',
-        answer: `If you're not satisfied with your purchase, we accept returns within 30 days of delivery. To initiate a return, please email us at ziwiShop@gmail.com with your order number and a brief explanation of why you're returning the item.`,
+        answer: `If you're not satisfied with your purchase, we accept returns within 30 days of delivery. To initiate a return, please email us at contact.zhiouamohamed@gmail.com
+       with your order number and a brief explanation of why you're returning the item.`,
     },
     {
         question: 'How do I track my order?',
@@ -14,7 +15,8 @@ const faqData = [
     },
     {
         question: 'How do I contact customer support?',
-        answer: `You can contact our customer support team by emailing us at ziwiShop@gmail.com, or by calling us at (555) 123-4567 between the hours of 9am and 5pm EST, Monday through Friday.`,
+        answer: `You can contact our customer support team by emailing us at contact.zhiouamohamed@gmail.com
+      , or by calling us at (+216) 26 843 760 between the hours of 9am and 5pm EST, Monday through Friday.`,
     },
     {
         question: 'Can I change or cancel my order?',

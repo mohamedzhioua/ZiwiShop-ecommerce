@@ -213,6 +213,7 @@ const UserDropdown = () => {
                             fullWidth
                             variant="outlined"
                             includeSpacing
+                            onClick={handleCloseUserMenu}
                         >
                             LOGIN
                         </CustomButton>
@@ -222,6 +223,7 @@ const UserDropdown = () => {
                             color="primary"
                             fullWidth
                             variant="outlined"
+                            onClick={handleCloseUserMenu}
                         >
                             REGISTER
                         </CustomButton>

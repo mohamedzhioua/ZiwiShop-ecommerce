@@ -39,7 +39,7 @@ function ProductSearch() {
 
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState()
-  const isMounted = useMounted()
+   const isMounted = useMounted()
 
 
   useEffect(() => {
