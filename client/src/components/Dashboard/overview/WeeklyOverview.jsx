@@ -1,18 +1,15 @@
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
+import PropTypes from 'prop-types';
+import { Card, CardContent, CardHeader, Typography, Box } from '@mui/material';
 import useTheme from '../../../hooks/useTheme'
 import Chart from 'react-apexcharts'
-import PropTypes from 'prop-types';
 import { currencyFormatter } from '../../../utils/currencyFormatter'
+
 
 const WeeklyOverview = (props) => {
   const { data } = props
   const { theme } = useTheme()
-   
- 
+
+
   const options = {
     chart: {
       parentHeightOffset: 0,
@@ -75,7 +72,7 @@ const WeeklyOverview = (props) => {
   }
 
   return (
-    <Card sx={{marginBottom:'14px'}}>
+    <Card sx={{ marginBottom: '14px' }}>
       <CardHeader
         title='Weekly Overview'
         titleTypographyProps={{
