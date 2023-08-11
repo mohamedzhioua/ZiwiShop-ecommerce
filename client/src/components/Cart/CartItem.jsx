@@ -21,13 +21,13 @@ const CartItem = (props) => {
     const dispatch = useDispatch();
 
   return (
-    <Box key={`${name}-${_id}`}>
+    <Box key={`${name}-${_id}`}mb={2}>
     <FlexBox p="15px 0">
       <Box flex="1 1 40%">
         <img
           alt={name}
           width="123px"
-          height="164px"
+          height="160px"
           src={images[0].url}
           loading="lazy"
         />

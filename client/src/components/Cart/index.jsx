@@ -11,6 +11,7 @@ import CartItem from "./CartItem";
 import CartSubtotal from "./CartSubtotal";
 import { useRef } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 export const FlexBox = styled(Box)`
   display: flex;
@@ -54,18 +55,22 @@ const CartMenu = () => {
         position="fixed"
         right="0"
         bottom="0"
-        width="max(400px, 30%)"
+        width={{ xs: "100%", sm: "100%", md: "400px", lg: "30%" }}
         height="100%"
         backgroundColor='background.paper'
       >
-        <Box padding="30px" overflow="auto" height="100%">
+        <Box
+          padding="30px"
+          overflow="auto"
+          height="100%"
+        >
           <FlexBox mb="15px">
-            <Typography variant="h3" sx={{ color: colors.grey[100] }}> SHOPPING BAG  ({itemCount})</Typography>
+            <Typography variant="h3" sx={{ color: colors.grey[500] }}> SHOPPING BAG  ({itemCount})</Typography>
             <IconButton
               onClick={() => dispatch(setIsCartOpen({}))}
               size="large"
               aria-haspopup="true"
-              sx={{ color: colors.grey[100] }}>
+              sx={{ color: colors.grey[500] }}>
               <CloseIcon />
             </IconButton>
           </FlexBox>
@@ -76,7 +81,8 @@ const CartMenu = () => {
           </Box>
           <Box m="20px 0">
             {cart.length > 0 ? (
-              <>            <CartSubtotal totalPrice={totalPrice} />
+              <>
+                <CartSubtotal totalPrice={totalPrice} />
                 <CustomButton
                   sx={{
                     borderRadius: 0,
@@ -94,7 +100,25 @@ const CartMenu = () => {
               </>
 
             ) : (
-              <Typography variant="h5" color="error">Your cart is empty.</Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: theme.spacing(2),
+                  height: '100%',
+                }}
+                color={colors.grey[500]}
+              >
+                <IconButton
+                  aria-label="Shopping Cart"
+                  color={colors.grey[500]}
+                >
+                  <ShoppingCartOutlinedIcon sx={{ height: '48px', width: '48px' }} />
+                </IconButton>
+                <Typography variant="h5" color={colors.grey[500]} >Your cart is empty.</Typography>
+              </Box>
             )}
           </Box>
         </Box>
