@@ -1,12 +1,12 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
 const User = require("../models/user");
 const SignupValidation = require("../validator/SignupValidation");
 const SigninValidation = require("../validator/SigninValidation");
 const ResetValidation = require("../validator/ResetValidation");
 const sendMail = require("../utils/sendMail");
+const { getGoogleOAuthTokens } = require("../utils/getGoogleOAuthTokens");
 
 const signToken = (id) => {
   return jwt.sign({ userId: id }, process.env.TOKEN_KEY, {
@@ -152,13 +152,13 @@ module.exports = {
       user.resetPasswordToken = resetPasswordToken;
       await user.save();
       const reseturl = `${process.env.FRONTEND_URL}/resetpassword?resetPasswordToken=${resetPasswordToken}`;
-      await sendMail( 
+      await sendMail(
         user.email,
         reseturl,
         user.name,
         "RESET YOUR PASSWORD",
         "forgotpasswordmail"
-       );
+      );
       res.status(200).json({
         success: true,
         message: `please check your email:- ${user.email} to Reset your password!`,
@@ -209,57 +209,54 @@ module.exports = {
     }
   },
   //  ---------------------------------------- //Google Authentication //--------------------------- //
-  googleLogin: async (req, res) => {
-    const client = new OAuth2Client(process.env.webClientId);
-    const { idToken } = req.body;
-
-    if (!idToken) {
-      return res.status(400).json("ID Token is missing");
-    }
+  googleOauthHandler: async (req, res) => {
+    // get the code from qs
+    const code = req.query.code;
 
     try {
-      const response = await client.verifyIdToken({
-        idToken,
-        audience: process.env.webClientId,
-      });
+      // get the id and access token with the code
+      const { id_token, access_token } = await getGoogleOAuthTokens({ code });
 
-      const { email_verified, email, name } = response.payload;
-      const image = response.payload.picture;
+      // get user with tokens
+      const googleUser = await getGoogleUser({ id_token, access_token });
+      console.log("🚀 ~ file: authController.js:222 ~ googleOauthHandler: ~ googleUser:", googleUser)
+      // const { email_verified, email, name } = response.payload;
+      // const image = response.payload.picture;
 
-      if (email_verified) {
-        let user = await User.findOne({ email });
+      // if (email_verified) {
+      //   let user = await User.findOne({ email });
 
-        if (user) {
-          const token = signToken(user._id);
-          res.status(200).json({
-            token,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            image: user.image,
-          });
-        } else {
-          let password = email + process.env.TOKEN_KEY;
-          const user = await User.create({
-            name,
-            email,
-            password,
-            image,
-            verified: true,
-          });
+      //   if (user) {
+      //     const token = signToken(user._id);
+      //     res.status(200).json({
+      //       token,
+      //       name: user.name,
+      //       email: user.email,
+      //       role: user.role,
+      //       image: user.image,
+      //     });
+      //   } else {
+      //     let password = email + process.env.TOKEN_KEY;
+      //     const user = await User.create({
+      //       name,
+      //       email,
+      //       password,
+      //       image,
+      //       verified: true,
+      //     });
 
-          const token = signToken(user._id);
-          res.status(200).json({
-            token,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            image: user.image,
-          });
-        }
-      } else {
-        return res.status(400).json("Google login failed. Please try again.");
-      }
+      //     const token = signToken(user._id);
+      //     res.status(200).json({
+      //       token,
+      //       name: user.name,
+      //       email: user.email,
+      //       role: user.role,
+      //       image: user.image,
+      //     });
+      //   }
+      // } else {
+      //   return res.status(400).json("Google login failed. Please try again.");
+      // }
     } catch (error) {
       console.log(error);
       return res.status(500).json("An error occurred during Google login.");

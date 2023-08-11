@@ -8,7 +8,7 @@ router.post("/emailverification", AuthController.verifyemail);
 
 router.post("/signin", AuthController.signin);
 
-router.post("/googleLogin", AuthController.googleLogin);
+router.get("/googleLogin", AuthController.googleOauthHandler);
 
 router.post("/facebookLogin", AuthController.FacebookLogin);
 
