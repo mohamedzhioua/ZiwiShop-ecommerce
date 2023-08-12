@@ -78,7 +78,7 @@ const OrderHistoryTable = (props) => {
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <Button type="button" onClick={() => {
-                                                        navigate(`/order/${item?._id}`);
+                                                        navigate(`/order/${item?._id}`, { state: { prevPath: location.pathname } });
                                                     }}>Details</Button>
                                                 </TableCell>
                                             </TableRow>

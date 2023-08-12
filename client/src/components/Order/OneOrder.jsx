@@ -25,7 +25,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import useAuth from '../../hooks/useAuth';
 import CustomButton from '../ui/CustomButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const OneOrder = (props) => {
     const { data } = props
@@ -35,7 +35,11 @@ const OneOrder = (props) => {
     const [order, setOrder] = useState(data)
     const [clientSecret, setClientSecret] = useState("");
     const [stripePromise, setStripePromise] = useState(null);
-
+    const location = useLocation();
+     const { prevPath } = location.state;
+     console.log("🚀 ~ file: OneOrder.jsx:40 ~ OneOrder ~ prevPath:", prevPath)
+ 
+ 
     useEffect(() => {
         const fetchStripeApiKey = async () => {
             const publishableKey = await paymentApi.getstripeapikey();
@@ -172,38 +176,43 @@ const OneOrder = (props) => {
                             <Typography variant="h5">Order Total</Typography>
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
-                        {user?.role === "ADMIN" && order.userEmail === user.email && (
-                            <Box sx={{ mt: 2 }}>
+                        {  prevPath === "/dashboard/orders" ?
+                            "" :
+                            (
+                                <>
+                                    <Box sx={{ mt: 2 }}>
 
-                                {!order.isPaid && order.paymentMethod === "paypal" && (
-                                    <PaypalPayment
-                                        totalPrice={order?.totalPrice}
-                                        id={order?._id}
-                                        payOrder={payOrder}
-                                    />
-                                )}
-                                {!order.isPaid && order.paymentMethod === 'stripe' && clientSecret && stripePromise && (
-                                    <Elements stripe={stripePromise} options={{ clientSecret }}>
-                                        <StripePayment
-                                            id={order?._id}
-                                            payOrder={payOrder}
-                                        />
-                                    </Elements>
+                                        {!order.isPaid && order.paymentMethod === "paypal" && (
+                                            <PaypalPayment
+                                                totalPrice={order?.totalPrice}
+                                                id={order?._id}
+                                                payOrder={payOrder}
+                                            />
+                                        )}
+                                        {!order.isPaid && order.paymentMethod === 'stripe' && clientSecret && stripePromise && (
+                                            <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                                <StripePayment
+                                                    id={order?._id}
+                                                    payOrder={payOrder}
+                                                />
+                                            </Elements>
 
-                                )}
-                            </Box>
-                        )}
-                        {!order.isPaid &&
-                            <Box sx={{ mt: 2 }}>
-                                <CustomButton
-                                    color="error"
-                                    size="large"
-                                    fullwidh
-                                    onClick={DeleteOrder}
-                                >
-                                    delete order
-                                </CustomButton>
-                            </Box>}
+                                        )}
+                                    </Box>
+
+                                    {!order.isPaid &&
+                                        <Box sx={{ mt: 2 }}>
+                                            <CustomButton
+                                                color="error"
+                                                size="large"
+                                                fullwidh
+                                                onClick={DeleteOrder}
+                                            >
+                                                delete order
+                                            </CustomButton>
+                                        </Box>}
+                                </>
+                            )}
                     </CardContent>
                 </Card>
             </Grid>

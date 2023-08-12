@@ -44,7 +44,7 @@ const Checkout = lazy(() => import("../pages/checkout/Checkout"));
 const Order = lazy(() => import("../pages/order/Order"));
 const OrderHistory = lazy(() => import("../pages/order/OrderHistory"));
 const AllOrders = lazy(() => import("../pages/dashboard/Orders"));
-
+ 
 
 const Router = () => {
 
