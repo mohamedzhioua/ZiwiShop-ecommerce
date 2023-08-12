@@ -183,8 +183,9 @@ export const AuthProvider = (props) => {
     });
 
   };
-  const googleLogin = async (idToken) => {
-    const user = await authApi.googleLogin({ idToken });
+  const googleLogin = async () => {
+    const user = await authApi.googleLogin( );
+    console.log("🚀 ~ file: JWTContext.jsx:188 ~ googleLogin ~ user:", user)
     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "GOOGLE_LOGIN",

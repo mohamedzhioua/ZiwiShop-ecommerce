@@ -26,8 +26,8 @@ class AuthApi {
     return this.request('post', '/facebookLogin', data);
   }
 
-  googleLogin(idToken) {
-    return this.request('post', '/googleLogin', idToken);
+  googleLogin() {
+    return this.request('get', '/googleLogin');
   }
 
   signup(data) {

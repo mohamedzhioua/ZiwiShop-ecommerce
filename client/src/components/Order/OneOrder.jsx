@@ -23,23 +23,19 @@ import StripePayment from '../payment/StripePayment';
 import { paymentApi } from '../../api/PaymentApi';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import useAuth from '../../hooks/useAuth';
 import CustomButton from '../ui/CustomButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const OneOrder = (props) => {
     const { data } = props
-    const { user } = useAuth();
     const navigate = useNavigate()
     const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [order, setOrder] = useState(data)
     const [clientSecret, setClientSecret] = useState("");
     const [stripePromise, setStripePromise] = useState(null);
     const location = useLocation();
-     const { prevPath } = location.state;
-     console.log("🚀 ~ file: OneOrder.jsx:40 ~ OneOrder ~ prevPath:", prevPath)
- 
- 
+    const { prevPath } = location.state || {};  
+
     useEffect(() => {
         const fetchStripeApiKey = async () => {
             const publishableKey = await paymentApi.getstripeapikey();
@@ -176,7 +172,7 @@ const OneOrder = (props) => {
                             <Typography variant="h5">Order Total</Typography>
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
-                        {  prevPath === "/dashboard/orders" ?
+                        { !prevPath || prevPath === "/dashboard/orders" ?
                             "" :
                             (
                                 <>
