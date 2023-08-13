@@ -172,7 +172,7 @@ const OneOrder = (props) => {
                             <Typography variant="h5">Order Total</Typography>
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
-                        { !prevPath || prevPath === "/dashboard/orders" ?
+                        { prevPath &&  prevPath === "/dashboard/orders" ?
                             "" :
                             (
                                 <>
