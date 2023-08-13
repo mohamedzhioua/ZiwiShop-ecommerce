@@ -10,7 +10,7 @@ const {
   getGoogleOAuthTokens,
   getGoogleUser,
 } = require("../utils/googleOAuthService");
-const signToken = require("../utils/jwt");
+const { AccessToken, RefreshToken } = require("../utils/jwt");
 
 const createActivationToken = (user) => {
   return jwt.sign(user, process.env.ACTIVATION_SECRET);
@@ -84,7 +84,7 @@ module.exports = {
       }
       user.verified = true;
       await user.save();
-      const token = signToken(user);
+      const token = AccessToken(user);
       res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -113,7 +113,15 @@ module.exports = {
       if (!userExist.verified) {
         return res.status(401).json("Please Verify Your Email and Try again");
       }
-      const token = signToken(userExist);
+      const token = AccessToken(userExist);
+      const refreshToken = RefreshToken(userExist._id);
+      // Create secure cookie with refresh token
+      res.cookie("token", refreshToken, {
+        httpOnly: true, //accessible only by web server
+        secure: true, //https
+        sameSite: "None", //cross-site cookie
+        maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+      });
       res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -182,7 +190,7 @@ module.exports = {
       user.password = hashedpassword;
       user.resetPasswordToken = undefined;
       await user.save();
-      const token = signToken(user);
+      const token = AccessToken(user);
       res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -213,7 +221,7 @@ module.exports = {
         picture,
         password,
         verified: true,
-        serviceProvider: "google",
+        serviceProvider:"google",
       };
       // upsert the user
       const user = await User.findOneAndUpdate(
@@ -224,12 +232,12 @@ module.exports = {
         { upsert: true, returnOriginal: false }
       );
 
-      const token = signToken(user);
-      res.cookie("token", token, {
-        httpOnly: true, //accessible only by web server
-        secure: true, //https
-        sameSite: "None", //cross-site cookie
-        maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+      const refreshToken = RefreshToken(user._id);
+      res.cookie("token", refreshToken, {
+        httpOnly: true,  
+        secure: true,  
+        sameSite: "None",  
+        maxAge: 7 * 24 * 60 * 60 * 1000,  
       });
       res.redirect(`${process.env.FRONTEND_URL}/auth/google`);
     } catch (error) {
@@ -250,7 +258,7 @@ module.exports = {
       const image = data.picture.data.url;
       let user = await User.findOne({ email });
       if (user) {
-        const token = signToken(user);
+        const token = AccessToken(user);
         res.status(200).json(token);
       } else {
         let password = email + process.env.TOKEN_KEY;
@@ -265,7 +273,7 @@ module.exports = {
         if (!user) {
           return res.status(400).json("User signup failed with Facebook");
         }
-        const token = signToken(user);
+        const token = AccessToken(user);
         res.status(200).json(token);
       }
     } catch (error) {
@@ -273,14 +281,28 @@ module.exports = {
       res.status(500).json("Facebook login failed. Please try again later");
     }
   },
-  me: async (req, res) => {
-     console.log("get me");
+  //  ---------------------------------------- //Facebook Authentication //--------------------------- //
+
+  refresh: async (req, res) => {
+    const cookies = req.cookies;
     try {
-      const decoded = jwt.verify(req.cookies["token"], process.env.TOKEN_KEY);
-      console.log("decoded", decoded);
-      return res.send(decoded);
+      if (!cookies?.token) return res.status(401).json("Unauthorized");
+      const decoded = jwt.verify(req.cookies["token"], process.env.REFRESH_TOKEN_SECRET);
+      const foundUser = await User.findById(decoded.userId).exec();
+      if (!foundUser) return res.status(401).json("Unauthorized");
+      const token = AccessToken(foundUser);
+
+      return res.json(token);
     } catch (error) {
-       res.send(null);
+      return res.status(403).send("Error: Forbidden " );
     }
+  },
+  //  ---------------------------------------- //Facebook Authentication //--------------------------- //
+
+  logout: async (req, res) => {
+    const cookies = req.cookies
+    if (!cookies?.token) res.status(402).json("No CONTENT FOUND IN THE COOKIE") //No content
+    res.clearCookie('token', { httpOnly: true, sameSite: 'None', secure: true })
+    res.json({ message: 'Cookie cleared' })
   },
 };

@@ -10,7 +10,7 @@ router.post("/signin", AuthController.signin);
 
 router.get("/googleLogin", AuthController.googleOauthHandler);
 
-router.get("/me", AuthController.me);
+router.get("/refresh", AuthController.refresh);
 
 router.post("/facebookLogin", AuthController.FacebookLogin);
 
@@ -18,5 +18,5 @@ router.post("/forgotpassword", AuthController.forgetPassword);
 
 router.post("/resetpassword", AuthController.resetpassword);
 
-
+router.post("/logout", AuthController.logout);
 module.exports = router;
