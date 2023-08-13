@@ -4,28 +4,43 @@ import OrderHistoryTable from "../../components/Order/OrderHistoryTable"
 import { useCallback, useEffect, useState } from "react"
 import { orderApi } from "../../api/orderApi"
 import { useMounted } from "../../hooks/use-mounted"
- 
+import { toast } from 'react-hot-toast';
+
 function OrderHistory() {
   const [orders, setOrders] = useState([])
   const isMounted = useMounted()
-
+  
   const GetMyOrders = useCallback(async () => {
     try {
-      const response = await orderApi.GetMyOrders();
-      if (isMounted()) {
-        setOrders(response);
-       }
-    } catch (error) {
-      console.error(error);
+      toast.promise(
+        orderApi.GetMyOrders(),
+        {
+          loading: 'Fetching data...',
+          error: 'Error while fetching data',
+        },
+        { id: 'fetching', success: { style: { display: 'none' } } }
+      )
+        .then((response) => {
+          if (isMounted()) {
+            setOrders(response);
+          }
+        })
+        .catch((error) => {
+          if (isMounted()) {
+            console.error(error);
+          }
+        });
+    } catch (err) {
+      console.error(err);
     }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   useEffect(() => {
     GetMyOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
     <Container maxWidth='xl' >

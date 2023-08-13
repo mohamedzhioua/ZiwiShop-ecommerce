@@ -1,5 +1,5 @@
 import {
-  Divider, Unstable_Grid2 as Grid,Box, Container
+  Divider, Unstable_Grid2 as Grid, Box, Container
 } from "@mui/material"
 import Heading from "../../components/ui/Heading"
 import StatisticsCard from "../../components/Dashboard/overview/StatisticsCard"
@@ -8,23 +8,38 @@ import WeeklyOverview from "../../components/Dashboard/overview/WeeklyOverview"
 import { useCallback, useEffect, useState } from "react"
 import { dashboardApi } from "../../api/dashboardApi"
 import { useMounted } from "../../hooks/use-mounted"
+import { toast } from "react-hot-toast"
 
 
 function Overview() {
   const [data, setData] = useState([])
-   const isMounted = useMounted()
+  const isMounted = useMounted()
+
   const getInfo = useCallback(async () => {
     try {
-      const response = await dashboardApi.getInfo();
-      if (isMounted()) {
-        setData(response);
-       }
-    } catch (error) {
-      console.error(error);
+      toast.promise(
+        dashboardApi.getInfo(),
+        {
+          loading: 'Fetching data...',
+          error: 'Error while fetching data',
+        },
+        { id: 'fetching', success: { style: { display: 'none' } } }
+      )
+        .then((response) => {
+          if (isMounted()) {
+            setData(response);
+          }
+        })
+        .catch((error) => {
+          if (isMounted()) {
+            console.error(error);
+          }
+        });
+    } catch (err) {
+      console.error(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-
   useEffect(() => {
     getInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +84,7 @@ function Overview() {
           xs={12}
           md={8}
         >
-          <StatisticsCard data={data}/>
+          <StatisticsCard data={data} />
         </Grid>
         <Grid
           xs={12}

@@ -34,7 +34,7 @@ const OneOrder = (props) => {
     const [clientSecret, setClientSecret] = useState("");
     const [stripePromise, setStripePromise] = useState(null);
     const location = useLocation();
-    const { prevPath } = location.state || {};  
+    const { prevPath } = location.state || {};
 
     useEffect(() => {
         const fetchStripeApiKey = async () => {
@@ -172,8 +172,8 @@ const OneOrder = (props) => {
                             <Typography variant="h5">Order Total</Typography>
                             <Typography variant="h5">{currencyFormatter.format(order.totalPrice)}</Typography>
                         </Box>
-                        { prevPath &&  prevPath === "/dashboard/orders" ?
-                            "" :
+                        {prevPath && prevPath === "/dashboard/orders" ?
+                            null :
                             (
                                 <>
                                     <Box sx={{ mt: 2 }}>

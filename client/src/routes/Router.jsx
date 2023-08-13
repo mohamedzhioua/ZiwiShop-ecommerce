@@ -1,8 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import ForceRedirect from "./ForceRedirect";
-import NotFound from "../pages/NotFound";
-import NoAccess from "../pages/NoAccess";
 import ProtectedRoute from "./PrivateRoute";
 import { CategoryProvider } from "../contexts/CategoryContext"
 import Splash from "../components/ui/Splash";
@@ -19,6 +17,8 @@ const FAQ = lazy(() => import("../pages/FAQ"));
 const EmailVerfication = lazy(() => import("../pages/auth/EmailVerfication"));
 const Error401 = lazy(() => import("../pages/401"));
 const Error500= lazy(() => import("../pages/500"));
+const NotFound= lazy(() => import("../pages/NotFound"));
+const NoAccess= lazy(() => import("../pages/NoAccess"));
 
 //dashboard
 const Overview = lazy(() => import("../pages/dashboard/Overview"));
@@ -59,8 +59,12 @@ const Router = () => {
       <Route path="/productDetails/:id" element={<Suspense fallback={<Splash />}><ProductDetails /></Suspense>} />
       <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} />
       <Route path="/forgotpassword" element={<Suspense fallback={<Splash />}><ForgetPassword /></Suspense>} />
+     {/* error pages */}
       <Route path="/401" element={<Suspense fallback={<Splash />}><Error401 /></Suspense>} />
       <Route path="/500" element={<Suspense fallback={<Splash />}><Error500 /></Suspense>} />
+      <Route path="/noaccess" element={<Suspense fallback={<Splash />}><NoAccess /></Suspense>} />
+      <Route path="*" element={<Suspense fallback={<Splash />}><NotFound /></Suspense>} />
+
 
       <Route element={<ForceRedirect />}>
       <Route path="/signin" element={<Login />} />
@@ -110,8 +114,6 @@ const Router = () => {
         <Route path="/dashboard/overview" element={<Overview />} />
       </Route>
 
-      <Route path="/noaccess" element={<NoAccess />} />
-      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

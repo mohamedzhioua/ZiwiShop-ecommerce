@@ -4,28 +4,43 @@ import { Divider, Box, Container } from '@mui/material';
 import OrderHistoryTable from '../../components/Order/OrderHistoryTable';
 import { useMounted } from '../../hooks/use-mounted';
 import { orderApi } from '../../api/orderApi';
+import { toast } from 'react-hot-toast';
 
 function Orders() {
   const [orders, setOrders] = useState([])
   const isMounted = useMounted()
-
+ 
   const GetAllOrders = useCallback(async () => {
     try {
-      const response = await orderApi.GetAllOrders();
-      if (isMounted()) {
-        setOrders(response);
-      }
-    } catch (error) {
-      console.error(error);
+      toast.promise(
+        orderApi.GetAllOrders(),
+        {
+          loading: 'Fetching data...',
+          error: 'Error while fetching data',
+        },
+        { id: 'fetching', success: { style: { display: 'none' } } }
+      )
+        .then((response) => {
+          if (isMounted()) {
+            setOrders(response);
+          }
+        })
+        .catch((error) => {
+          if (isMounted()) {
+            console.error(error);
+          }
+        });
+    } catch (err) {
+      console.error(err);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   useEffect(() => {
     GetAllOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
   return (
     <>
       <Container maxWidth='xl' sx={{ marginBottom: '14px' }}>
