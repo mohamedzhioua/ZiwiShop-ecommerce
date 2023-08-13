@@ -301,7 +301,7 @@ module.exports = {
       res.status(500).json("Facebook login failed. Please try again later");
     }
   },
-  //  ---------------------------------------- //Facebook Authentication //--------------------------- //
+  //  ---------------------------------------- //refresh token //--------------------------- //
 
   refresh: async (req, res) => {
     const cookies = req.cookies;
@@ -317,7 +317,7 @@ module.exports = {
       return res.status(403).send("Error: Forbidden " );
     }
   },
-  //  ---------------------------------------- //Facebook Authentication //--------------------------- //
+  //  ---------------------------------------- //LOgOut //--------------------------- //
 
   logout: async (req, res) => {
     const cookies = req.cookies

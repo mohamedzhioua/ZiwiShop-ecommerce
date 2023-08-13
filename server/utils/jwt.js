@@ -11,7 +11,7 @@ exports.AccessToken = (user) => {
   };
 
   const token = jwt.sign(tokenPayload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "7d",
   });
 
   return token;
@@ -20,7 +20,7 @@ exports.AccessToken = (user) => {
 //refreshToken
 exports.RefreshToken = (userId) => {
   const token = jwt.sign({ userId: userId }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "7d",
+    expiresIn: "15d",
   });
 
   return token;
