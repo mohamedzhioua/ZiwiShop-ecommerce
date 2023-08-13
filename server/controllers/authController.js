@@ -216,20 +216,21 @@ module.exports = {
 
       // get user with tokens
       const googleUser = await getGoogleUser({ id_token, access_token });
+    
       const { verified_email, email, name, picture } = googleUser;
 
       if (!verified_email) {
         return res.status(403).send("Google account is not verified");
       }
 
-      const password = email + process.env.TOKEN_KEY;
+      const password = email + process.env.ACCESS_TOKEN_SECRET;
       const userData = {
         email,
         name,
-        picture,
+        image: picture,
         password,
         verified: true,
-        serviceProvider:"google",
+        serviceProvider: "google",
       };
       // upsert the user
       const user = await User.findOneAndUpdate(
@@ -242,10 +243,10 @@ module.exports = {
 
       const refreshToken = RefreshToken(user._id);
       res.cookie("token", refreshToken, {
-        httpOnly: true,  
-        secure: true,  
-        sameSite: "None",  
-        maxAge: 7 * 24 * 60 * 60 * 1000,  
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
       res.redirect(`${process.env.FRONTEND_URL}/auth/google`);
     } catch (error) {
@@ -267,35 +268,34 @@ module.exports = {
       }
       const { email, name } = data;
       const image = data.picture.data.url;
-      
-        let password = email + process.env.TOKEN_KEY;
-        const userData = {
-          name,
+
+      let password = email + process.env.TOKEN_KEY;
+      const userData = {
+        name,
+        email,
+        password,
+        image,
+        verified: true,
+        serviceProvider: "facebook",
+      };
+      // upsert the user
+      const user = await User.findOneAndUpdate(
+        {
           email,
-          password,
-          image,
-          verified: true,
-          serviceProvider: "facebook",
-        };
-        // upsert the user
-        const user = await User.findOneAndUpdate(
-          {
-            email,
-          },
-          { $set: userData },
-          { upsert: true, returnOriginal: false }
-        );
-        const token = AccessToken(user);
-        const refreshToken = RefreshToken(user._id);
-        // Create secure cookie with refresh token
-        res.cookie("token", refreshToken, {
-          httpOnly: true, //accessible only by web server
-          secure: true, //https
-          sameSite: "None", //cross-site cookie
-          maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
-        });
-        res.status(200).json(token);
-    
+        },
+        { $set: userData },
+        { upsert: true, returnOriginal: false }
+      );
+      const token = AccessToken(user);
+      const refreshToken = RefreshToken(user._id);
+      // Create secure cookie with refresh token
+      res.cookie("token", refreshToken, {
+        httpOnly: true, //accessible only by web server
+        secure: true, //https
+        sameSite: "None", //cross-site cookie
+        maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+      });
+      res.status(200).json(token);
     } catch (error) {
       console.log(error);
       res.status(500).json("Facebook login failed. Please try again later");
@@ -307,22 +307,29 @@ module.exports = {
     const cookies = req.cookies;
     try {
       if (!cookies?.token) return res.status(401).json("Unauthorized");
-      const decoded = jwt.verify(req.cookies["token"], process.env.REFRESH_TOKEN_SECRET);
+      const decoded = jwt.verify(
+        req.cookies["token"],
+        process.env.REFRESH_TOKEN_SECRET
+      );
       const foundUser = await User.findById(decoded.userId).exec();
       if (!foundUser) return res.status(401).json("Unauthorized");
       const token = AccessToken(foundUser);
 
       return res.json(token);
     } catch (error) {
-      return res.status(403).send("Error: Forbidden " );
+      return res.status(403).send("Error: Forbidden ");
     }
   },
   //  ---------------------------------------- //LOgOut //--------------------------- //
 
   logout: async (req, res) => {
-    const cookies = req.cookies
-    if (!cookies?.token) res.status(402).json("No CONTENT FOUND IN THE COOKIE") //No content
-    res.clearCookie('token', { httpOnly: true, sameSite: 'None', secure: true })
-    res.json({ message: 'Cookie cleared' })
+    const cookies = req.cookies;
+    if (!cookies?.token) res.status(402).json("No CONTENT FOUND IN THE COOKIE"); //No content
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
+    res.json({ message: "Cookie cleared" });
   },
 };
