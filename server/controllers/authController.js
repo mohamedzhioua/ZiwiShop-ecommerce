@@ -85,6 +85,14 @@ module.exports = {
       user.verified = true;
       await user.save();
       const token = AccessToken(user);
+      const refreshToken = RefreshToken(user._id);
+
+      res.cookie("token", refreshToken, {
+        httpOnly: true, //accessible only by web server
+        secure: true, //https
+        sameSite: "None", //cross-site cookie
+        maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+      });
       res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
@@ -254,28 +262,40 @@ module.exports = {
         method: "GET",
       });
       const data = await response.json();
+      if (!data) {
+        return res.status(403).json("User signup failed with Facebook");
+      }
       const { email, name } = data;
       const image = data.picture.data.url;
-      let user = await User.findOne({ email });
-      if (user) {
-        const token = AccessToken(user);
-        res.status(200).json(token);
-      } else {
+      
         let password = email + process.env.TOKEN_KEY;
-        const user = await User.create({
+        const userData = {
           name,
           email,
           password,
           image,
           verified: true,
           serviceProvider: "facebook",
-        });
-        if (!user) {
-          return res.status(400).json("User signup failed with Facebook");
-        }
+        };
+        // upsert the user
+        const user = await User.findOneAndUpdate(
+          {
+            email,
+          },
+          { $set: userData },
+          { upsert: true, returnOriginal: false }
+        );
         const token = AccessToken(user);
+        const refreshToken = RefreshToken(user._id);
+        // Create secure cookie with refresh token
+        res.cookie("token", refreshToken, {
+          httpOnly: true, //accessible only by web server
+          secure: true, //https
+          sameSite: "None", //cross-site cookie
+          maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+        });
         res.status(200).json(token);
-      }
+    
     } catch (error) {
       console.log(error);
       res.status(500).json("Facebook login failed. Please try again later");
