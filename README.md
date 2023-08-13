@@ -9,6 +9,7 @@
    - 🔗 Getting Started
    - 🔗 Installation
    - 🔗 Usage
+   - 🔗 Illustration of Google Oauth process (without Passport or any googleapis npm package )
    - 🔗 Authentication
    - 🔗 Admin Dashboard
    - 🔗 User Interface
@@ -204,6 +205,12 @@ For your Facebook and Google client IDs, you can obtain them by creating apps on
 
   👉  Google: Follow the instructions outlined earlier to obtain your VITE_GOOGLE_CLIENT_ID and VITE_GOOGLE_OAUTH_REDIRECT_URL
   ```
+## Illustration of Google Oauth process (without Passport or any googleapis npm package)
+ throw this diagram you will learn how OAuth integrations work and specifically how you can set up a Google OAuth integration with your own Node.js application and it the end the concepts are the same irrespective of the service provider
+
+<img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/google-oauth.png">
+
+ ---
 ## Authentication
 Ziwishop supports authentication through Google and Facebook accounts. Users can log in using their Google or Facebook credentials, providing a convenient and secure way to access the platform.
 
