@@ -208,7 +208,7 @@ For your Facebook and Google client IDs, you can obtain them by creating apps on
 ## Illustration of Google Oauth process (without Passport or any googleapis npm package)
  throw this diagram you will learn how OAuth integrations work and specifically how you can set up a Google OAuth integration with your own Node.js application and it the end the concepts are the same irrespective of the service provider
 
-<img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/google-oauth.png">
+<img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/google-oauth.jpeg">
 
  ---
 ## Authentication
