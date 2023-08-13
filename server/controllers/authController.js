@@ -10,12 +10,7 @@ const {
   getGoogleOAuthTokens,
   getGoogleUser,
 } = require("../utils/googleOAuthService");
-
-const signToken = (id) => {
-  return jwt.sign({ userId: id }, process.env.TOKEN_KEY, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-};
+const signToken = require("../utils/jwt");
 
 const createActivationToken = (user) => {
   return jwt.sign(user, process.env.ACTIVATION_SECRET);
@@ -89,14 +84,8 @@ module.exports = {
       }
       user.verified = true;
       await user.save();
-      const token = signToken(user._id);
-      res.status(200).json({
-        token,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        image: user.image,
-      });
+      const token = signToken(user);
+      res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
@@ -122,16 +111,10 @@ module.exports = {
         return res.status(400).json(errors);
       }
       if (!userExist.verified) {
-        return res.status(401).json("Please Verifiy Your Email and Try again");
+        return res.status(401).json("Please Verify Your Email and Try again");
       }
-      const token = signToken(userExist._id);
-      res.status(200).json({
-        token,
-        name: userExist.name,
-        email: userExist.email,
-        role: userExist.role,
-        image: userExist.image,
-      });
+      const token = signToken(userExist);
+      res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
@@ -199,14 +182,8 @@ module.exports = {
       user.password = hashedpassword;
       user.resetPasswordToken = undefined;
       await user.save();
-      const token = signToken(user._id);
-      res.status(200).json({
-        token,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        image: user.image,
-      });
+      const token = signToken(user);
+      res.status(200).json(token);
     } catch (error) {
       return res.status(500).send("Error: " + error.message);
     }
@@ -214,7 +191,8 @@ module.exports = {
   //  ---------------------------------------- //Google Authentication //--------------------------- //
   googleOauthHandler: async (req, res) => {
     // get the code from qs
-    const code = req.query.code;
+    const { query } = req;
+    const code = query.code;
 
     try {
       // get the id and access token with the code
@@ -222,51 +200,40 @@ module.exports = {
 
       // get user with tokens
       const googleUser = await getGoogleUser({ id_token, access_token });
+      const { verified_email, email, name, picture } = googleUser;
 
-      if (!googleUser.verified_email) {
+      if (!verified_email) {
         return res.status(403).send("Google account is not verified");
       }
 
-      // const { email_verified, email, name } = response.payload;
-      // const image = response.payload.picture;
+      const password = email + process.env.TOKEN_KEY;
+      const userData = {
+        email,
+        name,
+        picture,
+        password,
+        verified: true,
+        serviceProvider: "google",
+      };
+      // upsert the user
+      const user = await User.findOneAndUpdate(
+        {
+          email,
+        },
+        { $set: userData },
+        { upsert: true, returnOriginal: false }
+      );
 
-      // if (email_verified) {
-      //   let user = await User.findOne({ email });
-
-      //   if (user) {
-      //     const token = signToken(user._id);
-      //     res.status(200).json({
-      //       token,
-      //       name: user.name,
-      //       email: user.email,
-      //       role: user.role,
-      //       image: user.image,
-      //     });
-      //   } else {
-      //     let password = email + process.env.TOKEN_KEY;
-      //     const user = await User.create({
-      //       name,
-      //       email,
-      //       password,
-      //       image,
-      //       verified: true,
-      //     });
-
-      //     const token = signToken(user._id);
-      //     res.status(200).json({
-      //       token,
-      //       name: user.name,
-      //       email: user.email,
-      //       role: user.role,
-      //       image: user.image,
-      //     });
-      //   }
-      // } else {
-      //   return res.status(400).json("Google login failed. Please try again.");
-      // }
+      const token = signToken(user);
+      res.cookie("token", token, {
+        httpOnly: true, //accessible only by web server
+        secure: true, //https
+        sameSite: "None", //cross-site cookie
+        maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+      });
+      res.redirect(`${process.env.FRONTEND_URL}/auth/google`);
     } catch (error) {
-      console.log(error);
-      return res.status(500).json("An error occurred during Google login.");
+      console.log(error, "Failed to authorize Google user");
     }
   },
 
@@ -283,14 +250,8 @@ module.exports = {
       const image = data.picture.data.url;
       let user = await User.findOne({ email });
       if (user) {
-        const token = signToken(user._id);
-        res.status(200).json({
-          token,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          image: user.image,
-        });
+        const token = signToken(user);
+        res.status(200).json(token);
       } else {
         let password = email + process.env.TOKEN_KEY;
         const user = await User.create({
@@ -299,22 +260,27 @@ module.exports = {
           password,
           image,
           verified: true,
+          serviceProvider: "facebook",
         });
         if (!user) {
           return res.status(400).json("User signup failed with Facebook");
         }
-        const token = signToken(user._id);
-        res.status(200).json({
-          token,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          image: user.image,
-        });
+        const token = signToken(user);
+        res.status(200).json(token);
       }
     } catch (error) {
       console.log(error);
       res.status(500).json("Facebook login failed. Please try again later");
+    }
+  },
+  me: async (req, res) => {
+     console.log("get me");
+    try {
+      const decoded = jwt.verify(req.cookies["token"], process.env.TOKEN_KEY);
+      console.log("decoded", decoded);
+      return res.send(decoded);
+    } catch (error) {
+       res.send(null);
     }
   },
 };

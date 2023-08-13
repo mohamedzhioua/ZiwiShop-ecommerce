@@ -10,6 +10,8 @@ router.post("/signin", AuthController.signin);
 
 router.get("/googleLogin", AuthController.googleOauthHandler);
 
+router.get("/me", AuthController.me);
+
 router.post("/facebookLogin", AuthController.FacebookLogin);
 
 router.post("/forgotpassword", AuthController.forgetPassword);

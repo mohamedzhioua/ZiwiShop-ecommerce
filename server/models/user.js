@@ -27,6 +27,11 @@ const UserSchema = new Schema(
       default: undefined,
     },
     verified: { type: Boolean, default: false },
+    serviceProvider: {
+      type: String,
+      enum: ["email", "google", "facebook"],
+      default: "email",
+    },
   },
   { timestamps: true }
 );

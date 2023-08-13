@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 const isAuth = async (req, res, next) => {
   try {
-    const authorization = req.headers.authorization;
+    const authorization = req.headers.authorization || req.headers.Authorization;
     if (authorization) {
       const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
        if (!token)
