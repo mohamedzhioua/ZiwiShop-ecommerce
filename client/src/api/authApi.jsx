@@ -2,17 +2,17 @@ import axiosInstance from './axios';
 
 class AuthApi {
   constructor() {
-    this.basePath = '/api/v1/user';
+    this.basePath = '/api/v1/auth';
   }
 
   request(method, url, data) {
     return new Promise((resolve, reject) => {
       axiosInstance[method](`${this.basePath}${url}`, data)
         .then((response) => {
-          resolve(response.data);
+           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.response.data);
+           reject(error.response.data);
         });
     });
   }
@@ -26,8 +26,8 @@ class AuthApi {
     return this.request('post', '/facebookLogin', data);
   }
 
-  googleLogin() {
-    return this.request('get', '/googleLogin');
+  refresh() {
+     return this.request('get', `/refresh` );
   }
 
   signup(data) {
@@ -45,6 +45,10 @@ class AuthApi {
  resetpassword(data) {
   return this.request('post',  `/resetpassword?resetPasswordToken=${data.resetPasswordToken}`, data);
 }
+Logout() {
+  return this.request('post', '/logout');
+}
+
 }
 
 export const authApi = new AuthApi();

@@ -20,5 +20,22 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(console.log(error));
   }
 );
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      const { status } = error.response;
+      if (status === 401) {
+        window.location = '/401'
+
+      } else if (status === 403) {
+        window.location = '/403'
+
+      }
+    }
+   }
+);
 
 export default axiosInstance;
