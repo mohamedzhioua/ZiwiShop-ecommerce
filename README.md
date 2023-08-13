@@ -49,7 +49,9 @@
 
   - [x] Fully **responsive design** to provide optimal user experience on various devices.
   - [x] **Props validation** implemented throughout the project to ensure data integrity and proper component usage.
-  - [x] Implemented **input validation at both the front-end and back-end** to enhance data integrity and security.
+  - [x] Implemented **input validation at both the front-end(Yup) and back-end(validator)**  to enhance data integrity and security.
+  - [x] Using **formik** building forms .
+  - [x] Using **nodemailer**  for User **email verification**.
   - [x] User authentication via **Google OAuth** implemented using Node.js **(without Passport or any googleapis npm package)** 
   - [x] User authentication **Facebook** for easy access.
   - [x] **Admin dashboard** for administrators to manage the platform efficiently, featuring charts and visualizations for data analysis.
