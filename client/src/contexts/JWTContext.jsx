@@ -63,22 +63,23 @@ const handlers = {
       user,
     };
   },
-VERIFY_EMAIL: (state, action) => {
-  const { user } = action.payload;
-  return {
-    ...state,
-    IsLoggedIn: true,
-    user,
-  };
-},
-RESET_PASSWORD: (state, action) => {
-  const { user } = action.payload;
-  return {
-    ...state,
-    IsLoggedIn: true,
-    user,
-  };
-},
+  VERIFY_EMAIL: (state, action) => {
+    const { user } = action.payload;
+    return {
+      ...state,
+      IsLoggedIn: true,
+      user,
+    };
+  },
+  RESET_PASSWORD: (state, action) => {
+    const { user } = action.payload;
+    return {
+      ...state,
+      IsLoggedIn: true,
+      user,
+    };
+  },
+
 };
 const reducer = (state, action) =>
   handlers[action.type] ? handlers[action.type](state, action) : state;
@@ -93,6 +94,7 @@ const AuthContext = createContext({
   register: () => Promise.resolve(),
   verifyemail: () => Promise.resolve(),
   resetpassword: () => Promise.resolve(),
+  refresh: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -106,6 +108,7 @@ export const AuthProvider = (props) => {
           window.localStorage.getItem("userDetails")
         );
         if (userDetails) {
+
           dispatch({
             type: "INITIALIZE",
             payload: {
@@ -139,7 +142,7 @@ export const AuthProvider = (props) => {
 
   const login = async (email, password) => {
     const res = await authApi.login({ email, password });
-    const user =  decodeToken(res)
+    const user = decodeToken(res)
     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "LOGIN",
@@ -149,7 +152,8 @@ export const AuthProvider = (props) => {
     });
   };
   const verifyemail = async (activationToken) => {
-    const user = await authApi.emailverification(activationToken);
+    const res = await authApi.emailverification(activationToken);
+    const user = decodeToken(res)
     localStorage.setItem("userDetails", JSON.stringify(user));
     dispatch({
       type: "VERIFY_EMAIL",
@@ -182,11 +186,11 @@ export const AuthProvider = (props) => {
     });
 
   };
- 
+
   const googleLogin = async () => {
     try {
       const res = await authApi.refresh();
-      const user =  decodeToken(res)
+      const user = decodeToken(res)
       localStorage.setItem("userDetails", JSON.stringify(user));
       dispatch({
         type: "GOOGLE_LOGIN",
@@ -198,7 +202,7 @@ export const AuthProvider = (props) => {
       console.error("Error in googleLogin:", error);
     }
   };
-  
+
   const register = async (data) => {
     const user = await authApi.signup(data);
     if (user.success === true) {
@@ -217,6 +221,7 @@ export const AuthProvider = (props) => {
       console.error(err);
     }
   };
+
 
 
   return (

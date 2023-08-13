@@ -1,5 +1,5 @@
 import axios from 'axios';
-  
+ 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 60000,
@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(
       const user = JSON.parse(userDetails);
       const token = user.token;
       config.headers.Authorization = `Bearer ${token}`;
-     }
+    }
     return config;
   },
   (error) => {
@@ -31,14 +31,17 @@ axiosInstance.interceptors.response.use(
         window.location = '/401'
 
       } else if (status === 403) {
-        window.location = '/403'
+        window.location = '/signin'
 
       } else if (status === 500) {
         window.location = '/500'
 
       }
     }
-   }
+  }
 );
 
 export default axiosInstance;
+ 
+
+ 

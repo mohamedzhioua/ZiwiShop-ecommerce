@@ -46,9 +46,9 @@ const Checkout = () => {
              if (isMounted()) {
                 actions.setStatus({ success: true });
                 actions.setSubmitting(false);
-                // localStorage.removeItem('cartItems');
-                // localStorage.removeItem('billingInfo');
-                // localStorage.removeItem('step');
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('billingInfo');
+                localStorage.removeItem('step');
                 toast.success('Order Created');
                 navigate(`/order/${response._id}`);
             }
