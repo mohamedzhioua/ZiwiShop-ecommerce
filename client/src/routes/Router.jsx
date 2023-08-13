@@ -18,6 +18,8 @@ const ResetPassword = lazy(() => import("../pages/auth/ResetPassword"));
 const FAQ = lazy(() => import("../pages/FAQ"));
 const EmailVerfication = lazy(() => import("../pages/auth/EmailVerfication"));
 const Error401 = lazy(() => import("../pages/401"));
+const Error500= lazy(() => import("../pages/500"));
+
 //dashboard
 const Overview = lazy(() => import("../pages/dashboard/Overview"));
 //product
@@ -58,6 +60,7 @@ const Router = () => {
       <Route path="/ZiwiShop/FAQ" element={<Suspense fallback={<Splash />}><FAQ /></Suspense>} />
       <Route path="/forgotpassword" element={<Suspense fallback={<Splash />}><ForgetPassword /></Suspense>} />
       <Route path="/401" element={<Suspense fallback={<Splash />}><Error401 /></Suspense>} />
+      <Route path="/500" element={<Suspense fallback={<Splash />}><Error500 /></Suspense>} />
 
       <Route element={<ForceRedirect />}>
       <Route path="/signin" element={<Login />} />

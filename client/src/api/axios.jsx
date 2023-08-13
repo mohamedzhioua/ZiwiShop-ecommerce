@@ -33,6 +33,9 @@ axiosInstance.interceptors.response.use(
       } else if (status === 403) {
         window.location = '/403'
 
+      } else if (status === 500) {
+        window.location = '/500'
+
       }
     }
    }
