@@ -5,12 +5,12 @@ const isAuth = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization || req.headers.Authorization;
     if (!authorization) {
-      return res.status(401).json("Unauthorized, please log in to access");
+      return res.status(401).json("Unauthorized");
     }
 
       const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
       if (!token) {
-        return res.status(401).json("Unauthorized, please log in to access");
+        return res.status(401).json("Unauthorized");
       }
   
       try {
@@ -25,7 +25,7 @@ const isAuth = async (req, res, next) => {
         req.user = user;
         next();
       } catch (error) {
-        return res.status(401).json("Unauthorized, please log in to access");
+        return res.status(401).json("Unauthorized");
       }
     } catch (error) {
       return res.status(403).json("Forbidden");

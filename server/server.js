@@ -21,7 +21,7 @@ app.get("/api/keys/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sandbox");
 });
 
-const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 const sizeRoutes = require("./routes/sizeRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
@@ -30,7 +30,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes")
 
-app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/size", sizeRoutes);
 app.use("/api/v1/category",categoryRoutes);
 app.use("/api/v1/product", productRoutes);
