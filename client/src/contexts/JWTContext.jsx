@@ -94,7 +94,6 @@ const AuthContext = createContext({
   register: () => Promise.resolve(),
   verifyemail: () => Promise.resolve(),
   resetpassword: () => Promise.resolve(),
-  refresh: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {

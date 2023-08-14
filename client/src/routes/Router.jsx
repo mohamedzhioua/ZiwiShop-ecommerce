@@ -17,6 +17,7 @@ const FAQ = lazy(() => import("../pages/FAQ"));
 const EmailVerfication = lazy(() => import("../pages/auth/EmailVerfication"));
 const Error401 = lazy(() => import("../pages/401"));
 const Error500= lazy(() => import("../pages/500"));
+const Error403= lazy(() => import("../pages/403"));
 const NotFound= lazy(() => import("../pages/NotFound"));
 const NoAccess= lazy(() => import("../pages/NoAccess"));
 
@@ -62,6 +63,7 @@ const Router = () => {
      {/* error pages */}
       <Route path="/401" element={<Suspense fallback={<Splash />}><Error401 /></Suspense>} />
       <Route path="/500" element={<Suspense fallback={<Splash />}><Error500 /></Suspense>} />
+      <Route path="/403" element={<Suspense fallback={<Splash />}><Error403 /></Suspense>} />
       <Route path="/noaccess" element={<Suspense fallback={<Splash />}><NoAccess /></Suspense>} />
       <Route path="*" element={<Suspense fallback={<Splash />}><NotFound /></Suspense>} />
 
