@@ -30,11 +30,13 @@
 
 -  It all began with a small old project built using 'npx create-react-app' with Bootstrap styling. However, from just trying to transform it to mui and add linkedin auth , finding myself reimagining the project using the MERN stack  with a Vite frontend project and Material-UI (MUI) version 5 for a more responsive and dynamic user interface. inspired by celio and some  other ecommerce sites... 
  
--  old Version Demo (simple auth with facebook and google): 
+##  old Version Demo (simple auth with facebook and google): 
 
  <img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/mern-stack-social-authentication_demo.gif">
 
--  New ZiwiShop Demo : 
+ ---
+ 
+##  New ZiwiShop Demo (clikc to watch): 
 
 [![youtube demo link](http://img.youtube.com/vi/MiBDLSnPVFg/0.jpg)](https://www.youtube.com/watch?v=MiBDLSnPVFg&ab_channel=mohamedzhioua)
 
