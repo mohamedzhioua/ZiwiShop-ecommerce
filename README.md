@@ -10,7 +10,7 @@
    - 🔗 Installation
    - 🔗 Usage
    - 🔗 Illustration of Google Oauth process (without Passport or any googleapis npm package )
-   - 🔗 Authentication
+   - 🔗 Authentication / Authorization
    - 🔗 Admin Dashboard
    - 🔗 User Interface
    - 🔗 Categories
@@ -213,8 +213,21 @@ For your Facebook and Google client IDs, you can obtain them by creating apps on
 <img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/google-oauth.jpeg">
 
  ---
-## Authentication
-Ziwishop supports authentication through Google and Facebook accounts. Users can log in using their Google or Facebook credentials, providing a convenient and secure way to access the platform.
+## Authentication / Authorization
+Ziwishop offers a robust authentication system that enables users to conveniently and securely access the platform through their Google and Facebook accounts. Additionally, for users who choose to log in using their email addresses, an email containing a verification link will be sent to ensure the authenticity of their account.
+
+Our platform employs **role-based access control for authorization**, which involves categorizing permissions into roles such as "User" or "Admin" and then assigning these roles to respective users. This practice is a widely recognized and effective method for organizing authorization mechanisms.
+
+The **authentication process** is further enhanced with JWT (JSON Web Tokens) Access, Refresh Tokens, Cookies, and Axios integration. In cases where a request, such as a "getCourse" request, results in a 401 error due to unauthorized access, a RefreshToken API is invoked.
+
+Upon receiving a response from the RefreshToken API, the original request is reattempted, thus enabling a seamless continuation of the user's intended action.
+
+Should the Refresh Token expire, a 'Refresh Token Invalid' message will be presented with a 403 HTTP status code, indicating that the user needs to reauthenticate.
+
+In situations where a 403 error occurs during the RefreshToken API process, a user-friendly notification in the form of a "sweet alert" will be displayed for 5 seconds. Subsequently, all local storage will be cleared, and the window will be reloaded for a complete sign-out effect. This ensures that users are aware of the situation and provided with a smooth logout experience.
+
+ <img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/authentication_flow.jpeg">
+ <img src="https://github.com/mohamedzhioua/ZiwiShop-ecommerce/blob/main/client/src/assets/user_roles_cover.jpeg">
 
 ## Admin Dashboard
 The Admin Dashboard is a powerful tool that allows administrators to manage various aspects of the platform. Admins can control categories, products, brands, sizes, and more. They can also view order history, sales analytics, and manage featured products.
