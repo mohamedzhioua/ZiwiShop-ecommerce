@@ -9,7 +9,7 @@
    - 🔗 Getting Started
    - 🔗 Installation
    - 🔗 Usage
-   - 🔗 Illustration of Google Oauth process (without Passport or any googleapis npm package )
+   - 🔗 Illustration of Google Oauth process (without Passport or any googleapis npm package)
    - 🔗 Authentication / Authorization
    - 🔗 Admin Dashboard
    - 🔗 User Interface
@@ -36,7 +36,7 @@
 
  ---
  
-##  New ZiwiShop Demo (clikc to watch): 
+##  New ZiwiShop Demo (click to watch): 
 
 [![youtube demo link](http://img.youtube.com/vi/MiBDLSnPVFg/0.jpg)](https://www.youtube.com/watch?v=MiBDLSnPVFg&ab_channel=mohamedzhioua)
 
