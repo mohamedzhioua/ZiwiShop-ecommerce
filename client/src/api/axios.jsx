@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { authApi } from './authApi';
 import { decodeToken } from '../utils/jwt_decode';
+ 
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -52,7 +53,7 @@ axiosInstance.interceptors.response.use(
       if (status === 401) {
         window.location = '/401';
       } else if (status === 403) {
-        window.location = '/403';
+          window.location = '/403';
       } else if (status === 500) {
         window.location = '/500';
       }
