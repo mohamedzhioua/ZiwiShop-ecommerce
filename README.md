@@ -36,7 +36,7 @@
 
 -  New ZiwiShop Demo : 
 
-[![youtube demo link](http://img.youtube.com/vi/MiBDLSnPVFg&t=3s&ab_channel=mohamedzhioua/0.jpg)](https://www.youtube.com/watch?v=MiBDLSnPVFg&ab_channel=mohamedzhioua)
+[![youtube demo link](http://img.youtube.com/vi/MiBDLSnPVFg/0.jpg)](https://www.youtube.com/watch?v=MiBDLSnPVFg&ab_channel=mohamedzhioua)
 
   ---
 ### :space_invader: Tech Stack
