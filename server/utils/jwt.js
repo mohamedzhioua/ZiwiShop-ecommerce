@@ -11,7 +11,7 @@ exports.AccessToken = (user) => {
   };
 
   const token = jwt.sign(tokenPayload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "10s",
+    expiresIn: "20m",
   });
 
   return token;
