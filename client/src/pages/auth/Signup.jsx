@@ -10,7 +10,7 @@ const Signup = () => {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '78vh',
+    height: '100dvh',
   });
 
   const CustomPaper = styled(Paper)({

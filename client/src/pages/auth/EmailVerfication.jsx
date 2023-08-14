@@ -33,7 +33,7 @@ function EmailVerfication() {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '78vh',
+    height: '78dvh',
   });
 
   const CustomPaper = styled(Paper)({
